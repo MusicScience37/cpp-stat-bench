@@ -17,7 +17,7 @@ class CppStatBenchConan(ConanFile):
         "requirements_for_tests": [True, False],
     }
     default_options = {
-        "shared": True,
+        "shared": False,
         "fPIC": True,
         "requirements_for_tests": True,
     }
@@ -35,7 +35,7 @@ class CppStatBenchConan(ConanFile):
         if self.settings.os == "Windows":
             del self.options.fPIC
         if self.options.shared:
-            self.options["fmt"].shared = True
+            raise ValueError("Shared library is not supported.")
 
     def requirements(self):
         self.requires("fmt/8.0.1")

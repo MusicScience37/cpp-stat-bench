@@ -21,8 +21,6 @@
 
 #include <cstdint>
 
-#include "stat_bench/impl/stat_bench_export.h"
-
 namespace stat_bench {
 namespace impl {
 
@@ -31,16 +29,14 @@ namespace impl {
  *
  * \return Current time.
  */
-[[nodiscard]] STAT_BENCH_EXPORT auto monotone_clock_now() noexcept
-    -> std::uint64_t;
+[[nodiscard]] auto monotone_clock_now() noexcept -> std::uint64_t;
 
 /*!
  * \brief Get the frequency using a monotone clock.
  *
  * \return Frequency.
  */
-[[nodiscard]] STAT_BENCH_EXPORT auto monotone_clock_freq() noexcept
-    -> std::uint64_t;
+[[nodiscard]] auto monotone_clock_freq() noexcept -> std::uint64_t;
 
 }  // namespace impl
 }  // namespace stat_bench
