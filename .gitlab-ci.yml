@@ -98,8 +98,7 @@ pre-commit:
   script:
     - pipenv run pre-commit run --all-files
 
-# TODO
-.static analysis:
+static analysis:
   extends: .retry setting
   stage: Check
   needs:
@@ -205,8 +204,7 @@ pre-commit:
     - cmake --build .
     - ctest -V
 
-# TODO
-.clang coverage:
+clang coverage:
   extends: .debug-test-base
   stage: Test with Clang
   image: musicscience37/clang-ci:clang11-v3.2.2
@@ -228,8 +226,7 @@ pre-commit:
     - scripts/collect_llvm_coverage.sh build_clang_coverage
   coverage: '/Line Coverage: \d+\.\d+/'
 
-# TODO
-.gcc coverage:
+gcc coverage:
   extends: .debug-test-base
   stage: Test with GCC
   image: musicscience37/gcc-ci:gcc10-v3.3
@@ -249,32 +246,28 @@ pre-commit:
     - scripts/collect_gcc_coverage.sh build_gcc_coverage
   coverage: '/Total:\|\s*(\d+\.?\d+?)%/'
 
-# TODO
-.gcc-10-debug:
+gcc-10-debug:
   extends: .debug-test-base
   stage: Test with GCC
   image: musicscience37/gcc-ci:gcc10-v3.3
   variables:
     BUILD_DIR: build_gcc10_debug
 
-# TODO
-.gcc-10-release:
+gcc-10-release:
   extends: .release-test-base
   stage: Test with GCC
   image: musicscience37/gcc-ci:gcc10-v3.3
   variables:
     BUILD_DIR: build_gcc10_release
 
-# TODO
-.clang-11-release:
+clang-11-release:
   extends: .release-test-base
   stage: Test with Clang
   image: musicscience37/clang-ci:clang11-v3.2.2
   variables:
     BUILD_DIR: build_clang11_release
 
-# TODO
-.clang-11-asan-ubsan:
+clang-11-asan-ubsan:
   extends: .debug-test-base
   stage: Test with Clang
   image: musicscience37/clang-ci:clang11-v3.2.2
@@ -291,8 +284,7 @@ pre-commit:
     - cmake --build .
     - ctest -V
 
-# TODO
-.clang-11-tsan:
+clang-11-tsan:
   extends: .debug-test-base
   stage: Test with Clang
   image: musicscience37/clang-ci:clang11-v3.2.2
