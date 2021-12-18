@@ -1,0 +1,36 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-added-large-files
+  - repo: local
+    hooks:
+      - id: clang-format
+        name: clang-format
+        description: Format C++ files with clang-format.
+        language: system
+        files: \.(h|cpp)$
+        entry: clang-format -i
+      - id: cmake-format
+        name: cmake-format
+        description: Format CMake files with cmake-format.
+        language: system
+        files: (CMakeLists.txt|.*\.cmake)$
+        exclude: source_list.cmake
+        entry: pipenv run cmake-format -i
+      - id: update-source-list-in-unit-test
+        name: update-source-list-in-unit-test
+        description: Update the list of source codes in unit test.
+        language: system
+        files: \.(h|cpp)$
+        entry: pipenv run python scripts/update_source_list.py
+      - id: check-encoding
+        name: check-encoding
+        description: Check encoding of files.
+        language: system
+        entry: pipenv run python scripts/check_encoding.py

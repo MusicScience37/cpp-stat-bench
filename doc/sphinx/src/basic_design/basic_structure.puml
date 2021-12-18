@@ -1,0 +1,7 @@
+@startuml basic_structure
+
+title Basic Structure
+
+class clock
+
+@enduml

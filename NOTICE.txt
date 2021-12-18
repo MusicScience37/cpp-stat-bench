@@ -1,0 +1,4 @@
+Copyright 2021 MusicScience37 (Kenta Kabashima)
+
+This project uses Catch2 library in tests, which is available under a
+"Boost Software License, Version 1.0." For details, see https://github.com/catchorg/Catch2.
