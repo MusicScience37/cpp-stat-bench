@@ -1,4 +1,4 @@
-from conans import ConanFile
+from conans import ConanFile, CMake
 
 
 class CppStatBenchConan(ConanFile):
@@ -10,19 +10,35 @@ class CppStatBenchConan(ConanFile):
     license = "Apache-2.0"
     author = "Kenta Kabashima (kenta_program37@hotmail.co.jp)"
     topics = ("Benchmark")
-    settings = None
+    settings = "os", "compiler", "build_type", "arch"
     options = {
+        "shared": [True, False],
+        "fPIC": [True, False],
         "requirements_for_tests": [True, False],
     }
     default_options = {
+        "shared": True,
+        "fPIC": True,
         "requirements_for_tests": True,
     }
-    exports_sources = "include/*"
+    exports_sources = (
+        "include/*",
+        "src/*",
+        "CMakeLists.txt",
+        "CTestCustom.cmake",
+        "cmake/*",
+    )
     no_copy_source = True
     generators = "cmake", "cmake_find_package"
 
+    def config_options(self):
+        if self.settings.os == "Windows":
+            del self.options.fPIC
+        if self.options.shared:
+            self.options["fmt"].shared = True
+
     def requirements(self):
-        pass
+        self.requires("fmt/8.0.1")
 
     def build_requirements(self):
         if self.options.requirements_for_tests:
@@ -30,8 +46,18 @@ class CppStatBenchConan(ConanFile):
                 "catch2/3.0.0@MusicScience37+conan-extra-packages/stable")
             self.build_requires("trompeloeil/41")
 
+    def build(self):
+        cmake = CMake(self)
+        cmake.configure()
+        cmake.build()
+
     def package(self):
-        self.copy("*.h")
+        self.copy("*.h", dst="include/stat_bench", src="include/stat_bench")
+        self.copy("*stat_bench.lib", dst="lib", keep_path=False)
+        self.copy("*.dll", dst="bin", keep_path=False)
+        self.copy("*.so*", dst="lib", keep_path=False)
+        self.copy("*.dylib", dst="lib", keep_path=False)
+        self.copy("*.a", dst="lib", keep_path=False)
 
     def package_info(self):
-        self.info.header_only()
+        self.cpp_info.libs = ["stat_bench"]

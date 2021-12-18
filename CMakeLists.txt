@@ -54,9 +54,7 @@ include(pipenv)
 
 set(STAT_BENCH_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 
-add_library(stat_bench INTERFACE)
-target_include_directories(stat_bench
-                           INTERFACE ${STAT_BENCH_SOURCE_DIR}/include)
+add_subdirectory(src)
 
 if(STAT_BENCH_BUILD_DOC)
     add_subdirectory(doc)
