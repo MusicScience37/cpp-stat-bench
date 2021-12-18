@@ -98,7 +98,8 @@ pre-commit:
   script:
     - pipenv run pre-commit run --all-files
 
-static analysis:
+# TODO
+.static analysis:
   extends: .retry setting
   stage: Check
   needs:
@@ -204,7 +205,8 @@ static analysis:
     - cmake --build .
     - ctest -V
 
-clang coverage:
+# TODO
+.clang coverage:
   extends: .debug-test-base
   stage: Test with Clang
   image: musicscience37/clang-ci:clang11-v3.2.2
@@ -226,7 +228,8 @@ clang coverage:
     - scripts/collect_llvm_coverage.sh build_clang_coverage
   coverage: '/Line Coverage: \d+\.\d+/'
 
-gcc coverage:
+# TODO
+.gcc coverage:
   extends: .debug-test-base
   stage: Test with GCC
   image: musicscience37/gcc-ci:gcc10-v3.3
@@ -246,28 +249,32 @@ gcc coverage:
     - scripts/collect_gcc_coverage.sh build_gcc_coverage
   coverage: '/Total:\|\s*(\d+\.?\d+?)%/'
 
-gcc-10-debug:
+# TODO
+.gcc-10-debug:
   extends: .debug-test-base
   stage: Test with GCC
   image: musicscience37/gcc-ci:gcc10-v3.3
   variables:
     BUILD_DIR: build_gcc10_debug
 
-gcc-10-release:
+# TODO
+.gcc-10-release:
   extends: .release-test-base
   stage: Test with GCC
   image: musicscience37/gcc-ci:gcc10-v3.3
   variables:
     BUILD_DIR: build_gcc10_release
 
-clang-11-release:
+# TODO
+.clang-11-release:
   extends: .release-test-base
   stage: Test with Clang
   image: musicscience37/clang-ci:clang11-v3.2.2
   variables:
     BUILD_DIR: build_clang11_release
 
-clang-11-asan-ubsan:
+# TODO
+.clang-11-asan-ubsan:
   extends: .debug-test-base
   stage: Test with Clang
   image: musicscience37/clang-ci:clang11-v3.2.2
@@ -284,7 +291,8 @@ clang-11-asan-ubsan:
     - cmake --build .
     - ctest -V
 
-clang-11-tsan:
+# TODO
+.clang-11-tsan:
   extends: .debug-test-base
   stage: Test with Clang
   image: musicscience37/clang-ci:clang11-v3.2.2
@@ -301,7 +309,8 @@ clang-11-tsan:
     - cmake --build .
     - ctest -V
 
-clang-11-conan:
+# TODO
+.clang-11-conan:
   extends: .retry setting
   stage: Test with Clang
   needs:
@@ -318,7 +327,8 @@ clang-11-conan:
     - pipenv run conan create --build missing . ${CONAN_USER}/${CONAN_CHANNEL}
     - pipenv run conan create --build missing --test-folder tests/conan_package . ${CONAN_USER}/${CONAN_CHANNEL}
 
-clang-11-conan-release:
+# TODO
+.clang-11-conan-release:
   extends: .retry setting
   stage: Publish
   needs:
