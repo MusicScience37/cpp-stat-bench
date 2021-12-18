@@ -35,11 +35,11 @@ CheckOptions:
     value: lower_case
 
   - key: readability-identifier-naming.ClassCase
-    value: lower_case
+    value: CamelCase
   - key: readability-identifier-naming.StructCase
-    value: lower_case
+    value: CamelCase
   - key: readability-identifier-naming.EnumCase
-    value: lower_case
+    value: CamelCase
 
   - key: readability-identifier-naming.FunctionCase
     value: lower_case

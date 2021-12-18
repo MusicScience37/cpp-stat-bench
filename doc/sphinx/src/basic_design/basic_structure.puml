@@ -2,6 +2,123 @@
 
 title Basic Structure
 
-class clock
+package clock {
+    class Duration {
+        {static} + freq() : uint64_t
+        + count() : uint64_t
+        + seconds() : double
+    }
+
+    class MonotoneTimePoint {
+        + operator-(MonotoneTimePoint) : Duration
+    }
+    MonotoneTimePoint ..> Duration
+
+    class MonotoneClock {
+        + now() : TimePoint
+    }
+    MonotoneClock ..> MonotoneTimePoint
+
+    class StopWatch {
+        + start() : void
+        + lap() : void
+        + durations() : vector<Duration>
+    }
+    StopWatch ..> MonotoneClock
+
+    class SystemTimePoint {
+        + to_string() : string
+    }
+
+    class SystemClock {
+        + now() : SystemTimePoint
+    }
+    SystemClock ..> SystemTimePoint
+}
+
+package bench {
+    class InvocationContext {
+        + threads() : size_t
+        + threads(val: size_t) : void
+        + iterations() : size_t
+        + samples() : size_t
+        + measure<Func>(func: Func&&) : void
+        + durations() : vector<vector<Duration>>
+    }
+    InvocationContext ..> StopWatch
+
+    class BenchmarkCaseInfo {
+        + benchmark_name() : string
+        + case_name() : string
+    }
+
+    class BenchmarkCase {
+        + info() : BenchmarkCaseInfo
+        + call(context: InvocationContext&) : void
+    }
+    BenchmarkCase o-- BenchmarkCaseInfo
+    BenchmarkCase ..> InvocationContext
+
+    class Benchmark {
+        + name() : string
+        + add(bench_case: BenchmarkCase) : void
+        + cases() : const vector<BenchmarkCase>&
+    }
+    Benchmark o-- BenchmarkCase
+
+    class BenchmarkCaseRegistry {
+        + add(bench_case: BenchmarkCase) : void
+        + benchmarks() : const vector<Benchmark>&
+        {static} + instance() : shared_ptr<BenchmarkCaseRegistry>
+    }
+    BenchmarkCaseRegistry o-- Benchmark
+}
+
+package measurer {
+    class Measurement {
+        + case_info() : BenchmarkCaseInfo
+        + measurer_name() : string
+        + threads() : size_t
+        + iterations() : size_t
+        + samples() : size_t
+        + started_at() : SystemTimePoint
+        + durations() : vector<vector<Duration>>
+    }
+    Measurement o-- BenchmarkCaseInfo
+    Measurement o-- SystemTimePoint
+    Measurement o-- Duration
+
+    interface IMeasurer <<interface>> {
+        {abstract} + name() : string
+        {abstract} + measure(bench_case: BenchmarkCase&) : Measurement
+    }
+    IMeasurer ..> BenchmarkCase
+    IMeasurer ..> Measurement
+}
+
+package reporter {
+    interface IReporter <<interface>> {
+        {abstract} + experiment_starts(time_stamp: const SystemTimePoint&) : void
+        {abstract} + experiment_finished(time_stamp: const SystemTimePoint&) : void
+        {abstract} + benchmark_starts(name: const string&) : void
+        {abstract} + benchmark_finished(name: const string&) : void
+        {abstract} + case_starts(case_info: const BenchmarkCaseInfo&) : void
+        {abstract} + case_finished(case_info: const BenchmarkCaseInfo&) : void
+        {abstract} + measurement_succeeded(measurement: const Measurement&) : void
+        {abstract} + measurement_failed(case_info: const BenchmarkCaseInfo&, error: const exception_ptr&) : void
+    }
+    IReporter ..> SystemTimePoint
+    IReporter ..> BenchmarkCaseInfo
+    IReporter ..> Measurement
+}
+
+package runner {
+    class Runner {
+        + run() : void
+    }
+    Runner o-- IMeasurer
+    Runner o-- BenchmarkCaseRegistry
+    Runner o-- IReporter
+}
 
 @enduml
