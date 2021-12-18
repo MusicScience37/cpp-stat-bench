@@ -22,6 +22,13 @@
 #include <cstdint>
 
 namespace stat_bench {
+namespace clock {
+
+/*!
+ * \brief Type of numbers of ticks.
+ */
+using TicksCount = std::int64_t;
+
 namespace impl {
 
 /*!
@@ -29,14 +36,15 @@ namespace impl {
  *
  * \return Current time.
  */
-[[nodiscard]] auto monotone_clock_now() noexcept -> std::uint64_t;
+[[nodiscard]] auto monotone_clock_now() noexcept -> TicksCount;
 
 /*!
- * \brief Get the frequency using a monotone clock.
+ * \brief Get the frequency of ticks in a monotone clock.
  *
  * \return Frequency.
  */
-[[nodiscard]] auto monotone_clock_freq() noexcept -> std::uint64_t;
+[[nodiscard]] auto monotone_clock_freq() noexcept -> TicksCount;
 
 }  // namespace impl
+}  // namespace clock
 }  // namespace stat_bench

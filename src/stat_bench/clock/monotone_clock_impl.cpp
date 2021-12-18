@@ -17,22 +17,25 @@
  * \file
  * \brief Definition of functions for monotone clocks.
  */
-#include "stat_bench/impl/monotone_clock_impl.h"
+#include "stat_bench/clock/monotone_clock_impl.h"
 
 #include <chrono>
 
 namespace stat_bench {
+namespace clock {
 namespace impl {
 
-auto monotone_clock_now() noexcept -> std::uint64_t {
-    return static_cast<std::uint64_t>(
+auto monotone_clock_now() noexcept -> TicksCount {
+    return static_cast<TicksCount>(
         std::chrono::steady_clock::now().time_since_epoch().count());
 }
 
-auto monotone_clock_freq() noexcept -> std::uint64_t {
-    return static_cast<std::uint64_t>(
+auto monotone_clock_freq() noexcept -> TicksCount {
+    return static_cast<TicksCount>(
+        std::chrono::steady_clock::duration::period::den /
         std::chrono::steady_clock::duration::period::num);
 }
 
 }  // namespace impl
+}  // namespace clock
 }  // namespace stat_bench
