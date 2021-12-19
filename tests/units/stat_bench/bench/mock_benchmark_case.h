@@ -17,6 +17,8 @@
  * \file
  * \brief Definition of MockBenchmarkCase class.
  */
+#pragma once
+
 #include "../../trompeloeil.h"
 #include "stat_bench/bench/i_benchmark_case.h"
 
