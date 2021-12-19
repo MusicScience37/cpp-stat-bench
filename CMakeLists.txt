@@ -42,6 +42,7 @@ conan_basic_setup()
 # find packages installed with Conan
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
 list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR})
+find_package(fmt REQUIRED)
 if(STAT_BENCH_TESTING)
     find_package(Catch2 REQUIRED)
     find_package(trompeloeil REQUIRED)
