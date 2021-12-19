@@ -19,9 +19,6 @@
  */
 #include "stat_bench/bench/benchmark_group.h"
 
-#include <tuple>
-#include <utility>
-
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_container_properties.hpp>
 
@@ -33,6 +30,7 @@ TEST_CASE("stat_bench::bench::BenchmarkGroup") {
 
         const stat_bench::bench::BenchmarkGroup group{group_name};
 
+        REQUIRE(group.name() == group_name);
         REQUIRE_THAT(group.cases(), Catch::Matchers::IsEmpty());
     }
 

@@ -42,6 +42,15 @@ public:
     explicit BenchmarkGroup(std::string name) : name_(std::move(name)) {}
 
     /*!
+     * \brief Get the group name.
+     *
+     * \return Group name.
+     */
+    [[nodiscard]] auto name() const noexcept -> const std::string& {
+        return name_;
+    }
+
+    /*!
      * \brief Add a case.
      *
      * \param[in] bench_case Case.
