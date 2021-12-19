@@ -52,22 +52,22 @@ package bench {
         + case_name() : string
     }
 
-    class BenchmarkCase {
-        + info() : BenchmarkCaseInfo
-        + call(context: InvocationContext&) : void
+    interface IBenchmarkCase <<interface>> {
+        {abstract} + info() : BenchmarkCaseInfo
+        {abstract} + call(context: InvocationContext&) : void
     }
-    BenchmarkCase o-- BenchmarkCaseInfo
-    BenchmarkCase ..> InvocationContext
+    IBenchmarkCase ..> BenchmarkCaseInfo
+    IBenchmarkCase ..> InvocationContext
 
     class Benchmark {
         + name() : string
-        + add(bench_case: BenchmarkCase) : void
-        + cases() : const vector<BenchmarkCase>&
+        + add(bench_case: shared_ptr<IBenchmarkCase>) : void
+        + cases() : const vector<shared_ptr<IBenchmarkCase>>&
     }
-    Benchmark o-- BenchmarkCase
+    Benchmark o-- IBenchmarkCase
 
     class BenchmarkCaseRegistry {
-        + add(bench_case: BenchmarkCase) : void
+        + add(bench_case: shared_ptr<IBenchmarkCase>) : void
         + benchmarks() : const vector<Benchmark>&
         {static} + instance() : shared_ptr<BenchmarkCaseRegistry>
     }
@@ -90,9 +90,9 @@ package measurer {
 
     interface IMeasurer <<interface>> {
         {abstract} + name() : string
-        {abstract} + measure(bench_case: BenchmarkCase&) : Measurement
+        {abstract} + measure(bench_case: IBenchmarkCase&) : Measurement
     }
-    IMeasurer ..> BenchmarkCase
+    IMeasurer ..> IBenchmarkCase
     IMeasurer ..> Measurement
 }
 
