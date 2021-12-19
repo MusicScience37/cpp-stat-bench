@@ -15,52 +15,38 @@
  */
 /*!
  * \file
- * \brief Definition of Duration class.
+ * \brief Definition of MonotoneTimePoint class.
  */
 #pragma once
 
 #include <cstdint>
 
-#include "stat_bench/clock/monotone_clock_impl.h"
+#include "stat_bench/clock/duration.h"
 
 namespace stat_bench {
 namespace clock {
 
 /*!
- * \brief Class of durations.
+ * \brief Class of time points of monotone clocks.
  */
-class Duration {
+class MonotoneTimePoint {
 public:
     /*!
      * \brief Constructor.
      *
      * \param[in] count Number of ticks.
      */
-    explicit Duration(TicksCount count) noexcept : count_(count) {}
+    explicit MonotoneTimePoint(TicksCount count) noexcept : count_(count) {}
 
     /*!
-     * \brief Get the number of ticks.
+     * \brief Calculate a duration between two time points.
      *
-     * \return Number of ticks.
+     * \param[in] right Right-hand-side object.
+     * \return Duration.
      */
-    [[nodiscard]] auto count() const noexcept -> TicksCount { return count_; }
-
-    /*!
-     * \brief Get the frequency of ticks.
-     *
-     * \return Frequency of ticks.
-     */
-    [[nodiscard]] static auto freq() noexcept -> TicksCount {
-        return impl::monotone_clock_freq();
-    }
-
-    /*!
-     * \brief Get as seconds.
-     *
-     * \return Seconds.
-     */
-    [[nodiscard]] auto seconds() const noexcept -> double {
-        return static_cast<double>(count()) / static_cast<double>(freq());
+    [[nodiscard]] auto operator-(const MonotoneTimePoint& right) const noexcept
+        -> Duration {
+        return Duration(count_ - right.count_);
     }
 
 private:
