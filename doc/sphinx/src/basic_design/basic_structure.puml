@@ -39,7 +39,6 @@ package clock {
 package bench {
     class InvocationContext {
         + threads() : size_t
-        + threads(val: size_t) : void
         + iterations() : size_t
         + samples() : size_t
         + measure<Func>(func: Func&&) : void
@@ -52,26 +51,26 @@ package bench {
         + case_name() : string
     }
 
-    class BenchmarkCase {
-        + info() : BenchmarkCaseInfo
-        + call(context: InvocationContext&) : void
+    interface IBenchmarkCase <<interface>> {
+        {abstract} + info() : BenchmarkCaseInfo
+        {abstract} + call(context: InvocationContext&) : void
     }
-    BenchmarkCase o-- BenchmarkCaseInfo
-    BenchmarkCase ..> InvocationContext
+    IBenchmarkCase ..> BenchmarkCaseInfo
+    IBenchmarkCase ..> InvocationContext
 
-    class Benchmark {
+    class BenchmarkGroup {
         + name() : string
-        + add(bench_case: BenchmarkCase) : void
-        + cases() : const vector<BenchmarkCase>&
+        + add(bench_case: shared_ptr<IBenchmarkCase>) : void
+        + cases() : const vector<shared_ptr<IBenchmarkCase>>&
     }
-    Benchmark o-- BenchmarkCase
+    BenchmarkGroup o-- IBenchmarkCase
 
     class BenchmarkCaseRegistry {
-        + add(bench_case: BenchmarkCase) : void
-        + benchmarks() : const vector<Benchmark>&
+        + add(bench_case: shared_ptr<IBenchmarkCase>) : void
+        + benchmarks() : const vector<BenchmarkGroup>&
         {static} + instance() : shared_ptr<BenchmarkCaseRegistry>
     }
-    BenchmarkCaseRegistry o-- Benchmark
+    BenchmarkCaseRegistry o-- BenchmarkGroup
 }
 
 package measurer {
@@ -90,9 +89,9 @@ package measurer {
 
     interface IMeasurer <<interface>> {
         {abstract} + name() : string
-        {abstract} + measure(bench_case: BenchmarkCase&) : Measurement
+        {abstract} + measure(bench_case: IBenchmarkCase&) : Measurement
     }
-    IMeasurer ..> BenchmarkCase
+    IMeasurer ..> IBenchmarkCase
     IMeasurer ..> Measurement
 }
 
