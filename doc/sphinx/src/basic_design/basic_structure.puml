@@ -58,19 +58,19 @@ package bench {
     IBenchmarkCase ..> BenchmarkCaseInfo
     IBenchmarkCase ..> InvocationContext
 
-    class Benchmark {
+    class BenchmarkGroup {
         + name() : string
         + add(bench_case: shared_ptr<IBenchmarkCase>) : void
         + cases() : const vector<shared_ptr<IBenchmarkCase>>&
     }
-    Benchmark o-- IBenchmarkCase
+    BenchmarkGroup o-- IBenchmarkCase
 
     class BenchmarkCaseRegistry {
         + add(bench_case: shared_ptr<IBenchmarkCase>) : void
-        + benchmarks() : const vector<Benchmark>&
+        + benchmarks() : const vector<BenchmarkGroup>&
         {static} + instance() : shared_ptr<BenchmarkCaseRegistry>
     }
-    BenchmarkCaseRegistry o-- Benchmark
+    BenchmarkCaseRegistry o-- BenchmarkGroup
 }
 
 package measurer {

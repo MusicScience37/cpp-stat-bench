@@ -34,21 +34,20 @@ public:
     /*!
      * \brief Constructor.
      *
-     * \param[in] benchmark_name Name of the benchmark.
+     * \param[in] group_name Name of the group of cases.
      * \param[in] case_name Name of the case in the benchmark.
      */
-    BenchmarkCaseInfo(
-        std::string benchmark_name, std::string case_name) noexcept
-        : benchmark_name_(std::move(benchmark_name)),
+    BenchmarkCaseInfo(std::string group_name, std::string case_name) noexcept
+        : group_name_(std::move(group_name)),
           case_name_(std::move(case_name)) {}
 
     /*!
-     * \brief Get the name of the benchmark.
+     * \brief Get the name of the group of cases.
      *
-     * \return Name of the benchmark.
+     * \return Name of the group of cases.
      */
-    [[nodiscard]] auto benchmark_name() const noexcept -> const std::string& {
-        return benchmark_name_;
+    [[nodiscard]] auto group_name() const noexcept -> const std::string& {
+        return group_name_;
     }
 
     /*!
@@ -61,8 +60,8 @@ public:
     }
 
 private:
-    //! Name of the benchmark.
-    std::string benchmark_name_;
+    //! Name of the group of cases.
+    std::string group_name_;
 
     //! Name of the case in the benchmark.
     std::string case_name_;
@@ -92,7 +91,7 @@ struct formatter<stat_bench::bench::BenchmarkCaseInfo>
     auto format(const stat_bench::bench::BenchmarkCaseInfo& val,
         FormatContext& context) -> decltype(context.out()) {
         return format_to(
-            context.out(), "{}/{}", val.benchmark_name(), val.case_name());
+            context.out(), "{}/{}", val.group_name(), val.case_name());
     }
 };
 

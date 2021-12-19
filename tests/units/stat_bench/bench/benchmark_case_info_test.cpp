@@ -23,23 +23,23 @@
 
 TEST_CASE("stat_bench::bench::BenchmarkCaseInfo") {
     SECTION("construct") {
-        const std::string benchmark_name = "benchmark";
+        const std::string group_name = "group";
         const std::string case_name = "case";
 
         const auto info =
-            stat_bench::bench::BenchmarkCaseInfo(benchmark_name, case_name);
+            stat_bench::bench::BenchmarkCaseInfo(group_name, case_name);
 
-        REQUIRE(info.benchmark_name() == benchmark_name);
+        REQUIRE(info.group_name() == group_name);
         REQUIRE(info.case_name() == case_name);
     }
 
     SECTION("format") {
-        const std::string benchmark_name = "benchmark";
+        const std::string group_name = "group";
         const std::string case_name = "case";
 
         const auto info =
-            stat_bench::bench::BenchmarkCaseInfo(benchmark_name, case_name);
+            stat_bench::bench::BenchmarkCaseInfo(group_name, case_name);
 
-        REQUIRE(fmt::format("{}", info) == "benchmark/case");
+        REQUIRE(fmt::format("{}", info) == "group/case");
     }
 }
