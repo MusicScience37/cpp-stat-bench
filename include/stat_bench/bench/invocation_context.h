@@ -115,9 +115,14 @@ public:
     /*!
      * \brief Get the measured durations.
      *
+     * \note Duration of iterations in each sample is measured per thread.
+     *
      * \return Durations.
      */
-    [[nodiscard]] auto durations() const noexcept { return durations_; }
+    [[nodiscard]] auto durations() const noexcept
+        -> const std::vector<std::vector<clock::Duration>>& {
+        return durations_;
+    }
 
 private:
     //! Condition.

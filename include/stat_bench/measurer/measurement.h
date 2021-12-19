@@ -106,6 +106,8 @@ public:
     /*!
      * \brief Get the measured durations.
      *
+     * \note Duration of iterations in each sample is measured per thread.
+     *
      * \return Measured durations.
      */
     [[nodiscard]] auto durations() const noexcept
