@@ -1,5 +1,6 @@
 set(SOURCE_FILES
     stat_bench/bench/benchmark_case_info_test.cpp
+    stat_bench/bench/invocation_context_test.cpp
     stat_bench/clock/duration_test.cpp
     stat_bench/clock/monotone_clock_impl_test.cpp
     stat_bench/clock/monotone_clock_test.cpp

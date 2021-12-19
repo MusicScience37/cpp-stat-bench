@@ -39,7 +39,6 @@ package clock {
 package bench {
     class InvocationContext {
         + threads() : size_t
-        + threads(val: size_t) : void
         + iterations() : size_t
         + samples() : size_t
         + measure<Func>(func: Func&&) : void
