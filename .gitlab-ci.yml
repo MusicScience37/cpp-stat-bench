@@ -1,0 +1,381 @@
+image: ubuntu:focal
+
+stages:
+  - Reset
+  - Prepare
+  - Check
+  - Test with Clang
+  - Test with GCC
+  - Build Documentation
+  - Publish
+
+variables:
+  STAT_BENCH_VERSION: "0.0.0"
+  CONAN_USER: "MusicScience37+cpp-stat-bench"
+  SECURE_LOG_LEVEL: debug
+
+include:
+  - template: Dependency-Scanning.gitlab-ci.yml
+  - template: Jobs/SAST.gitlab-ci.yml
+dependency_scanning:
+  stage: Check
+  needs: []
+sast:
+  stage: Check
+  needs: []
+gemnasium-python-dependency_scanning:
+  image:
+    name: registry.gitlab.com/gitlab-org/security-products/analyzers/gemnasium-python:2-python-3.9
+
+.retry setting:
+  retry:
+    max: 2
+    when: runner_system_failure
+
+reset pipenv:
+  extends: .retry setting
+  stage: Reset
+  image: musicscience37/clang-ci:clang11-v3.2.2
+  script:
+    - rm -rf .venv Pipfile.lock
+    - mkdir .venv
+    - pipenv install --dev
+  cache:
+    key: pipenv-$CI_COMMIT_REF_SLUG
+    paths:
+      - .venv
+      - Pipfile.lock
+  only:
+    - develop
+    - main
+    - tags
+
+sync pipenv:
+  extends: .retry setting
+  stage: Prepare
+  image: musicscience37/clang-ci:clang11-v3.2.2
+  script:
+    - mkdir -p .venv
+    - pipenv install --dev
+  cache:
+    key: pipenv-$CI_COMMIT_REF_SLUG
+    paths:
+      - .venv
+      - Pipfile.lock
+  artifacts:
+    paths:
+      - .venv
+      - Pipfile.lock
+    expire_in: "1 mos"
+
+line count:
+  extends: .retry setting
+  stage: Prepare
+  dependencies: []
+  image: registry.gitlab.com/musicscience37_ci/cloc-docker:v1-3
+  script:
+    - mkdir -p line_count
+    - cloc ./
+      --exclude-dir=line_count
+      --force-lang=C++,h
+      --json --out=line_count/line_count.json
+    - cloc include src
+      --exclude-dir=line_count
+      --force-lang=C++,h
+      --json --out=line_count/src_line_count.json
+  artifacts:
+    paths:
+      - line_count
+    expire_in: "1 mos"
+
+pre-commit:
+  stage: Check
+  needs:
+    - sync pipenv
+  dependencies:
+    - sync pipenv
+  image: musicscience37/clang-ci:clang11-v3.2.2
+  script:
+    - pipenv run pre-commit run --all-files
+
+static analysis:
+  extends: .retry setting
+  stage: Check
+  needs:
+    - sync pipenv
+  dependencies:
+    - sync pipenv
+  image: musicscience37/clang-ci:clang11-v3.2.2
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+  before_script:
+    - pip3 install junit2html
+    - mkdir build_static_analysis
+    - cd build_static_analysis
+    - git clone https://github.com/PSPDFKit-labs/clang-tidy-to-junit.git
+    - cd ../
+  script:
+    - cd build_static_analysis
+    - pipenv run conan profile new --detect default
+    - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
+    - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
+    - pipenv run conan install --build=missing ..
+    - cd ../
+    - cmake -S ./ -B build_static_analysis
+      -DSTAT_BENCH_ENABLE_CLANG_TIDY:BOOL=ON
+      -DSTAT_BENCH_TESTING:BOOL=ON
+      -DSTAT_BENCH_ENABLE_BENCH=ON
+      -DSTAT_BENCH_BUILD_EXAMPLES=ON
+      -DSTAT_BENCH_ENABLE_CPP_WARNINGS:BOOL=ON
+    - cmake --build build_static_analysis
+      --target stat_bench_clang_tidy
+    - scripts/check_clang_tidy.sh build_static_analysis/clang_tidy
+  after_script:
+    - cd build_static_analysis/clang_tidy
+    - cat $(find $1 -name '*.txt') |
+      python3 ../clang-tidy-to-junit/clang-tidy-to-junit.py $(dirname $(pwd)) > clang_tidy_junit.xml
+    - python3 -m junit2htmlreport clang_tidy_junit.xml clang_tidy_junit.html
+  artifacts:
+    paths:
+      - build_static_analysis
+    reports:
+      junit:
+        - build_static_analysis/clang_tidy/clang_tidy_junit.xml
+    when: always
+    expire_in: "3 mos"
+
+.release-test-base:
+  extends: .retry setting
+  needs:
+    - sync pipenv
+  dependencies:
+    - sync pipenv
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+  before_script:
+    - mkdir $BUILD_DIR
+    - cd $BUILD_DIR
+    - pipenv run conan profile new --detect default
+    - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
+    - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
+    - pipenv run conan install --build=missing -s build_type=Release ..
+    - cd ../
+  script:
+    - cmake -S ./ -B $BUILD_DIR
+      -DCMAKE_BUILD_TYPE=Release
+      -DSTAT_BENCH_TESTING:BOOL=ON
+      -DSTAT_BENCH_ENABLE_BENCH=ON
+      -DSTAT_BENCH_TEST_BENCHMARKS=ON
+      -DSTAT_BENCH_BUILD_EXAMPLES=ON
+      -DSTAT_BENCH_TEST_EXAMPLES=ON
+      -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+    - cd $BUILD_DIR
+    - cmake --build .
+    - ctest -V
+  artifacts:
+    paths:
+      - $BUILD_DIR
+      - "*.png"
+      - "*.html"
+    reports:
+      junit:
+        - $BUILD_DIR/junit/*.xml
+    when: always
+    expire_in: "1 mos"
+
+.debug-test-base:
+  extends: .release-test-base
+  before_script:
+    - mkdir $BUILD_DIR
+    - cd $BUILD_DIR
+    - pipenv run conan profile new --detect default
+    - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
+    - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
+    - pipenv run conan install --build=missing -s build_type=Debug ..
+    - cd ../
+  script:
+    - cmake -S ./ -B $BUILD_DIR
+      -DCMAKE_BUILD_TYPE=Debug
+      -DSTAT_BENCH_TESTING:BOOL=ON
+      -DSTAT_BENCH_BUILD_EXAMPLES=ON
+      -DSTAT_BENCH_TEST_EXAMPLES=ON
+      -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+    - cd $BUILD_DIR
+    - cmake --build .
+    - ctest -V
+
+clang coverage:
+  extends: .debug-test-base
+  stage: Test with Clang
+  image: musicscience37/clang-ci:clang11-v3.2.2
+  variables:
+    BUILD_DIR: build_clang_coverage
+  script:
+    - cmake -S ./ -B $BUILD_DIR
+      -DCMAKE_BUILD_TYPE=Debug
+      -DSTAT_BENCH_TESTING:BOOL=ON
+      -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+      "-DCMAKE_CXX_FLAGS=-fprofile-instr-generate -fcoverage-mapping"
+      "-DCMAKE_MODULE_LINKER_FLAGS=-fprofile-instr-generate -fcoverage-mapping"
+    - cd $BUILD_DIR
+    - mkdir coverage
+    - export LLVM_PROFILE_FILE=$(pwd)/coverage/coverage_%p.profraw
+    - cmake --build .
+    - ctest -V
+    - cd ../
+    - scripts/collect_llvm_coverage.sh build_clang_coverage
+  coverage: '/Line Coverage: \d+\.\d+/'
+
+gcc coverage:
+  extends: .debug-test-base
+  stage: Test with GCC
+  image: musicscience37/gcc-ci:gcc10-v3.3
+  variables:
+    BUILD_DIR: build_gcc_coverage
+  script:
+    - cmake -S ./ -B $BUILD_DIR
+      -DCMAKE_BUILD_TYPE=Debug
+      -DSTAT_BENCH_TESTING:BOOL=ON
+      -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+      "-DCMAKE_CXX_FLAGS=--coverage"
+      "-DCMAKE_MODULE_LINKER_FLAGS=--coverage"
+    - cd $BUILD_DIR
+    - cmake --build .
+    - ctest -V
+    - cd ../
+    - scripts/collect_gcc_coverage.sh build_gcc_coverage
+  coverage: '/Total:\|\s*(\d+\.?\d+?)%/'
+
+gcc-10-debug:
+  extends: .debug-test-base
+  stage: Test with GCC
+  image: musicscience37/gcc-ci:gcc10-v3.3
+  variables:
+    BUILD_DIR: build_gcc10_debug
+
+gcc-10-release:
+  extends: .release-test-base
+  stage: Test with GCC
+  image: musicscience37/gcc-ci:gcc10-v3.3
+  variables:
+    BUILD_DIR: build_gcc10_release
+
+clang-11-release:
+  extends: .release-test-base
+  stage: Test with Clang
+  image: musicscience37/clang-ci:clang11-v3.2.2
+  variables:
+    BUILD_DIR: build_clang11_release
+
+clang-11-asan-ubsan:
+  extends: .debug-test-base
+  stage: Test with Clang
+  image: musicscience37/clang-ci:clang11-v3.2.2
+  variables:
+    BUILD_DIR: build_clang_asan_ubsan
+  script:
+    - cmake -S ./ -B $BUILD_DIR
+      -DCMAKE_BUILD_TYPE=Debug
+      -DSTAT_BENCH_TESTING:BOOL=ON
+      -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+      -DCMAKE_CXX_FLAGS=-fsanitize=address,undefined
+      -DCMAKE_MODULE_LINKER_FLAGS=-fsanitize=address,undefined
+    - cd $BUILD_DIR
+    - cmake --build .
+    - ctest -V
+
+clang-11-tsan:
+  extends: .debug-test-base
+  stage: Test with Clang
+  image: musicscience37/clang-ci:clang11-v3.2.2
+  variables:
+    BUILD_DIR: build_clang_tsan
+  script:
+    - cmake -S ./ -B $BUILD_DIR
+      -DCMAKE_BUILD_TYPE=Debug
+      -DSTAT_BENCH_TESTING:BOOL=ON
+      -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+      -DCMAKE_CXX_FLAGS=-fsanitize=thread
+      -DCMAKE_MODULE_LINKER_FLAGS=-fsanitize=thread
+    - cd $BUILD_DIR
+    - cmake --build .
+    - ctest -V
+
+clang-11-conan:
+  extends: .retry setting
+  stage: Test with Clang
+  needs:
+    - sync pipenv
+  dependencies:
+    - sync pipenv
+  image: musicscience37/clang-ci:clang11-v3.2.2
+  variables:
+    CONAN_CHANNEL: "testing"
+  script:
+    - pipenv run conan profile new --detect default
+    - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
+    - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
+    - pipenv run conan create --build missing . ${CONAN_USER}/${CONAN_CHANNEL}
+    - pipenv run conan create --build missing --test-folder tests/conan_package . ${CONAN_USER}/${CONAN_CHANNEL}
+
+clang-11-conan-release:
+  extends: .retry setting
+  stage: Publish
+  needs:
+    - sync pipenv
+  dependencies:
+    - sync pipenv
+  image: musicscience37/clang-ci:clang11-v3.2.2
+  variables:
+    CONAN_CHANNEL: "stable"
+  script:
+    - pipenv run conan profile new --detect default
+    - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
+    - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
+    - pipenv run conan create --build missing --test-folder tests/conan_package . ${CONAN_USER}/${CONAN_CHANNEL}
+    - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} pipenv run conan upload -r gitlab cpp_stat_bench/${STAT_BENCH_VERSION}@${CONAN_USER}/${CONAN_CHANNEL} --all
+  only:
+    - tags
+
+doc:
+  extends: .retry setting
+  stage: Build Documentation
+  needs:
+    - sync pipenv
+  dependencies:
+    - sync pipenv
+  image: musicscience37/sphinx-doxygen:v3.3
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
+  script:
+    - mkdir build_doc
+    - cd build_doc
+    - pipenv run conan profile new --detect default
+    - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
+    - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
+    - pipenv run conan install --build=missing ..
+    - cd ../
+    - cmake -S ./ -B build_doc
+      -DSTAT_BENCH_BUILD_DOC:BOOL=ON
+    - cmake --build build_doc --target stat_bench_doc
+  artifacts:
+    paths:
+      - build_doc
+    when: always
+    expire_in: "3 mos"
+
+pages:
+  extends: .retry setting
+  stage: Publish
+  only:
+    - develop
+  needs:
+    - doc
+  dependencies:
+    - doc
+  script:
+    - rm -rf public
+    - mv build_doc/doc/html public
+  artifacts:
+    paths:
+      - public

@@ -1,0 +1,63 @@
+HeaderFilterRegex: "include/stat_bench/"
+Checks: >
+  clang-diagnostic-*,
+  clang-analyzer-*,
+  google-*,
+    -google-runtime-references,
+    -google-readability-todo,
+  performance-*,
+  portability-*,
+  readability-*,
+    readability-identifier-naming,
+    -readability-function-cognitive-complexity,
+    -readability-convert-member-functions-to-static,
+  modernize-*,
+  hicpp-*,
+    -hicpp-no-array-decay,
+  cert-*,
+  bugprone-*,
+  concurrency-*,
+  boost-*,
+
+# Ignored checks:
+#
+# - google-runtime-references: This is a Google-specific rule, and forces use of raw pointers.
+# - google-readability-todo: I want not to write names.
+# - readability-function-cognitive-complexity: Even a simple tests cannot satisfy the limit.
+# - readability-convert-member-functions-to-static: For API consistency.
+# - hicpp-no-array-decay: This forces to use an external library.
+
+CheckOptions:
+  # Naming Conventions
+  # for these parameters of the naming convention,
+  # see https://clang.llvm.org/extra/clang-tidy/checks/readability-identifier-naming.html
+  - key: readability-identifier-naming.NamespaceCase
+    value: lower_case
+
+  - key: readability-identifier-naming.ClassCase
+    value: CamelCase
+  - key: readability-identifier-naming.StructCase
+    value: CamelCase
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.FunctionCase
+    value: lower_case
+
+  - key: readability-identifier-naming.VariableCase
+    value: lower_case
+  - key: readability-identifier-naming.ParameterCase
+    value: lower_case
+  - key: readability-identifier-naming.EnumConstantCase
+    value: lower_case
+  - key: readability-identifier-naming.MemberCase
+    value: lower_case
+  - key: readability-identifier-naming.PrivateMemberSuffix
+    value: _
+  - key: readability-identifier-naming.ProtectedMemberSuffix
+    value: _
+
+  - key: readability-identifier-naming.TypeTemplateParameterCase
+    value: CamelCase
+  - key: readability-identifier-naming.ValueTemplateParameterCase
+    value: CamelCase
