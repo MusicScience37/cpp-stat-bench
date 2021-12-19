@@ -301,8 +301,7 @@ clang-11-tsan:
     - cmake --build .
     - ctest -V
 
-# TODO
-.clang-11-conan:
+clang-11-conan:
   extends: .retry setting
   stage: Test with Clang
   needs:
@@ -319,8 +318,7 @@ clang-11-tsan:
     - pipenv run conan create --build missing . ${CONAN_USER}/${CONAN_CHANNEL}
     - pipenv run conan create --build missing --test-folder tests/conan_package . ${CONAN_USER}/${CONAN_CHANNEL}
 
-# TODO
-.clang-11-conan-release:
+clang-11-conan-release:
   extends: .retry setting
   stage: Publish
   needs:
