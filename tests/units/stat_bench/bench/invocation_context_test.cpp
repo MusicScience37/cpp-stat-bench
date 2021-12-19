@@ -31,7 +31,8 @@ TEST_CASE("stat_bench::bench::InvocationContext") {
         constexpr std::size_t samples = 13;
 
         const stat_bench::bench::InvocationContext context{
-            threads, iterations, samples};
+            stat_bench::bench::BenchmarkCondition(threads), iterations,
+            samples};
 
         REQUIRE(context.threads() == threads);
         REQUIRE(context.iterations() == iterations);
@@ -43,7 +44,8 @@ TEST_CASE("stat_bench::bench::InvocationContext") {
         constexpr std::size_t iterations = 7;
         constexpr std::size_t samples = 13;
         stat_bench::bench::InvocationContext context{
-            threads, iterations, samples};
+            stat_bench::bench::BenchmarkCondition(threads), iterations,
+            samples};
 
         std::vector<std::tuple<std::size_t, std::size_t, std::size_t>>
             invocations;

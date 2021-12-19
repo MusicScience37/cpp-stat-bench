@@ -24,6 +24,7 @@
 #include <stdexcept>
 #include <vector>
 
+#include "stat_bench/bench/benchmark_condition.h"
 #include "stat_bench/clock/stop_watch.h"
 
 namespace stat_bench {
@@ -37,14 +38,14 @@ public:
     /*!
      * \brief Constructor.
      *
-     * \param[in] threads Number of threads.
+     * \param[in] cond Condition.
      * \param[in] iterations Number of iterations.
      * \param[in] samples Number of samples.
      */
     InvocationContext(
-        std::size_t threads, std::size_t iterations, std::size_t samples)
-        : threads_(threads), iterations_(iterations), samples_(samples) {
-        if (threads_ != 1) {
+        BenchmarkCondition cond, std::size_t iterations, std::size_t samples)
+        : cond_(cond), iterations_(iterations), samples_(samples) {
+        if (cond_.threads() != 1) {
             throw std::invalid_argument(
                 "Number of threads must be one in the current implementation.");
         }
@@ -66,7 +67,7 @@ public:
      * \return Number of threads.
      */
     [[nodiscard]] auto threads() const noexcept -> std::size_t {
-        return threads_;
+        return cond_.threads();
     }
 
     /*!
@@ -119,8 +120,8 @@ public:
     [[nodiscard]] auto durations() const noexcept { return durations_; }
 
 private:
-    //! Number of threads.
-    std::size_t threads_;
+    //! Condition.
+    BenchmarkCondition cond_;
 
     //! Number of iterations.
     std::size_t iterations_;
