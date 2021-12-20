@@ -15,7 +15,7 @@
  */
 /*!
  * \file
- * \brief Definition of ConsoleReporter class.
+ * \brief Implementation of ConsoleReporter class.
  */
 #include "stat_bench/reporter/console_reporter.h"
 

@@ -13,4 +13,5 @@ set(SOURCE_FILES
     stat_bench/measurer/max_processing_time_measurer_test.cpp
     stat_bench/measurer/mean_processing_time_measurer_test.cpp
     stat_bench/measurer/measurement_test.cpp
+    stat_bench/runner_test.cpp
 )
