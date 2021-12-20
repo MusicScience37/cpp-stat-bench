@@ -76,7 +76,7 @@ private:
         std::size_t samples) const -> Measurement;
 
     //! Name.
-    const std::string name_{"MeanProcessingTimeMeasurer"};
+    const std::string name_{"Mean Processing Time"};
 
     //! Minimum duration for a sample. [sec]
     double min_sample_duration_sec_;

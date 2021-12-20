@@ -36,9 +36,7 @@ TEST_CASE("stat_bench::measurer::MeanProcessingTimeMeasurer") {
         std::make_shared<stat_bench::measurer::MeanProcessingTimeMeasurer>(
             min_sample_duration_sec, samples);
 
-    SECTION("get name") {
-        REQUIRE(measurer->name() == "MeanProcessingTimeMeasurer");
-    }
+    SECTION("get name") { REQUIRE(measurer->name() == "Mean Processing Time"); }
 
     SECTION("measure") {
         stat_bench_test::bench::MockBenchmarkCase bench_case;
@@ -61,7 +59,7 @@ TEST_CASE("stat_bench::measurer::MeanProcessingTimeMeasurer") {
         REQUIRE(result.case_info().group_name() == info.group_name());
         REQUIRE(result.case_info().case_name() == info.case_name());
         REQUIRE(result.cond().threads() == cond.threads());
-        REQUIRE(result.measurer_name() == "MeanProcessingTimeMeasurer");
+        REQUIRE(result.measurer_name() == "Mean Processing Time");
         REQUIRE(result.iterations() > 0);
         REQUIRE(result.samples() == samples);
         REQUIRE(result.durations().size() == 1);

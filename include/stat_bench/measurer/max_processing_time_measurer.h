@@ -60,7 +60,7 @@ public:
 
 private:
     //! Name.
-    const std::string name_{"MaxProcessingTimeMeasurer"};
+    const std::string name_{"Processing Time"};
 
     //! Number of samples.
     std::size_t samples_;

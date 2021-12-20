@@ -35,9 +35,7 @@ TEST_CASE("stat_bench::measurer::MaxProcessingTimeMeasurer") {
         std::make_shared<stat_bench::measurer::MaxProcessingTimeMeasurer>(
             samples);
 
-    SECTION("get name") {
-        REQUIRE(measurer->name() == "MaxProcessingTimeMeasurer");
-    }
+    SECTION("get name") { REQUIRE(measurer->name() == "Processing Time"); }
 
     SECTION("measure") {
         stat_bench_test::bench::MockBenchmarkCase bench_case;
@@ -60,7 +58,7 @@ TEST_CASE("stat_bench::measurer::MaxProcessingTimeMeasurer") {
         REQUIRE(result.case_info().group_name() == info.group_name());
         REQUIRE(result.case_info().case_name() == info.case_name());
         REQUIRE(result.cond().threads() == cond.threads());
-        REQUIRE(result.measurer_name() == "MaxProcessingTimeMeasurer");
+        REQUIRE(result.measurer_name() == "Processing Time");
         REQUIRE(result.iterations() > 0);
         REQUIRE(result.samples() == samples);
         REQUIRE(result.durations().size() == 1);
