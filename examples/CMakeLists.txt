@@ -1,2 +1,14 @@
-add_executable(stat_bench_ex_bench_fibonacci bench_fibonacci.cpp)
-target_link_libraries(stat_bench_ex_bench_fibonacci stat_bench)
+option(STAT_BENCH_TEST_EXAMPLE "Test execution of examples" OFF)
+
+function(add_example TARGET)
+    add_executable(${TARGET} ${ARGN})
+    target_link_libraries(${TARGET} PRIVATE stat_bench)
+    if(STAT_BENCH_TEST_EXAMPLE)
+        add_test(
+            NAME ${TARGET}
+            COMMAND $<TARGET_FILE:${TARGET}>
+            WORKING_DIRECTORY ${STAT_BENCH_SOURCE_DIR})
+    endif()
+endfunction()
+
+add_example(stat_bench_ex_bench_fibonacci bench_fibonacci.cpp)
