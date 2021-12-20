@@ -69,10 +69,7 @@ TEST_CASE("stat_bench::Runner") {
         REQUIRE_CALL(*reporter, measurer_starts(measurer_name))
             .IN_SEQUENCE(seq);
         REQUIRE_CALL(*reporter, group_starts(group_name1)).IN_SEQUENCE(seq);
-        REQUIRE_CALL(*reporter, case_starts(trompeloeil::_))
-            .IN_SEQUENCE(seq)
-            // NOLINTNEXTLINE
-            .SIDE_EFFECT(CHECK(_1.case_name() == case_name1));
+        REQUIRE_CALL(*reporter, case_starts(trompeloeil::_)).IN_SEQUENCE(seq);
 
         const std::size_t iterations = 7;
         const std::size_t samples = 11;
@@ -96,10 +93,7 @@ TEST_CASE("stat_bench::Runner") {
         FORBID_CALL(*reporter,
             measurement_failed(trompeloeil::_, trompeloeil::_, trompeloeil::_));
 
-        REQUIRE_CALL(*reporter, case_finished(trompeloeil::_))
-            .IN_SEQUENCE(seq)
-            // NOLINTNEXTLINE
-            .SIDE_EFFECT(CHECK(_1.case_name() == case_name1));
+        REQUIRE_CALL(*reporter, case_finished(trompeloeil::_)).IN_SEQUENCE(seq);
         REQUIRE_CALL(*reporter, group_finished(group_name1)).IN_SEQUENCE(seq);
         REQUIRE_CALL(*reporter, measurer_finished(measurer_name))
             .IN_SEQUENCE(seq);
@@ -144,10 +138,7 @@ TEST_CASE("stat_bench::Runner") {
         REQUIRE_CALL(*reporter, measurer_starts(measurer_name))
             .IN_SEQUENCE(seq);
         REQUIRE_CALL(*reporter, group_starts(group_name1)).IN_SEQUENCE(seq);
-        REQUIRE_CALL(*reporter, case_starts(trompeloeil::_))
-            .IN_SEQUENCE(seq)
-            // NOLINTNEXTLINE
-            .SIDE_EFFECT(CHECK(_1.case_name() == case_name1));
+        REQUIRE_CALL(*reporter, case_starts(trompeloeil::_)).IN_SEQUENCE(seq);
 
         const std::size_t iterations = 7;
         const std::size_t samples = 11;
@@ -164,16 +155,11 @@ TEST_CASE("stat_bench::Runner") {
         REQUIRE_CALL(*reporter,
             measurement_failed(trompeloeil::_, trompeloeil::_, trompeloeil::_))
             // NOLINTNEXTLINE
-            .SIDE_EFFECT(CHECK(_1.case_name() == case_name1))
-            // NOLINTNEXTLINE
             .LR_SIDE_EFFECT(error = _3)
             .IN_SEQUENCE(seq);
         FORBID_CALL(*reporter, measurement_succeeded(trompeloeil::_));
 
-        REQUIRE_CALL(*reporter, case_finished(trompeloeil::_))
-            .IN_SEQUENCE(seq)
-            // NOLINTNEXTLINE
-            .SIDE_EFFECT(CHECK(_1.case_name() == case_name1));
+        REQUIRE_CALL(*reporter, case_finished(trompeloeil::_)).IN_SEQUENCE(seq);
         REQUIRE_CALL(*reporter, group_finished(group_name1)).IN_SEQUENCE(seq);
         REQUIRE_CALL(*reporter, measurer_finished(measurer_name))
             .IN_SEQUENCE(seq);
