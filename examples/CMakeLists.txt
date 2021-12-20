@@ -1,0 +1,2 @@
+add_executable(stat_bench_ex_bench_fibonacci bench_fibonacci.cpp)
+target_link_libraries(stat_bench_ex_bench_fibonacci stat_bench)

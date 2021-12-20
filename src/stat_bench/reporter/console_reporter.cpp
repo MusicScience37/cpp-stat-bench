@@ -34,7 +34,7 @@ void ConsoleReporter::experiment_starts(
 
 void ConsoleReporter::experiment_finished(
     const clock::SystemTimePoint& time_stamp) {
-    fmt::print(file_, "Benchmark finished at {}\n\n", time_stamp);
+    fmt::print(file_, "Benchmark finished at {}\n", time_stamp);
 }
 
 void ConsoleReporter::measurer_starts(const std::string& name) {
@@ -46,18 +46,20 @@ void ConsoleReporter::measurer_finished(const std::string& name) {
 }
 
 static constexpr const char* console_table_format =
-    "{:<30}{:>10d}{:>10d}{:>10.3f}{:>10.3f}\n";
+    "{:<30}{:>10d}{:>10d}{:>15.5f}{:>15.5f}\n";
+static constexpr const char* console_table_format_label =
+    "{:<30}{:>10}{:>10}{:>15}{:>15}\n";
 static constexpr const char* console_table_format_error = "{:<30}{}\n";
 
 void ConsoleReporter::group_starts(const std::string& name) {
     fmt::print(file_, "### {}\n\n", name);
-    fmt::print(file_, console_table_format, "", "Iterations", "Samples",
+    fmt::print(file_, console_table_format_label, "", "Iterations", "Samples",
         "Mean [ms]", "Max [ms]");
-    fmt::print(file_, "{:-<72}", "");
+    fmt::print(file_, "{:-<82}\n", "");
 }
 
 void ConsoleReporter::group_finished(const std::string& /*name*/) {
-    fmt::print(file_, "\n");
+    // no operation
 }
 
 void ConsoleReporter::case_starts(
@@ -77,7 +79,8 @@ void ConsoleReporter::measurement_succeeded(
     std::size_t num = 0.0;
     for (const auto& durations_per_thread : measurement.durations()) {
         for (const auto& duration : durations_per_thread) {
-            const double duration_ms = duration.seconds() * 1e-3;
+            const double duration_ms = duration.seconds() * 1e+3 /
+                static_cast<double>(measurement.iterations());
             sum_ms += duration_ms;
             if (duration_ms > max_ms) {
                 max_ms = duration_ms;

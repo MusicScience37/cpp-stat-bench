@@ -35,14 +35,14 @@ Runner::Runner() = default;
 void Runner::init() {
     // TODO: configuration from command line arguments.
 
-    constexpr std::size_t max_processing_time_measurer_samples = 1000;
+    constexpr std::size_t max_processing_time_measurer_samples = 100;
     measurers_.push_back(std::make_shared<measurer::MaxProcessingTimeMeasurer>(
         max_processing_time_measurer_samples));
 
     constexpr std::size_t mean_processing_time_measurer_samples = 30;
-    constexpr double min_sample_duration_sec = 0.1;
+    constexpr double min_sample_duration_sec = 0.03;
     measurers_.push_back(std::make_shared<measurer::MeanProcessingTimeMeasurer>(
-        mean_processing_time_measurer_samples, min_sample_duration_sec));
+        min_sample_duration_sec, mean_processing_time_measurer_samples));
 
     reporters_.push_back(std::make_shared<reporter::ConsoleReporter>());
 }

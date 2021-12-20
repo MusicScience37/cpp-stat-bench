@@ -90,8 +90,8 @@ struct formatter<stat_bench::bench::BenchmarkCaseInfo>
     template <typename FormatContext>
     auto format(const stat_bench::bench::BenchmarkCaseInfo& val,
         FormatContext& context) -> decltype(context.out()) {
-        return format_to(
-            context.out(), "{}/{}", val.group_name(), val.case_name());
+        return formatter<std::string>::format(
+            fmt::format("{}/{}", val.group_name(), val.case_name()), context);
     }
 };
 
