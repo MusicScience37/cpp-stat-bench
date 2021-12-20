@@ -66,5 +66,5 @@ if(STAT_BENCH_TESTING)
 endif()
 
 if(STAT_BENCH_BUILD_EXAMPLES)
-    # add_subdirectory(examples)
+    add_subdirectory(examples)
 endif()

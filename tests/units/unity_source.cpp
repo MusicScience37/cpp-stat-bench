@@ -12,3 +12,4 @@
 #include "stat_bench/measurer/max_processing_time_measurer_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/measurer/mean_processing_time_measurer_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/measurer/measurement_test.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "stat_bench/runner_test.cpp"  // NOLINT(bugprone-suspicious-include)
