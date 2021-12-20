@@ -22,6 +22,7 @@
 #include <chrono>
 
 #include <fmt/chrono.h>
+#include <fmt/core.h>
 #include <fmt/format.h>
 
 namespace stat_bench {
@@ -42,11 +43,14 @@ public:
         : time_point_(time_point) {}
 
     /*!
-     * \brief Get string expression.
+     * \brief Format to string.
      *
-     * \return String expression.
+     * \tparam OutputIter Type of the output iterator.
+     * \param[in] iter Output iterator.
+     * \return Output iterator after formatting.
      */
-    [[nodiscard]] auto to_string() const -> std::string {
+    template <typename OutputIter>
+    auto format_to(OutputIter iter) const -> OutputIter {
         const auto time_sec =
             std::chrono::time_point_cast<std::chrono::seconds>(time_point_);
         const auto time_tm =
@@ -56,7 +60,19 @@ public:
                 time_point_ - time_sec)
                 .count();
 
-        return fmt::format("{0:%FT%T}.{1:06d}{0:%z}", time_tm, time_usec);
+        return fmt::format_to(
+            iter, "{0:%FT%T}.{1:06d}{0:%z}", time_tm, time_usec);
+    }
+
+    /*!
+     * \brief Get string expression.
+     *
+     * \return String expression.
+     */
+    [[nodiscard]] auto to_string() const -> std::string {
+        fmt::memory_buffer buffer;
+        format_to(fmt::detail::buffer_appender<char>(buffer));
+        return std::string(buffer.data(), buffer.size());
     }
 
 private:
@@ -66,3 +82,29 @@ private:
 
 }  // namespace clock
 }  // namespace stat_bench
+
+namespace fmt {
+
+/*!
+ * \brief Implementation of fmt::formatter for
+ * stat_bench::clock::SystemTimePoint.
+ */
+template <>
+struct formatter<stat_bench::clock::SystemTimePoint>
+    : public formatter<std::string> {
+    /*!
+     * \brief Format.
+     *
+     * \tparam FormatContext Type of the context.
+     * \param[in] val Value.
+     * \param[in] context Context.
+     * \return Output iterator after formatting.
+     */
+    template <typename FormatContext>
+    auto format(const stat_bench::clock::SystemTimePoint& val,
+        FormatContext& context) -> decltype(context.out()) {
+        return val.format_to(context.out());
+    }
+};
+
+}  // namespace fmt
