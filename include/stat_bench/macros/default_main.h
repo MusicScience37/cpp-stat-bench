@@ -30,11 +30,18 @@ namespace impl {
 /*!
  * \brief Default main function.
  *
+ * \param[in] argc Number of arguments.
+ * \param[in] argv Arguments.
  * \return Exit code.
  */
-auto default_main(int /*argc*/, char** /*argv*/) noexcept -> int {
+auto default_main(int argc, const char** argv) noexcept -> int {
     try {
         stat_bench::runner::Runner runner;
+        runner.parse_cli(argc, argv);
+        if (runner.config().show_help) {
+            std::cout << runner.cli() << std::endl;
+            return EXIT_SUCCESS;
+        }
         runner.init();
         runner.run();
         return EXIT_SUCCESS;
@@ -51,6 +58,6 @@ auto default_main(int /*argc*/, char** /*argv*/) noexcept -> int {
  * \brief Macro of default main function.
  */
 #define STAT_BENCH_IMPL_DEFAULT_MAIN                         \
-    auto main(int argc, char** argv)->int {                  \
+    auto main(int argc, const char** argv)->int {            \
         return ::stat_bench::impl::default_main(argc, argv); \
     }

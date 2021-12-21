@@ -34,6 +34,18 @@ namespace runner {
 
 Runner::Runner() {
     cli_ |= lyra::opt(config_.show_help)["-h"]["--help"]("Show this help.");
+    cli_ |= lyra::opt(config_.processing_time_samples, "num")["--samples"](
+        "Number of samples for measurements of processing time.")
+                .choices([](std::size_t val) { return val > 0; });
+    cli_ |= lyra::opt(
+        config_.mean_processing_time_samples, "num")["--mean_samples"](
+        "Number of samples for measurements of mean processing time.")
+                .choices([](std::size_t val) { return val > 0; });
+    cli_ |= lyra::opt(
+        config_.min_sample_duration_sec, "num")["--min_sample_duration"](
+        "minimum duration of a sample for measurement of mean processing time. "
+        "[sec]")
+                .choices([](double val) { return val > 0.0; });
 }
 
 Runner::~Runner() = default;
@@ -46,16 +58,11 @@ void Runner::parse_cli(int argc, const char** argv) {
 }
 
 void Runner::init() {
-    // TODO: configuration from command line arguments.
-
-    constexpr std::size_t max_processing_time_measurer_samples = 100;
     measurers_.push_back(std::make_shared<measurer::ProcessingTimeMeasurer>(
-        max_processing_time_measurer_samples));
+        config_.processing_time_samples));
 
-    constexpr std::size_t mean_processing_time_measurer_samples = 30;
-    constexpr double min_sample_duration_sec = 0.03;
     measurers_.push_back(std::make_shared<measurer::MeanProcessingTimeMeasurer>(
-        min_sample_duration_sec, mean_processing_time_measurer_samples));
+        config_.min_sample_duration_sec, config_.mean_processing_time_samples));
 
     reporters_.push_back(std::make_shared<reporter::ConsoleReporter>());
 }

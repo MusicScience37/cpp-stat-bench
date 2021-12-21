@@ -33,12 +33,41 @@
 namespace stat_bench {
 namespace runner {
 
+namespace impl {
+
+//! Default number of samples for measurements of processing time.
+static constexpr std::size_t default_processing_time_samples = 30;
+
+//! Default number of samples for measurement of mean processing time.
+static constexpr std::size_t default_mean_processing_time_samples = 30;
+
+/*!
+ * \brief Default minimum duration of a sample for measurement of mean
+ * processing time. [sec]
+ */
+static constexpr double default_min_sample_duration_sec = 0.03;
+
+}  // namespace impl
+
 /*!
  * \brief Class of configurations.
  */
 struct Config {
     //! Whether to show help.
     bool show_help{false};
+
+    //! Number of samples for measurements of processing time.
+    std::size_t processing_time_samples{impl::default_processing_time_samples};
+
+    //! Number of samples for measurements of mean processing time.
+    std::size_t mean_processing_time_samples{
+        impl::default_mean_processing_time_samples};
+
+    /*!
+     * \brief minimum duration of a sample for measurement of mean processing
+     * time. [sec]
+     */
+    double min_sample_duration_sec{impl::default_min_sample_duration_sec};
 };
 
 /*!
