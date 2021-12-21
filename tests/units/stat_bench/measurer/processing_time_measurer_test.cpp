@@ -15,9 +15,9 @@
  */
 /*!
  * \file
- * \brief Test of MaxProcessingTimeMeasurer class.
+ * \brief Test of ProcessingTimeMeasurer class.
  */
-#include "stat_bench/measurer/max_processing_time_measurer.h"
+#include "stat_bench/measurer/processing_time_measurer.h"
 
 #include <chrono>
 #include <memory>
@@ -29,11 +29,10 @@
 #include "stat_bench/bench/benchmark_case_info.h"
 #include "stat_bench/bench/benchmark_condition.h"
 
-TEST_CASE("stat_bench::measurer::MaxProcessingTimeMeasurer") {
+TEST_CASE("stat_bench::measurer::ProcessingTimeMeasurer") {
     constexpr std::size_t samples = 3;
     const auto measurer =
-        std::make_shared<stat_bench::measurer::MaxProcessingTimeMeasurer>(
-            samples);
+        std::make_shared<stat_bench::measurer::ProcessingTimeMeasurer>(samples);
 
     SECTION("get name") { REQUIRE(measurer->name() == "Processing Time"); }
 

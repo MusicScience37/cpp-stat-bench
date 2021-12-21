@@ -15,7 +15,7 @@
  */
 /*!
  * \file
- * \brief Definition of MaxProcessingTimeMeasurer class.
+ * \brief Definition of ProcessingTimeMeasurer class.
  */
 #pragma once
 
@@ -25,17 +25,16 @@ namespace stat_bench {
 namespace measurer {
 
 /*!
- * \brief Class to measure maximum processing time.
+ * \brief Class to measure processing time.
  */
-class MaxProcessingTimeMeasurer final : public IMeasurer {
+class ProcessingTimeMeasurer final : public IMeasurer {
 public:
     /*!
      * \brief Constructor.
      *
      * \param[in] samples Number of samples.
      */
-    explicit MaxProcessingTimeMeasurer(std::size_t samples)
-        : samples_(samples) {}
+    explicit ProcessingTimeMeasurer(std::size_t samples) : samples_(samples) {}
 
     //! \copydoc stat_bench::measurer::IMeasurer::name
     [[nodiscard]] auto name() const noexcept -> const std::string& override {
@@ -46,17 +45,17 @@ public:
     [[nodiscard]] auto measure(bench::IBenchmarkCase* bench_case,
         const bench::BenchmarkCondition& cond) const -> Measurement override;
 
-    MaxProcessingTimeMeasurer(const MaxProcessingTimeMeasurer&) = delete;
-    MaxProcessingTimeMeasurer(MaxProcessingTimeMeasurer&&) = delete;
-    auto operator=(const MaxProcessingTimeMeasurer&)
-        -> MaxProcessingTimeMeasurer& = delete;
-    auto operator=(MaxProcessingTimeMeasurer&&)
-        -> MaxProcessingTimeMeasurer& = delete;
+    ProcessingTimeMeasurer(const ProcessingTimeMeasurer&) = delete;
+    ProcessingTimeMeasurer(ProcessingTimeMeasurer&&) = delete;
+    auto operator=(const ProcessingTimeMeasurer&)
+        -> ProcessingTimeMeasurer& = delete;
+    auto operator=(ProcessingTimeMeasurer&&)
+        -> ProcessingTimeMeasurer& = delete;
 
     /*!
      * \brief Destructor.
      */
-    ~MaxProcessingTimeMeasurer() override = default;
+    ~ProcessingTimeMeasurer() override = default;
 
 private:
     //! Name.
