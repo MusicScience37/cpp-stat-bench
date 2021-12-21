@@ -22,7 +22,7 @@
 #include <cstdlib>
 #include <iostream>
 
-#include "stat_bench/runner.h"
+#include "stat_bench/runner/runner.h"
 
 namespace stat_bench {
 namespace impl {
@@ -34,7 +34,7 @@ namespace impl {
  */
 auto default_main(int /*argc*/, char** /*argv*/) noexcept -> int {
     try {
-        stat_bench::Runner runner;
+        stat_bench::runner::Runner runner;
         runner.init();
         runner.run();
         return EXIT_SUCCESS;

@@ -17,21 +17,21 @@
  * \file
  * \brief Test of Runner class.
  */
-#include "stat_bench/runner.h"
+#include "stat_bench/runner/runner.h"
 
 #include <exception>
 
 #include <catch2/catch_test_macros.hpp>
 #include <trompeloeil.hpp>
 
-#include "bench/mock_benchmark_case.h"
-#include "measurer/mock_measurer.h"
-#include "reporter/mock_reporter.h"
+#include "../bench/mock_benchmark_case.h"
+#include "../measurer/mock_measurer.h"
+#include "../reporter/mock_reporter.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/measurer/measurement.h"
 
-TEST_CASE("stat_bench::Runner") {
-    stat_bench::Runner runner;
+TEST_CASE("stat_bench::runner::Runner") {
+    stat_bench::runner::Runner runner;
 
     const auto measurer =
         std::make_shared<stat_bench_test::measurer::MockMeasurer>();

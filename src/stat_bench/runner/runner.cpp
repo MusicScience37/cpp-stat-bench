@@ -17,7 +17,7 @@
  * \file
  * \brief Implementation of Runner class.
  */
-#include "stat_bench/runner.h"
+#include "stat_bench/runner/runner.h"
 
 #include <exception>
 
@@ -29,6 +29,7 @@
 #include "stat_bench/reporter/console_reporter.h"
 
 namespace stat_bench {
+namespace runner {
 
 Runner::Runner() = default;
 
@@ -117,4 +118,5 @@ void Runner::run_case(const std::shared_ptr<measurer::IMeasurer>& measurer,
     }
 }
 
+}  // namespace runner
 }  // namespace stat_bench

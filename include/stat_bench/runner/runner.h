@@ -29,6 +29,7 @@
 #include "stat_bench/reporter/i_reporter.h"
 
 namespace stat_bench {
+namespace runner {
 
 /*!
  * \brief Class of runners of benchmarks.
@@ -92,4 +93,5 @@ private:
     std::vector<std::shared_ptr<reporter::IReporter>> reporters_{};
 };
 
+}  // namespace runner
 }  // namespace stat_bench
