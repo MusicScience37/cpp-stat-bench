@@ -20,6 +20,7 @@
 #pragma once
 
 #include "stat_bench/macros/case_impl.h"
+#include "stat_bench/macros/default_main.h"
 #include "stat_bench/macros/measure_impl.h"
 #include "stat_bench/macros/unique_name.h"
 
@@ -52,3 +53,8 @@
 #define STAT_BENCH_MEASURE()    \
     STAT_BENCH_MEASURE_INDEXED( \
         /*THREAD_INDEX_VAR*/, /*SAMPLE_INDEX_VAR*/, /*ITERATION_INDEX_VAR*/)
+
+/*!
+ * \brief Macro of default main function.
+ */
+#define STAT_BENCH_MAIN STAT_BENCH_IMPL_DEFAULT_MAIN

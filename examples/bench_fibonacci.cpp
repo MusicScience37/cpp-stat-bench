@@ -44,14 +44,4 @@ STAT_BENCH_CASE("Fibonacci", "Fibonacci30") {
     STAT_BENCH_MEASURE() { (void)fibonacci(number); };
 }
 
-auto main() -> int {
-    try {
-        stat_bench::Runner runner;
-        runner.init();
-        runner.run();
-        return 0;
-    } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-        return 1;
-    }
-}
+STAT_BENCH_MAIN
