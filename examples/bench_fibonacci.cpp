@@ -17,10 +17,7 @@
  * \file
  * \brief Benchmark of fibonacci.
  */
-#include <iostream>
-
 #include "stat_bench/benchmark_macros.h"
-#include "stat_bench/runner.h"
 
 [[nodiscard]] auto fibonacci(std::uint64_t number) -> std::uint64_t {
     if (number < 2) {
