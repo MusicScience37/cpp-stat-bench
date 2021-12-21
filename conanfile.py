@@ -39,6 +39,7 @@ class CppStatBenchConan(ConanFile):
 
     def requirements(self):
         self.requires("fmt/8.0.1")
+        self.requires("lyra/1.6.0")
 
     def build_requirements(self):
         if self.options.requirements_for_tests:

@@ -171,4 +171,14 @@ TEST_CASE("stat_bench::runner::Runner") {
         REQUIRE(error);
         REQUIRE_THROWS_AS(std::rethrow_exception(error), std::runtime_error);
     }
+
+    SECTION("parse command line arguments") {
+        const int argc = 2;
+        char arg0[] = "test_bench";                  // NOLINT
+        char arg1[] = "--help";                      // NOLINT
+        const char* argv[] = {arg0, arg1, nullptr};  // NOLINT
+
+        REQUIRE_NOTHROW(runner.parse_cli(argc, argv));
+        REQUIRE(runner.config().show_help);
+    }
 }

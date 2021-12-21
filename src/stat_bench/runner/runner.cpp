@@ -20,6 +20,7 @@
 #include "stat_bench/runner/runner.h"
 
 #include <exception>
+#include <stdexcept>
 
 #include "stat_bench/bench/benchmark_case_registry.h"
 #include "stat_bench/bench/benchmark_condition.h"
@@ -31,7 +32,18 @@
 namespace stat_bench {
 namespace runner {
 
-Runner::Runner() = default;
+Runner::Runner() {
+    cli_ |= lyra::opt(config_.show_help)["-h"]["--help"]("Show this help.");
+}
+
+Runner::~Runner() = default;
+
+void Runner::parse_cli(int argc, const char** argv) {
+    const auto result = cli_.parse(lyra::args{argc, argv});
+    if (!result) {
+        throw std::runtime_error(result.message());
+    }
+}
 
 void Runner::init() {
     // TODO: configuration from command line arguments.

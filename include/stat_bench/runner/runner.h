@@ -22,6 +22,8 @@
 #include <memory>
 #include <vector>
 
+#include <lyra/lyra.hpp>
+
 #include "stat_bench/bench/benchmark_case_registry.h"
 #include "stat_bench/bench/i_benchmark_case.h"
 #include "stat_bench/measurer/i_measurer.h"
@@ -32,6 +34,14 @@ namespace stat_bench {
 namespace runner {
 
 /*!
+ * \brief Class of configurations.
+ */
+struct Config {
+    //! Whether to show help.
+    bool show_help{false};
+};
+
+/*!
  * \brief Class of runners of benchmarks.
  */
 class Runner {
@@ -40,6 +50,38 @@ public:
      * \brief Constructor.
      */
     Runner();
+
+    Runner(const Runner&) = delete;
+    Runner(Runner&&) = delete;
+    auto operator=(const Runner&) -> Runner& = delete;
+    auto operator=(Runner&&) -> Runner& = delete;
+
+    /*!
+     * \brief Destructor.
+     */
+    ~Runner();
+
+    /*!
+     * \brief Access to the command line interface definition.
+     *
+     * \return Reference to the definition.
+     */
+    [[nodiscard]] auto cli() -> lyra::cli& { return cli_; }
+
+    /*!
+     * \brief Parse command line arguments.
+     *
+     * \param[in] argc Number of arguments.
+     * \param[in] argv Arguments.
+     */
+    void parse_cli(int argc, const char** argv);
+
+    /*!
+     * \brief Get the configuration.
+     *
+     * \return Configuration.
+     */
+    [[nodiscard]] auto config() -> const Config& { return config_; }
 
     /*!
      * \brief Initialize.
@@ -85,6 +127,12 @@ private:
      */
     void run_case(const std::shared_ptr<measurer::IMeasurer>& measurer,
         const std::shared_ptr<bench::IBenchmarkCase>& bench_case) const;
+
+    //! Configurations.
+    Config config_{};
+
+    //! Command line interface.
+    lyra::cli cli_{};
 
     //! Measurers.
     std::vector<std::shared_ptr<measurer::IMeasurer>> measurers_{};
