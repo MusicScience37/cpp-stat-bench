@@ -1,4 +1,13 @@
 Copyright 2021 MusicScience37 (Kenta Kabashima)
 
+This project uses fmt library, which is available under a
+"MIT License." For details, see https://github.com/fmtlib/fmt.
+
+This project uses lyra library, which is available under a
+"Boost Software License, Version 1.0." For details, see https://github.com/bfgroup/Lyra.
+
 This project uses Catch2 library in tests, which is available under a
 "Boost Software License, Version 1.0." For details, see https://github.com/catchorg/Catch2.
+
+This project uses trompeloeil library in tests, which is available under a
+"Boost Software License, Version 1.0." For details, see https://github.com/rollbear/trompeloeil.
