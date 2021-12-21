@@ -66,7 +66,7 @@ TEST_CASE("stat_bench::measurer::MeanProcessingTimeMeasurer") {
         REQUIRE(result.durations().at(0).size() == result.samples());
         for (std::size_t i = 0; i < result.samples(); ++i) {
             INFO("i = " << i);
-            constexpr double tol = min_sample_duration_sec * 0.9;
+            constexpr double tol = min_sample_duration_sec * 0.5;
             REQUIRE(result.durations().at(0).at(i).seconds() > tol);
         }
     }

@@ -15,9 +15,9 @@
  */
 /*!
  * \file
- * \brief Implementation of MeanDurationMeasurer class.
+ * \brief Implementation of ProcessingTimeMeasurer class.
  */
-#include "stat_bench/measurer/max_processing_time_measurer.h"
+#include "stat_bench/measurer/processing_time_measurer.h"
 
 #include <stdexcept>
 
@@ -26,7 +26,7 @@
 namespace stat_bench {
 namespace measurer {
 
-auto MaxProcessingTimeMeasurer::measure(bench::IBenchmarkCase* bench_case,
+auto ProcessingTimeMeasurer::measure(bench::IBenchmarkCase* bench_case,
     const bench::BenchmarkCondition& cond) const -> Measurement {
     constexpr std::size_t iterations = 1;
     bench::InvocationContext context{cond, iterations, samples_};

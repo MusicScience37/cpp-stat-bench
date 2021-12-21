@@ -24,8 +24,8 @@
 #include "stat_bench/bench/benchmark_case_registry.h"
 #include "stat_bench/bench/benchmark_condition.h"
 #include "stat_bench/clock/system_clock.h"
-#include "stat_bench/measurer/max_processing_time_measurer.h"
 #include "stat_bench/measurer/mean_processing_time_measurer.h"
+#include "stat_bench/measurer/processing_time_measurer.h"
 #include "stat_bench/reporter/console_reporter.h"
 
 namespace stat_bench {
@@ -36,7 +36,7 @@ void Runner::init() {
     // TODO: configuration from command line arguments.
 
     constexpr std::size_t max_processing_time_measurer_samples = 100;
-    measurers_.push_back(std::make_shared<measurer::MaxProcessingTimeMeasurer>(
+    measurers_.push_back(std::make_shared<measurer::ProcessingTimeMeasurer>(
         max_processing_time_measurer_samples));
 
     constexpr std::size_t mean_processing_time_measurer_samples = 30;
