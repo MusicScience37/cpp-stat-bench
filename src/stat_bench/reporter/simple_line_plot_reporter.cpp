@@ -43,8 +43,12 @@ void SimpleLinePlotReporter::experiment_finished(
     // no operation
 }
 
-void SimpleLinePlotReporter::measurer_starts(const std::string& /*name*/) {
-    // no operation
+void SimpleLinePlotReporter::measurer_starts(const std::string& name) {
+    measurer_name_ = name;
+    std::size_t pos = 0;
+    while ((pos = measurer_name_.find(' ', pos)) != std::string::npos) {
+        measurer_name_.erase(pos, 1);
+    }
 }
 
 void SimpleLinePlotReporter::measurer_finished(const std::string& /*name*/) {
@@ -61,13 +65,13 @@ void SimpleLinePlotReporter::group_finished(const std::string& name) {
 
     const std::string contents = render_template(line2d,
         std::unordered_map<std::string, std::string>{
-            {"{{PLOT_NAME}}", "Processing Time"},
-            {"{{X_TITLE}}", "Sample Index"}, {"{{X_TYPE}}", "-"},
-            {"{{Y_TITLE}}", "Time [sec]"}, {"{{Y_TYPE}}", "log"},
+            {"{{PLOT_NAME}}", measurer_name_}, {"{{X_TITLE}}", "Sample Index"},
+            {"{{X_TYPE}}", "-"}, {"{{Y_TITLE}}", "Time [sec]"},
+            {"{{Y_TYPE}}", "log"},
             {"\"{{DATA}}\"", std::string(data_buf_.data(), data_buf_.size())}});
 
     const std::string filepath =
-        fmt::format(FMT_STRING("{}{}.html"), prefix_, name);
+        fmt::format(FMT_STRING("{}{}_{}.html"), prefix_, name, measurer_name_);
     std::ofstream stream{filepath};
     stream << contents;
 }

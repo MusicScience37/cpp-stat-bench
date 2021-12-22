@@ -75,8 +75,11 @@ private:
     //! File prefix.
     std::string prefix_;
 
+    //! Measurer name.
+    std::string measurer_name_{};
+
     //! Buffer of formatted data.
-    fmt::memory_buffer data_buf_;
+    fmt::memory_buffer data_buf_{};
 };
 
 }  // namespace reporter
