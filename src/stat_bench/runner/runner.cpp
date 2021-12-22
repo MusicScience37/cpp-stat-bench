@@ -28,6 +28,7 @@
 #include "stat_bench/measurer/mean_processing_time_measurer.h"
 #include "stat_bench/measurer/processing_time_measurer.h"
 #include "stat_bench/reporter/console_reporter.h"
+#include "stat_bench/reporter/simple_line_plot_reporter.h"
 
 namespace stat_bench {
 namespace runner {
@@ -65,6 +66,9 @@ void Runner::init() {
         config_.min_sample_duration_sec, config_.mean_processing_time_samples));
 
     reporters_.push_back(std::make_shared<reporter::ConsoleReporter>());
+
+    reporters_.push_back(
+        std::make_shared<reporter::SimpleLinePlotReporter>(""));
 }
 
 void Runner::run(const bench::BenchmarkCaseRegistry& registry) const {

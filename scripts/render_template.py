@@ -40,7 +40,9 @@ async def get_line2d(_: web.Request) -> web.Response:
         body=render_template("line2d.html", {
             "{{PLOT_NAME}}": "Test Line",
             "{{X_TITLE}}": "x axis",
+            "{{X_TYPE}}": "-",
             "{{Y_TITLE}}": "y axis",
+            "{{Y_TYPE}}": "log",
             "\"{{DATA}}\"": """
                 [
                     {
@@ -52,7 +54,7 @@ async def get_line2d(_: web.Request) -> web.Response:
                     },
                     {
                       x: [1, 2, 3, 4, 5],
-                      y: [4, 0, 4, 6, 8],
+                      y: [4, 1, 4, 6, 8],
                       mode: "lines",
                       type: "scatter",
                       name: "b",
