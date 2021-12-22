@@ -88,25 +88,22 @@ void SimpleLinePlotReporter::case_finished(
 
 void SimpleLinePlotReporter::measurement_succeeded(
     const measurer::Measurement& measurement) {
-    const std::size_t samples = measurement.samples();
+    const std::size_t samples =
+        measurement.samples() * measurement.cond().threads();
     std::vector<std::size_t> x;
     x.reserve(samples);
     for (std::size_t i = 0; i < samples; ++i) {
         x.push_back(i + 1);
     }
 
-    auto y = std::vector<double>(samples, 0.0);
+    std::vector<double> y;
+    y.reserve(samples);
     const double inv_iterations =
         1.0 / static_cast<double>(measurement.iterations());
     for (const auto& durations_per_thread : measurement.durations()) {
-        for (std::size_t i = 0; i < samples; ++i) {
-            y.at(i) += durations_per_thread.at(i).seconds() * inv_iterations;
+        for (const auto& duration : durations_per_thread) {
+            y.push_back(duration.seconds() * inv_iterations);
         }
-    }
-    const double inv_threads =
-        1.0 / static_cast<double>(measurement.durations().size());
-    for (auto& val : y) {
-        val *= inv_threads;
     }
 
     fmt::format_to(std::back_inserter(data_buf_), FMT_STRING(R"***({{
