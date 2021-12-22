@@ -220,3 +220,4 @@ cython_debug/
 # End of https://www.toptal.com/developers/gitignore/api/c++,visualstudiocode,cmake,python,conan
 
 !.vscode/cmake-variants.yaml
+/*.html
