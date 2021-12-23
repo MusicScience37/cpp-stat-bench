@@ -1,13 +1,14 @@
-option(STAT_BENCH_TEST_EXAMPLE "Test execution of examples" OFF)
+option(STAT_BENCH_TEST_EXAMPLES "Test execution of examples" OFF)
 
 function(add_example TARGET)
     add_executable(${TARGET} ${ARGN})
     target_link_libraries(${TARGET} PRIVATE stat_bench)
-    if(STAT_BENCH_TEST_EXAMPLE)
+    if(STAT_BENCH_TESTING AND STAT_BENCH_TEST_EXAMPLES)
         add_test(
             NAME ${TARGET}
-            COMMAND $<TARGET_FILE:${TARGET}>
-            WORKING_DIRECTORY ${STAT_BENCH_SOURCE_DIR})
+            COMMAND $<TARGET_FILE:${TARGET}> --plot
+                    "${STAT_BENCH_TEMP_TEST_DIR}/${TARGET}"
+            WORKING_DIRECTORY ${STAT_BENCH_TEMP_TEST_DIR})
     endif()
 endfunction()
 

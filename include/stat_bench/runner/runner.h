@@ -36,7 +36,7 @@ namespace runner {
 namespace impl {
 
 //! Default number of samples for measurements of processing time.
-static constexpr std::size_t default_processing_time_samples = 30;
+static constexpr std::size_t default_processing_time_samples = 100;
 
 //! Default number of samples for measurement of mean processing time.
 static constexpr std::size_t default_mean_processing_time_samples = 30;
@@ -64,10 +64,17 @@ struct Config {
         impl::default_mean_processing_time_samples};
 
     /*!
-     * \brief minimum duration of a sample for measurement of mean processing
+     * \brief Minimum duration of a sample for measurement of mean processing
      * time. [sec]
      */
     double min_sample_duration_sec{impl::default_min_sample_duration_sec};
+
+    /*!
+     * \brief Prefix of filepaths to generate plots.
+     *
+     * Empty string specifies no output.
+     */
+    std::string plot_prefix{};
 };
 
 /*!

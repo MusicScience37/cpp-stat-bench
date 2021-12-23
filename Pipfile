@@ -7,7 +7,9 @@ verify_ssl = true
 conan = "*"
 
 [dev-packages]
+aiohttp = "*"
 autopep8 = "*"
+cchardet = "*"
 cmakelang = "*"
 doc8 = "*"
 myst-parser = "*"

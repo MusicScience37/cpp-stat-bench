@@ -1,13 +1,14 @@
 {
   "cSpell.words": [
+    "aiohttp",
     "asan",
     "cloc",
     "cmake",
     "ctest",
     "DCMAKE",
     "deallocate",
-    "DSTAT",
     "doxygen",
+    "DSTAT",
     "dylib",
     "fcoverage",
     "fprofile",
@@ -21,12 +22,16 @@
     "MusicScience37",
     "pipenv",
     "Pipfile",
+    "Plotly",
     "profraw",
     "SAST",
+    "showlegend",
     "trompeloeil",
     "tsan",
     "ubsan",
-    "venv"
+    "venv",
+    "xaxis",
+    "yaxis"
   ],
   "clangd.arguments": [
     "--compile-commands-dir=${workspaceFolder}/build/Debug",
