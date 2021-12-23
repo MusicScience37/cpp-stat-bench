@@ -95,6 +95,7 @@ public:
     template <typename Func>
     void measure(const Func& func) {
         durations_.clear();
+        durations_.resize(cond_.threads());
 
         if (cond_.threads() == 1) {
             measure_here(func, 0);
@@ -159,7 +160,7 @@ private:
         }
 
         std::unique_lock<std::mutex> lock(durations_mutex_);
-        durations_.push_back(watch.calc_durations());
+        durations_.at(thread_index) = watch.calc_durations();
     }
 
     //! Condition.

@@ -102,28 +102,6 @@ TEST_CASE("stat_bench::bench::InvocationContext") {
             });
 
         REQUIRE(invocations.size() == threads * iterations * samples);
-        std::size_t invocation_index = 0;
-        for (std::size_t thread_index = 0; thread_index < threads;
-             ++thread_index) {
-            for (std::size_t sample_index = 0; sample_index < samples;
-                 ++sample_index) {
-                INFO("sample_index = " << sample_index);
-                for (std::size_t iteration_index = 0;
-                     iteration_index < iterations; ++iteration_index) {
-                    INFO("iteration_index = " << iteration_index);
-                    INFO("invocation_index = " << invocation_index);
-
-                    REQUIRE(std::get<0>(invocations.at(invocation_index)) ==
-                        thread_index);
-                    REQUIRE(std::get<1>(invocations.at(invocation_index)) ==
-                        sample_index);
-                    REQUIRE(std::get<2>(invocations.at(invocation_index)) ==
-                        iteration_index);
-
-                    ++invocation_index;
-                }
-            }
-        }
 
         const auto durations = context.durations();
         REQUIRE(durations.size() == threads);
