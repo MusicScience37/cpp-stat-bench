@@ -64,10 +64,17 @@ struct Config {
         impl::default_mean_processing_time_samples};
 
     /*!
-     * \brief minimum duration of a sample for measurement of mean processing
+     * \brief Minimum duration of a sample for measurement of mean processing
      * time. [sec]
      */
     double min_sample_duration_sec{impl::default_min_sample_duration_sec};
+
+    /*!
+     * \brief Prefix of filepaths to generate plots.
+     *
+     * Empty string specifies no output.
+     */
+    std::string plot_prefix{};
 };
 
 /*!

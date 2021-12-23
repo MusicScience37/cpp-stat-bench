@@ -36,18 +36,24 @@ namespace runner {
 
 Runner::Runner() {
     cli_ |= lyra::opt(config_.show_help)["-h"]["--help"]("Show this help.");
+
     cli_ |= lyra::opt(config_.processing_time_samples, "num")["--samples"](
         "Number of samples for measurements of processing time.")
                 .choices([](std::size_t val) { return val > 0; });
+
     cli_ |= lyra::opt(
         config_.mean_processing_time_samples, "num")["--mean_samples"](
         "Number of samples for measurements of mean processing time.")
                 .choices([](std::size_t val) { return val > 0; });
+
     cli_ |= lyra::opt(
         config_.min_sample_duration_sec, "num")["--min_sample_duration"](
-        "minimum duration of a sample for measurement of mean processing time. "
+        "Minimum duration of a sample for measurement of mean processing time. "
         "[sec]")
                 .choices([](double val) { return val > 0.0; });
+
+    cli_ |= lyra::opt(config_.plot_prefix, "prefix")["--plot"](
+        "Generate plots of results.");
 }
 
 Runner::~Runner() = default;
@@ -62,15 +68,17 @@ void Runner::parse_cli(int argc, const char** argv) {
 void Runner::init() {
     measurers_.push_back(std::make_shared<measurer::ProcessingTimeMeasurer>(
         config_.processing_time_samples));
-
     measurers_.push_back(std::make_shared<measurer::MeanProcessingTimeMeasurer>(
         config_.min_sample_duration_sec, config_.mean_processing_time_samples));
 
     reporters_.push_back(std::make_shared<reporter::ConsoleReporter>());
 
-    reporters_.push_back(
-        std::make_shared<reporter::SimpleLinePlotReporter>(""));
-    reporters_.push_back(std::make_shared<reporter::CdfLinePlotReporter>(""));
+    if (!config_.plot_prefix.empty()) {
+        reporters_.push_back(std::make_shared<reporter::SimpleLinePlotReporter>(
+            config_.plot_prefix));
+        reporters_.push_back(std::make_shared<reporter::CdfLinePlotReporter>(
+            config_.plot_prefix));
+    }
 }
 
 void Runner::run(const bench::BenchmarkCaseRegistry& registry) const {
