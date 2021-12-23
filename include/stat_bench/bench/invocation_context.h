@@ -20,6 +20,7 @@
 #pragma once
 
 #include <cstddef>
+#include <exception>
 #include <mutex>
 #include <stdexcept>
 #include <thread>
@@ -100,12 +101,24 @@ public:
         } else {
             std::vector<std::thread> threads;
             threads.reserve(cond_.threads());
-            for (std::size_t i = 0; i < cond_.threads(); ++i) {
-                threads.emplace_back(
-                    [this, &func, i] { this->measure_here(func, i); });
+            std::exception_ptr error;
+            try {
+                for (std::size_t i = 0; i < cond_.threads(); ++i) {
+                    threads.emplace_back(
+                        [this, &func, i] { this->measure_here(func, i); });
+                }
+            } catch (...) {
+                error = std::current_exception();
             }
+
             for (std::size_t i = 0; i < cond_.threads(); ++i) {
-                threads.at(i).join();
+                if (threads.at(i).joinable()) {
+                    threads.at(i).join();
+                }
+            }
+
+            if (error) {
+                std::rethrow_exception(error);
             }
         }
     }
