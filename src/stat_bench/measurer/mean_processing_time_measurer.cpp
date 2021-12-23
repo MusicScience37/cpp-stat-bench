@@ -19,6 +19,8 @@
  */
 #include "stat_bench/measurer/mean_processing_time_measurer.h"
 
+#include <cstddef>
+#include <limits>
 #include <stdexcept>
 
 #include "stat_bench/bench/invocation_context.h"
@@ -41,8 +43,9 @@ auto MeanProcessingTimeMeasurer::measure(bench::IBenchmarkCase* bench_case,
 
         const double multiplier = std::min(
             min_sample_duration_sec_ / std::max(duration_sec, 1e-9), 100.0);
-        iterations = static_cast<std::size_t>(
-            static_cast<double>(iterations) * multiplier);
+        constexpr double max_iterations = 1e+6;
+        iterations = static_cast<std::size_t>(std::min(
+            max_iterations, static_cast<double>(iterations) * multiplier));
     }
 
     return measure_once(bench_case, cond, iterations, samples_);
