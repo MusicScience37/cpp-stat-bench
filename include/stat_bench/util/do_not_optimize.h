@@ -22,6 +22,7 @@
 #include "stat_bench/util/use_pointer.h"
 
 namespace stat_bench {
+namespace util {
 
 /*!
  * \brief Prevent compilers to optimize away a value.
@@ -33,7 +34,8 @@ namespace stat_bench {
  */
 template <typename T>
 inline void do_not_optimize(T&& val) noexcept {
-    stat_bench::util::use_pointer(reinterpret_cast<void*>(&val));
+    use_pointer(reinterpret_cast<void*>(&val));
 }
 
+}  // namespace util
 }  // namespace stat_bench

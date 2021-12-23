@@ -17,13 +17,13 @@
  * \file
  * \brief Test of do_not_optimize function.
  */
-#include "stat_bench/do_not_optimize.h"
+#include "stat_bench/util/do_not_optimize.h"
 
 #include <catch2/catch_test_macros.hpp>
 
-TEST_CASE("stat_bench::do_not_optimize") {
+TEST_CASE("stat_bench::util::do_not_optimize") {
     SECTION("use pointer") {
         int val = 0;
-        REQUIRE_NOTHROW(stat_bench::do_not_optimize(val));
+        REQUIRE_NOTHROW(stat_bench::util::do_not_optimize(val));
     }
 }
