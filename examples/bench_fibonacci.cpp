@@ -17,8 +17,6 @@
  * \file
  * \brief Benchmark of fibonacci.
  */
-#include <atomic>
-
 #include "stat_bench/benchmark_macros.h"
 #include "stat_bench/util/do_not_optimize.h"
 
