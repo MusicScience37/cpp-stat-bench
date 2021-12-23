@@ -15,23 +15,14 @@
  */
 /*!
  * \file
- * \brief Definition of use_pointer function.
+ * \brief Test of memory_barrier function.
  */
-#include "stat_bench/util/use_pointer.h"
+#include "stat_bench/util/memory_barrier.h"
 
-#include <atomic>
+#include <catch2/catch_test_macros.hpp>
 
-namespace stat_bench {
-namespace util {
-
-// Separate implementation to prevent optimization.
-
-void use_pointer(void* ptr) noexcept {
-    std::atomic_signal_fence(std::memory_order_acq_rel);
-    *reinterpret_cast<char volatile*>(ptr) =
-        *reinterpret_cast<char volatile*>(ptr);
-    std::atomic_signal_fence(std::memory_order_acq_rel);
+TEST_CASE("stat_bench::util::memory_barrier") {
+    SECTION("memory barrier") {
+        REQUIRE_NOTHROW(stat_bench::util::memory_barrier());
+    }
 }
-
-}  // namespace util
-}  // namespace stat_bench

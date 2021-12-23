@@ -14,4 +14,5 @@
 #include "stat_bench/measurer/measurement_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/measurer/processing_time_measurer_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/runner/runner_test.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "stat_bench/util/memory_barrier_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/util/use_pointer_test.cpp"  // NOLINT(bugprone-suspicious-include)

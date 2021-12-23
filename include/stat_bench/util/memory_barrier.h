@@ -15,21 +15,19 @@
  */
 /*!
  * \file
- * \brief Definition of use_pointer function.
+ * \brief Definition of memory_barrier function.
  */
-#include "stat_bench/util/use_pointer.h"
+#pragma once
 
 #include <atomic>
 
 namespace stat_bench {
 namespace util {
 
-// Separate implementation to prevent optimization.
-
-void use_pointer(void* ptr) noexcept {
-    std::atomic_signal_fence(std::memory_order_acq_rel);
-    *reinterpret_cast<char volatile*>(ptr) =
-        *reinterpret_cast<char volatile*>(ptr);
+/*!
+ * \brief Prevent optimizers to move memory access beyond this function call.
+ */
+inline void memory_barrier() noexcept {
     std::atomic_signal_fence(std::memory_order_acq_rel);
 }
 
