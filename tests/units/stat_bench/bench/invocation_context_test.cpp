@@ -19,6 +19,7 @@
  */
 #include "stat_bench/bench/invocation_context.h"
 
+#include <mutex>
 #include <tuple>
 #include <utility>
 
@@ -73,6 +74,54 @@ TEST_CASE("stat_bench::bench::InvocationContext") {
                     iteration_index);
 
                 ++invocation_index;
+            }
+        }
+
+        const auto durations = context.durations();
+        REQUIRE(durations.size() == threads);
+        REQUIRE(durations.at(0).size() == samples);
+    }
+
+    SECTION("measure durations with threads") {
+        constexpr std::size_t threads = 2;
+        constexpr std::size_t iterations = 7;
+        constexpr std::size_t samples = 13;
+        stat_bench::bench::InvocationContext context{
+            stat_bench::bench::BenchmarkCondition(threads), iterations,
+            samples};
+
+        std::vector<std::tuple<std::size_t, std::size_t, std::size_t>>
+            invocations;
+        std::mutex mutex;
+        context.measure(
+            [&invocations, &mutex](std::size_t thread_index,
+                std::size_t sample_index, std::size_t iteration_index) {
+                std::unique_lock<std::mutex> lock(mutex);
+                invocations.emplace_back(
+                    thread_index, sample_index, iteration_index);
+            });
+
+        REQUIRE(invocations.size() == threads * iterations * samples);
+        std::size_t invocation_index = 0;
+        for (std::size_t thread_index = 0; thread_index < threads;
+             ++thread_index) {
+            for (std::size_t sample_index = 0; sample_index < samples;
+                 ++sample_index) {
+                INFO("sample_index = " << sample_index);
+                for (std::size_t iteration_index = 0;
+                     iteration_index < iterations; ++iteration_index) {
+                    INFO("iteration_index = " << iteration_index);
+                    INFO("invocation_index = " << invocation_index);
+
+                    REQUIRE(std::get<0>(invocations.at(invocation_index)) ==
+                        thread_index);
+                    REQUIRE(std::get<1>(invocations.at(invocation_index)) ==
+                        sample_index);
+                    REQUIRE(std::get<2>(invocations.at(invocation_index)) ==
+                        iteration_index);
+
+                    ++invocation_index;
+                }
             }
         }
 
