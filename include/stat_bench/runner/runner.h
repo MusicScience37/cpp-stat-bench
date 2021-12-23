@@ -36,7 +36,7 @@ namespace runner {
 namespace impl {
 
 //! Default number of samples for measurements of processing time.
-static constexpr std::size_t default_processing_time_samples = 30;
+static constexpr std::size_t default_processing_time_samples = 100;
 
 //! Default number of samples for measurement of mean processing time.
 static constexpr std::size_t default_mean_processing_time_samples = 30;

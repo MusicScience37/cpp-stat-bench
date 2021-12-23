@@ -27,6 +27,7 @@
 #include "stat_bench/clock/system_clock.h"
 #include "stat_bench/measurer/mean_processing_time_measurer.h"
 #include "stat_bench/measurer/processing_time_measurer.h"
+#include "stat_bench/reporter/cdf_line_plot_reporter.h"
 #include "stat_bench/reporter/console_reporter.h"
 #include "stat_bench/reporter/simple_line_plot_reporter.h"
 
@@ -69,6 +70,7 @@ void Runner::init() {
 
     reporters_.push_back(
         std::make_shared<reporter::SimpleLinePlotReporter>(""));
+    reporters_.push_back(std::make_shared<reporter::CdfLinePlotReporter>(""));
 }
 
 void Runner::run(const bench::BenchmarkCaseRegistry& registry) const {
