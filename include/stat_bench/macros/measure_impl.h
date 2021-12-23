@@ -64,8 +64,8 @@ private:
  * \param[in] SAMPLE_INDEX_VAR Variable name of the index of the sample.
  * \param[in] ITERATION_INDEX_VAR Variable name of the index of the iteration.
  */
-#define STAT_BENCH_IMPL_MEASURE_IMPL(                                     \
-    THREAD_INDEX_VAR, SAMPLE_INDEX_VAR, ITERATION_INDEX_VAR)              \
-    ::stat_bench::impl::FunctionMeasurer(STAT_BENCH_IMPL_CONTEXT_NAME)    \
-        << [](std::size_t THREAD_INDEX_VAR, std::size_t SAMPLE_INDEX_VAR, \
+#define STAT_BENCH_IMPL_MEASURE_IMPL(                                      \
+    THREAD_INDEX_VAR, SAMPLE_INDEX_VAR, ITERATION_INDEX_VAR)               \
+    ::stat_bench::impl::FunctionMeasurer(STAT_BENCH_IMPL_CONTEXT_NAME)     \
+        << [&](std::size_t THREAD_INDEX_VAR, std::size_t SAMPLE_INDEX_VAR, \
                std::size_t ITERATION_INDEX_VAR)
