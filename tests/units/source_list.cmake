@@ -1,0 +1,17 @@
+set(SOURCE_FILES
+    stat_bench/bench/benchmark_case_info_test.cpp
+    stat_bench/bench/benchmark_case_registry_test.cpp
+    stat_bench/bench/benchmark_condition_test.cpp
+    stat_bench/bench/benchmark_group_test.cpp
+    stat_bench/bench/invocation_context_test.cpp
+    stat_bench/clock/duration_test.cpp
+    stat_bench/clock/monotone_clock_impl_test.cpp
+    stat_bench/clock/monotone_clock_test.cpp
+    stat_bench/clock/monotone_time_point_test.cpp
+    stat_bench/clock/stop_watch_test.cpp
+    stat_bench/clock/system_clock_test.cpp
+    stat_bench/measurer/mean_processing_time_measurer_test.cpp
+    stat_bench/measurer/measurement_test.cpp
+    stat_bench/measurer/processing_time_measurer_test.cpp
+    stat_bench/runner/runner_test.cpp
+)

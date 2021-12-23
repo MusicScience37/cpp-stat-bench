@@ -1,0 +1,24 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[packages]
+conan = "*"
+
+[dev-packages]
+aiohttp = "*"
+autopep8 = "*"
+cchardet = "*"
+cmakelang = "*"
+doc8 = "*"
+myst-parser = "*"
+pre-commit = "*"
+pylint = "*"
+sphinx = "*"
+sphinx-autobuild = "*"
+sphinx-rtd-theme = "*"
+sphinxcontrib-plantuml = "*"
+
+[requires]
+python_version = "3.9"
