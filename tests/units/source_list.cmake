@@ -14,4 +14,7 @@ set(SOURCE_FILES
     stat_bench/measurer/measurement_test.cpp
     stat_bench/measurer/processing_time_measurer_test.cpp
     stat_bench/runner/runner_test.cpp
+    stat_bench/util/do_not_optimize_test.cpp
+    stat_bench/util/memory_barrier_test.cpp
+    stat_bench/util/use_pointer_test.cpp
 )

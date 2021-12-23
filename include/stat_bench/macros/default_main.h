@@ -34,7 +34,7 @@ namespace impl {
  * \param[in] argv Arguments.
  * \return Exit code.
  */
-auto default_main(int argc, const char** argv) noexcept -> int {
+inline auto default_main(int argc, const char** argv) noexcept -> int {
     try {
         stat_bench::runner::Runner runner;
         runner.parse_cli(argc, argv);
