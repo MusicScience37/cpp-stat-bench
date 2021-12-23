@@ -6,7 +6,8 @@ function(add_example TARGET)
     if(STAT_BENCH_TESTING AND STAT_BENCH_TEST_EXAMPLES)
         add_test(
             NAME ${TARGET}
-            COMMAND $<TARGET_FILE:${TARGET}>
+            COMMAND $<TARGET_FILE:${TARGET}> --plot
+                    "${STAT_BENCH_TEMP_TEST_DIR}/${TARGET}"
             WORKING_DIRECTORY ${STAT_BENCH_TEMP_TEST_DIR})
     endif()
 endfunction()
