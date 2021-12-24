@@ -6,6 +6,7 @@ stages:
   - Check
   - Test with Clang
   - Test with GCC
+  - Test with MSVC
   - Build Documentation
   - Publish
 
@@ -336,6 +337,21 @@ clang-11-conan-release:
     - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} pipenv run conan upload -r gitlab cpp_stat_bench/${STAT_BENCH_VERSION}@${CONAN_USER}/${CONAN_CHANNEL} --all
   only:
     - tags
+
+msvc-release:
+  extends: .release-test-base
+  tags:
+    - shared-windows
+    - windows
+    - windows-1809
+  stage: Test with MSVC
+  variables:
+    BUILD_DIR: build_msvc
+  before_script:
+    - Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+    - choco install cmake -y --installargs 'ADD_CMAKE_TO_PATH=System'
+    - choco install python --version=3.8.0 -y
+    - RefreshEnv
 
 doc:
   extends: .retry setting
