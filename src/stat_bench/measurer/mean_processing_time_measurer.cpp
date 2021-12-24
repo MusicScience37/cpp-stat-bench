@@ -37,7 +37,7 @@ auto MeanProcessingTimeMeasurer::measure(bench::IBenchmarkCase* bench_case,
     for (std::size_t i = 0; i < trials; ++i) {
         constexpr std::size_t samples = 1;
         const auto data = measure_once(bench_case, cond, iterations, samples);
-        const double duration_sec = data.durations().at(0).at(0).seconds();
+        const double duration_sec = data.durations_stat().mean();
         if (duration_sec > min_sample_duration_sec_) {
             break;
         }
