@@ -40,7 +40,7 @@ TEST_CASE("stat_bench::clock::impl::monotone_clock_now") {
         const double actual_duration_sec =
             static_cast<double>(actual_duration_ticks) /
             static_cast<double>(stat_bench::clock::impl::monotone_clock_freq());
-        constexpr double tol = 0.1;
+        constexpr double tol = 0.5;
         REQUIRE_THAT(actual_duration_sec,
             Catch::Matchers::WithinRel(duration_sec, tol));  // NOLINT
     }

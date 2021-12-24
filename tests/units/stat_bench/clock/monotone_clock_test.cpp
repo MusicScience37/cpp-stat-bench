@@ -36,7 +36,7 @@ TEST_CASE("stat_bench::clock::MonotoneClock") {
 
         const auto actual_duration = end - start;
         const double actual_duration_sec = actual_duration.seconds();
-        constexpr double tol = 0.1;
+        constexpr double tol = 0.5;
         REQUIRE_THAT(actual_duration_sec,
             Catch::Matchers::WithinRel(duration_sec, tol));  // NOLINT
     }
