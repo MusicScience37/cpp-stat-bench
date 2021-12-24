@@ -19,6 +19,7 @@
  */
 #include "stat_bench/measurer/mean_processing_time_measurer.h"
 
+#include <algorithm>
 #include <cstddef>
 #include <limits>
 #include <stdexcept>
