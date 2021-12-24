@@ -76,7 +76,7 @@ void ConsoleReporter::measurement_succeeded(
     const measurer::Measurement& measurement) {
     double sum_ms = 0.0;
     double max_ms = 0.0;
-    std::size_t num = 0.0;
+    std::size_t num = 0;
     for (const auto& durations_per_thread : measurement.durations()) {
         for (const auto& duration : durations_per_thread) {
             const double duration_ms = duration.seconds() * 1e+3 /
