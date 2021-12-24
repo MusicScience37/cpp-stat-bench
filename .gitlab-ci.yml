@@ -355,6 +355,7 @@ msvc-release:
     - choco install python --version=3.9.9 -y
     - RefreshEnv
     - pip install pipenv
+    - pipenv install --dev
     - mkdir $BUILD_DIR
     - cd $BUILD_DIR
     - pipenv run conan profile new --detect default
