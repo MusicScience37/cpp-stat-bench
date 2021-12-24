@@ -6,6 +6,9 @@ target_link_libraries(stat_bench PUBLIC fmt::fmt bfg::lyra)
 set_target_properties(stat_bench PROPERTIES VERSION ${PROJECT_VERSION})
 target_check_clang_tidy(stat_bench)
 
+find_package(Threads REQUIRED)
+target_link_libraries(stat_bench PUBLIC Threads::Threads)
+
 function(preprocess_template PATH VAR_NAME)
     file(READ "${CMAKE_CURRENT_SOURCE_DIR}/${PATH}" CONTENTS)
     file(
@@ -13,5 +16,4 @@ function(preprocess_template PATH VAR_NAME)
         "#pragma once\nstatic constexpr const char* ${VAR_NAME} = R\"(${CONTENTS})\";"
     )
 endfunction()
-
 preprocess_template(stat_bench/reporter/template/line2d.html line2d)

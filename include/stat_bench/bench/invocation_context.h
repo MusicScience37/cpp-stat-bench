@@ -20,8 +20,10 @@
 #pragma once
 
 #include <cstddef>
+#include <exception>
 #include <mutex>
 #include <stdexcept>
+#include <thread>
 #include <vector>
 
 #include "stat_bench/bench/benchmark_condition.h"
@@ -45,12 +47,7 @@ public:
      */
     InvocationContext(
         BenchmarkCondition cond, std::size_t iterations, std::size_t samples)
-        : cond_(cond), iterations_(iterations), samples_(samples) {
-        if (cond_.threads() != 1) {
-            throw std::invalid_argument(
-                "Number of threads must be one in the current implementation.");
-        }
-    }
+        : cond_(cond), iterations_(iterations), samples_(samples) {}
 
     InvocationContext(const InvocationContext&) = delete;
     InvocationContext(InvocationContext&&) = delete;
@@ -98,21 +95,33 @@ public:
     template <typename Func>
     void measure(const Func& func) {
         durations_.clear();
+        durations_.resize(cond_.threads());
 
-        clock::StopWatch watch;
-        watch.start(samples_);
-        const std::size_t thread_index = 0;
-        for (std::size_t sample_index = 0; sample_index < samples_;
-             ++sample_index) {
-            util::memory_barrier();
-            for (std::size_t iteration_index = 0; iteration_index < iterations_;
-                 ++iteration_index) {
-                func(thread_index, sample_index, iteration_index);
+        if (cond_.threads() == 1) {
+            measure_here(func, 0);
+        } else {
+            std::vector<std::thread> threads;
+            threads.reserve(cond_.threads());
+            std::exception_ptr error;
+            try {
+                for (std::size_t i = 0; i < cond_.threads(); ++i) {
+                    threads.emplace_back(
+                        [this, &func, i] { this->measure_here(func, i); });
+                }
+            } catch (...) {
+                error = std::current_exception();
             }
-            util::memory_barrier();
-            watch.lap();
+
+            for (std::size_t i = 0; i < cond_.threads(); ++i) {
+                if (threads.at(i).joinable()) {
+                    threads.at(i).join();
+                }
+            }
+
+            if (error) {
+                std::rethrow_exception(error);
+            }
         }
-        durations_.push_back(watch.calc_durations());
     }
 
     /*!
@@ -128,6 +137,32 @@ public:
     }
 
 private:
+    /*!
+     * \brief Measure time in the current thread.
+     *
+     * \tparam Func Type of function.
+     * \param[in] func Function.
+     * \param[in] thread_index Index of the thread.
+     */
+    template <typename Func>
+    void measure_here(const Func& func, std::size_t thread_index) {
+        clock::StopWatch watch;
+        watch.start(samples_);
+        for (std::size_t sample_index = 0; sample_index < samples_;
+             ++sample_index) {
+            util::memory_barrier();
+            for (std::size_t iteration_index = 0; iteration_index < iterations_;
+                 ++iteration_index) {
+                func(thread_index, sample_index, iteration_index);
+            }
+            util::memory_barrier();
+            watch.lap();
+        }
+
+        std::unique_lock<std::mutex> lock(durations_mutex_);
+        durations_.at(thread_index) = watch.calc_durations();
+    }
+
     //! Condition.
     BenchmarkCondition cond_;
 

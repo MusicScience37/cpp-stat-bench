@@ -19,6 +19,7 @@
  */
 #include "stat_bench/bench/invocation_context.h"
 
+#include <mutex>
 #include <tuple>
 #include <utility>
 
@@ -75,6 +76,32 @@ TEST_CASE("stat_bench::bench::InvocationContext") {
                 ++invocation_index;
             }
         }
+
+        const auto durations = context.durations();
+        REQUIRE(durations.size() == threads);
+        REQUIRE(durations.at(0).size() == samples);
+    }
+
+    SECTION("measure durations with threads") {
+        constexpr std::size_t threads = 2;
+        constexpr std::size_t iterations = 7;
+        constexpr std::size_t samples = 13;
+        stat_bench::bench::InvocationContext context{
+            stat_bench::bench::BenchmarkCondition(threads), iterations,
+            samples};
+
+        std::vector<std::tuple<std::size_t, std::size_t, std::size_t>>
+            invocations;
+        std::mutex mutex;
+        context.measure(
+            [&invocations, &mutex](std::size_t thread_index,
+                std::size_t sample_index, std::size_t iteration_index) {
+                std::unique_lock<std::mutex> lock(mutex);
+                invocations.emplace_back(
+                    thread_index, sample_index, iteration_index);
+            });
+
+        REQUIRE(invocations.size() == threads * iterations * samples);
 
         const auto durations = context.durations();
         REQUIRE(durations.size() == threads);

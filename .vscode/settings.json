@@ -24,6 +24,7 @@
     "Pipfile",
     "Plotly",
     "profraw",
+    "pthread",
     "SAST",
     "showlegend",
     "trompeloeil",

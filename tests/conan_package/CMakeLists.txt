@@ -26,7 +26,7 @@ find_package(cpp_stat_bench REQUIRED)
 
 enable_testing()
 add_executable(example example.cpp)
-target_link_libraries(example cpp_stat_bench::cpp_stat_bench)
+target_link_libraries(example cpp_stat_bench::stat_bench)
 add_test(
     NAME example
     COMMAND example
