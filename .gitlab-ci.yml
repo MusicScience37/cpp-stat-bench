@@ -362,6 +362,18 @@ msvc-release:
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
     - pipenv run conan install --build=missing -s build_type=Release ..
     - cd ../
+  script:
+    - cmake -S ./ -B $BUILD_DIR
+      -DCMAKE_BUILD_TYPE=Release
+      -DSTAT_BENCH_TESTING:BOOL=ON
+      -DSTAT_BENCH_ENABLE_BENCH=ON
+      -DSTAT_BENCH_TEST_BENCHMARKS=ON
+      -DSTAT_BENCH_BUILD_EXAMPLES=ON
+      -DSTAT_BENCH_TEST_EXAMPLES=ON
+      -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+    - cd $BUILD_DIR
+    - cmake --build . --config Release
+    - ctest -V
 
 doc:
   extends: .retry setting
