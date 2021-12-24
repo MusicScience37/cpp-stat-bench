@@ -9,7 +9,7 @@ target_check_clang_tidy(stat_bench)
 find_package(Threads REQUIRED)
 target_link_libraries(stat_bench PUBLIC Threads::Threads)
 
-if (MSVC)
+if(MSVC)
     target_compile_options(stat_bench PUBLIC /EHsc)
 endif()
 
