@@ -83,7 +83,7 @@ auto monotone_clock_now() noexcept -> TicksCount {
 }
 
 auto monotone_clock_freq() noexcept -> TicksCount {
-    static const TicksCount freq = static_cast<TicksCount>(
+    static const auto freq = static_cast<TicksCount>(
         std::chrono::steady_clock::duration::period::den /
         std::chrono::steady_clock::duration::period::num);
     return freq;
