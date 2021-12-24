@@ -65,6 +65,47 @@ auto monotone_clock_freq() noexcept -> TicksCount {
 }  // namespace clock
 }  // namespace stat_bench
 
+#elif defined(__unix__)
+
+/* *****************************************************************
+ * For UNIX.
+ * *****************************************************************/
+
+#include <cstdio>
+#include <cstdlib>
+
+#include <time.h>  // NOLINT
+
+#ifdef CLOCK_MONOTONIC_RAW
+#define STAT_BENCH_CLOCK_ID CLOCK_MONOTONIC_RAW
+#else
+#define STAT_BENCH_CLOCK_ID CLOCK_MONOTONIC
+#endif
+
+namespace stat_bench {
+namespace clock {
+namespace impl {
+
+static constexpr TicksCount freq = 1000000000;
+
+auto monotone_clock_now() noexcept -> TicksCount {
+    timespec ts{};
+    if (clock_gettime(STAT_BENCH_CLOCK_ID, &ts) != 0) {
+        std::perror("Failed to get the current tick.");
+        std::abort();
+    }
+    auto ticks = static_cast<TicksCount>(ts.tv_sec);
+    ticks *= freq;
+    ticks += ts.tv_nsec;
+    return ticks;
+}
+
+auto monotone_clock_freq() noexcept -> TicksCount { return freq; }
+
+}  // namespace impl
+}  // namespace clock
+}  // namespace stat_bench
+
 #else
 
 /* *****************************************************************
