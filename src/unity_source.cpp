@@ -1,4 +1,5 @@
 #include "stat_bench/clock/monotone_clock_impl.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "stat_bench/measurer/calc_stat.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/measurer/mean_processing_time_measurer.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/measurer/processing_time_measurer.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/reporter/cdf_line_plot_reporter.cpp"  // NOLINT(bugprone-suspicious-include)
