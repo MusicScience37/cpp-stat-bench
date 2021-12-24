@@ -61,6 +61,8 @@ auto monotone_clock_freq() noexcept -> TicksCount {
     return freq;
 }
 
+auto monotone_clock_res() noexcept -> TicksCount { return 1; }
+
 }  // namespace impl
 }  // namespace clock
 }  // namespace stat_bench
@@ -102,6 +104,18 @@ auto monotone_clock_now() noexcept -> TicksCount {
 
 auto monotone_clock_freq() noexcept -> TicksCount { return freq; }
 
+auto monotone_clock_res() noexcept -> TicksCount {
+    timespec ts{};
+    if (clock_getres(STAT_BENCH_CLOCK_ID, &ts) != 0) {
+        std::perror("Failed to get the resolution of the clock.");
+        std::abort();
+    }
+    auto ticks = static_cast<TicksCount>(ts.tv_sec);
+    ticks *= freq;
+    ticks += ts.tv_nsec;
+    return ticks;
+}
+
 }  // namespace impl
 }  // namespace clock
 }  // namespace stat_bench
@@ -129,6 +143,8 @@ auto monotone_clock_freq() noexcept -> TicksCount {
         std::chrono::steady_clock::duration::period::num);
     return freq;
 }
+
+auto monotone_clock_res() noexcept -> TicksCount { return 1; }
 
 }  // namespace impl
 }  // namespace clock

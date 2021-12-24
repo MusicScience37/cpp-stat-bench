@@ -45,6 +45,13 @@ namespace impl {
  */
 [[nodiscard]] auto monotone_clock_freq() noexcept -> TicksCount;
 
+/*!
+ * \brief Get the resolution of ticks in a monotone clock.
+ *
+ * \return Resolution.
+ */
+[[nodiscard]] auto monotone_clock_res() noexcept -> TicksCount;
+
 }  // namespace impl
 }  // namespace clock
 }  // namespace stat_bench

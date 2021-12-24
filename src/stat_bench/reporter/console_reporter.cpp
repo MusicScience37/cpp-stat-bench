@@ -31,22 +31,28 @@ ConsoleReporter::ConsoleReporter(std::FILE* file) : file_(file) {}
 void ConsoleReporter::experiment_starts(
     const clock::SystemTimePoint& time_stamp) {
     fmt::print(file_, "Benchmark start at {}\n\n", time_stamp);
+
     fmt::print(file_, "Time resolution: {:.3e} sec.\n\n",
-        1.0 / static_cast<double>(clock::impl::monotone_clock_freq()));
+        static_cast<double>(clock::impl::monotone_clock_res()) /
+            static_cast<double>(clock::impl::monotone_clock_freq()));
+
     std::fflush(file_);
 }
 
 void ConsoleReporter::experiment_finished(
     const clock::SystemTimePoint& time_stamp) {
     fmt::print(file_, "Benchmark finished at {}\n", time_stamp);
+    std::fflush(file_);
 }
 
 void ConsoleReporter::measurer_starts(const std::string& name) {
     fmt::print(file_, "## {}\n\n", name);
+    std::fflush(file_);
 }
 
 void ConsoleReporter::measurer_finished(const std::string& name) {
     fmt::print(file_, "\n");
+    std::fflush(file_);
 }
 
 static constexpr const char* console_table_format =
@@ -60,6 +66,7 @@ void ConsoleReporter::group_starts(const std::string& name) {
     fmt::print(file_, console_table_format_label, "", "Iterations", "Samples",
         "Mean [ms]", "Max [ms]");
     fmt::print(file_, "{:-<82}\n", "");
+    std::fflush(file_);
 }
 
 void ConsoleReporter::group_finished(const std::string& /*name*/) {
@@ -95,6 +102,7 @@ void ConsoleReporter::measurement_succeeded(
     const double mean_ms = sum_ms / static_cast<double>(num);
     fmt::print(file_, console_table_format, measurement.case_info(),
         measurement.iterations(), measurement.samples(), mean_ms, max_ms);
+    std::fflush(file_);
 }
 
 void ConsoleReporter::measurement_failed(
@@ -105,6 +113,7 @@ void ConsoleReporter::measurement_failed(
     } catch (const std::exception& e) {
         fmt::print(file_, console_table_format_error, case_info, e.what());
     }
+    std::fflush(file_);
 }
 
 }  // namespace reporter

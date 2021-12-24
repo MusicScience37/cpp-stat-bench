@@ -45,3 +45,9 @@ TEST_CASE("stat_bench::clock::impl::monotone_clock_now") {
             Catch::Matchers::WithinRel(duration_sec, tol));  // NOLINT
     }
 }
+
+TEST_CASE("stat_bench::clock::impl::monotone_clock_res") {
+    SECTION("get resolution") {
+        REQUIRE(stat_bench::clock::impl::monotone_clock_res() > 0);
+    }
+}
