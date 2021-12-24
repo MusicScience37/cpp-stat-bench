@@ -23,6 +23,7 @@
 #include <vector>
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_container_properties.hpp>
 
 TEST_CASE("stat_bench::util::Statistics") {
     SECTION("calculate") {
@@ -63,5 +64,10 @@ TEST_CASE("stat_bench::util::Statistics") {
         REQUIRE(stat.min() == val);                 // NOLINT
         REQUIRE(stat.variance() == 0.0);            // NOLINT
         REQUIRE(stat.standard_deviation() == 0.0);  // NOLINT
+    }
+
+    SECTION("calculate for no sample") {
+        stat_bench::util::Statistics stat;
+        REQUIRE_THROWS(stat.calc());
     }
 }

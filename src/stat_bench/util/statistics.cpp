@@ -22,6 +22,7 @@
 #include <algorithm>
 #include <cmath>
 #include <limits>
+#include <stdexcept>
 
 namespace stat_bench {
 namespace util {
@@ -41,6 +42,10 @@ void Statistics::add(double val) {
 }
 
 void Statistics::calc() {
+    if (sorted_samples_.empty()) {
+        throw std::invalid_argument("No sample for statistics.");
+    }
+
     double sum = 0.0;
     max_ = std::numeric_limits<double>::min();
     min_ = std::numeric_limits<double>::max();
