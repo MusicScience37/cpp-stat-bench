@@ -352,6 +352,12 @@ msvc-release:
     - choco install cmake -y --installargs 'ADD_CMAKE_TO_PATH=System'
     - choco install python --version=3.8.0 -y
     - RefreshEnv
+    - mkdir $BUILD_DIR
+    - cd $BUILD_DIR
+    - pipenv run conan profile new --detect default
+    - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
+    - pipenv run conan install --build=missing -s build_type=Release ..
+    - cd ../
 
 doc:
   extends: .retry setting
