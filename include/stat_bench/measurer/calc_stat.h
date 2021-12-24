@@ -31,11 +31,12 @@ namespace measurer {
  * \brief Calculate statistics.
  *
  * \param[in] durations Durations.
+ * \param[in] iterations Number of iterations.
  * \return Statistics.
  */
 [[nodiscard]] auto calc_stat(
-    const std::vector<std::vector<clock::Duration>>& durations)
-    -> util::Statistics;
+    const std::vector<std::vector<clock::Duration>>& durations,
+    std::size_t iterations) -> util::Statistics;
 
 /*!
  * \brief Calculate statistics.

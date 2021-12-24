@@ -24,17 +24,18 @@
 namespace stat_bench {
 namespace measurer {
 
-auto calc_stat(const std::vector<std::vector<clock::Duration>>& durations)
-    -> util::Statistics {
+auto calc_stat(const std::vector<std::vector<clock::Duration>>& durations,
+    std::size_t iterations) -> util::Statistics {
     if (durations.empty() || durations.at(0).empty()) {
         throw std::invalid_argument("No duration sample for statistics.");
     }
 
     util::Statistics stat;
     stat.reserve(durations.size() * durations.at(0).size());
+    const double inv_iterations = 1.0 / static_cast<double>(iterations);
     for (const auto& durations_per_thread : durations) {
         for (const auto& duration : durations_per_thread) {
-            stat.add(duration.seconds());
+            stat.add(duration.seconds() * inv_iterations);
         }
     }
     stat.calc();

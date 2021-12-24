@@ -57,7 +57,7 @@ public:
           iterations_(iterations),
           samples_(samples),
           durations_(std::move(durations)),
-          durations_stat_(calc_stat(durations_)) {}
+          durations_stat_(calc_stat(durations_, iterations)) {}
 
     /*!
      * \brief Get the information of the case.

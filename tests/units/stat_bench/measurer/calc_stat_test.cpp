@@ -29,12 +29,13 @@ TEST_CASE("stat_bench::measurer::calc_stat(Duration)") {
     using stat_bench::clock::Duration;
 
     SECTION("calculate") {
+        constexpr std::size_t iterations = 2;
         const stat_bench::clock::TicksCount freq = Duration::freq();
         const std::vector<std::vector<Duration>> data{
-            {Duration(2 * freq), Duration(6 * freq)},
-            {Duration(freq), Duration(3 * freq)}};
+            {Duration(4 * freq), Duration(12 * freq)},
+            {Duration(2 * freq), Duration(6 * freq)}};
 
-        const auto stat = stat_bench::measurer::calc_stat(data);
+        const auto stat = stat_bench::measurer::calc_stat(data, iterations);
 
         REQUIRE(stat.sorted_samples() ==
             std::vector<double>{1.0, 2.0, 3.0, 6.0});                // NOLINT
