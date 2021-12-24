@@ -21,6 +21,8 @@
 
 #include <fmt/format.h>
 
+#include "stat_bench/clock/monotone_clock_impl.h"
+
 namespace stat_bench {
 namespace reporter {
 
@@ -29,6 +31,8 @@ ConsoleReporter::ConsoleReporter(std::FILE* file) : file_(file) {}
 void ConsoleReporter::experiment_starts(
     const clock::SystemTimePoint& time_stamp) {
     fmt::print(file_, "Benchmark start at {}\n\n", time_stamp);
+    fmt::print(file_, "Time resolution: {:.3e} sec.\n\n",
+        1.0 / static_cast<double>(clock::impl::monotone_clock_freq()));
     std::fflush(file_);
 }
 
