@@ -373,7 +373,7 @@ msvc-release:
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
     - cd $BUILD_DIR
     - cmake --build . --config Release
-    - ctest -V
+    - ctest -V --build-config Release
 
 doc:
   extends: .retry setting
