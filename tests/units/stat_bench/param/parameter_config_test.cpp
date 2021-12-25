@@ -69,4 +69,13 @@ TEST_CASE("stat_bench::param::ParameterConfig") {
 
         REQUIRE(!generator.iterate());
     }
+
+    SECTION("check parameter existence") {
+        stat_bench::param::ParameterConfig config;
+
+        (void)config.add<int>("param1");
+
+        REQUIRE(config.has("param1"));
+        REQUIRE(!config.has("invalid"));
+    }
 }

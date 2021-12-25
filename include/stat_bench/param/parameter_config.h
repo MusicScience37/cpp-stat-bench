@@ -19,6 +19,7 @@
  */
 #pragma once
 
+#include <algorithm>
 #include <memory>
 #include <string>
 #include <utility>
@@ -53,6 +54,20 @@ public:
         auto vec = std::make_shared<ParameterValueVector<T>>();
         params_.emplace_back(param_name, vec);
         return vec;
+    }
+
+    /*!
+     * \brief Check whether a parameter exists.
+     *
+     * \param[in] param_name Parameter name.
+     * \return Whether the parameter with the given name exists.
+     */
+    [[nodiscard]] auto has(const std::string& param_name) -> bool {
+        return std::find_if(params_.begin(), params_.end(),
+                   [&param_name](const std::pair<std::string,
+                       std::shared_ptr<IParameterValueVector>>& pair) {
+                       return pair.first == param_name;
+                   }) != params_.end();
     }
 
     /*!
