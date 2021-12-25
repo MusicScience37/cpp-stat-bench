@@ -34,13 +34,14 @@ TEST_CASE("stat_bench::bench::InvocationContext") {
         constexpr std::size_t samples = 13;
 
         const stat_bench::bench::InvocationContext context{
-            stat_bench::bench::BenchmarkCondition(threads,
+            stat_bench::bench::BenchmarkCondition(
                 stat_bench_test::param::create_ordinary_parameter_dict()),
             iterations, samples};
 
         REQUIRE(context.threads() == threads);
         REQUIRE(context.iterations() == iterations);
         REQUIRE(context.samples() == samples);
+        REQUIRE(context.get_param<std::size_t>("threads") == 1);
     }
 
     SECTION("measure durations") {

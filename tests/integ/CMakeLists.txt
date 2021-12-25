@@ -14,6 +14,16 @@ add_test(
             --mean_samples 5
     WORKING_DIRECTORY ${STAT_BENCH_TEMP_TEST_DIR})
 
+add_executable(stat_bench_test_integ_parametrized_benchmark
+               parametrized_benchmark.cpp)
+target_link_libraries(stat_bench_test_integ_parametrized_benchmark
+                      PRIVATE stat_bench)
+add_test(
+    NAME stat_bench_test_integ_parametrized_benchmark
+    COMMAND stat_bench_test_integ_parametrized_benchmark --plot ./ --samples 5
+            --mean_samples 5
+    WORKING_DIRECTORY ${STAT_BENCH_TEMP_TEST_DIR})
+
 add_executable(stat_bench_test_integ_error_in_benchmark error_in_benchmark.cpp)
 target_link_libraries(stat_bench_test_integ_error_in_benchmark
                       PRIVATE stat_bench)

@@ -20,6 +20,7 @@
 #pragma once
 
 #include <cstddef>
+#include <utility>
 
 #include "stat_bench/bench/benchmark_condition.h"
 #include "stat_bench/bench/threadable_invoker.h"
@@ -42,7 +43,7 @@ public:
      */
     InvocationContext(
         BenchmarkCondition cond, std::size_t iterations, std::size_t samples)
-        : cond_(cond), iterations_(iterations), samples_(samples) {}
+        : cond_(std::move(cond)), iterations_(iterations), samples_(samples) {}
 
     InvocationContext(const InvocationContext&) = delete;
     InvocationContext(InvocationContext&&) = delete;
@@ -79,6 +80,19 @@ public:
      */
     [[nodiscard]] auto samples() const noexcept -> std::size_t {
         return samples_;
+    }
+
+    /*!
+     * \brief Get a parameter.
+     *
+     * \tparam T Type of the parameter value.
+     * \param[in] param_name Parameter name.
+     * \return Parameter value.
+     */
+    template <typename T>
+    [[nodiscard]] auto get_param(const std::string& param_name) const
+        -> const T& {
+        return cond_.params().get<T>(param_name);
     }
 
     /*!
