@@ -21,12 +21,15 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include "../param/create_ordinary_parameter_dict.h"
+
 TEST_CASE("stat_bench::measurer::Measurement") {
     using stat_bench::clock::Duration;
 
     SECTION("construct") {
         const auto info = stat_bench::bench::BenchmarkCaseInfo("group", "case");
-        const auto cond = stat_bench::bench::BenchmarkCondition(5);
+        const auto cond = stat_bench::bench::BenchmarkCondition(
+            5, stat_bench_test::param::create_ordinary_parameter_dict());
         const auto measurer_name = std::string("measurer");
         const std::size_t iterations = 7;
         const std::size_t samples = 11;

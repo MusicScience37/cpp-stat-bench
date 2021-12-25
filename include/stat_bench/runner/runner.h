@@ -164,6 +164,18 @@ private:
     void run_case(const std::shared_ptr<measurer::IMeasurer>& measurer,
         const std::shared_ptr<bench::IBenchmarkCase>& bench_case) const;
 
+    /*!
+     * \brief Run a case.
+     *
+     * \param[in] measurer Measurer.
+     * \param[in] bench_case Case.
+     * \param[in] cond Condition.
+     */
+    void run_case_with_condition(
+        const std::shared_ptr<measurer::IMeasurer>& measurer,
+        const std::shared_ptr<bench::IBenchmarkCase>& bench_case,
+        const bench::BenchmarkCondition& cond) const;
+
     //! Configurations.
     Config config_{};
 

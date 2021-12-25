@@ -52,7 +52,7 @@ public:
         std::size_t iterations, std::size_t samples,
         std::vector<std::vector<clock::Duration>> durations)
         : case_info_(std::move(case_info)),
-          cond_(cond),
+          cond_(std::move(cond)),
           measurer_name_(std::move(measurer_name)),
           iterations_(iterations),
           samples_(samples),

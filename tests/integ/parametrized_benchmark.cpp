@@ -17,21 +17,16 @@
  * \file
  * \brief Benchmark of fibonacci.
  */
+#include <cstddef>
+
 #include "stat_bench/benchmark_macros.h"
 #include "stat_bench/util/do_not_optimize.h"
-
-[[nodiscard]] auto fibonacci(std::uint64_t number) -> std::uint64_t {
-    if (number < 2) {
-        return 1;
-    }
-    return fibonacci(number - 1) + fibonacci(number - 2);
-}
 
 class Fixture : public stat_bench::FixtureBase {
 public:
     Fixture() {
         // NOLINTNEXTLINE
-        add_param<std::uint64_t>("number")->add(10)->add(20)->add(30);
+        add_param<std::uint64_t>("number")->add(20)->add(30);
     }
 
     void setup(stat_bench::bench::InvocationContext& context) override {
@@ -42,7 +37,14 @@ protected:
     std::uint64_t number_{0};
 };
 
-STAT_BENCH_CASE_F(Fixture, "Fibonacci", "Fibonacci") {
+[[nodiscard]] auto fibonacci(std::uint64_t number) -> std::uint64_t {
+    if (number < 2) {
+        return 1;
+    }
+    return fibonacci(number - 1) + fibonacci(number - 2);
+}
+
+STAT_BENCH_CASE_F(Fixture, "FibonacciParametrized", "Fibonacci") {
     STAT_BENCH_MEASURE() {
         stat_bench::util::do_not_optimize(number_);
         stat_bench::util::do_not_optimize(fibonacci(number_));

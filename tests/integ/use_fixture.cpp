@@ -21,6 +21,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include "../units/stat_bench/param/create_ordinary_parameter_dict.h"
 #include "stat_bench/bench/invocation_context.h"
 #include "stat_bench/benchmark_macros.h"
 
@@ -64,7 +65,9 @@ TEST_CASE("STAT_BENCH_CASE_F") {
     REQUIRE(benchmarks.at(0).cases().at(0)->info().case_name() == "Add");
 
     stat_bench::bench::InvocationContext context{
-        stat_bench::bench::BenchmarkCondition(1), 1, 1};
+        stat_bench::bench::BenchmarkCondition(
+            1, stat_bench_test::param::create_ordinary_parameter_dict()),
+        1, 1};
 
     state = 1;
     REQUIRE_NOTHROW(benchmarks.at(0).cases().at(0)->execute(context));

@@ -107,8 +107,8 @@ void CdfLinePlotReporter::measurement_succeeded(
     type: "scatter",
     name: "{} (threads={})",
 }},)***"),
-        fmt::join(x, ", "), fmt::join(y, ", "), measurement.case_info(),
-        measurement.cond().threads());
+        fmt::join(x, ", "), fmt::join(y, ", "),
+        measurement.case_info().case_name(), measurement.cond().threads());
 }
 
 void CdfLinePlotReporter::measurement_failed(

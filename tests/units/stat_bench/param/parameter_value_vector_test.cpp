@@ -15,22 +15,30 @@
  */
 /*!
  * \file
- * \brief Test of BenchmarkCondition class.
+ * \brief Test of ParameterValueVector class.
  */
-#include "stat_bench/bench/benchmark_condition.h"
+#include "stat_bench/param/parameter_value_vector.h"
 
 #include <catch2/catch_test_macros.hpp>
 
-#include "../param/create_ordinary_parameter_dict.h"
+TEST_CASE("stat_bench::param::ParameterValueVector") {
+    SECTION("add values") {
+        const auto vec = std::make_shared<
+            stat_bench::param::ParameterValueVector<std::string>>();
 
-TEST_CASE("stat_bench::bench::BenchmarkCondition") {
-    SECTION("construct") {
-        constexpr std::size_t threads = 7;
+        vec->add("Test1")->add("Test2");
+        REQUIRE(vec->size() == 2);
 
-        const auto cond = stat_bench::bench::BenchmarkCondition(
-            threads, stat_bench_test::param::create_ordinary_parameter_dict());
+        auto iter = vec->begin();
+        auto end = vec->end();
+        REQUIRE(iter != end);
+        REQUIRE(iter->as<std::string>() == "Test1");
 
-        REQUIRE(cond.threads() == threads);
-        REQUIRE(fmt::format("{}", cond.params()) == "threads=1");
+        ++iter;
+        REQUIRE(iter != end);
+        REQUIRE(iter->as<std::string>() == "Test2");
+
+        ++iter;
+        REQUIRE(iter == end);
     }
 }
