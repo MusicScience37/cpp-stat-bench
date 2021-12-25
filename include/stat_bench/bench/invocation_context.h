@@ -20,15 +20,10 @@
 #pragma once
 
 #include <cstddef>
-#include <exception>
-#include <mutex>
-#include <stdexcept>
-#include <thread>
-#include <vector>
 
 #include "stat_bench/bench/benchmark_condition.h"
-#include "stat_bench/clock/stop_watch.h"
-#include "stat_bench/util/memory_barrier.h"
+#include "stat_bench/bench/threadable_invoker.h"
+#include "stat_bench/clock/duration.h"
 
 namespace stat_bench {
 namespace bench {
@@ -93,35 +88,10 @@ public:
      * \param[in] func Function.
      */
     template <typename Func>
-    void measure(const Func& func) {
-        durations_.clear();
-        durations_.resize(cond_.threads());
-
-        if (cond_.threads() == 1) {
-            measure_here(func, 0);
-        } else {
-            std::vector<std::thread> threads;
-            threads.reserve(cond_.threads());
-            std::exception_ptr error;
-            try {
-                for (std::size_t i = 0; i < cond_.threads(); ++i) {
-                    threads.emplace_back(
-                        [this, &func, i] { this->measure_here(func, i); });
-                }
-            } catch (...) {
-                error = std::current_exception();
-            }
-
-            for (std::size_t i = 0; i < cond_.threads(); ++i) {
-                if (threads.at(i).joinable()) {
-                    threads.at(i).join();
-                }
-            }
-
-            if (error) {
-                std::rethrow_exception(error);
-            }
-        }
+    inline void measure(const Func& func) {
+        durations_ =
+            ThreadableInvoker(cond_.threads(), iterations_, samples_, 0)
+                .measure(func);
     }
 
     /*!
@@ -137,32 +107,6 @@ public:
     }
 
 private:
-    /*!
-     * \brief Measure time in the current thread.
-     *
-     * \tparam Func Type of function.
-     * \param[in] func Function.
-     * \param[in] thread_index Index of the thread.
-     */
-    template <typename Func>
-    void measure_here(const Func& func, std::size_t thread_index) {
-        clock::StopWatch watch;
-        watch.start(samples_);
-        for (std::size_t sample_index = 0; sample_index < samples_;
-             ++sample_index) {
-            util::memory_barrier();
-            for (std::size_t iteration_index = 0; iteration_index < iterations_;
-                 ++iteration_index) {
-                func(thread_index, sample_index, iteration_index);
-            }
-            util::memory_barrier();
-            watch.lap();
-        }
-
-        std::unique_lock<std::mutex> lock(durations_mutex_);
-        durations_.at(thread_index) = watch.calc_durations();
-    }
-
     //! Condition.
     BenchmarkCondition cond_;
 
@@ -174,9 +118,6 @@ private:
 
     //! Measured durations.
     std::vector<std::vector<clock::Duration>> durations_{};
-
-    //! Mutex for durations.
-    std::mutex durations_mutex_{};
 };
 
 }  // namespace bench
