@@ -19,7 +19,7 @@
  */
 #pragma once
 
-#include "stat_bench/bench/i_benchmark_case.h"
+#include "stat_bench/bench/benchmark_base.h"
 
 namespace stat_bench {
 namespace bench {
@@ -27,7 +27,7 @@ namespace bench {
 /*!
  * \brief Base class of fixtures.
  */
-class FixtureBase : public IBenchmarkCase {
+class FixtureBase : public BenchmarkBase {
 public:
     /*!
      * \brief Setup before running actual process.

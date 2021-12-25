@@ -32,6 +32,10 @@ public:
         info, const stat_bench::bench::BenchmarkCaseInfo&(), noexcept override);
 
     // NOLINTNEXTLINE
+    MAKE_CONST_MOCK0(
+        params, const stat_bench::param::ParameterConfig&(), noexcept override);
+
+    // NOLINTNEXTLINE
     MAKE_MOCK1(execute, void(stat_bench::bench::InvocationContext&), override);
 
     MockBenchmarkCase() = default;

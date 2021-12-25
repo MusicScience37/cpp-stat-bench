@@ -24,6 +24,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include <trompeloeil.hpp>
 
+#include "../param/create_ordinary_parameter_dict.h"
 #include "mock_fixture.h"
 #include "stat_bench/bench/i_benchmark_case.h"
 
@@ -37,7 +38,9 @@ TEST_CASE("stat_bench::bench::FixtureBase") {
     constexpr std::size_t samples = 13;
 
     stat_bench::bench::InvocationContext context{
-        stat_bench::bench::BenchmarkCondition(threads), iterations, samples};
+        stat_bench::bench::BenchmarkCondition(
+            threads, stat_bench_test::param::create_ordinary_parameter_dict()),
+        iterations, samples};
 
     SECTION("execute") {
         trompeloeil::sequence seq;

@@ -119,12 +119,32 @@ void Runner::run(const bench::BenchmarkCaseRegistry& registry) const {
 
 void Runner::run_case(const std::shared_ptr<measurer::IMeasurer>& measurer,
     const std::shared_ptr<bench::IBenchmarkCase>& bench_case) const {
+    auto params = bench_case->params();
+    if (!params.has("threads")) {
+        params.add<std::size_t>("threads")->add(1);
+    }
+    auto generator = params.create_generator();
+
+    while (true) {
+        const auto cond = bench::BenchmarkCondition(generator.generate());
+
+        run_case_with_condition(measurer, bench_case, cond);
+
+        if (!generator.iterate()) {
+            break;
+        }
+    }
+}
+
+void Runner::run_case_with_condition(
+    const std::shared_ptr<measurer::IMeasurer>& measurer,
+    const std::shared_ptr<bench::IBenchmarkCase>& bench_case,
+    const bench::BenchmarkCondition& cond) const {
     for (const auto& reporter : reporters_) {
         reporter->case_starts(bench_case->info());
     }
 
     constexpr std::size_t threads = 1;
-    const auto cond = bench::BenchmarkCondition(threads);
     std::exception_ptr error_in_reporter;
     try {
         const auto measurement = measurer->measure(bench_case.get(), cond);

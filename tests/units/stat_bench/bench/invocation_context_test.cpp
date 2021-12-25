@@ -25,6 +25,8 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include "../param/create_ordinary_parameter_dict.h"
+
 TEST_CASE("stat_bench::bench::InvocationContext") {
     SECTION("construct") {
         constexpr std::size_t threads = 1;
@@ -32,8 +34,9 @@ TEST_CASE("stat_bench::bench::InvocationContext") {
         constexpr std::size_t samples = 13;
 
         const stat_bench::bench::InvocationContext context{
-            stat_bench::bench::BenchmarkCondition(threads), iterations,
-            samples};
+            stat_bench::bench::BenchmarkCondition(threads,
+                stat_bench_test::param::create_ordinary_parameter_dict()),
+            iterations, samples};
 
         REQUIRE(context.threads() == threads);
         REQUIRE(context.iterations() == iterations);
@@ -45,8 +48,9 @@ TEST_CASE("stat_bench::bench::InvocationContext") {
         constexpr std::size_t iterations = 7;
         constexpr std::size_t samples = 13;
         stat_bench::bench::InvocationContext context{
-            stat_bench::bench::BenchmarkCondition(threads), iterations,
-            samples};
+            stat_bench::bench::BenchmarkCondition(threads,
+                stat_bench_test::param::create_ordinary_parameter_dict()),
+            iterations, samples};
 
         std::vector<std::tuple<std::size_t, std::size_t, std::size_t>>
             invocations;
@@ -87,8 +91,9 @@ TEST_CASE("stat_bench::bench::InvocationContext") {
         constexpr std::size_t iterations = 7;
         constexpr std::size_t samples = 13;
         stat_bench::bench::InvocationContext context{
-            stat_bench::bench::BenchmarkCondition(threads), iterations,
-            samples};
+            stat_bench::bench::BenchmarkCondition(threads,
+                stat_bench_test::param::create_ordinary_parameter_dict()),
+            iterations, samples};
 
         std::vector<std::tuple<std::size_t, std::size_t, std::size_t>>
             invocations;

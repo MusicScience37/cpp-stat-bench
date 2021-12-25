@@ -68,14 +68,14 @@ auto format_duration(double val) -> std::string {
 
 }  // namespace
 
-#define CONSOLE_TABLE_FORMAT "{:<30}{:>10}{:>10}{:>15}{:>15}\n"
-#define CONSOLE_TABLE_FORMAT_ERROR "{:<30}{}\n"
+#define CONSOLE_TABLE_FORMAT "{:<50}{:>10}{:>10}{:>15}{:>15}\n"
+#define CONSOLE_TABLE_FORMAT_ERROR "{:<50}{}\n"
 
 void ConsoleReporter::group_starts(const std::string& name) {
     fmt::print(file_, FMT_STRING("### {}\n\n"), name);
     fmt::print(file_, FMT_STRING(CONSOLE_TABLE_FORMAT), "", "Iterations",
         "Samples", "Mean [ms]", "Max [ms]");
-    fmt::print(file_, FMT_STRING("{:-<100}\n"), "");
+    fmt::print(file_, FMT_STRING("{:-<102}\n"), "");
     std::fflush(file_);
 }
 
@@ -95,7 +95,9 @@ void ConsoleReporter::case_finished(
 
 void ConsoleReporter::measurement_succeeded(
     const measurer::Measurement& measurement) {
-    fmt::print(file_, FMT_STRING(CONSOLE_TABLE_FORMAT), measurement.case_info(),
+    fmt::print(file_, FMT_STRING(CONSOLE_TABLE_FORMAT),
+        fmt::format(FMT_STRING("{} ({}) "), measurement.case_info().case_name(),
+            measurement.cond().params()),
         measurement.iterations(), measurement.samples(),
         format_duration(measurement.durations_stat().mean()),
         format_duration(measurement.durations_stat().max()));

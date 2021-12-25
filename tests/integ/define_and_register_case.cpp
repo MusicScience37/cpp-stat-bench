@@ -21,6 +21,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include "../units/stat_bench/param/create_ordinary_parameter_dict.h"
 #include "stat_bench/bench/benchmark_condition.h"
 #include "stat_bench/benchmark_macros.h"
 
@@ -57,7 +58,9 @@ TEST_CASE("STAT_BENCH_CASE") {
     REQUIRE(benchmarks.at(1).cases().size() == 1);
 
     stat_bench::bench::InvocationContext context{
-        stat_bench::bench::BenchmarkCondition(1), 1, 1};
+        stat_bench::bench::BenchmarkCondition(
+            1, stat_bench_test::param::create_ordinary_parameter_dict()),
+        1, 1};
 
     const auto& case1 = benchmarks.at(0).cases().at(0);
     REQUIRE(case1->info().group_name() == "Group1");

@@ -62,7 +62,7 @@ public:
      * \param[in] param_name Parameter name.
      * \return Whether the parameter with the given name exists.
      */
-    [[nodiscard]] auto has(const std::string& param_name) -> bool {
+    [[nodiscard]] auto has(const std::string& param_name) const -> bool {
         return std::find_if(params_.begin(), params_.end(),
                    [&param_name](const std::pair<std::string,
                        std::shared_ptr<IParameterValueVector>>& pair) {
