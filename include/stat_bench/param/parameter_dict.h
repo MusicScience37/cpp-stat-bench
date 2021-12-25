@@ -22,6 +22,8 @@
 #include <string>
 #include <unordered_map>
 
+#include <fmt/format.h>
+
 #include "stat_bench/param/parameter_value.h"
 #include "stat_bench/stat_bench_exception.h"
 
@@ -58,6 +60,26 @@ public:
         return iter->second.as<T>();
     }
 
+    /*!
+     * \brief Format to string.
+     *
+     * \tparam OutputIter Type of the output iterator.
+     * \param[in] out Output iterator to write the formatted string.
+     * \return Output iterator after formatting.
+     */
+    template <typename OutputIter>
+    auto format_to(OutputIter out) const -> OutputIter {
+        auto pair_iter = data_.begin();
+        out = fmt::format_to(
+            out, "{}={}", pair_iter->first, pair_iter->second.to_string());
+        ++pair_iter;
+        for (; pair_iter != data_.end(); ++pair_iter) {
+            out = fmt::format_to(out, ", {}={}", pair_iter->first,
+                pair_iter->second.to_string());
+        }
+        return out;
+    }
+
 private:
     //! Data.
     std::unordered_map<std::string, ParameterValue> data_;
@@ -65,3 +87,29 @@ private:
 
 }  // namespace param
 }  // namespace stat_bench
+
+namespace fmt {
+
+/*!
+ * \brief Implementation of fmt::formatter for
+ * stat_bench::param::ParameterDict
+ */
+template <>
+struct formatter<stat_bench::param::ParameterDict>
+    : public formatter<std::string> {
+    /*!
+     * \brief Format.
+     *
+     * \tparam FormatContext Type of the context.
+     * \param[in] val Value.
+     * \param[in] context Context.
+     * \return Output iterator after formatting.
+     */
+    template <typename FormatContext>
+    auto format(const stat_bench::param::ParameterDict& val,
+        FormatContext& context) -> decltype(context.out()) {
+        return val.format_to(context.out());
+    }
+};
+
+}  // namespace fmt

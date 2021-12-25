@@ -20,6 +20,7 @@
 #include "stat_bench/param/parameter_dict.h"
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_string.hpp>
 
 #include "stat_bench/param/parameter_value.h"
 
@@ -38,5 +39,10 @@ TEST_CASE("stat_bench::param::ParameterDict") {
 
         REQUIRE_THROWS((void)dict.get<std::string>("Invalid"));
         REQUIRE_THROWS((void)dict.get<int>("Param2"));
+
+        REQUIRE_THAT(fmt::format("{}", dict),
+            Catch::Matchers::Contains("Param1=5") &&
+                Catch::Matchers::Contains("Param2=Value2") &&
+                Catch::Matchers::Contains(", "));
     }
 }
