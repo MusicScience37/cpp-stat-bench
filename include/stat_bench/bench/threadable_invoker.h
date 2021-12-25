@@ -76,7 +76,7 @@ public:
      * \return Measured durations per thread.
      */
     template <typename Func>
-    [[nodiscard]] auto measure(const Func& func) const
+    [[nodiscard]] inline auto measure(const Func& func) const
         -> std::vector<std::vector<clock::Duration>> {
         if (num_threads_ == 1) {
             return std::vector<std::vector<clock::Duration>>{
@@ -127,7 +127,7 @@ private:
      * \return Measured durations.
      */
     template <typename Func>
-    [[nodiscard]] auto measure_here(const Func& func,
+    [[nodiscard]] inline auto measure_here(const Func& func,
         std::size_t thread_index) const -> std::vector<clock::Duration> {
         clock::StopWatch watch;
 
@@ -165,7 +165,7 @@ private:
      * \param[out] promise Promise object to store the result.
      */
     template <typename Func>
-    void measure_here(const Func& func, std::size_t thread_index,
+    inline void measure_here(const Func& func, std::size_t thread_index,
         std::promise<std::vector<clock::Duration>>& promise) const noexcept {
         try {
             promise.set_value(measure_here(func, thread_index));
