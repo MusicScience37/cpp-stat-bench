@@ -3,7 +3,6 @@ set(SOURCE_FILES
     stat_bench/measurer/calc_stat.cpp
     stat_bench/measurer/mean_processing_time_measurer.cpp
     stat_bench/measurer/processing_time_measurer.cpp
-    stat_bench/param/parameter_value_test.cpp
     stat_bench/reporter/cdf_line_plot_reporter.cpp
     stat_bench/reporter/console_reporter.cpp
     stat_bench/reporter/render_template.cpp

@@ -15,6 +15,7 @@
 #include "stat_bench/measurer/mean_processing_time_measurer_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/measurer/measurement_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/measurer/processing_time_measurer_test.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "stat_bench/param/parameter_value_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/runner/runner_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/util/do_not_optimize_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/util/memory_barrier_test.cpp"  // NOLINT(bugprone-suspicious-include)
