@@ -31,7 +31,7 @@ namespace stat_bench {
 namespace param {
 
 /*!
- * \brief Class of generators of parameters.
+ * \brief Class of generators of parameter dictionaries.
  */
 class ParameterGenerator {
 public:
