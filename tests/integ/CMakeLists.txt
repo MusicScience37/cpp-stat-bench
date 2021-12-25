@@ -2,6 +2,9 @@ add_executable(stat_bench_test_integ_define_and_register_case
                define_and_register_case.cpp)
 target_add_catch2(stat_bench_test_integ_define_and_register_case)
 
+add_executable(stat_bench_test_integ_use_fixture use_fixture.cpp)
+target_add_catch2(stat_bench_test_integ_use_fixture)
+
 add_executable(stat_bench_test_integ_example_benchmark example_benchmark.cpp)
 target_link_libraries(stat_bench_test_integ_example_benchmark
                       PRIVATE stat_bench)
