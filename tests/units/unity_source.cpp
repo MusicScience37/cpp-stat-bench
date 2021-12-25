@@ -2,6 +2,7 @@
 #include "stat_bench/bench/benchmark_case_registry_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/bench/benchmark_condition_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/bench/benchmark_group_test.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "stat_bench/bench/fixture_base_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/bench/invocation_context_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/bench/threadable_invoker_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/clock/duration_test.cpp"  // NOLINT(bugprone-suspicious-include)

@@ -19,10 +19,20 @@
  */
 #pragma once
 
+#include "stat_bench/bench/fixture_base.h"
 #include "stat_bench/macros/case_impl.h"
 #include "stat_bench/macros/default_main.h"
 #include "stat_bench/macros/measure_impl.h"
 #include "stat_bench/macros/unique_name.h"
+
+namespace stat_bench {
+
+/*!
+ * \brief Base class of fixtures.
+ */
+using FixtureBase = ::stat_bench::bench::FixtureBase;
+
+}  // namespace stat_bench
 
 /*!
  * \brief Macro to define a case.
@@ -34,6 +44,19 @@
     STAT_BENCH_IMPL_CASE_IMPL(STAT_BENCH_IMPL_UNIQUE_NAME(StatBenchCase),   \
         STAT_BENCH_IMPL_UNIQUE_NAME(stat_bench_case_register_), GROUP_NAME, \
         CASE_NAME)
+
+/*!
+ * \brief Macro to define a case using a fixture.
+ *
+ * \param[in] FIXTURE_NAME Fixture name.
+ * \param[in] GROUP_NAME Group name.
+ * \param[in] CASE_NAME Case name.
+ */
+#define STAT_BENCH_CASE_F(FIXTURE_NAME, GROUP_NAME, CASE_NAME)                \
+    STAT_BENCH_IMPL_CASE_WITH_FIXTURE_IMPL(                                   \
+        STAT_BENCH_IMPL_UNIQUE_NAME(StatBenchCase),                           \
+        STAT_BENCH_IMPL_UNIQUE_NAME(stat_bench_case_register_), FIXTURE_NAME, \
+        GROUP_NAME, CASE_NAME)
 
 /*!
  * \brief Macro to measure a function.

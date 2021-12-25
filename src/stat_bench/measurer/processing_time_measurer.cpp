@@ -30,7 +30,7 @@ auto ProcessingTimeMeasurer::measure(bench::IBenchmarkCase* bench_case,
     const bench::BenchmarkCondition& cond) const -> Measurement {
     constexpr std::size_t iterations = 1;
     bench::InvocationContext context{cond, iterations, samples_};
-    bench_case->invoke(context);
+    bench_case->execute(context);
     if (context.durations().empty()) {
         throw std::runtime_error("No measurement was done.");
     }

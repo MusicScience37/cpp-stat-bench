@@ -39,11 +39,11 @@ public:
         -> const BenchmarkCaseInfo& = 0;
 
     /*!
-     * \brief Invoke the function of this case.
+     * \brief Execute this case.
      *
      * \param[in] context Context.
      */
-    virtual void invoke(InvocationContext& context) = 0;
+    virtual void execute(InvocationContext& context) = 0;
 
     IBenchmarkCase(const IBenchmarkCase&) = delete;
     IBenchmarkCase(IBenchmarkCase&&) = delete;

@@ -15,31 +15,38 @@
  */
 /*!
  * \file
- * \brief Definition of MockBenchmarkCase class.
+ * \brief Definition of MockFixture class.
  */
 #pragma once
 
 #include "../../trompeloeil.h"
-#include "stat_bench/bench/i_benchmark_case.h"
+#include "stat_bench/bench/fixture_base.h"
 
 namespace stat_bench_test {
 namespace bench {
 
-class MockBenchmarkCase final : public stat_bench::bench::IBenchmarkCase {
+class MockFixture final : public stat_bench::bench::FixtureBase {
 public:
     // NOLINTNEXTLINE
     MAKE_CONST_MOCK0(
         info, const stat_bench::bench::BenchmarkCaseInfo&(), noexcept override);
 
     // NOLINTNEXTLINE
-    MAKE_MOCK1(execute, void(stat_bench::bench::InvocationContext&), override);
+    MAKE_MOCK1(setup, void(stat_bench::bench::InvocationContext&), override);
 
-    MockBenchmarkCase() = default;
-    MockBenchmarkCase(const MockBenchmarkCase&) = delete;
-    MockBenchmarkCase(MockBenchmarkCase&&) = delete;
-    auto operator=(const MockBenchmarkCase&) -> MockBenchmarkCase& = delete;
-    auto operator=(MockBenchmarkCase&&) -> MockBenchmarkCase& = delete;
-    ~MockBenchmarkCase() override = default;
+    // NOLINTNEXTLINE
+    MAKE_MOCK1(
+        tear_down, void(stat_bench::bench::InvocationContext&), override);
+
+    // NOLINTNEXTLINE
+    MAKE_MOCK1(run, void(stat_bench::bench::InvocationContext&), override);
+
+    MockFixture() = default;
+    MockFixture(const MockFixture&) = delete;
+    MockFixture(MockFixture&&) = delete;
+    auto operator=(const MockFixture&) -> MockFixture& = delete;
+    auto operator=(MockFixture&&) -> MockFixture& = delete;
+    ~MockFixture() override = default;
 };
 
 }  // namespace bench
