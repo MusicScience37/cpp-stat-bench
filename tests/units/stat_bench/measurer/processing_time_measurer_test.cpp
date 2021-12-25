@@ -43,7 +43,7 @@ TEST_CASE("stat_bench::measurer::ProcessingTimeMeasurer") {
 
         // NOLINTNEXTLINE
         ALLOW_CALL(bench_case, info()).RETURN(info);
-        REQUIRE_CALL(bench_case, invoke(trompeloeil::_))
+        REQUIRE_CALL(bench_case, execute(trompeloeil::_))
             .TIMES(1)
             // NOLINTNEXTLINE
             .SIDE_EFFECT(_1.measure(

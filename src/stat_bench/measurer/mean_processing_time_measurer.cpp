@@ -57,7 +57,7 @@ auto MeanProcessingTimeMeasurer::measure_once(bench::IBenchmarkCase* bench_case,
     const bench::BenchmarkCondition& cond, std::size_t iterations,
     std::size_t samples) const -> Measurement {
     bench::InvocationContext context{cond, iterations, samples};
-    bench_case->invoke(context);
+    bench_case->execute(context);
     if (context.durations().empty()) {
         throw std::runtime_error("No measurement was done.");
     }

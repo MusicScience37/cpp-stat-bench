@@ -41,7 +41,7 @@
     public:                                                                \
         CLASS_NAME() : BenchCaseHelper(GROUP_NAME, CASE_NAME) {}           \
                                                                            \
-        void invoke(::stat_bench::bench::InvocationContext&                \
+        void execute(::stat_bench::bench::InvocationContext&               \
                 STAT_BENCH_IMPL_CONTEXT_NAME) override;                    \
     };                                                                     \
                                                                            \
@@ -50,5 +50,5 @@
                                                                            \
     } /* namespace */                                                      \
                                                                            \
-    void CLASS_NAME::invoke(                                               \
+    void CLASS_NAME::execute(                                              \
         ::stat_bench::bench::InvocationContext& STAT_BENCH_IMPL_CONTEXT_NAME)
