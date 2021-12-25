@@ -50,5 +50,6 @@ TEST_CASE("stat_bench::measurer::Measurement") {
         REQUIRE(measurement.durations().at(1).size() == 2);
         REQUIRE(measurement.durations().at(1).at(0).count() == 3);
         REQUIRE(measurement.durations().at(1).at(1).count() == 4);
+        REQUIRE(measurement.durations_stat().sorted_samples().size() == 4);
     }
 }

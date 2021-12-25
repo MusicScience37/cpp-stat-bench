@@ -26,6 +26,8 @@
 #include "stat_bench/bench/benchmark_case_info.h"
 #include "stat_bench/bench/benchmark_condition.h"
 #include "stat_bench/clock/duration.h"
+#include "stat_bench/measurer/calc_stat.h"
+#include "stat_bench/util/statistics.h"
 
 namespace stat_bench {
 namespace measurer {
@@ -54,7 +56,8 @@ public:
           measurer_name_(std::move(measurer_name)),
           iterations_(iterations),
           samples_(samples),
-          durations_(std::move(durations)) {}
+          durations_(std::move(durations)),
+          durations_stat_(calc_stat(durations_, iterations)) {}
 
     /*!
      * \brief Get the information of the case.
@@ -115,6 +118,16 @@ public:
         return durations_;
     }
 
+    /*!
+     * \brief Get the statistics of durations.
+     *
+     * \return Statistics of durations.
+     */
+    [[nodiscard]] auto durations_stat() const noexcept
+        -> const util::Statistics& {
+        return durations_stat_;
+    }
+
 private:
     //! Information of the case.
     bench::BenchmarkCaseInfo case_info_;
@@ -133,6 +146,9 @@ private:
 
     //! Measured durations.
     std::vector<std::vector<clock::Duration>> durations_;
+
+    //! Statistics of durations.
+    util::Statistics durations_stat_;
 };
 
 }  // namespace measurer
