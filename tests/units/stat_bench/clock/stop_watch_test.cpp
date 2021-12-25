@@ -47,4 +47,14 @@ TEST_CASE("stat_bench::clock::StopWatch") {
                 Catch::Matchers::WithinRel(duration_sec, tol));
         }
     }
+
+    SECTION("lack of samples") {
+        constexpr unsigned int duration_ms = 10;
+        constexpr double duration_sec = 0.01;
+        constexpr std::size_t num_laps = 7;
+
+        stat_bench::clock::StopWatch watch;
+        watch.start(num_laps);
+        REQUIRE_THROWS(watch.calc_durations());
+    }
 }
