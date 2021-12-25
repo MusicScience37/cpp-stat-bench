@@ -85,23 +85,11 @@ void ConsoleReporter::case_finished(
 
 void ConsoleReporter::measurement_succeeded(
     const measurer::Measurement& measurement) {
-    double sum_ms = 0.0;
-    double max_ms = 0.0;
-    std::size_t num = 0;
-    for (const auto& durations_per_thread : measurement.durations()) {
-        for (const auto& duration : durations_per_thread) {
-            const double duration_ms = duration.seconds() * 1e+3 /
-                static_cast<double>(measurement.iterations());
-            sum_ms += duration_ms;
-            if (duration_ms > max_ms) {
-                max_ms = duration_ms;
-            }
-            ++num;
-        }
-    }
-    const double mean_ms = sum_ms / static_cast<double>(num);
+    constexpr double sec_to_ms = 1e+3;
     fmt::print(file_, console_table_format, measurement.case_info(),
-        measurement.iterations(), measurement.samples(), mean_ms, max_ms);
+        measurement.iterations(), measurement.samples(),
+        measurement.durations_stat().mean() * sec_to_ms,
+        measurement.durations_stat().max() * sec_to_ms);
     std::fflush(file_);
 }
 
