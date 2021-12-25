@@ -16,15 +16,40 @@
 /*!
  * \file
  * \brief Definition of use_pointer function.
+ *
+ * \note Separate implementation to prevent optimization.
  */
 #include "stat_bench/util/use_pointer.h"
+
+#if defined(__GNUC__) || defined(__clang__)
+
+/* *****************************************************************
+ * For GCC and Clang with inline assembly.
+ * *****************************************************************/
 
 #include <atomic>
 
 namespace stat_bench {
 namespace util {
 
-// Separate implementation to prevent optimization.
+void use_pointer(void* ptr) noexcept {
+    // NOLINTNEXTLINE
+    asm volatile("" : : "g"(ptr) : "memory");
+}
+
+}  // namespace util
+}  // namespace stat_bench
+
+#else
+
+/* *****************************************************************
+ * Fallback implementation using volatile.
+ * *****************************************************************/
+
+#include <atomic>
+
+namespace stat_bench {
+namespace util {
 
 void use_pointer(void* ptr) noexcept {
     std::atomic_signal_fence(std::memory_order_acq_rel);
@@ -35,3 +60,5 @@ void use_pointer(void* ptr) noexcept {
 
 }  // namespace util
 }  // namespace stat_bench
+
+#endif
