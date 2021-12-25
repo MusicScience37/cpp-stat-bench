@@ -27,27 +27,25 @@
     return fibonacci(number - 1) + fibonacci(number - 2);
 }
 
-STAT_BENCH_CASE("Fibonacci", "Fibonacci10") {
-    std::uint64_t number = 10;  // NOLINT
-    STAT_BENCH_MEASURE() {
-        stat_bench::util::do_not_optimize(number);
-        stat_bench::util::do_not_optimize(fibonacci(number));
-    };
-}
+class Fixture : public stat_bench::FixtureBase {
+public:
+    Fixture() {
+        // NOLINTNEXTLINE
+        add_param<std::uint64_t>("number")->add(10)->add(20)->add(30);
+    }
 
-STAT_BENCH_CASE("Fibonacci", "Fibonacci20") {
-    std::uint64_t number = 20;  // NOLINT
-    STAT_BENCH_MEASURE() {
-        stat_bench::util::do_not_optimize(number);
-        stat_bench::util::do_not_optimize(fibonacci(number));
-    };
-}
+    void setup(stat_bench::bench::InvocationContext& context) override {
+        number_ = context.get_param<std::size_t>("number");
+    }
 
-STAT_BENCH_CASE("Fibonacci", "Fibonacci30") {
-    std::uint64_t number = 30;  // NOLINT
+protected:
+    std::uint64_t number_{0};
+};
+
+STAT_BENCH_CASE_F(Fixture, "Fibonacci", "Fibonacci") {
     STAT_BENCH_MEASURE() {
-        stat_bench::util::do_not_optimize(number);
-        stat_bench::util::do_not_optimize(fibonacci(number));
+        stat_bench::util::do_not_optimize(number_);
+        stat_bench::util::do_not_optimize(fibonacci(number_));
     };
 }
 
