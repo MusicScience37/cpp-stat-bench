@@ -18,6 +18,7 @@ variables:
 include:
   - template: Dependency-Scanning.gitlab-ci.yml
   - template: Jobs/SAST.gitlab-ci.yml
+  - template: Security/License-Scanning.gitlab-ci.yml
 dependency_scanning:
   stage: Check
   needs: []
@@ -27,6 +28,9 @@ sast:
 gemnasium-python-dependency_scanning:
   image:
     name: registry.gitlab.com/gitlab-org/security-products/analyzers/gemnasium-python:2-python-3.9
+license_scanning:
+  stage: Check
+  needs: []
 
 .retry setting:
   retry:
