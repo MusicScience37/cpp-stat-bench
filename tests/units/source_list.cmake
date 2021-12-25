@@ -17,6 +17,7 @@ set(SOURCE_FILES
     stat_bench/measurer/measurement_test.cpp
     stat_bench/measurer/processing_time_measurer_test.cpp
     stat_bench/param/parameter_dict_test.cpp
+    stat_bench/param/parameter_generator_test.cpp
     stat_bench/param/parameter_value_test.cpp
     stat_bench/param/parameter_value_vector_test.cpp
     stat_bench/runner/runner_test.cpp

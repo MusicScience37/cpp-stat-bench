@@ -48,6 +48,13 @@ public:
      */
     [[nodiscard]] virtual auto end() const -> ConstIterator = 0;
 
+    /*!
+     * \brief Get the number of values.
+     *
+     * \return Number of values.
+     */
+    [[nodiscard]] virtual auto size() const -> std::size_t = 0;
+
     IParameterValueVector(const IParameterValueVector&) = delete;
     IParameterValueVector(IParameterValueVector&&) = delete;
     auto operator=(const IParameterValueVector&)
@@ -98,6 +105,11 @@ public:
     //! \copydoc stat_bench::param::IParameterValueVector::end
     [[nodiscard]] auto end() const -> ConstIterator override {
         return values_.end();
+    }
+
+    //! \copydoc stat_bench::param::IParameterValueVector::size
+    [[nodiscard]] auto size() const -> std::size_t override {
+        return values_.size();
     }
 
     ParameterValueVector(const ParameterValueVector&) = delete;

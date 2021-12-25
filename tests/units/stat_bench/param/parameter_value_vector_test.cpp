@@ -27,13 +27,17 @@ TEST_CASE("stat_bench::param::ParameterValueVector") {
             stat_bench::param::ParameterValueVector<std::string>>();
 
         vec->add("Test1")->add("Test2");
+        REQUIRE(vec->size() == 2);
+
         auto iter = vec->begin();
         auto end = vec->end();
         REQUIRE(iter != end);
         REQUIRE(iter->as<std::string>() == "Test1");
+
         ++iter;
         REQUIRE(iter != end);
         REQUIRE(iter->as<std::string>() == "Test2");
+
         ++iter;
         REQUIRE(iter == end);
     }
