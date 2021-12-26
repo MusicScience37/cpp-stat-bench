@@ -29,10 +29,10 @@ TEST_CASE("stat_bench::measurer::Measurement") {
     SECTION("construct") {
         const auto info = stat_bench::bench::BenchmarkCaseInfo("group", "case");
         const auto cond = stat_bench::bench::BenchmarkCondition(
-            5, stat_bench_test::param::create_ordinary_parameter_dict());
+            2, stat_bench_test::param::create_ordinary_parameter_dict());
         const auto measurer_name = std::string("measurer");
         const std::size_t iterations = 7;
-        const std::size_t samples = 11;
+        const std::size_t samples = 2;
         const auto durations = std::vector<std::vector<Duration>>{
             std::vector<Duration>{Duration(1), Duration(2)},
             std::vector<Duration>{Duration(3), Duration(4)}};
@@ -41,9 +41,12 @@ TEST_CASE("stat_bench::measurer::Measurement") {
             custom_stat_outputs;
         const auto custom_stat_output1 =
             std::make_shared<stat_bench::stat::CustomStatOutput>(
-                "CustomStatOutput1", 1, 1, 1,
-                stat_bench::stat::CustomOutputAnalysisType::as_is);
+                "CustomStatOutput1", 2, 2, 1,
+                stat_bench::stat::CustomOutputAnalysisType::mean);
         custom_stat_output1->add(0, 0, 1.0);
+        custom_stat_output1->add(0, 1, 1.0);
+        custom_stat_output1->add(1, 0, 1.0);
+        custom_stat_output1->add(1, 1, 1.0);
         custom_stat_outputs.push_back(custom_stat_output1);
 
         const std::vector<std::pair<std::string, double>> custom_outputs{
@@ -73,7 +76,7 @@ TEST_CASE("stat_bench::measurer::Measurement") {
         REQUIRE(measurement.custom_stat_outputs().at(0)->name() ==
             "CustomStatOutput1");
         REQUIRE(measurement.custom_stat().size() == 1);
-        REQUIRE(measurement.custom_stat().at(0).mean() == 1.0);
+        REQUIRE(measurement.custom_stat().at(0).mean() == 1.0);  // NOLINT
         REQUIRE(measurement.custom_outputs().size() == 1);
         REQUIRE(measurement.custom_outputs().at(0).first == "CustomOutput2");
         REQUIRE(measurement.custom_outputs().at(0).second == 2.0);  // NOLINT

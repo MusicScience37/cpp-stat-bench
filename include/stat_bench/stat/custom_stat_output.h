@@ -33,7 +33,7 @@ namespace stat {
  * \brief Enumeration of types of analysis applied to custom outputs.
  */
 enum CustomOutputAnalysisType {
-    as_is,        //!< As is. (Nothing will be done except for statistics.)
+    mean,         //!< Mean per sample.
     rate_per_sec  //!< Rate per sec.
 };
 
@@ -84,21 +84,21 @@ public:
     [[nodiscard]] auto stat(
         const std::vector<std::vector<clock::Duration>>& durations) const
         -> Statistics {
+        const std::size_t samples = durations.at(0).size();
+        const std::size_t sample_index_offset = samples_ - samples;
         Statistics res;
-        res.reserve(threads_ * samples_);
-        const double inv_iterations = 1.0 / static_cast<double>(iterations_);
+        res.reserve(threads_ * samples);
         for (std::size_t i = 0; i < threads_; ++i) {
-            for (std::size_t j = 0; j < samples_; ++j) {
-                double val = data_.at(i).at(j);
-                val *= inv_iterations;
+            for (std::size_t j = 0; j < samples; ++j) {
+                double val = data_.at(i).at(j + sample_index_offset);
 
                 switch (analysis_type_) {
+                case CustomOutputAnalysisType::mean:
+                    val /= static_cast<double>(iterations_);
+                    break;
                 case CustomOutputAnalysisType::rate_per_sec:
                     val /= durations.at(i).at(j).seconds();
                     break;
-                default:
-                    // no operation
-                    ;
                 }
 
                 res.add(val);

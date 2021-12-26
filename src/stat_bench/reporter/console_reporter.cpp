@@ -68,14 +68,14 @@ auto format_duration(double val) -> std::string {
 
 }  // namespace
 
-#define CONSOLE_TABLE_FORMAT "{:<50}{:>10}{:>10}{:>15}{:>15}\n"
-#define CONSOLE_TABLE_FORMAT_ERROR "{:<50}{}\n"
+#define CONSOLE_TABLE_FORMAT "{:<50} {:>10} {:>8} {:>12} {:>12} "
+#define CONSOLE_TABLE_FORMAT_ERROR "{:<50} {}\n"
 
 void ConsoleReporter::group_starts(const std::string& name) {
     fmt::print(file_, FMT_STRING("### {}\n\n"), name);
-    fmt::print(file_, FMT_STRING(CONSOLE_TABLE_FORMAT), "", "Iterations",
-        "Samples", "Mean [ms]", "Max [ms]");
-    fmt::print(file_, FMT_STRING("{:-<102}\n"), "");
+    fmt::print(file_, FMT_STRING(CONSOLE_TABLE_FORMAT "{}\n"), "", "Iterations",
+        "Samples", "Mean [ms]", "Max [ms]", "Custom Outputs (mean)");
+    fmt::print(file_, FMT_STRING("{:-<120}\n"), "");
     std::fflush(file_);
 }
 
@@ -101,6 +101,15 @@ void ConsoleReporter::measurement_succeeded(
         measurement.iterations(), measurement.samples(),
         format_duration(measurement.durations_stat().mean()),
         format_duration(measurement.durations_stat().max()));
+    for (std::size_t i = 0; i < measurement.custom_stat_outputs().size(); ++i) {
+        fmt::print(file_, FMT_STRING("{}={:.3e}, "),
+            measurement.custom_stat_outputs().at(i)->name(),
+            measurement.custom_stat().at(i).mean());
+    }
+    for (const auto& out : measurement.custom_outputs()) {
+        fmt::print(file_, FMT_STRING("{}={:.3e}, "), out.first, out.second);
+    }
+    fmt::print(file_, "\n");
     std::fflush(file_);
 }
 
