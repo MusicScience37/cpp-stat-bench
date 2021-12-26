@@ -17,7 +17,7 @@
  * \file
  * \brief Implementation of Statistics class.
  */
-#include "stat_bench/util/statistics.h"
+#include "stat_bench/stat/statistics.h"
 
 #include <algorithm>
 #include <cmath>
@@ -25,7 +25,7 @@
 #include <stdexcept>
 
 namespace stat_bench {
-namespace util {
+namespace stat {
 
 Statistics::Statistics() = default;
 
@@ -77,5 +77,5 @@ void Statistics::calc() {
     standard_deviation_ = std::sqrt(variance_);
 }
 
-}  // namespace util
+}  // namespace stat
 }  // namespace stat_bench

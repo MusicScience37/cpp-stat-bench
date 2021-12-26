@@ -12,7 +12,6 @@ set(SOURCE_FILES
     stat_bench/clock/monotone_time_point_test.cpp
     stat_bench/clock/stop_watch_test.cpp
     stat_bench/clock/system_clock_test.cpp
-    stat_bench/measurer/calc_stat_test.cpp
     stat_bench/measurer/mean_processing_time_measurer_test.cpp
     stat_bench/measurer/measurement_test.cpp
     stat_bench/measurer/processing_time_measurer_test.cpp
@@ -22,8 +21,10 @@ set(SOURCE_FILES
     stat_bench/param/parameter_value_test.cpp
     stat_bench/param/parameter_value_vector_test.cpp
     stat_bench/runner/runner_test.cpp
+    stat_bench/stat/calc_stat_test.cpp
+    stat_bench/stat/custom_stat_output_test.cpp
+    stat_bench/stat/statistics_test.cpp
     stat_bench/util/do_not_optimize_test.cpp
     stat_bench/util/memory_barrier_test.cpp
-    stat_bench/util/statistics_test.cpp
     stat_bench/util/use_pointer_test.cpp
 )

@@ -23,7 +23,7 @@
 #include <vector>
 
 namespace stat_bench {
-namespace util {
+namespace stat {
 
 /*!
  * \brief Class to calculate statistics.
@@ -129,5 +129,5 @@ private:
     double standard_deviation_{0.0};
 };
 
-}  // namespace util
+}  // namespace stat
 }  // namespace stat_bench

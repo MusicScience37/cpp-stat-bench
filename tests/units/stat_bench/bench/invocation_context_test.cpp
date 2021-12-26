@@ -116,4 +116,42 @@ TEST_CASE("stat_bench::bench::InvocationContext") {
         REQUIRE(durations.size() == threads);
         REQUIRE(durations.at(0).size() == samples - warming_up_samples);
     }
+
+    SECTION("add custom output with statistics") {
+        constexpr std::size_t threads = 2;
+        constexpr std::size_t iterations = 7;
+        constexpr std::size_t samples = 13;
+        constexpr std::size_t warming_up_samples = 1;
+        stat_bench::bench::InvocationContext context{
+            stat_bench::bench::BenchmarkCondition(threads,
+                stat_bench_test::param::create_ordinary_parameter_dict()),
+            iterations, samples, warming_up_samples};
+
+        const std::string output_name = "CustomOutput1";
+        const auto out = context.add_custom_stat(output_name);
+
+        const auto out_list = context.custom_stat_outputs();
+        REQUIRE(out_list.size() == 1);
+        REQUIRE(out_list.at(0) == out);
+    }
+
+    SECTION("add custom output without statistics") {
+        constexpr std::size_t threads = 2;
+        constexpr std::size_t iterations = 7;
+        constexpr std::size_t samples = 13;
+        constexpr std::size_t warming_up_samples = 1;
+        stat_bench::bench::InvocationContext context{
+            stat_bench::bench::BenchmarkCondition(threads,
+                stat_bench_test::param::create_ordinary_parameter_dict()),
+            iterations, samples, warming_up_samples};
+
+        const std::string output_name = "CustomOutput1";
+        constexpr double val = 3.14;
+        context.add_custom_output(output_name, val);
+
+        const auto out_list = context.custom_outputs();
+        REQUIRE(out_list.size() == 1);
+        REQUIRE(out_list.at(0).first == output_name);
+        REQUIRE(out_list.at(0).second == val);
+    }
 }

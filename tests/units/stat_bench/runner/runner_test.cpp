@@ -84,8 +84,8 @@ TEST_CASE("stat_bench::runner::Runner") {
                     stat_bench::clock::Duration(123)}};
         REQUIRE_CALL(*measurer, measure(trompeloeil::_, trompeloeil::_))
             // NOLINTNEXTLINE
-            .RETURN(stat_bench::measurer::Measurement(
-                _1->info(), _2, measurer_name, iterations, samples, durations))
+            .RETURN(stat_bench::measurer::Measurement(_1->info(), _2,
+                measurer_name, iterations, samples, durations, {}, {}))
             .IN_SEQUENCE(seq);
 
         std::shared_ptr<stat_bench::measurer::Measurement> measurement;
@@ -214,8 +214,8 @@ TEST_CASE("stat_bench::runner::Runner") {
             // NOLINTNEXTLINE
             .LR_SIDE_EFFECT(conditions.push_back(_2))
             // NOLINTNEXTLINE
-            .RETURN(stat_bench::measurer::Measurement(
-                _1->info(), _2, measurer_name, iterations, samples, durations))
+            .RETURN(stat_bench::measurer::Measurement(_1->info(), _2,
+                measurer_name, iterations, samples, durations, {}, {}))
             // NOLINTNEXTLINE
             .TIMES(6);
 

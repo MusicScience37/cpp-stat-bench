@@ -17,20 +17,20 @@
  * \file
  * \brief Definition of calc_stat function.
  */
-#include "stat_bench/measurer/calc_stat.h"
+#include "stat_bench/stat/calc_stat.h"
 
 #include <stdexcept>
 
 namespace stat_bench {
-namespace measurer {
+namespace stat {
 
 auto calc_stat(const std::vector<std::vector<clock::Duration>>& durations,
-    std::size_t iterations) -> util::Statistics {
+    std::size_t iterations) -> stat::Statistics {
     if (durations.empty() || durations.at(0).empty()) {
         throw std::invalid_argument("No duration sample for statistics.");
     }
 
-    util::Statistics stat;
+    stat::Statistics stat;
     stat.reserve(durations.size() * durations.at(0).size());
     const double inv_iterations = 1.0 / static_cast<double>(iterations);
     for (const auto& durations_per_thread : durations) {
@@ -44,12 +44,12 @@ auto calc_stat(const std::vector<std::vector<clock::Duration>>& durations,
 }
 
 auto calc_stat(const std::vector<std::vector<double>>& values)
-    -> util::Statistics {
+    -> stat::Statistics {
     if (values.empty() || values.at(0).empty()) {
         throw std::invalid_argument("No sample value for statistics.");
     }
 
-    util::Statistics stat;
+    stat::Statistics stat;
     stat.reserve(values.size() * values.at(0).size());
     for (const auto& values_per_thread : values) {
         for (double value : values_per_thread) {
@@ -61,5 +61,5 @@ auto calc_stat(const std::vector<std::vector<double>>& values)
     return stat;
 }
 
-}  // namespace measurer
+}  // namespace stat
 }  // namespace stat_bench

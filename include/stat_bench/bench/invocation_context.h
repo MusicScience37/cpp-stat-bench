@@ -20,11 +20,15 @@
 #pragma once
 
 #include <cstddef>
+#include <memory>
+#include <string>
+#include <unordered_map>
 #include <utility>
 
 #include "stat_bench/bench/benchmark_condition.h"
 #include "stat_bench/bench/threadable_invoker.h"
 #include "stat_bench/clock/duration.h"
+#include "stat_bench/stat/custom_stat_output.h"
 
 namespace stat_bench {
 namespace bench {
@@ -100,6 +104,33 @@ public:
     }
 
     /*!
+     * \brief Add a custom output with statistics.
+     *
+     * \param[in] name Name.
+     * \param[in] analysis_type Type of analysis.
+     * \return Object to add output values.
+     */
+    [[nodiscard]] auto add_custom_stat(const std::string& name,
+        stat::CustomOutputAnalysisType analysis_type =
+            stat::CustomOutputAnalysisType::mean)
+        -> std::shared_ptr<stat::CustomStatOutput> {
+        auto out = std::make_shared<stat::CustomStatOutput>(
+            name, cond_.threads(), samples_, iterations_, analysis_type);
+        custom_stat_outputs_.push_back(out);
+        return out;
+    }
+
+    /*!
+     * \brief Add a custom output without statistics.
+     *
+     * \param[in] name Name.
+     * \param[in] value Output value.
+     */
+    void add_custom_output(const std::string& name, double value) {
+        custom_outputs_.emplace_back(name, value);
+    }
+
+    /*!
      * \brief Measure time.
      *
      * \tparam Func Type of function.
@@ -124,6 +155,26 @@ public:
         return durations_;
     }
 
+    /*!
+     * \brief Get the custom outputs with statistics.
+     *
+     * \return Custom outputs with statistics.
+     */
+    [[nodiscard]] auto custom_stat_outputs() const noexcept
+        -> const std::vector<std::shared_ptr<stat::CustomStatOutput>>& {
+        return custom_stat_outputs_;
+    }
+
+    /*!
+     * \brief Get the custom outputs without statistics.
+     *
+     * \return Custom outputs without statistics.
+     */
+    [[nodiscard]] auto custom_outputs() const noexcept
+        -> const std::vector<std::pair<std::string, double>>& {
+        return custom_outputs_;
+    }
+
 private:
     //! Condition.
     BenchmarkCondition cond_;
@@ -139,6 +190,12 @@ private:
 
     //! Measured durations.
     std::vector<std::vector<clock::Duration>> durations_{};
+
+    //! Custom outputs with statistics.
+    std::vector<std::shared_ptr<stat::CustomStatOutput>> custom_stat_outputs_{};
+
+    //! Custom outputs without statistics.
+    std::vector<std::pair<std::string, double>> custom_outputs_{};
 };
 
 }  // namespace bench

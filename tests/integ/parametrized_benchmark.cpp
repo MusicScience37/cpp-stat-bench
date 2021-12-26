@@ -31,10 +31,20 @@ public:
 
     void setup(stat_bench::bench::InvocationContext& context) override {
         number_ = context.get_param<std::size_t>("number");
+        throughput_stat_ = context.add_custom_stat("throughput_stat",
+            stat_bench::stat::CustomOutputAnalysisType::rate_per_sec);
+    }
+
+    void tear_down(stat_bench::bench::InvocationContext& context) override {
+        context.add_custom_output("processed_numbers",
+            static_cast<double>(context.samples()) *
+                static_cast<double>(context.iterations()));
     }
 
 protected:
     std::uint64_t number_{0};
+
+    std::shared_ptr<stat_bench::stat::CustomStatOutput> throughput_stat_{};
 };
 
 [[nodiscard]] auto fibonacci(std::uint64_t number) -> std::uint64_t {
@@ -45,9 +55,11 @@ protected:
 }
 
 STAT_BENCH_CASE_F(Fixture, "FibonacciParametrized", "Fibonacci") {
-    STAT_BENCH_MEASURE() {
+    STAT_BENCH_MEASURE_INDEXED(
+        thread_index, sample_index, /*iteration_index*/) {
         stat_bench::util::do_not_optimize(number_);
         stat_bench::util::do_not_optimize(fibonacci(number_));
+        throughput_stat_->add(thread_index, sample_index, 1.0);
     };
 }
 

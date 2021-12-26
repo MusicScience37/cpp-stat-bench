@@ -39,7 +39,8 @@ auto measure_once(bench::IBenchmarkCase* bench_case,
         throw std::runtime_error("No measurement was done.");
     }
     return Measurement(bench_case->info(), cond, measurer_name, iterations,
-        samples, context.durations());
+        samples, context.durations(), context.custom_stat_outputs(),
+        context.custom_outputs());
 }
 
 }  // namespace measurer
