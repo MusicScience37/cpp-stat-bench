@@ -1,7 +1,10 @@
 set(SOURCE_FILES
     stat_bench/clock/monotone_clock_impl.cpp
     stat_bench/measurer/calc_stat.cpp
+    stat_bench/measurer/determine_iterations.cpp
+    stat_bench/measurer/determine_warming_up_samples.cpp
     stat_bench/measurer/mean_processing_time_measurer.cpp
+    stat_bench/measurer/measure_once.cpp
     stat_bench/measurer/processing_time_measurer.cpp
     stat_bench/param/parameter_generator.cpp
     stat_bench/reporter/cdf_line_plot_reporter.cpp

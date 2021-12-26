@@ -33,9 +33,12 @@
 TEST_CASE("stat_bench::measurer::MeanProcessingTimeMeasurer") {
     constexpr double min_sample_duration_sec = 0.01;
     constexpr std::size_t samples = 3;
+    constexpr std::size_t min_warming_up_iterations = 5;
+    constexpr double min_warming_up_duration_sec = 0.01;
     const auto measurer =
         std::make_shared<stat_bench::measurer::MeanProcessingTimeMeasurer>(
-            min_sample_duration_sec, samples);
+            min_sample_duration_sec, samples, min_warming_up_iterations,
+            min_warming_up_duration_sec);
 
     SECTION("get name") { REQUIRE(measurer->name() == "Mean Processing Time"); }
 

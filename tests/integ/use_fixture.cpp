@@ -67,7 +67,7 @@ TEST_CASE("STAT_BENCH_CASE_F") {
     stat_bench::bench::InvocationContext context{
         stat_bench::bench::BenchmarkCondition(
             1, stat_bench_test::param::create_ordinary_parameter_dict()),
-        1, 1};
+        1, 1, 0};
 
     state = 1;
     REQUIRE_NOTHROW(benchmarks.at(0).cases().at(0)->execute(context));

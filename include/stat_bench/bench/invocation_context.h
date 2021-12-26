@@ -39,11 +39,15 @@ public:
      *
      * \param[in] cond Condition.
      * \param[in] iterations Number of iterations.
-     * \param[in] samples Number of samples.
+     * \param[in] samples Number of samples (including warming up).
+     * \param[in] warming_up_samples Number of samples for warming up.
      */
-    InvocationContext(
-        BenchmarkCondition cond, std::size_t iterations, std::size_t samples)
-        : cond_(std::move(cond)), iterations_(iterations), samples_(samples) {}
+    InvocationContext(BenchmarkCondition cond, std::size_t iterations,
+        std::size_t samples, std::size_t warming_up_samples)
+        : cond_(std::move(cond)),
+          iterations_(iterations),
+          samples_(samples),
+          warming_up_samples_(warming_up_samples) {}
 
     InvocationContext(const InvocationContext&) = delete;
     InvocationContext(InvocationContext&&) = delete;
@@ -103,9 +107,9 @@ public:
      */
     template <typename Func>
     inline void measure(const Func& func) {
-        durations_ =
-            ThreadableInvoker(cond_.threads(), iterations_, samples_, 0)
-                .measure(func);
+        durations_ = ThreadableInvoker(
+            cond_.threads(), iterations_, samples_, warming_up_samples_)
+                         .measure(func);
     }
 
     /*!
@@ -127,8 +131,11 @@ private:
     //! Number of iterations.
     std::size_t iterations_;
 
-    //! Number of samples.
+    //! Number of samples (including warming up).
     std::size_t samples_;
+
+    //! Number of samples for warming up.
+    std::size_t warming_up_samples_;
 
     //! Measured durations.
     std::vector<std::vector<clock::Duration>> durations_{};

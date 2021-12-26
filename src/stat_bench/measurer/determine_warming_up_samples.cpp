@@ -15,34 +15,31 @@
  */
 /*!
  * \file
- * \brief Implementation of MeanDurationMeasurer class.
+ * \brief Definition of determine_warming_up_samples function.
  */
-#include "stat_bench/measurer/mean_processing_time_measurer.h"
-
-#include <algorithm>
-#include <cstddef>
-#include <limits>
-#include <stdexcept>
-
-#include "stat_bench/bench/invocation_context.h"
-#include "stat_bench/measurer/determine_iterations.h"
 #include "stat_bench/measurer/determine_warming_up_samples.h"
+
+#include <algorithm>  // std::min, std::max
+#include <limits>
+
+#include "stat_bench/measurer/determine_iterations.h"
 #include "stat_bench/measurer/measure_once.h"
 
 namespace stat_bench {
 namespace measurer {
 
-auto MeanProcessingTimeMeasurer::measure(bench::IBenchmarkCase* bench_case,
-    const bench::BenchmarkCondition& cond) const -> Measurement {
-    const std::size_t iterations =
-        determine_iterations(bench_case, cond, name_, min_sample_duration_sec_);
-
+auto determine_warming_up_samples(bench::IBenchmarkCase* bench_case,
+    const bench::BenchmarkCondition& cond, const std::string& measurer_name,
+    std::size_t iterations, std::size_t min_iterations, double min_duration_sec)
+    -> std::size_t {
+    std::size_t warming_up_iterations =
+        determine_iterations(bench_case, cond, measurer_name, min_duration_sec);
+    if (warming_up_iterations < min_iterations) {
+        warming_up_iterations = min_iterations;
+    }
     const std::size_t warming_up_samples =
-        determine_warming_up_samples(bench_case, cond, name_, iterations,
-            min_warming_up_iterations_, min_warming_up_duration_sec_);
-
-    return measure_once(
-        bench_case, cond, name_, iterations, samples_, warming_up_samples);
+        (warming_up_iterations + iterations - 1) / iterations;
+    return warming_up_samples;
 }
 
 }  // namespace measurer

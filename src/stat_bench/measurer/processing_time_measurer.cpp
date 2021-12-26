@@ -22,6 +22,8 @@
 #include <stdexcept>
 
 #include "stat_bench/bench/invocation_context.h"
+#include "stat_bench/measurer/determine_warming_up_samples.h"
+#include "stat_bench/measurer/measure_once.h"
 
 namespace stat_bench {
 namespace measurer {
@@ -29,13 +31,13 @@ namespace measurer {
 auto ProcessingTimeMeasurer::measure(bench::IBenchmarkCase* bench_case,
     const bench::BenchmarkCondition& cond) const -> Measurement {
     constexpr std::size_t iterations = 1;
-    bench::InvocationContext context{cond, iterations, samples_};
-    bench_case->execute(context);
-    if (context.durations().empty()) {
-        throw std::runtime_error("No measurement was done.");
-    }
-    return Measurement(bench_case->info(), cond, name_, iterations, samples_,
-        context.durations());
+
+    const std::size_t warming_up_samples =
+        determine_warming_up_samples(bench_case, cond, name_, iterations,
+            min_warming_up_iterations_, min_warming_up_duration_sec_);
+
+    return measure_once(
+        bench_case, cond, name_, iterations, samples_, warming_up_samples);
 }
 
 }  // namespace measurer

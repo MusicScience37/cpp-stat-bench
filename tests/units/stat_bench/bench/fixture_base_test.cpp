@@ -40,7 +40,7 @@ TEST_CASE("stat_bench::bench::FixtureBase") {
     stat_bench::bench::InvocationContext context{
         stat_bench::bench::BenchmarkCondition(
             threads, stat_bench_test::param::create_ordinary_parameter_dict()),
-        iterations, samples};
+        iterations, samples, 0};
 
     SECTION("execute") {
         trompeloeil::sequence seq;
