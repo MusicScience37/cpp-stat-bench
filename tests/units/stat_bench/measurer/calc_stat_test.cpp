@@ -17,7 +17,7 @@
  * \file
  * \brief Test of calc_stat function.
  */
-#include "stat_bench/measurer/calc_stat.h"
+#include "stat_bench/stat/calc_stat.h"
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_floating.hpp>
@@ -25,7 +25,7 @@
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/clock/monotone_clock_impl.h"
 
-TEST_CASE("stat_bench::measurer::calc_stat(Duration)") {
+TEST_CASE("stat_bench::stat::calc_stat(Duration)") {
     using stat_bench::clock::Duration;
 
     SECTION("calculate") {
@@ -35,7 +35,7 @@ TEST_CASE("stat_bench::measurer::calc_stat(Duration)") {
             {Duration(4 * freq), Duration(12 * freq)},
             {Duration(2 * freq), Duration(6 * freq)}};
 
-        const auto stat = stat_bench::measurer::calc_stat(data, iterations);
+        const auto stat = stat_bench::stat::calc_stat(data, iterations);
 
         REQUIRE(stat.sorted_samples() ==
             std::vector<double>{1.0, 2.0, 3.0, 6.0});                // NOLINT
@@ -43,11 +43,11 @@ TEST_CASE("stat_bench::measurer::calc_stat(Duration)") {
     }
 }
 
-TEST_CASE("stat_bench::measurer::calc_stat(double)") {
+TEST_CASE("stat_bench::stat::calc_stat(double)") {
     SECTION("calculate") {
         const std::vector<std::vector<double>> data{{2.0, 6.0}, {1.0, 3.0}};
 
-        const auto stat = stat_bench::measurer::calc_stat(data);
+        const auto stat = stat_bench::stat::calc_stat(data);
 
         REQUIRE(stat.sorted_samples() ==
             std::vector<double>{1.0, 2.0, 3.0, 6.0});                // NOLINT

@@ -1,6 +1,5 @@
 set(SOURCE_FILES
     stat_bench/clock/monotone_clock_impl.cpp
-    stat_bench/measurer/calc_stat.cpp
     stat_bench/measurer/determine_iterations.cpp
     stat_bench/measurer/determine_warming_up_samples.cpp
     stat_bench/measurer/mean_processing_time_measurer.cpp
@@ -12,6 +11,7 @@ set(SOURCE_FILES
     stat_bench/reporter/render_template.cpp
     stat_bench/reporter/simple_line_plot_reporter.cpp
     stat_bench/runner/runner.cpp
-    stat_bench/util/statistics.cpp
+    stat_bench/stat/calc_stat.cpp
+    stat_bench/stat/statistics.cpp
     stat_bench/util/use_pointer.cpp
 )

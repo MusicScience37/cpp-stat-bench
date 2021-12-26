@@ -17,7 +17,7 @@
  * \file
  * \brief Test of Statistics class.
  */
-#include "stat_bench/util/statistics.h"
+#include "stat_bench/stat/statistics.h"
 
 #include <cmath>
 #include <vector>
@@ -25,11 +25,11 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers_container_properties.hpp>
 
-TEST_CASE("stat_bench::util::Statistics") {
+TEST_CASE("stat_bench::stat::Statistics") {
     SECTION("calculate") {
         const std::vector<double> data{2.0, 6.0, 1.0};
 
-        stat_bench::util::Statistics stat;
+        stat_bench::stat::Statistics stat;
         stat.clear();
         stat.reserve(data.size());
         for (double val : data) {
@@ -50,7 +50,7 @@ TEST_CASE("stat_bench::util::Statistics") {
         constexpr double val = 3.14;
         const std::vector<double> data{val};
 
-        stat_bench::util::Statistics stat;
+        stat_bench::stat::Statistics stat;
         stat.clear();
         stat.reserve(data.size());
         for (double val : data) {
@@ -67,7 +67,7 @@ TEST_CASE("stat_bench::util::Statistics") {
     }
 
     SECTION("calculate for no sample") {
-        stat_bench::util::Statistics stat;
+        stat_bench::stat::Statistics stat;
         REQUIRE_THROWS(stat.calc());
     }
 }

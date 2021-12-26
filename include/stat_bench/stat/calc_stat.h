@@ -22,10 +22,10 @@
 #include <vector>
 
 #include "stat_bench/clock/duration.h"
-#include "stat_bench/util/statistics.h"
+#include "stat_bench/stat/statistics.h"
 
 namespace stat_bench {
-namespace measurer {
+namespace stat {
 
 /*!
  * \brief Calculate statistics.
@@ -36,7 +36,7 @@ namespace measurer {
  */
 [[nodiscard]] auto calc_stat(
     const std::vector<std::vector<clock::Duration>>& durations,
-    std::size_t iterations) -> util::Statistics;
+    std::size_t iterations) -> stat::Statistics;
 
 /*!
  * \brief Calculate statistics.
@@ -45,7 +45,7 @@ namespace measurer {
  * \return Statistics.
  */
 [[nodiscard]] auto calc_stat(const std::vector<std::vector<double>>& values)
-    -> util::Statistics;
+    -> stat::Statistics;
 
-}  // namespace measurer
+}  // namespace stat
 }  // namespace stat_bench
