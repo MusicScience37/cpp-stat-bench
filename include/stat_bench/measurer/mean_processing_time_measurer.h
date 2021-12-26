@@ -62,19 +62,6 @@ public:
     ~MeanProcessingTimeMeasurer() override = default;
 
 private:
-    /*!
-     * \brief Measure once.
-     *
-     * \param[in] bench_case Case.
-     * \param[in] cond Condition.
-     * \param[in] iterations Number of iterations.
-     * \param[in] samples Number of samples.
-     * \return
-     */
-    [[nodiscard]] auto measure_once(bench::IBenchmarkCase* bench_case,
-        const bench::BenchmarkCondition& cond, std::size_t iterations,
-        std::size_t samples) const -> Measurement;
-
     //! Name.
     const std::string name_{"Mean Processing Time"};
 

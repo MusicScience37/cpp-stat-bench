@@ -32,11 +32,12 @@ TEST_CASE("stat_bench::bench::InvocationContext") {
         constexpr std::size_t threads = 1;
         constexpr std::size_t iterations = 7;
         constexpr std::size_t samples = 13;
+        constexpr std::size_t warming_up_samples = 1;
 
         const stat_bench::bench::InvocationContext context{
             stat_bench::bench::BenchmarkCondition(
                 stat_bench_test::param::create_ordinary_parameter_dict()),
-            iterations, samples};
+            iterations, samples, warming_up_samples};
 
         REQUIRE(context.threads() == threads);
         REQUIRE(context.iterations() == iterations);
@@ -48,10 +49,11 @@ TEST_CASE("stat_bench::bench::InvocationContext") {
         constexpr std::size_t threads = 1;
         constexpr std::size_t iterations = 7;
         constexpr std::size_t samples = 13;
+        constexpr std::size_t warming_up_samples = 1;
         stat_bench::bench::InvocationContext context{
             stat_bench::bench::BenchmarkCondition(threads,
                 stat_bench_test::param::create_ordinary_parameter_dict()),
-            iterations, samples};
+            iterations, samples, warming_up_samples};
 
         std::vector<std::tuple<std::size_t, std::size_t, std::size_t>>
             invocations;
@@ -84,17 +86,18 @@ TEST_CASE("stat_bench::bench::InvocationContext") {
 
         const auto durations = context.durations();
         REQUIRE(durations.size() == threads);
-        REQUIRE(durations.at(0).size() == samples);
+        REQUIRE(durations.at(0).size() == samples - warming_up_samples);
     }
 
     SECTION("measure durations with threads") {
         constexpr std::size_t threads = 2;
         constexpr std::size_t iterations = 7;
         constexpr std::size_t samples = 13;
+        constexpr std::size_t warming_up_samples = 1;
         stat_bench::bench::InvocationContext context{
             stat_bench::bench::BenchmarkCondition(threads,
                 stat_bench_test::param::create_ordinary_parameter_dict()),
-            iterations, samples};
+            iterations, samples, warming_up_samples};
 
         std::vector<std::tuple<std::size_t, std::size_t, std::size_t>>
             invocations;
@@ -111,6 +114,6 @@ TEST_CASE("stat_bench::bench::InvocationContext") {
 
         const auto durations = context.durations();
         REQUIRE(durations.size() == threads);
-        REQUIRE(durations.at(0).size() == samples);
+        REQUIRE(durations.at(0).size() == samples - warming_up_samples);
     }
 }

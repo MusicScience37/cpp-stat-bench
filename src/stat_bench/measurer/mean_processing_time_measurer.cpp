@@ -25,18 +25,22 @@
 #include <stdexcept>
 
 #include "stat_bench/bench/invocation_context.h"
+#include "stat_bench/measurer/measure_once.h"
 
 namespace stat_bench {
 namespace measurer {
 
 auto MeanProcessingTimeMeasurer::measure(bench::IBenchmarkCase* bench_case,
     const bench::BenchmarkCondition& cond) const -> Measurement {
+    // TODO warming up
+
     // First find the proper number of iterations.
     std::size_t iterations = 1;
     constexpr std::size_t trials = 10;
     for (std::size_t i = 0; i < trials; ++i) {
         constexpr std::size_t samples = 1;
-        const auto data = measure_once(bench_case, cond, iterations, samples);
+        const auto data =
+            measure_once(bench_case, cond, name_, iterations, samples, 0);
         const double duration_sec =
             data.durations_stat().mean() * static_cast<double>(iterations);
         if (duration_sec > min_sample_duration_sec_) {
@@ -50,19 +54,7 @@ auto MeanProcessingTimeMeasurer::measure(bench::IBenchmarkCase* bench_case,
             max_iterations, static_cast<double>(iterations) * multiplier));
     }
 
-    return measure_once(bench_case, cond, iterations, samples_);
-}
-
-auto MeanProcessingTimeMeasurer::measure_once(bench::IBenchmarkCase* bench_case,
-    const bench::BenchmarkCondition& cond, std::size_t iterations,
-    std::size_t samples) const -> Measurement {
-    bench::InvocationContext context{cond, iterations, samples};
-    bench_case->execute(context);
-    if (context.durations().empty()) {
-        throw std::runtime_error("No measurement was done.");
-    }
-    return Measurement(bench_case->info(), cond, name_, iterations, samples,
-        context.durations());
+    return measure_once(bench_case, cond, name_, iterations, samples_, 0);
 }
 
 }  // namespace measurer
