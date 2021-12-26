@@ -47,6 +47,12 @@ static constexpr std::size_t default_mean_processing_time_samples = 30;
  */
 static constexpr double default_min_sample_duration_sec = 0.03;
 
+//! Default minimum number of iterations for warming up.
+static constexpr std::size_t default_min_warming_up_iterations = 1;
+
+//! Default minimum duration for warming up. [sec]
+static constexpr double default_min_warming_up_duration_sec = 0.03;
+
 }  // namespace impl
 
 /*!
@@ -68,6 +74,14 @@ struct Config {
      * time. [sec]
      */
     double min_sample_duration_sec{impl::default_min_sample_duration_sec};
+
+    //! Minimum number of iterations for warming up.
+    std::size_t min_warming_up_iterations{
+        impl::default_min_warming_up_iterations};
+
+    //! Minimum duration for warming up. [sec]
+    double min_warming_up_duration_sec{
+        impl::default_min_warming_up_duration_sec};
 
     /*!
      * \brief Prefix of filepaths to generate plots.

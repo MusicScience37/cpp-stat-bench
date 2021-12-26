@@ -15,32 +15,31 @@
  */
 /*!
  * \file
- * \brief Definition of measure_once function.
+ * \brief Declaration of determine_iterations function.
  */
-#include "stat_bench/measurer/measure_once.h"
+#pragma once
 
+#include <cstddef>
 #include <string>
 
 #include "stat_bench/bench/benchmark_condition.h"
 #include "stat_bench/bench/i_benchmark_case.h"
-#include "stat_bench/measurer/measurement.h"
 
 namespace stat_bench {
 namespace measurer {
 
-auto measure_once(bench::IBenchmarkCase* bench_case,
+/*!
+ * \brief Determine number of iterations.
+ *
+ * \param[in] bench_case Case.
+ * \param[in] cond Condition.
+ * \param[in] measurer_name Measurer name.
+ * \param[in] min_sample_duration_sec Minimum duration for a sample. [sec]
+ * \return Number of iterations.
+ */
+[[nodiscard]] auto determine_iterations(bench::IBenchmarkCase* bench_case,
     const bench::BenchmarkCondition& cond, const std::string& measurer_name,
-    std::size_t iterations, std::size_t samples, std::size_t warming_up_samples)
-    -> Measurement {
-    bench::InvocationContext context{
-        cond, iterations, samples + warming_up_samples, warming_up_samples};
-    bench_case->execute(context);
-    if (context.durations().empty()) {
-        throw std::runtime_error("No measurement was done.");
-    }
-    return Measurement(bench_case->info(), cond, measurer_name, iterations,
-        samples, context.durations());
-}
+    double min_sample_duration_sec) -> std::size_t;
 
 }  // namespace measurer
 }  // namespace stat_bench

@@ -22,6 +22,7 @@
 #include <stdexcept>
 
 #include "stat_bench/bench/invocation_context.h"
+#include "stat_bench/measurer/determine_warming_up_samples.h"
 #include "stat_bench/measurer/measure_once.h"
 
 namespace stat_bench {
@@ -29,9 +30,14 @@ namespace measurer {
 
 auto ProcessingTimeMeasurer::measure(bench::IBenchmarkCase* bench_case,
     const bench::BenchmarkCondition& cond) const -> Measurement {
-    // TODO warming up
     constexpr std::size_t iterations = 1;
-    return measure_once(bench_case, cond, name_, iterations, samples_, 0);
+
+    const std::size_t warming_up_samples =
+        determine_warming_up_samples(bench_case, cond, name_, iterations,
+            min_warming_up_iterations_, min_warming_up_duration_sec_);
+
+    return measure_once(
+        bench_case, cond, name_, iterations, samples_, warming_up_samples);
 }
 
 }  // namespace measurer

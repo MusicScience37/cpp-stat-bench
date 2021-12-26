@@ -25,6 +25,8 @@
 #include <stdexcept>
 
 #include "stat_bench/bench/invocation_context.h"
+#include "stat_bench/measurer/determine_iterations.h"
+#include "stat_bench/measurer/determine_warming_up_samples.h"
 #include "stat_bench/measurer/measure_once.h"
 
 namespace stat_bench {
@@ -32,29 +34,15 @@ namespace measurer {
 
 auto MeanProcessingTimeMeasurer::measure(bench::IBenchmarkCase* bench_case,
     const bench::BenchmarkCondition& cond) const -> Measurement {
-    // TODO warming up
+    const std::size_t iterations =
+        determine_iterations(bench_case, cond, name_, min_sample_duration_sec_);
 
-    // First find the proper number of iterations.
-    std::size_t iterations = 1;
-    constexpr std::size_t trials = 10;
-    for (std::size_t i = 0; i < trials; ++i) {
-        constexpr std::size_t samples = 1;
-        const auto data =
-            measure_once(bench_case, cond, name_, iterations, samples, 0);
-        const double duration_sec =
-            data.durations_stat().mean() * static_cast<double>(iterations);
-        if (duration_sec > min_sample_duration_sec_) {
-            break;
-        }
+    const std::size_t warming_up_samples =
+        determine_warming_up_samples(bench_case, cond, name_, iterations,
+            min_warming_up_iterations_, min_warming_up_duration_sec_);
 
-        const double multiplier = std::min(
-            min_sample_duration_sec_ / std::max(duration_sec, 1e-9), 100.0);
-        constexpr double max_iterations = 1e+6;
-        iterations = static_cast<std::size_t>(std::min(
-            max_iterations, static_cast<double>(iterations) * multiplier));
-    }
-
-    return measure_once(bench_case, cond, name_, iterations, samples_, 0);
+    return measure_once(
+        bench_case, cond, name_, iterations, samples_, warming_up_samples);
 }
 
 }  // namespace measurer

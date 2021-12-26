@@ -34,11 +34,18 @@ public:
      *
      * \param[in] min_sample_duration_sec Minimum duration for a sample. [sec]
      * \param[in] samples Number of samples.
+     * \param[in] min_warming_up_iterations Minimum number of iterations for
+     * warming up.
+     * \param[in] min_warming_up_duration_sec Minimum duration for
+     * warming up. [sec]
      */
-    explicit MeanProcessingTimeMeasurer(
-        double min_sample_duration_sec, std::size_t samples)
+    MeanProcessingTimeMeasurer(double min_sample_duration_sec,
+        std::size_t samples, std::size_t min_warming_up_iterations,
+        double min_warming_up_duration_sec)
         : min_sample_duration_sec_(min_sample_duration_sec),
-          samples_(samples) {}
+          samples_(samples),
+          min_warming_up_iterations_(min_warming_up_iterations),
+          min_warming_up_duration_sec_(min_warming_up_duration_sec) {}
 
     //! \copydoc stat_bench::measurer::IMeasurer::name
     [[nodiscard]] auto name() const noexcept -> const std::string& override {
@@ -70,6 +77,12 @@ private:
 
     //! Number of samples.
     std::size_t samples_;
+
+    //! Minimum number of iterations for warming up.
+    std::size_t min_warming_up_iterations_;
+
+    //! Minimum duration for warming up. [sec]
+    double min_warming_up_duration_sec_;
 };
 
 }  // namespace measurer

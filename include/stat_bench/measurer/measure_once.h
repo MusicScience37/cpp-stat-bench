@@ -15,7 +15,7 @@
  */
 /*!
  * \file
- * \brief Declaration of MeanProcessingTimeMeasurer class.
+ * \brief Declaration of measure_once function.
  */
 #pragma once
 
