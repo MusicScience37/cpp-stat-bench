@@ -107,12 +107,15 @@ public:
      * \brief Add a custom output with statistics.
      *
      * \param[in] name Name.
+     * \param[in] analysis_type Type of analysis.
      * \return Object to add output values.
      */
-    [[nodiscard]] auto add_custom_stat(const std::string& name)
+    [[nodiscard]] auto add_custom_stat(const std::string& name,
+        stat::CustomOutputAnalysisType analysis_type =
+            stat::CustomOutputAnalysisType::as_is)
         -> std::shared_ptr<stat::CustomStatOutput> {
         auto out = std::make_shared<stat::CustomStatOutput>(
-            name, cond_.threads(), samples_, iterations_);
+            name, cond_.threads(), samples_, iterations_, analysis_type);
         custom_stat_outputs_.push_back(out);
         return out;
     }
@@ -122,8 +125,25 @@ public:
      *
      * \param[in] name Name.
      * \param[in] value Output value.
+     * \param[in] analysis_type Type of analysis.
      */
-    void add_custom_output(const std::string& name, double value) {
+    void add_custom_output(const std::string& name, double value,
+        stat::CustomOutputAnalysisType analysis_type =
+            stat::CustomOutputAnalysisType::as_is) {
+        switch (analysis_type) {  // NOLINT: for future addition of types.
+        case stat_bench::stat::CustomOutputAnalysisType::rate_per_sec: {
+            double duration_sum = 0.0;
+            for (const auto& durations_per_thread : durations_) {
+                for (const auto& duration : durations_per_thread) {
+                    duration_sum += duration.seconds();
+                }
+            }
+            value /= duration_sum;
+        } break;
+        default:
+            // no operation
+            ;
+        }
         custom_outputs_.emplace_back(name, value);
     }
 

@@ -30,6 +30,14 @@ namespace stat_bench {
 namespace stat {
 
 /*!
+ * \brief Enumeration of types of analysis applied to custom outputs.
+ */
+enum CustomOutputAnalysisType {
+    as_is,        //!< As is. (Nothing will be done except for statistics.)
+    rate_per_sec  //!< Rate per sec.
+};
+
+/*!
  * \brief Class of custom outputs with statistics.
  */
 class CustomStatOutput {
@@ -41,13 +49,15 @@ public:
      * \param[in] threads Number of threads.
      * \param[in] samples Number of samples.
      * \param[in] iterations Number of iterations.
+     * \param[in] analysis_type Type of analysis.
      */
     CustomStatOutput(std::string name, std::size_t threads, std::size_t samples,
-        std::size_t iterations)
+        std::size_t iterations, CustomOutputAnalysisType analysis_type)
         : name_(std::move(name)),
           threads_(threads),
           samples_(samples),
-          iterations_(iterations) {
+          iterations_(iterations),
+          analysis_type_(analysis_type) {
         data_.reserve(threads_);
         for (std::size_t i = 0; i < threads_; ++i) {
             data_.emplace_back(samples_, 0.0);
@@ -68,15 +78,30 @@ public:
     /*!
      * \brief Calculate statistics.
      *
+     * \param[in] durations Durations.
      * \return Statistics.
      */
-    [[nodiscard]] auto stat() const -> Statistics {
+    [[nodiscard]] auto stat(
+        const std::vector<std::vector<clock::Duration>>& durations) const
+        -> Statistics {
         Statistics res;
         res.reserve(threads_ * samples_);
         const double inv_iterations = 1.0 / static_cast<double>(iterations_);
-        for (const auto& data_per_thread : data_) {
-            for (double val : data_per_thread) {
-                res.add(val * inv_iterations);
+        for (std::size_t i = 0; i < threads_; ++i) {
+            for (std::size_t j = 0; j < samples_; ++j) {
+                double val = data_.at(i).at(j);
+                val *= inv_iterations;
+
+                switch (analysis_type_) {
+                case CustomOutputAnalysisType::rate_per_sec:
+                    val /= durations.at(i).at(j).seconds();
+                    break;
+                default:
+                    // no operation
+                    ;
+                }
+
+                res.add(val);
             }
         }
         res.calc();
@@ -107,6 +132,9 @@ private:
 
     //! Number of iterations.
     std::size_t iterations_;
+
+    //! Type of analysis.
+    CustomOutputAnalysisType analysis_type_;
 };
 
 }  // namespace stat

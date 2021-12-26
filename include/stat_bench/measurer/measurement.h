@@ -69,7 +69,7 @@ public:
           custom_outputs_(std::move(custom_outputs)) {
         custom_stat_.reserve(custom_stat_outputs_.size());
         for (const auto& out : custom_stat_outputs_) {
-            custom_stat_.push_back(out->stat());
+            custom_stat_.push_back(out->stat(durations_));
         }
     }
 

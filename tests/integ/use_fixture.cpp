@@ -38,6 +38,9 @@ public:
     void tear_down(stat_bench::bench::InvocationContext& context) override {
         REQUIRE(state.load() == 2);
         state = 3;
+        context.add_custom_output("ProcessRate",
+            static_cast<double>(context.samples()) *
+                static_cast<double>(context.iterations()));
     }
 
 protected:

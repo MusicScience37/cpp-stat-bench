@@ -41,7 +41,8 @@ TEST_CASE("stat_bench::measurer::Measurement") {
             custom_stat_outputs;
         const auto custom_stat_output1 =
             std::make_shared<stat_bench::stat::CustomStatOutput>(
-                "CustomStatOutput1", 1, 1, 1);
+                "CustomStatOutput1", 1, 1, 1,
+                stat_bench::stat::CustomOutputAnalysisType::as_is);
         custom_stat_output1->add(0, 0, 1.0);
         custom_stat_outputs.push_back(custom_stat_output1);
 
