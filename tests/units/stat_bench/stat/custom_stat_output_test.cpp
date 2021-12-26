@@ -24,12 +24,26 @@
 #include <catch2/matchers/catch_matchers_vector.hpp>
 
 TEST_CASE("stat_bench::stat::CustomStatOutput") {
-    SECTION("calculate statistics") {
+    SECTION("construct") {
+        const std::string name = "CustomStat";
         constexpr std::size_t threads = 2;
         constexpr std::size_t samples = 3;
         constexpr std::size_t iterations = 4;
 
-        stat_bench::stat::CustomStatOutput output{threads, samples, iterations};
+        stat_bench::stat::CustomStatOutput output{
+            name, threads, samples, iterations};
+
+        REQUIRE(output.name() == name);
+    }
+
+    SECTION("calculate statistics") {
+        const std::string name = "CustomStat";
+        constexpr std::size_t threads = 2;
+        constexpr std::size_t samples = 3;
+        constexpr std::size_t iterations = 4;
+
+        stat_bench::stat::CustomStatOutput output{
+            name, threads, samples, iterations};
         output.add(0, 0, 1.0);  // NOLINT
         output.add(0, 0, 1.0);  // NOLINT
         output.add(0, 0, 1.0);  // NOLINT

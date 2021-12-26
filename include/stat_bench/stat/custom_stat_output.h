@@ -19,6 +19,8 @@
  */
 #pragma once
 
+#include <string>
+#include <utility>
 #include <vector>
 
 #include "stat_bench/clock/duration.h"
@@ -35,13 +37,17 @@ public:
     /*!
      * \brief Constructor.
      *
+     * \param[in] name Name.
      * \param[in] threads Number of threads.
      * \param[in] samples Number of samples.
      * \param[in] iterations Number of iterations.
      */
-    CustomStatOutput(
-        std::size_t threads, std::size_t samples, std::size_t iterations)
-        : threads_(threads), samples_(samples), iterations_(iterations) {
+    CustomStatOutput(std::string name, std::size_t threads, std::size_t samples,
+        std::size_t iterations)
+        : name_(std::move(name)),
+          threads_(threads),
+          samples_(samples),
+          iterations_(iterations) {
         data_.reserve(threads_);
         for (std::size_t i = 0; i < threads_; ++i) {
             data_.emplace_back(samples_, 0.0);
@@ -77,7 +83,19 @@ public:
         return res;
     }
 
+    /*!
+     * \brief Get the name.
+     *
+     * \return Name.
+     */
+    [[nodiscard]] auto name() const noexcept -> const std::string& {
+        return name_;
+    }
+
 private:
+    //! Name.
+    std::string name_;
+
     //! Data.
     std::vector<std::vector<double>> data_{};
 
