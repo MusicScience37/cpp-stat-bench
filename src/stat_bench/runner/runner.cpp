@@ -61,7 +61,8 @@ Runner::Runner() {
 
     cli_ |= lyra::opt(config_.min_warming_up_duration_sec,
         "num")["--min_warming_up_duration_sec"](
-        "Minimum duration for warming up. [sec]");
+        "Minimum duration for warming up. [sec]")
+                .choices([](double val) { return val >= 0.0; });
 }
 
 Runner::~Runner() = default;
