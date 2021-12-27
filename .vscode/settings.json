@@ -23,6 +23,7 @@
     "mkdir",
     "MSVC",
     "MusicScience37",
+    "nlohmann",
     "pipenv",
     "Pipfile",
     "Plotly",
