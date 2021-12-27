@@ -64,6 +64,6 @@ class CppStatBenchConan(ConanFile):
     def package_info(self):
         self.cpp_info.components["stat_bench"].libs = ["stat_bench"]
         self.cpp_info.components["stat_bench"].requires = [
-            "fmt::fmt", "lyra::lyra"]
+            "fmt::fmt", "lyra::lyra", "nlohmann_json::nlohmann_json"]
         if self.settings.os in ["Linux", "FreeBSD"]:
             self.cpp_info.components["stat_bench"].system_libs = ["pthread"]
