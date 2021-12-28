@@ -7,6 +7,7 @@
 #include "stat_bench/param/parameter_generator.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/reporter/cdf_line_plot_reporter.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/reporter/console_reporter.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "stat_bench/reporter/data_file_helper.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/reporter/render_template.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/reporter/simple_line_plot_reporter.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/runner/runner.cpp"   // NOLINT(bugprone-suspicious-include)

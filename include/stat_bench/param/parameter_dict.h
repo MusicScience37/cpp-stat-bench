@@ -80,6 +80,21 @@ public:
         return out;
     }
 
+    /*!
+     * \brief Get as a dictionary of string values.
+     *
+     * \return Dictionary.
+     */
+    [[nodiscard]] auto as_string_dict() const
+        -> std::unordered_map<std::string, std::string> {
+        std::unordered_map<std::string, std::string> data;
+        data.reserve(data_.size());
+        for (const auto& pair : data_) {
+            data.emplace(pair.first, pair.second.to_string());
+        }
+        return data;
+    }
+
 private:
     //! Data.
     std::unordered_map<std::string, ParameterValue> data_;

@@ -117,6 +117,16 @@ public:
         return name_;
     }
 
+    /*!
+     * \brief Get data.
+     *
+     * \return Data.
+     */
+    [[nodiscard]] auto data() const noexcept
+        -> const std::vector<std::vector<double>>& {
+        return data_;
+    }
+
 private:
     //! Name.
     std::string name_;
