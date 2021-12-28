@@ -32,10 +32,12 @@ Statistics::Statistics() = default;
 void Statistics::clear() { sorted_samples_.clear(); }
 
 void Statistics::reserve(std::size_t samples) {
+    unsorted_samples_.reserve(samples);
     sorted_samples_.reserve(samples);
 }
 
 void Statistics::add(double val) {
+    unsorted_samples_.push_back(val);
     sorted_samples_.insert(
         std::lower_bound(sorted_samples_.begin(), sorted_samples_.end(), val),
         val);
