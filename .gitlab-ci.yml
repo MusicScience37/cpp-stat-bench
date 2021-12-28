@@ -378,6 +378,9 @@ msvc-release:
     - cd $BUILD_DIR
     - cmake --build . --config Release
     - ctest -V --build-config Release
+  retry:
+    max: 2
+    when: always
 
 doc:
   extends: .retry setting

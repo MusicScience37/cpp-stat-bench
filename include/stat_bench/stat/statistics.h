@@ -60,6 +60,16 @@ public:
     void calc();
 
     /*!
+     * \brief Get the unsorted samples.
+     *
+     * \return Unsorted samples.
+     */
+    [[nodiscard]] auto unsorted_samples() const noexcept
+        -> const std::vector<double>& {
+        return unsorted_samples_;
+    }
+
+    /*!
      * \brief Get the sorted samples.
      *
      * \return Sorted samples.
@@ -107,6 +117,9 @@ public:
     }
 
 private:
+    //! Unsorted samples.
+    std::vector<double> unsorted_samples_{};
+
     //! Sorted samples.
     std::vector<double> sorted_samples_{};
 

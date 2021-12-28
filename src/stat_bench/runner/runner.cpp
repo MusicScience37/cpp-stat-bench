@@ -20,6 +20,7 @@
 #include "stat_bench/runner/runner.h"
 
 #include <exception>
+#include <memory>
 #include <stdexcept>
 
 #include "stat_bench/bench/benchmark_case_registry.h"
@@ -29,6 +30,7 @@
 #include "stat_bench/measurer/processing_time_measurer.h"
 #include "stat_bench/reporter/cdf_line_plot_reporter.h"
 #include "stat_bench/reporter/console_reporter.h"
+#include "stat_bench/reporter/json_reporter.h"
 #include "stat_bench/reporter/simple_line_plot_reporter.h"
 
 namespace stat_bench {
@@ -39,6 +41,9 @@ Runner::Runner() {
 
     cli_ |= lyra::opt(config_.plot_prefix, "prefix")["--plot"](
         "Generate plots of results.");
+
+    cli_ |= lyra::opt(config_.json_file_path, "filepath")["--json"](
+        "Generate JSON data file.");
 
     cli_ |= lyra::opt(config_.processing_time_samples, "num")["--samples"](
         "Number of samples for measurements of processing time.")
@@ -90,6 +95,11 @@ void Runner::init() {
             config_.plot_prefix));
         reporters_.push_back(std::make_shared<reporter::CdfLinePlotReporter>(
             config_.plot_prefix));
+    }
+
+    if (!config_.json_file_path.empty()) {
+        reporters_.push_back(
+            std::make_shared<reporter::JsonReporter>(config_.json_file_path));
     }
 }
 

@@ -19,6 +19,7 @@
 #include "stat_bench/param/parameter_generator_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/param/parameter_value_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/param/parameter_value_vector_test.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "stat_bench/reporter/json_data_file_helper_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/runner/runner_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/stat/calc_stat_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/stat/custom_stat_output_test.cpp"  // NOLINT(bugprone-suspicious-include)

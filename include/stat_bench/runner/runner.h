@@ -89,6 +89,13 @@ struct Config {
      * Empty string specifies no output.
      */
     std::string plot_prefix{};
+
+    /*!
+     * \brief File path of JSON data file.
+     *
+     * Empty string specifies no output.
+     */
+    std::string json_file_path{};
 };
 
 /*!

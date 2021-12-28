@@ -8,6 +8,8 @@ set(SOURCE_FILES
     stat_bench/param/parameter_generator.cpp
     stat_bench/reporter/cdf_line_plot_reporter.cpp
     stat_bench/reporter/console_reporter.cpp
+    stat_bench/reporter/data_file_helper.cpp
+    stat_bench/reporter/json_reporter.cpp
     stat_bench/reporter/render_template.cpp
     stat_bench/reporter/simple_line_plot_reporter.cpp
     stat_bench/runner/runner.cpp
