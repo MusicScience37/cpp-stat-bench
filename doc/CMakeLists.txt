@@ -3,6 +3,7 @@ message("Configure documentation of ${FULL_PROJECT_NAME}")
 add_custom_target(stat_bench_doc)
 
 set(STAT_BENCH_HTML_ROOT ${CMAKE_CURRENT_BINARY_DIR}/html)
+set(STAT_BENCH_XML_ROOT ${CMAKE_CURRENT_BINARY_DIR}/xml)
 
 add_subdirectory(doxygen)
 
