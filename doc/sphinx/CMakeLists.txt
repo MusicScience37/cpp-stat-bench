@@ -1,3 +1,19 @@
+find_package(Doxygen REQUIRED dot)
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in
+               ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+
+file(MAKE_DIRECTORY ${STAT_BENCH_XML_ROOT})
+
+add_custom_target(
+    stat_bench_doc_doxygen_xml ALL
+    COMMAND doxygen ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+    COMMENT "Generate Doxygen XML API documentation for ${FULL_PROJECT_NAME}"
+    DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile
+    WORKING_DIRECTORY ${STAT_BENCH_SOURCE_DIR})
+
+add_dependencies(stat_bench_doc_doxygen_xml stat_bench_doc_doxygen)
+
 if(DEFINED ENV{PLANTUML_JAR_PATH})
     set(DEFAULT_PLANTUML_JAR_PATH $ENV{PLANTUML_JAR_PATH})
 else()
@@ -7,8 +23,10 @@ set(PLANTUML_JAR_PATH
     "${DEFAULT_PLANTUML_JAR_PATH}"
     CACHE FILEPATH "path of plantuml.jar")
 
-set(STAT_BENCH_SPHINX_OPTIONS -D "plantuml=java -jar ${PLANTUML_JAR_PATH}" -D
-                              "release=${PROJECT_VERSION}")
+set(STAT_BENCH_SPHINX_OPTIONS
+    -D "plantuml=java -jar ${PLANTUML_JAR_PATH}" -D
+    "release=${PROJECT_VERSION}" -D
+    breathe_projects.stat_bench="${STAT_BENCH_XML_ROOT}")
 
 add_custom_target(
     stat_bench_doc_sphinx_html ALL
@@ -20,6 +38,7 @@ add_custom_target(
     WORKING_DIRECTORY ${STAT_BENCH_SOURCE_DIR})
 
 add_dependencies(stat_bench_doc stat_bench_doc_sphinx_html)
+add_dependencies(stat_bench_doc_sphinx_html stat_bench_doc_doxygen_xml)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/start_auto_build.sh.in
                ${CMAKE_CURRENT_BINARY_DIR}/start_auto_build.sh)
