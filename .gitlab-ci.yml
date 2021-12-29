@@ -6,17 +6,19 @@ stages:
   - Check
   - Test with Clang
   - Test with GCC
+  - Test with MSVC
   - Build Documentation
   - Publish
 
 variables:
-  STAT_BENCH_VERSION: "0.0.0"
+  STAT_BENCH_VERSION: "0.1.0"
   CONAN_USER: "MusicScience37+cpp-stat-bench"
   SECURE_LOG_LEVEL: debug
 
 include:
   - template: Dependency-Scanning.gitlab-ci.yml
   - template: Jobs/SAST.gitlab-ci.yml
+  - template: Security/License-Scanning.gitlab-ci.yml
 dependency_scanning:
   stage: Check
   needs: []
@@ -26,6 +28,9 @@ sast:
 gemnasium-python-dependency_scanning:
   image:
     name: registry.gitlab.com/gitlab-org/security-products/analyzers/gemnasium-python:2-python-3.9
+license_scanning:
+  stage: Check
+  needs: []
 
 .retry setting:
   retry:
@@ -336,6 +341,46 @@ clang-11-conan-release:
     - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} pipenv run conan upload -r gitlab cpp_stat_bench/${STAT_BENCH_VERSION}@${CONAN_USER}/${CONAN_CHANNEL} --all
   only:
     - tags
+
+msvc-release:
+  extends: .release-test-base
+  tags:
+    - shared-windows
+    - windows
+    - windows-1809
+  stage: Test with MSVC
+  needs: []
+  dependencies: []
+  variables:
+    BUILD_DIR: build_msvc
+  before_script:
+    - Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+    - choco install cmake -y --installargs 'ADD_CMAKE_TO_PATH=System'
+    - choco install python --version=3.9.9 -y
+    - RefreshEnv
+    - pip install pipenv
+    - pipenv install
+    - mkdir $BUILD_DIR
+    - cd $BUILD_DIR
+    - pipenv run conan profile new --detect default
+    - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
+    - pipenv run conan install --build=missing -s build_type=Release ..
+    - cd ../
+  script:
+    - cmake -S ./ -B $BUILD_DIR
+      -DCMAKE_BUILD_TYPE=Release
+      -DSTAT_BENCH_TESTING:BOOL=ON
+      -DSTAT_BENCH_ENABLE_BENCH=ON
+      -DSTAT_BENCH_TEST_BENCHMARKS=ON
+      -DSTAT_BENCH_BUILD_EXAMPLES=ON
+      -DSTAT_BENCH_TEST_EXAMPLES=ON
+      -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+    - cd $BUILD_DIR
+    - cmake --build . --config Release
+    - ctest -V --build-config Release
+  retry:
+    max: 2
+    when: always
 
 doc:
   extends: .retry setting

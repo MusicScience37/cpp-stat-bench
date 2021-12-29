@@ -21,6 +21,8 @@
 
 #include <fmt/format.h>
 
+#include "stat_bench/clock/monotone_clock_impl.h"
+
 namespace stat_bench {
 namespace reporter {
 
@@ -28,34 +30,53 @@ ConsoleReporter::ConsoleReporter(std::FILE* file) : file_(file) {}
 
 void ConsoleReporter::experiment_starts(
     const clock::SystemTimePoint& time_stamp) {
-    fmt::print(file_, "Benchmark start at {}\n\n", time_stamp);
+    fmt::print(file_, FMT_STRING("Benchmark start at {}\n\n"), time_stamp);
+
+    fmt::print(file_, FMT_STRING("Time resolution: {:.3e} sec.\n\n"),
+        static_cast<double>(clock::impl::monotone_clock_res()) /
+            static_cast<double>(clock::impl::monotone_clock_freq()));
+
     std::fflush(file_);
 }
 
 void ConsoleReporter::experiment_finished(
     const clock::SystemTimePoint& time_stamp) {
-    fmt::print(file_, "Benchmark finished at {}\n", time_stamp);
+    fmt::print(file_, FMT_STRING("Benchmark finished at {}\n"), time_stamp);
+    std::fflush(file_);
 }
 
 void ConsoleReporter::measurer_starts(const std::string& name) {
-    fmt::print(file_, "## {}\n\n", name);
+    fmt::print(file_, FMT_STRING("## {}\n\n"), name);
+    std::fflush(file_);
 }
 
 void ConsoleReporter::measurer_finished(const std::string& name) {
     fmt::print(file_, "\n");
+    std::fflush(file_);
 }
 
-static constexpr const char* console_table_format =
-    "{:<30}{:>10d}{:>10d}{:>15.5f}{:>15.5f}\n";
-static constexpr const char* console_table_format_label =
-    "{:<30}{:>10}{:>10}{:>15}{:>15}\n";
-static constexpr const char* console_table_format_error = "{:<30}{}\n";
+namespace {
+
+auto format_duration(double val) -> std::string {
+    constexpr double sec_to_ms = 1e+3;
+    constexpr double tol = 1e-3;
+    if (val < tol) {
+        return fmt::format(FMT_STRING("{:.3e}"), val * sec_to_ms);
+    }
+    return fmt::format(FMT_STRING("{:.3f}"), val * sec_to_ms);
+}
+
+}  // namespace
+
+#define CONSOLE_TABLE_FORMAT "{:<50} {:>10} {:>8} {:>12} {:>12} "
+#define CONSOLE_TABLE_FORMAT_ERROR "{:<50} {}\n"
 
 void ConsoleReporter::group_starts(const std::string& name) {
-    fmt::print(file_, "### {}\n\n", name);
-    fmt::print(file_, console_table_format_label, "", "Iterations", "Samples",
-        "Mean [ms]", "Max [ms]");
-    fmt::print(file_, "{:-<82}\n", "");
+    fmt::print(file_, FMT_STRING("### {}\n\n"), name);
+    fmt::print(file_, FMT_STRING(CONSOLE_TABLE_FORMAT "{}\n"), "", "Iterations",
+        "Samples", "Mean [ms]", "Max [ms]", "Custom Outputs (mean)");
+    fmt::print(file_, FMT_STRING("{:-<120}\n"), "");
+    std::fflush(file_);
 }
 
 void ConsoleReporter::group_finished(const std::string& /*name*/) {
@@ -74,23 +95,22 @@ void ConsoleReporter::case_finished(
 
 void ConsoleReporter::measurement_succeeded(
     const measurer::Measurement& measurement) {
-    double sum_ms = 0.0;
-    double max_ms = 0.0;
-    std::size_t num = 0.0;
-    for (const auto& durations_per_thread : measurement.durations()) {
-        for (const auto& duration : durations_per_thread) {
-            const double duration_ms = duration.seconds() * 1e+3 /
-                static_cast<double>(measurement.iterations());
-            sum_ms += duration_ms;
-            if (duration_ms > max_ms) {
-                max_ms = duration_ms;
-            }
-            ++num;
-        }
+    fmt::print(file_, FMT_STRING(CONSOLE_TABLE_FORMAT),
+        fmt::format(FMT_STRING("{} ({}) "), measurement.case_info().case_name(),
+            measurement.cond().params()),
+        measurement.iterations(), measurement.samples(),
+        format_duration(measurement.durations_stat().mean()),
+        format_duration(measurement.durations_stat().max()));
+    for (std::size_t i = 0; i < measurement.custom_stat_outputs().size(); ++i) {
+        fmt::print(file_, FMT_STRING("{}={:.3e}, "),
+            measurement.custom_stat_outputs().at(i)->name(),
+            measurement.custom_stat().at(i).mean());
     }
-    const double mean_ms = sum_ms / static_cast<double>(num);
-    fmt::print(file_, console_table_format, measurement.case_info(),
-        measurement.iterations(), measurement.samples(), mean_ms, max_ms);
+    for (const auto& out : measurement.custom_outputs()) {
+        fmt::print(file_, FMT_STRING("{}={:.3e}, "), out.first, out.second);
+    }
+    fmt::print(file_, "\n");
+    std::fflush(file_);
 }
 
 void ConsoleReporter::measurement_failed(
@@ -99,8 +119,10 @@ void ConsoleReporter::measurement_failed(
     try {
         std::rethrow_exception(error);
     } catch (const std::exception& e) {
-        fmt::print(file_, console_table_format_error, case_info, e.what());
+        fmt::print(
+            file_, FMT_STRING(CONSOLE_TABLE_FORMAT_ERROR), case_info, e.what());
     }
+    std::fflush(file_);
 }
 
 }  // namespace reporter

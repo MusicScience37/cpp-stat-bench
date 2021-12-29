@@ -26,6 +26,7 @@
 
 #include "stat_bench/reporter/render_template.h"
 #include "stat_bench/reporter/template/line2d.html.h"
+#include "stat_bench/util/prepare_directory.h"
 
 namespace stat_bench {
 namespace reporter {
@@ -74,6 +75,7 @@ void CdfLinePlotReporter::group_finished(const std::string& name) {
 
     const std::string filepath = fmt::format(
         FMT_STRING("{}{}_{}_cdf.html"), prefix_, name, measurer_name_);
+    util::prepare_directory_for(filepath);
     std::ofstream stream{filepath};
     stream << contents;
 }
@@ -90,24 +92,15 @@ void CdfLinePlotReporter::case_finished(
 
 void CdfLinePlotReporter::measurement_succeeded(
     const measurer::Measurement& measurement) {
+    const std::vector<double>& x =
+        measurement.durations_stat().sorted_samples();
     const std::size_t samples =
-        measurement.samples() * measurement.cond().threads();
+        measurement.durations_stat().sorted_samples().size();
     std::vector<double> y;
     y.reserve(samples);
     for (std::size_t i = 0; i < samples; ++i) {
         y.push_back(static_cast<double>(i + 1) / static_cast<double>(samples));
     }
-
-    std::vector<double> x;
-    x.reserve(samples);
-    const double inv_iterations =
-        1.0 / static_cast<double>(measurement.iterations());
-    for (const auto& durations_per_thread : measurement.durations()) {
-        for (const auto& duration : durations_per_thread) {
-            x.push_back(duration.seconds() * inv_iterations);
-        }
-    }
-    std::sort(x.begin(), x.end());
 
     fmt::format_to(std::back_inserter(data_buf_), FMT_STRING(R"***({{
     x: [{}],
@@ -116,8 +109,8 @@ void CdfLinePlotReporter::measurement_succeeded(
     type: "scatter",
     name: "{} (threads={})",
 }},)***"),
-        fmt::join(x, ", "), fmt::join(y, ", "), measurement.case_info(),
-        measurement.cond().threads());
+        fmt::join(x, ", "), fmt::join(y, ", "),
+        measurement.case_info().case_name(), measurement.cond().threads());
 }
 
 void CdfLinePlotReporter::measurement_failed(

@@ -46,7 +46,7 @@ def list_source_file_paths(base_path: Path) -> list[str]:
 
     source_files = list_source_files(base_path)
     return sorted([
-        str(source_file.relative_to(base_path))
+        str(source_file.relative_to(base_path)).replace("\\", "/")
         for source_file in source_files
         if str(source_file) != str(base_path / UNITY_SRC_SUFFIX)
     ])
@@ -61,7 +61,7 @@ def write_unity_source(base_path: Path, file_paths: list[str]):
     """
 
     unity_src_path = base_path / UNITY_SRC_SUFFIX
-    with open(str(unity_src_path), mode='w', encoding='ascii') as file:
+    with open(str(unity_src_path), mode='w', encoding='ascii', newline="\n") as file:
         for source_file in file_paths:
             file.write(
                 f'#include "{source_file}" // NOLINT(bugprone-suspicious-include)\n')
@@ -78,7 +78,7 @@ def write_cmake_var_file(base_path: Path, file_paths: list[str]):
     """
 
     source_list_cmake_path = base_path / SOURCE_LIST_CMAKE_SUFFIX
-    with open(str(source_list_cmake_path), mode='w', encoding='ascii') as file:
+    with open(str(source_list_cmake_path), mode='w', encoding='ascii', newline="\n") as file:
         file.write('set(SOURCE_FILES\n')
         for source_file in file_paths:
             file.write(f'    {source_file}\n')

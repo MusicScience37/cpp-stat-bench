@@ -22,7 +22,39 @@
 #include "stat_bench/bench/benchmark_case_helper.h"
 #include "stat_bench/bench/benchmark_case_register.h"
 #include "stat_bench/bench/benchmark_case_registry.h"
+#include "stat_bench/bench/null_fixture.h"
 #include "stat_bench/macros/context_name.h"
+
+/*!
+ * \brief Macro to define a case using a fixture.
+ *
+ * \param[in] CLASS_NAME Class name.
+ * \param[in] REGISTER_NAME BenchmarkCaseRegister variable name.
+ * \param[in] FIXTURE_NAME Fixture name.
+ * \param[in] GROUP_NAME Group name.
+ * \param[in] CASE_NAME Case name.
+ */
+#define STAT_BENCH_IMPL_CASE_WITH_FIXTURE_IMPL(                       \
+    CLASS_NAME, REGISTER_NAME, FIXTURE_NAME, GROUP_NAME, CASE_NAME)   \
+                                                                      \
+    namespace {                                                       \
+                                                                      \
+    class CLASS_NAME final                                            \
+        : public ::stat_bench::bench::BenchCaseHelper<FIXTURE_NAME> { \
+    public:                                                           \
+        CLASS_NAME() : BenchCaseHelper(GROUP_NAME, CASE_NAME) {}      \
+                                                                      \
+        void run(::stat_bench::bench::InvocationContext&              \
+                STAT_BENCH_IMPL_CONTEXT_NAME) override;               \
+    };                                                                \
+                                                                      \
+    static ::stat_bench::bench::BenchmarkCaseRegister<CLASS_NAME>     \
+        REGISTER_NAME;                                                \
+                                                                      \
+    } /* namespace */                                                 \
+                                                                      \
+    void CLASS_NAME::run(                                             \
+        ::stat_bench::bench::InvocationContext& STAT_BENCH_IMPL_CONTEXT_NAME)
 
 /*!
  * \brief Macro to define a case.
@@ -32,23 +64,7 @@
  * \param[in] GROUP_NAME Group name.
  * \param[in] CASE_NAME Case name.
  */
-#define STAT_BENCH_IMPL_CASE_IMPL(                                         \
-    CLASS_NAME, REGISTER_NAME, GROUP_NAME, CASE_NAME)                      \
-                                                                           \
-    namespace {                                                            \
-                                                                           \
-    class CLASS_NAME final : public ::stat_bench::bench::BenchCaseHelper { \
-    public:                                                                \
-        CLASS_NAME() : BenchCaseHelper(GROUP_NAME, CASE_NAME) {}           \
-                                                                           \
-        void invoke(::stat_bench::bench::InvocationContext&                \
-                STAT_BENCH_IMPL_CONTEXT_NAME) override;                    \
-    };                                                                     \
-                                                                           \
-    static ::stat_bench::bench::BenchmarkCaseRegister<CLASS_NAME>          \
-        REGISTER_NAME;                                                     \
-                                                                           \
-    } /* namespace */                                                      \
-                                                                           \
-    void CLASS_NAME::invoke(                                               \
-        ::stat_bench::bench::InvocationContext& STAT_BENCH_IMPL_CONTEXT_NAME)
+#define STAT_BENCH_IMPL_CASE_IMPL(                                    \
+    CLASS_NAME, REGISTER_NAME, GROUP_NAME, CASE_NAME)                 \
+    STAT_BENCH_IMPL_CASE_WITH_FIXTURE_IMPL(CLASS_NAME, REGISTER_NAME, \
+        ::stat_bench::bench::NullFixture, GROUP_NAME, CASE_NAME)

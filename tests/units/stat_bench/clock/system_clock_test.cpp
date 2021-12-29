@@ -28,7 +28,7 @@
 TEST_CASE("stat_bench::clock::SystemClock") {
     SECTION("get a timestamp") {
         const std::string timestamp =
-            stat_bench::clock::SystemClock::now().to_string();
+            fmt::format("{}", stat_bench::clock::SystemClock::now());
         REQUIRE_THAT(timestamp,
             Catch::Matchers::Matches(
                 R"(\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d\.\d\d\d\d\d\d.\d\d\d\d)"));

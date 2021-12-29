@@ -8,7 +8,7 @@ endif()
 
 project(
     stat_bench
-    VERSION 0.0.0
+    VERSION 0.1.0
     DESCRIPTION "Benchmark library with statistics for C++."
     LANGUAGES CXX)
 set(FULL_PROJECT_NAME "cpp-stat-bench")
@@ -44,6 +44,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
 list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR})
 find_package(fmt REQUIRED)
 find_package(lyra REQUIRED)
+find_package(nlohmann_json REQUIRED)
 if(STAT_BENCH_TESTING)
     find_package(Catch2 REQUIRED)
     find_package(trompeloeil REQUIRED)

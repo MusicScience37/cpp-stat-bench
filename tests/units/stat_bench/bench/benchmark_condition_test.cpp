@@ -21,12 +21,16 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include "../param/create_ordinary_parameter_dict.h"
+
 TEST_CASE("stat_bench::bench::BenchmarkCondition") {
     SECTION("construct") {
         constexpr std::size_t threads = 7;
 
-        const auto cond = stat_bench::bench::BenchmarkCondition(threads);
+        const auto cond = stat_bench::bench::BenchmarkCondition(
+            threads, stat_bench_test::param::create_ordinary_parameter_dict());
 
         REQUIRE(cond.threads() == threads);
+        REQUIRE(fmt::format("{}", cond.params()) == "threads=1");
     }
 }

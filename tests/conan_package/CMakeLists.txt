@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.12)
 
 project(
     stat_bench_test
-    VERSION 0.0.0
+    VERSION 0.1.0
     LANGUAGES CXX)
 message(STATUS "stat_bench_test version ${PROJECT_VERSION}")
 message(STATUS "build type: ${CMAKE_BUILD_TYPE}")
@@ -26,7 +26,7 @@ find_package(cpp_stat_bench REQUIRED)
 
 enable_testing()
 add_executable(example example.cpp)
-target_link_libraries(example cpp_stat_bench::cpp_stat_bench)
+target_link_libraries(example cpp_stat_bench::stat_bench)
 add_test(
     NAME example
     COMMAND example

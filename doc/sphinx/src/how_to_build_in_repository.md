@@ -17,6 +17,7 @@ you will require following dependencies:
   - Following compilers are tested in CI:
     - GCC 10
     - Clang 11
+    - MSVC 19
 
 Additionally, you will require following dependencies
 to build documentation.
