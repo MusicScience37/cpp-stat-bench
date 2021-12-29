@@ -20,6 +20,7 @@
 #include "stat_bench/runner/runner.h"
 
 #include <exception>
+#include <memory>
 #include <stdexcept>
 
 #include "stat_bench/bench/benchmark_case_registry.h"
@@ -29,6 +30,7 @@
 #include "stat_bench/measurer/processing_time_measurer.h"
 #include "stat_bench/reporter/cdf_line_plot_reporter.h"
 #include "stat_bench/reporter/console_reporter.h"
+#include "stat_bench/reporter/json_reporter.h"
 #include "stat_bench/reporter/simple_line_plot_reporter.h"
 
 namespace stat_bench {
@@ -36,6 +38,12 @@ namespace runner {
 
 Runner::Runner() {
     cli_ |= lyra::opt(config_.show_help)["-h"]["--help"]("Show this help.");
+
+    cli_ |= lyra::opt(config_.plot_prefix, "prefix")["--plot"](
+        "Generate plots of results.");
+
+    cli_ |= lyra::opt(config_.json_file_path, "filepath")["--json"](
+        "Generate JSON data file.");
 
     cli_ |= lyra::opt(config_.processing_time_samples, "num")["--samples"](
         "Number of samples for measurements of processing time.")
@@ -52,8 +60,14 @@ Runner::Runner() {
         "[sec]")
                 .choices([](double val) { return val > 0.0; });
 
-    cli_ |= lyra::opt(config_.plot_prefix, "prefix")["--plot"](
-        "Generate plots of results.");
+    cli_ |= lyra::opt(config_.min_warming_up_iterations,
+        "num")["--min_warming_up_iterations"](
+        "Minimum number of iterations for warming up.");
+
+    cli_ |= lyra::opt(config_.min_warming_up_duration_sec,
+        "num")["--min_warming_up_duration_sec"](
+        "Minimum duration for warming up. [sec]")
+                .choices([](double val) { return val >= 0.0; });
 }
 
 Runner::~Runner() = default;
@@ -67,9 +81,12 @@ void Runner::parse_cli(int argc, const char** argv) {
 
 void Runner::init() {
     measurers_.push_back(std::make_shared<measurer::ProcessingTimeMeasurer>(
-        config_.processing_time_samples));
+        config_.processing_time_samples, config_.min_warming_up_iterations,
+        config_.min_warming_up_duration_sec));
     measurers_.push_back(std::make_shared<measurer::MeanProcessingTimeMeasurer>(
-        config_.min_sample_duration_sec, config_.mean_processing_time_samples));
+        config_.min_sample_duration_sec, config_.mean_processing_time_samples,
+        config_.min_warming_up_iterations,
+        config_.min_warming_up_duration_sec));
 
     reporters_.push_back(std::make_shared<reporter::ConsoleReporter>());
 
@@ -78,6 +95,11 @@ void Runner::init() {
             config_.plot_prefix));
         reporters_.push_back(std::make_shared<reporter::CdfLinePlotReporter>(
             config_.plot_prefix));
+    }
+
+    if (!config_.json_file_path.empty()) {
+        reporters_.push_back(
+            std::make_shared<reporter::JsonReporter>(config_.json_file_path));
     }
 }
 
@@ -119,12 +141,32 @@ void Runner::run(const bench::BenchmarkCaseRegistry& registry) const {
 
 void Runner::run_case(const std::shared_ptr<measurer::IMeasurer>& measurer,
     const std::shared_ptr<bench::IBenchmarkCase>& bench_case) const {
+    auto params = bench_case->params();
+    if (!params.has("threads")) {
+        params.add<std::size_t>("threads")->add(1);
+    }
+    auto generator = params.create_generator();
+
+    while (true) {
+        const auto cond = bench::BenchmarkCondition(generator.generate());
+
+        run_case_with_condition(measurer, bench_case, cond);
+
+        if (!generator.iterate()) {
+            break;
+        }
+    }
+}
+
+void Runner::run_case_with_condition(
+    const std::shared_ptr<measurer::IMeasurer>& measurer,
+    const std::shared_ptr<bench::IBenchmarkCase>& bench_case,
+    const bench::BenchmarkCondition& cond) const {
     for (const auto& reporter : reporters_) {
         reporter->case_starts(bench_case->info());
     }
 
     constexpr std::size_t threads = 1;
-    const auto cond = bench::BenchmarkCondition(threads);
     std::exception_ptr error_in_reporter;
     try {
         const auto measurement = measurer->measure(bench_case.get(), cond);

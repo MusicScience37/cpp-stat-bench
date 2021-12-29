@@ -19,48 +19,30 @@
  */
 #include "stat_bench/measurer/mean_processing_time_measurer.h"
 
+#include <algorithm>
 #include <cstddef>
 #include <limits>
 #include <stdexcept>
 
 #include "stat_bench/bench/invocation_context.h"
+#include "stat_bench/measurer/determine_iterations.h"
+#include "stat_bench/measurer/determine_warming_up_samples.h"
+#include "stat_bench/measurer/measure_once.h"
 
 namespace stat_bench {
 namespace measurer {
 
 auto MeanProcessingTimeMeasurer::measure(bench::IBenchmarkCase* bench_case,
     const bench::BenchmarkCondition& cond) const -> Measurement {
-    // First find the proper number of iterations.
-    std::size_t iterations = 1;
-    constexpr std::size_t trials = 10;
-    for (std::size_t i = 0; i < trials; ++i) {
-        constexpr std::size_t samples = 1;
-        const auto data = measure_once(bench_case, cond, iterations, samples);
-        const double duration_sec = data.durations().at(0).at(0).seconds();
-        if (duration_sec > min_sample_duration_sec_) {
-            break;
-        }
+    const std::size_t iterations =
+        determine_iterations(bench_case, cond, name_, min_sample_duration_sec_);
 
-        const double multiplier = std::min(
-            min_sample_duration_sec_ / std::max(duration_sec, 1e-9), 100.0);
-        constexpr double max_iterations = 1e+6;
-        iterations = static_cast<std::size_t>(std::min(
-            max_iterations, static_cast<double>(iterations) * multiplier));
-    }
+    const std::size_t warming_up_samples =
+        determine_warming_up_samples(bench_case, cond, name_, iterations,
+            min_warming_up_iterations_, min_warming_up_duration_sec_);
 
-    return measure_once(bench_case, cond, iterations, samples_);
-}
-
-auto MeanProcessingTimeMeasurer::measure_once(bench::IBenchmarkCase* bench_case,
-    const bench::BenchmarkCondition& cond, std::size_t iterations,
-    std::size_t samples) const -> Measurement {
-    bench::InvocationContext context{cond, iterations, samples};
-    bench_case->invoke(context);
-    if (context.durations().empty()) {
-        throw std::runtime_error("No measurement was done.");
-    }
-    return Measurement(bench_case->info(), cond, name_, iterations, samples,
-        context.durations());
+    return measure_once(
+        bench_case, cond, name_, iterations, samples_, warming_up_samples);
 }
 
 }  // namespace measurer

@@ -21,6 +21,7 @@
 
 #include "stat_bench/bench/benchmark_case_info.h"
 #include "stat_bench/bench/invocation_context.h"
+#include "stat_bench/param/parameter_config.h"
 
 namespace stat_bench {
 namespace bench {
@@ -39,11 +40,19 @@ public:
         -> const BenchmarkCaseInfo& = 0;
 
     /*!
-     * \brief Invoke the function of this case.
+     * \brief Get parameters.
+     *
+     * \return Parameters.
+     */
+    [[nodiscard]] virtual auto params() const noexcept
+        -> const param::ParameterConfig& = 0;
+
+    /*!
+     * \brief Execute this case.
      *
      * \param[in] context Context.
      */
-    virtual void invoke(InvocationContext& context) = 0;
+    virtual void execute(InvocationContext& context) = 0;
 
     IBenchmarkCase(const IBenchmarkCase&) = delete;
     IBenchmarkCase(IBenchmarkCase&&) = delete;

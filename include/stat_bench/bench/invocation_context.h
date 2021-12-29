@@ -20,12 +20,15 @@
 #pragma once
 
 #include <cstddef>
-#include <mutex>
-#include <stdexcept>
-#include <vector>
+#include <memory>
+#include <string>
+#include <unordered_map>
+#include <utility>
 
 #include "stat_bench/bench/benchmark_condition.h"
-#include "stat_bench/clock/stop_watch.h"
+#include "stat_bench/bench/threadable_invoker.h"
+#include "stat_bench/clock/duration.h"
+#include "stat_bench/stat/custom_stat_output.h"
 
 namespace stat_bench {
 namespace bench {
@@ -40,16 +43,15 @@ public:
      *
      * \param[in] cond Condition.
      * \param[in] iterations Number of iterations.
-     * \param[in] samples Number of samples.
+     * \param[in] samples Number of samples (including warming up).
+     * \param[in] warming_up_samples Number of samples for warming up.
      */
-    InvocationContext(
-        BenchmarkCondition cond, std::size_t iterations, std::size_t samples)
-        : cond_(cond), iterations_(iterations), samples_(samples) {
-        if (cond_.threads() != 1) {
-            throw std::invalid_argument(
-                "Number of threads must be one in the current implementation.");
-        }
-    }
+    InvocationContext(BenchmarkCondition cond, std::size_t iterations,
+        std::size_t samples, std::size_t warming_up_samples)
+        : cond_(std::move(cond)),
+          iterations_(iterations),
+          samples_(samples),
+          warming_up_samples_(warming_up_samples) {}
 
     InvocationContext(const InvocationContext&) = delete;
     InvocationContext(InvocationContext&&) = delete;
@@ -89,27 +91,57 @@ public:
     }
 
     /*!
+     * \brief Get a parameter.
+     *
+     * \tparam T Type of the parameter value.
+     * \param[in] param_name Parameter name.
+     * \return Parameter value.
+     */
+    template <typename T>
+    [[nodiscard]] auto get_param(const std::string& param_name) const
+        -> const T& {
+        return cond_.params().get<T>(param_name);
+    }
+
+    /*!
+     * \brief Add a custom output with statistics.
+     *
+     * \param[in] name Name.
+     * \param[in] analysis_type Type of analysis.
+     * \return Object to add output values.
+     */
+    [[nodiscard]] auto add_custom_stat(const std::string& name,
+        stat::CustomOutputAnalysisType analysis_type =
+            stat::CustomOutputAnalysisType::mean)
+        -> std::shared_ptr<stat::CustomStatOutput> {
+        auto out =
+            std::make_shared<stat::CustomStatOutput>(name, cond_.threads(),
+                samples_, warming_up_samples_, iterations_, analysis_type);
+        custom_stat_outputs_.push_back(out);
+        return out;
+    }
+
+    /*!
+     * \brief Add a custom output without statistics.
+     *
+     * \param[in] name Name.
+     * \param[in] value Output value.
+     */
+    void add_custom_output(const std::string& name, double value) {
+        custom_outputs_.emplace_back(name, value);
+    }
+
+    /*!
      * \brief Measure time.
      *
      * \tparam Func Type of function.
      * \param[in] func Function.
      */
     template <typename Func>
-    void measure(const Func& func) {
-        durations_.clear();
-
-        clock::StopWatch watch;
-        watch.start(samples_);
-        const std::size_t thread_index = 0;
-        for (std::size_t sample_index = 0; sample_index < samples_;
-             ++sample_index) {
-            for (std::size_t iteration_index = 0; iteration_index < iterations_;
-                 ++iteration_index) {
-                func(thread_index, sample_index, iteration_index);
-            }
-            watch.lap();
-        }
-        durations_.push_back(watch.calc_durations());
+    inline void measure(const Func& func) {
+        durations_ = ThreadableInvoker(
+            cond_.threads(), iterations_, samples_, warming_up_samples_)
+                         .measure(func);
     }
 
     /*!
@@ -124,6 +156,26 @@ public:
         return durations_;
     }
 
+    /*!
+     * \brief Get the custom outputs with statistics.
+     *
+     * \return Custom outputs with statistics.
+     */
+    [[nodiscard]] auto custom_stat_outputs() const noexcept
+        -> const std::vector<std::shared_ptr<stat::CustomStatOutput>>& {
+        return custom_stat_outputs_;
+    }
+
+    /*!
+     * \brief Get the custom outputs without statistics.
+     *
+     * \return Custom outputs without statistics.
+     */
+    [[nodiscard]] auto custom_outputs() const noexcept
+        -> const std::vector<std::pair<std::string, double>>& {
+        return custom_outputs_;
+    }
+
 private:
     //! Condition.
     BenchmarkCondition cond_;
@@ -131,14 +183,20 @@ private:
     //! Number of iterations.
     std::size_t iterations_;
 
-    //! Number of samples.
+    //! Number of samples (including warming up).
     std::size_t samples_;
+
+    //! Number of samples for warming up.
+    std::size_t warming_up_samples_;
 
     //! Measured durations.
     std::vector<std::vector<clock::Duration>> durations_{};
 
-    //! Mutex for durations.
-    std::mutex durations_mutex_{};
+    //! Custom outputs with statistics.
+    std::vector<std::shared_ptr<stat::CustomStatOutput>> custom_stat_outputs_{};
+
+    //! Custom outputs without statistics.
+    std::vector<std::pair<std::string, double>> custom_outputs_{};
 };
 
 }  // namespace bench

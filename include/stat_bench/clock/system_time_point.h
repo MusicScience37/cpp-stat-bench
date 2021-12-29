@@ -64,17 +64,6 @@ public:
             iter, "{0:%FT%T}.{1:06d}{0:%z}", time_tm, time_usec);
     }
 
-    /*!
-     * \brief Get string expression.
-     *
-     * \return String expression.
-     */
-    [[nodiscard]] auto to_string() const -> std::string {
-        fmt::memory_buffer buffer;
-        format_to(fmt::detail::buffer_appender<char>(buffer));
-        return std::string(buffer.data(), buffer.size());
-    }
-
 private:
     //! Actual time point.
     std::chrono::system_clock::time_point time_point_;

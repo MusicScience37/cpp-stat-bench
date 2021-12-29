@@ -21,15 +21,18 @@
 
 #include <string>
 
-#include "stat_bench/bench/i_benchmark_case.h"
+#include "stat_bench/bench/benchmark_case_info.h"
 
 namespace stat_bench {
 namespace bench {
 
 /*!
- * \brief Class to help definition of benchmarks.
+ * \brief Class to help definition of cases in benchmarks.
+ *
+ * \tparam Fixture Type of the fixture.
  */
-class BenchCaseHelper : public bench::IBenchmarkCase {
+template <typename Fixture>
+class BenchCaseHelper : public Fixture {
 protected:
     /*!
      * \brief Constructor.

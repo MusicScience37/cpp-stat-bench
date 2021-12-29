@@ -19,6 +19,7 @@
  */
 #pragma once
 
+#include <memory>
 #include <string>
 #include <utility>
 #include <vector>
@@ -26,6 +27,9 @@
 #include "stat_bench/bench/benchmark_case_info.h"
 #include "stat_bench/bench/benchmark_condition.h"
 #include "stat_bench/clock/duration.h"
+#include "stat_bench/stat/calc_stat.h"
+#include "stat_bench/stat/custom_stat_output.h"
+#include "stat_bench/stat/statistics.h"
 
 namespace stat_bench {
 namespace measurer {
@@ -44,17 +48,31 @@ public:
      * \param[in] iterations Number of iterations.
      * \param[in] samples Number of samples.
      * \param[in] durations Measured durations.
+     * \param[in] custom_stat_outputs Custom outputs with statistics.
+     * \param[in] custom_outputs Custom outputs without statistics.
      */
     Measurement(bench::BenchmarkCaseInfo case_info,
         bench::BenchmarkCondition cond, std::string measurer_name,
         std::size_t iterations, std::size_t samples,
-        std::vector<std::vector<clock::Duration>> durations)
+        std::vector<std::vector<clock::Duration>> durations,
+        std::vector<std::shared_ptr<stat::CustomStatOutput>>
+            custom_stat_outputs,
+        std::vector<std::pair<std::string, double>> custom_outputs)
         : case_info_(std::move(case_info)),
-          cond_(cond),
+          cond_(std::move(cond)),
           measurer_name_(std::move(measurer_name)),
           iterations_(iterations),
           samples_(samples),
-          durations_(std::move(durations)) {}
+          durations_(std::move(durations)),
+          durations_stat_(stat::calc_stat(durations_, iterations)),
+          custom_stat_outputs_(std::move(custom_stat_outputs)),
+          custom_outputs_(std::move(custom_outputs)) {
+        custom_stat_.reserve(custom_stat_outputs_.size());
+        for (const auto& out : custom_stat_outputs_) {
+            out->preprocess(durations_);
+            custom_stat_.push_back(out->stat());
+        }
+    }
 
     /*!
      * \brief Get the information of the case.
@@ -115,6 +133,46 @@ public:
         return durations_;
     }
 
+    /*!
+     * \brief Get the statistics of durations.
+     *
+     * \return Statistics of durations.
+     */
+    [[nodiscard]] auto durations_stat() const noexcept
+        -> const stat::Statistics& {
+        return durations_stat_;
+    }
+
+    /*!
+     * \brief Get the custom outputs with statistics.
+     *
+     * \return Custom outputs with statistics.
+     */
+    [[nodiscard]] auto custom_stat_outputs() const noexcept
+        -> const std::vector<std::shared_ptr<stat::CustomStatOutput>>& {
+        return custom_stat_outputs_;
+    }
+
+    /*!
+     * \brief Get the statistics of custom outputs.
+     *
+     * \return Statistics of custom outputs.
+     */
+    [[nodiscard]] auto custom_stat() const noexcept
+        -> const std::vector<stat::Statistics>& {
+        return custom_stat_;
+    }
+
+    /*!
+     * \brief Get the custom outputs without statistics.
+     *
+     * \return Custom outputs without statistics.
+     */
+    [[nodiscard]] auto custom_outputs() const noexcept
+        -> const std::vector<std::pair<std::string, double>>& {
+        return custom_outputs_;
+    }
+
 private:
     //! Information of the case.
     bench::BenchmarkCaseInfo case_info_;
@@ -133,6 +191,18 @@ private:
 
     //! Measured durations.
     std::vector<std::vector<clock::Duration>> durations_;
+
+    //! Statistics of durations.
+    stat::Statistics durations_stat_;
+
+    //! Custom outputs with statistics.
+    std::vector<std::shared_ptr<stat::CustomStatOutput>> custom_stat_outputs_;
+
+    //! Statistics of custom outputs.
+    std::vector<stat::Statistics> custom_stat_;
+
+    //! Custom outputs without statistics.
+    std::vector<std::pair<std::string, double>> custom_outputs_;
 };
 
 }  // namespace measurer

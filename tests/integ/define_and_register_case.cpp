@@ -21,6 +21,7 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include "../units/stat_bench/param/create_ordinary_parameter_dict.h"
 #include "stat_bench/bench/benchmark_condition.h"
 #include "stat_bench/benchmark_macros.h"
 
@@ -57,23 +58,25 @@ TEST_CASE("STAT_BENCH_CASE") {
     REQUIRE(benchmarks.at(1).cases().size() == 1);
 
     stat_bench::bench::InvocationContext context{
-        stat_bench::bench::BenchmarkCondition(1), 1, 1};
+        stat_bench::bench::BenchmarkCondition(
+            1, stat_bench_test::param::create_ordinary_parameter_dict()),
+        1, 1, 0};
 
     const auto& case1 = benchmarks.at(0).cases().at(0);
     REQUIRE(case1->info().group_name() == "Group1");
     REQUIRE(case1->info().case_name() == "Case1");
-    REQUIRE_NOTHROW(case1->invoke(context));
+    REQUIRE_NOTHROW(case1->execute(context));
     REQUIRE(case_index() == 1);
 
     const auto& case2 = benchmarks.at(0).cases().at(1);
     REQUIRE(case2->info().group_name() == "Group1");
     REQUIRE(case2->info().case_name() == "Case2");
-    REQUIRE_NOTHROW(case2->invoke(context));
+    REQUIRE_NOTHROW(case2->execute(context));
     REQUIRE(case_index() == 2);
 
     const auto& case3 = benchmarks.at(1).cases().at(0);
     REQUIRE(case3->info().group_name() == "Group2");
     REQUIRE(case3->info().case_name() == "Case3");
-    REQUIRE_NOTHROW(case3->invoke(context));
+    REQUIRE_NOTHROW(case3->execute(context));
     REQUIRE(case_index() == 3);
 }

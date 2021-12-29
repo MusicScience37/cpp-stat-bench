@@ -26,25 +26,30 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include "../bench/mock_benchmark_case.h"
+#include "../param/create_ordinary_parameter_dict.h"
 #include "stat_bench/bench/benchmark_case_info.h"
 #include "stat_bench/bench/benchmark_condition.h"
 
 TEST_CASE("stat_bench::measurer::ProcessingTimeMeasurer") {
     constexpr std::size_t samples = 3;
+    constexpr std::size_t min_warming_up_iterations = 5;
+    constexpr double min_warming_up_duration_sec = 0.01;
     const auto measurer =
-        std::make_shared<stat_bench::measurer::ProcessingTimeMeasurer>(samples);
+        std::make_shared<stat_bench::measurer::ProcessingTimeMeasurer>(
+            samples, min_warming_up_iterations, min_warming_up_duration_sec);
 
     SECTION("get name") { REQUIRE(measurer->name() == "Processing Time"); }
 
     SECTION("measure") {
         stat_bench_test::bench::MockBenchmarkCase bench_case;
         const auto info = stat_bench::bench::BenchmarkCaseInfo("group", "case");
-        const auto cond = stat_bench::bench::BenchmarkCondition(1);
+        const auto cond = stat_bench::bench::BenchmarkCondition(
+            1, stat_bench_test::param::create_ordinary_parameter_dict());
 
         // NOLINTNEXTLINE
         ALLOW_CALL(bench_case, info()).RETURN(info);
-        REQUIRE_CALL(bench_case, invoke(trompeloeil::_))
-            .TIMES(1)
+        REQUIRE_CALL(bench_case, execute(trompeloeil::_))
+            .TIMES(AT_LEAST(1))
             // NOLINTNEXTLINE
             .SIDE_EFFECT(_1.measure(
                 [](std::size_t /*thread_index*/, std::size_t /*sample_index*/,
