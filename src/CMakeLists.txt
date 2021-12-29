@@ -11,7 +11,7 @@ find_package(Threads REQUIRED)
 target_link_libraries(stat_bench PUBLIC Threads::Threads)
 
 if(MSVC)
-    target_compile_options(stat_bench PUBLIC /EHsc)
+    target_compile_options(stat_bench PUBLIC /EHsc /utf-8)
 endif()
 
 function(preprocess_template PATH VAR_NAME)
