@@ -1,12 +1,28 @@
 # cpp-stat-bench
 
-Benchmark library with statistics for C++.
-
 [![GitLab Release](https://img.shields.io/gitlab/v/release/32226502?sort=semver)](https://gitlab.com/MusicScience37/cpp-stat-bench/-/releases)
 [![C++ standard](https://img.shields.io/badge/standard-C%2B%2B14-blue?logo=c%2B%2B)](https://en.cppreference.com/w/cpp/compiler_support/14)
 [![pipeline status](https://gitlab.com/MusicScience37/cpp-stat-bench/badges/develop/pipeline.svg)](https://gitlab.com/MusicScience37/cpp-stat-bench/-/commits/develop)
 [![coverage report](https://gitlab.com/MusicScience37/cpp-stat-bench/badges/develop/coverage.svg)](https://gitlab.com/MusicScience37/cpp-stat-bench/-/commits/develop)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+
+Benchmark library with statistics for C++.
+
+## ✨ Features
+
+- Report results in various types of output files.
+  - To console.
+  - To JSON files.
+  - To HTML files of plots 📈.
+    - Processing time for each execution.
+    - Cumulative distribution function of processing time.
+- Measure processing time in two patterns.
+  - Processing time of each execution.
+  - Mean processing time of consecutive executions.
+- Report custom data with or without statistics.
+- Use custom parameters in various types.
+- Perform benchmark in multiple threads.
+- Use fixtures.
 
 ## Repositories
 
@@ -15,6 +31,7 @@ Benchmark library with statistics for C++.
 ## Documentation
 
 - [Documentation build on develop branch](https://musicscience37.gitlab.io/cpp-stat-bench/)
+- Examples are in `examples` directory.
 
 ## How to Use
 
