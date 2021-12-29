@@ -63,24 +63,22 @@ namespace data_file_spec {
  *
  * \param[in] stat_output Custom output with statistics.
  * \param[in] stat Statistics of custom output.
- * \param[in] samples Number of samples.
  * \return Converted data.
  */
 [[nodiscard]] auto convert(
     const std::shared_ptr<stat::CustomStatOutput>& stat_output,
-    const stat::Statistics& stat, std::size_t samples) -> CustomStatOutputData;
+    const stat::Statistics& stat) -> CustomStatOutputData;
 
 /*!
  * \brief Convert to data for data files.
  *
  * \param[in] stat_outputs Custom outputs with statistics.
  * \param[in] stats Statistics of custom outputs.
- * \param[in] samples Number of samples.
  * \return Converted data.
  */
 [[nodiscard]] auto convert(
     const std::vector<std::shared_ptr<stat::CustomStatOutput>>& stat_outputs,
-    const std::vector<stat::Statistics>& stats, std::size_t samples)
+    const std::vector<stat::Statistics>& stats)
     -> std::vector<CustomStatOutputData>;
 
 /*!
