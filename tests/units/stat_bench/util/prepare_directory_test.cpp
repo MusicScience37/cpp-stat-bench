@@ -22,6 +22,9 @@
 #include <catch2/catch_test_macros.hpp>
 
 #ifdef _WIN32
+#include <Windows.h>  // GetFileAttributesA
+#include <direct.h>   // _rmdir
+#include <fileapi.h>  // GetFileAttributesA
 #else
 #include <sys/stat.h>  // stat
 #include <unistd.h>    // rmdir
@@ -33,7 +36,9 @@ TEST_CASE("stat_bench::util::prepare_directory_for") {
         const std::string file_path = dir_path + "test";
 
 #ifdef _WIN32
-        // TODO
+        ::_rmdir(dir_path.c_str());
+        REQUIRE(
+            ::GetFileAttributesA(dir_path.c_str()) == INVALID_FILE_ATTRIBUTES);
 #else
         ::rmdir(dir_path.c_str());
         struct stat buf {};
@@ -43,7 +48,10 @@ TEST_CASE("stat_bench::util::prepare_directory_for") {
         stat_bench::util::prepare_directory_for(file_path);
 
 #ifdef _WIN32
-        // TODO
+        REQUIRE(
+            ::GetFileAttributesA(dir_path.c_str()) != INVALID_FILE_ATTRIBUTES);
+        REQUIRE(
+            ::GetFileAttributesA(file_path.c_str()) == INVALID_FILE_ATTRIBUTES);
 #else
         REQUIRE(::stat(dir_path.c_str(), &buf) == 0);
         REQUIRE(::stat(file_path.c_str(), &buf) != 0);

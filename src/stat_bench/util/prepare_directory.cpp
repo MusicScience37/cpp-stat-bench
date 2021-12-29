@@ -21,11 +21,44 @@
 
 #ifdef _WIN32
 
+#include <Windows.h>  // GetFileAttributesA
+#include <direct.h>   // _mkdir
+#include <fileapi.h>  // GetFileAttributesA
+
 namespace stat_bench {
 namespace util {
 
+[[nodiscard]] static auto path_exists(const std::string& path) -> bool {
+    return ::GetFileAttributesA(path.c_str()) != INVALID_FILE_ATTRIBUTES;
+}
+
 void prepare_directory(const std::string& path) {
-    // TODO
+    if (path_exists(path)) {
+        return;
+    }
+
+    std::size_t pos = 0;
+    while (true) {
+        pos = path.find_first_of("/\\", pos);
+        if (pos == std::string::npos) {
+            pos = path.size();
+        }
+        const auto parent = path.substr(0, pos);
+        ++pos;
+
+        if (parent.empty() || path_exists(parent)) {
+            continue;
+        }
+        ::_mkdir(path.c_str());
+        if (pos >= path.size()) {
+            return;
+        }
+    }
+}
+
+void prepare_directory_for(const std::string& path) {
+    const std::size_t pos = path.find_last_of("/\\");
+    prepare_directory(path.substr(0, pos));
 }
 
 }  // namespace util
@@ -48,7 +81,7 @@ void prepare_directory(const std::string& path) {
         return;
     }
 
-    std::size_t pos;
+    std::size_t pos = 0;
     while (true) {
         pos = path.find_first_of('/', pos);
         if (pos == std::string::npos) {
