@@ -8,8 +8,8 @@ target_add_catch2(stat_bench_test_integ_use_fixture)
 function(add_bench_test EXE_NAME)
     add_test(
         NAME ${EXE_NAME}
-        COMMAND ${EXE_NAME} --plot "./" --json "${EXE_NAME}.json" --samples 5
-                --mean_samples 5
+        COMMAND ${EXE_NAME} --plot "${EXE_NAME}/" --json
+                "${EXE_NAME}/${EXE_NAME}.json" --samples 5 --mean_samples 5
         WORKING_DIRECTORY ${STAT_BENCH_TEMP_TEST_DIR})
 endfunction()
 

@@ -26,6 +26,7 @@
 
 #include "stat_bench/reporter/render_template.h"
 #include "stat_bench/reporter/template/line2d.html.h"
+#include "stat_bench/util/prepare_directory.h"
 
 namespace stat_bench {
 namespace reporter {
@@ -74,6 +75,7 @@ void CdfLinePlotReporter::group_finished(const std::string& name) {
 
     const std::string filepath = fmt::format(
         FMT_STRING("{}{}_{}_cdf.html"), prefix_, name, measurer_name_);
+    util::prepare_directory_for(filepath);
     std::ofstream stream{filepath};
     stream << contents;
 }
