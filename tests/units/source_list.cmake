@@ -27,5 +27,6 @@ set(SOURCE_FILES
     stat_bench/stat/statistics_test.cpp
     stat_bench/util/do_not_optimize_test.cpp
     stat_bench/util/memory_barrier_test.cpp
+    stat_bench/util/prepare_directory_test.cpp
     stat_bench/util/use_pointer_test.cpp
 )

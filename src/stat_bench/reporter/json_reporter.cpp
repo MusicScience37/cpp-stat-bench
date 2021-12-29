@@ -26,6 +26,7 @@
 #include "stat_bench/reporter/data_file_helper.h"
 #include "stat_bench/reporter/json_data_file_helper.h"
 #include "stat_bench/stat_bench_exception.h"
+#include "stat_bench/util/prepare_directory.h"
 
 namespace stat_bench {
 namespace reporter {
@@ -41,6 +42,7 @@ void JsonReporter::experiment_finished(
     const clock::SystemTimePoint& time_stamp) {
     data_.finished_at = fmt::format(FMT_STRING("{}"), time_stamp);
 
+    util::prepare_directory_for(file_path_);
     std::ofstream stream{file_path_};
     if (!stream) {
         throw StatBenchException(

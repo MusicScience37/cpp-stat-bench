@@ -26,4 +26,5 @@
 #include "stat_bench/stat/statistics_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/util/do_not_optimize_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/util/memory_barrier_test.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "stat_bench/util/prepare_directory_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/util/use_pointer_test.cpp"  // NOLINT(bugprone-suspicious-include)
