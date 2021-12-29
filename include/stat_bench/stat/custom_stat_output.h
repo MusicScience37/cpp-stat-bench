@@ -25,6 +25,7 @@
 
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/stat/statistics.h"
+#include "stat_bench/stat_bench_exception.h"
 
 namespace stat_bench {
 namespace stat {
@@ -47,20 +48,28 @@ public:
      *
      * \param[in] name Name.
      * \param[in] threads Number of threads.
-     * \param[in] samples Number of samples.
-     * \param[in] iterations Number of iterations.
-     * \param[in] analysis_type Type of analysis.
+     * \param[in] samples Number of samples (including warming_up_samples).
+     * \param[in] warming_up_samples Number of samples for warming up. (They're
+     * ignored.)
+     * \param[in] iterations Number of iterations. \param[in]
+     * analysis_type Type of analysis.
      */
     CustomStatOutput(std::string name, std::size_t threads, std::size_t samples,
-        std::size_t iterations, CustomOutputAnalysisType analysis_type)
+        std::size_t warming_up_samples, std::size_t iterations,
+        CustomOutputAnalysisType analysis_type)
         : name_(std::move(name)),
           threads_(threads),
           samples_(samples),
+          warming_up_samples_(warming_up_samples),
           iterations_(iterations),
           analysis_type_(analysis_type) {
+        if (samples <= warming_up_samples) {
+            throw StatBenchException("Invalid number of samples.");
+        }
         data_.reserve(threads_);
+        const std::size_t used_samples = samples - warming_up_samples;
         for (std::size_t i = 0; i < threads_; ++i) {
-            data_.emplace_back(samples_, 0.0);
+            data_.emplace_back(used_samples, 0.0);
         }
     }
 
@@ -72,25 +81,23 @@ public:
      * \param[in] val Value of the current iteration.
      */
     void add(std::size_t thread_index, std::size_t sample_index, double val) {
-        data_.at(thread_index).at(sample_index) += val;
+        if (sample_index < warming_up_samples_) {
+            return;
+        }
+        data_.at(thread_index).at(sample_index - warming_up_samples_) += val;
     }
 
     /*!
-     * \brief Calculate statistics.
+     * \brief Preprocess data.
      *
      * \param[in] durations Durations.
-     * \return Statistics.
      */
-    [[nodiscard]] auto stat(
-        const std::vector<std::vector<clock::Duration>>& durations) const
-        -> Statistics {
-        const std::size_t samples = durations.at(0).size();
-        const std::size_t sample_index_offset = samples_ - samples;
-        Statistics res;
-        res.reserve(threads_ * samples);
+    void preprocess(
+        const std::vector<std::vector<clock::Duration>>& durations) {
+        const std::size_t used_samples = samples_ - warming_up_samples_;
         for (std::size_t i = 0; i < threads_; ++i) {
-            for (std::size_t j = 0; j < samples; ++j) {
-                double val = data_.at(i).at(j + sample_index_offset);
+            for (std::size_t j = 0; j < used_samples; ++j) {
+                double& val = data_.at(i).at(j);
 
                 switch (analysis_type_) {
                 case CustomOutputAnalysisType::mean:
@@ -100,7 +107,22 @@ public:
                     val /= durations.at(i).at(j).seconds();
                     break;
                 }
+            }
+        }
+    }
 
+    /*!
+     * \brief Calculate statistics.
+     *
+     * \return Statistics.
+     */
+    [[nodiscard]] auto stat() const -> Statistics {
+        const std::size_t used_samples = samples_ - warming_up_samples_;
+        Statistics res;
+        res.reserve(threads_ * used_samples);
+        for (std::size_t i = 0; i < threads_; ++i) {
+            for (std::size_t j = 0; j < used_samples; ++j) {
+                const double val = data_.at(i).at(j);
                 res.add(val);
             }
         }
@@ -137,8 +159,11 @@ private:
     //! Number of threads.
     std::size_t threads_;
 
-    //! Number of samples.
+    //! Number of total samples.
     std::size_t samples_;
+
+    //! Number of samples for warming up.
+    std::size_t warming_up_samples_;
 
     //! Number of iterations.
     std::size_t iterations_;

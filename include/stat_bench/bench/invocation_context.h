@@ -114,8 +114,9 @@ public:
         stat::CustomOutputAnalysisType analysis_type =
             stat::CustomOutputAnalysisType::mean)
         -> std::shared_ptr<stat::CustomStatOutput> {
-        auto out = std::make_shared<stat::CustomStatOutput>(
-            name, cond_.threads(), samples_, iterations_, analysis_type);
+        auto out =
+            std::make_shared<stat::CustomStatOutput>(name, cond_.threads(),
+                samples_, warming_up_samples_, iterations_, analysis_type);
         custom_stat_outputs_.push_back(out);
         return out;
     }

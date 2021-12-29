@@ -49,29 +49,20 @@ auto convert(const std::vector<std::vector<clock::Duration>>& durations,
 }
 
 auto convert(const std::shared_ptr<stat::CustomStatOutput>& stat_output,
-    const stat::Statistics& stat, std::size_t samples) -> CustomStatOutputData {
+    const stat::Statistics& stat) -> CustomStatOutputData {
     std::vector<std::vector<double>> data;
-    for (auto iter = stat.unsorted_samples().begin();
-         iter < stat.unsorted_samples().end();
-         iter += static_cast<std::ptrdiff_t>(samples)) {
-        auto last = iter + static_cast<std::ptrdiff_t>(samples);
-        if (last > stat.unsorted_samples().end()) {
-            last = stat.unsorted_samples().end();
-        }
-        data.emplace_back(iter, last);
-    }
     return CustomStatOutputData{
-        stat_output->name(), convert(stat), std::move(data)};
+        stat_output->name(), convert(stat), stat_output->data()};
 }
 
 auto convert(
     const std::vector<std::shared_ptr<stat::CustomStatOutput>>& stat_outputs,
-    const std::vector<stat::Statistics>& stats, std::size_t samples)
+    const std::vector<stat::Statistics>& stats)
     -> std::vector<CustomStatOutputData> {
     std::vector<CustomStatOutputData> data;
     data.reserve(stat_outputs.size());
     for (std::size_t i = 0; i < stat_outputs.size(); ++i) {
-        data.push_back(convert(stat_outputs.at(i), stats.at(i), samples));
+        data.push_back(convert(stat_outputs.at(i), stats.at(i)));
     }
     return data;
 }
@@ -92,8 +83,7 @@ auto convert(const measurer::Measurement& measurement) -> MeasurementData {
         convert(measurement.cond().params()), measurement.measurer_name(),
         measurement.iterations(), measurement.samples(),
         convert(measurement.durations(), measurement.durations_stat()),
-        convert(measurement.custom_stat_outputs(), measurement.custom_stat(),
-            measurement.samples()),
+        convert(measurement.custom_stat_outputs(), measurement.custom_stat()),
         convert(measurement.custom_outputs())};
 }
 

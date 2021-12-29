@@ -30,10 +30,12 @@ TEST_CASE("stat_bench::stat::CustomStatOutput") {
         const std::string name = "CustomStat";
         constexpr std::size_t threads = 2;
         constexpr std::size_t samples = 3;
+        constexpr std::size_t warming_up_samples = 2;
         constexpr std::size_t iterations = 4;
 
         stat_bench::stat::CustomStatOutput output{name, threads, samples,
-            iterations, stat_bench::stat::CustomOutputAnalysisType::mean};
+            warming_up_samples, iterations,
+            stat_bench::stat::CustomOutputAnalysisType::mean};
 
         REQUIRE(output.name() == name);
     }
@@ -42,10 +44,12 @@ TEST_CASE("stat_bench::stat::CustomStatOutput") {
         const std::string name = "CustomStat";
         constexpr std::size_t threads = 2;
         constexpr std::size_t samples = 3;
+        constexpr std::size_t warming_up_samples = 1;
         constexpr std::size_t iterations = 4;
 
         stat_bench::stat::CustomStatOutput output{name, threads, samples,
-            iterations, stat_bench::stat::CustomOutputAnalysisType::mean};
+            warming_up_samples, iterations,
+            stat_bench::stat::CustomOutputAnalysisType::mean};
         output.add(0, 0, 1.0);  // NOLINT
         output.add(0, 0, 1.0);  // NOLINT
         output.add(0, 0, 1.0);  // NOLINT
@@ -76,7 +80,8 @@ TEST_CASE("stat_bench::stat::CustomStatOutput") {
                  stat_bench::clock::Duration::freq() * 2),
                 stat_bench::clock::Duration(
                     stat_bench::clock::Duration::freq() * 1)}};
-        const auto stat = output.stat(durations);
+        output.preprocess(durations);
+        const auto stat = output.stat();
         REQUIRE_THAT(stat.mean(), Catch::Matchers::WithinRel(4.5));  // NOLINT
         REQUIRE_THAT(stat.sorted_samples(),
             Catch::Matchers::Approx(
@@ -86,21 +91,24 @@ TEST_CASE("stat_bench::stat::CustomStatOutput") {
     SECTION("calculate statistics using rate per seconds") {
         const std::string name = "CustomStat";
         constexpr std::size_t threads = 1;
-        constexpr std::size_t samples = 2;
+        constexpr std::size_t samples = 3;
+        constexpr std::size_t warming_up_samples = 1;
         constexpr std::size_t iterations = 1;
 
         stat_bench::stat::CustomStatOutput output{name, threads, samples,
-            iterations,
+            warming_up_samples, iterations,
             stat_bench::stat::CustomOutputAnalysisType::rate_per_sec};
         output.add(0, 0, 1.0);  // NOLINT
-        output.add(0, 1, 2.0);  // NOLINT
+        output.add(0, 1, 1.0);  // NOLINT
+        output.add(0, 2, 2.0);  // NOLINT
 
         std::vector<std::vector<stat_bench::clock::Duration>> durations{
             {stat_bench::clock::Duration(
                  stat_bench::clock::Duration::freq() * 2),
                 stat_bench::clock::Duration(
                     stat_bench::clock::Duration::freq() * 1)}};
-        const auto stat = output.stat(durations);
+        output.preprocess(durations);
+        const auto stat = output.stat();
         REQUIRE_THAT(stat.sorted_samples(),
             Catch::Matchers::Approx(std::vector<double>{0.5, 2.0}));  // NOLINT
     }
