@@ -12,6 +12,7 @@ Full API reference generated using Doxygen can be viewed `here <api/index.html>`
     :maxdepth: 2
     :caption: About
 
+    about
     license
 
 .. toctree::

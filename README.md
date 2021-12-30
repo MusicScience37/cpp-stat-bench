@@ -27,6 +27,7 @@ Benchmark library with statistics for C++.
 ## Repositories
 
 - Main in GitLab: [https://gitlab.com/MusicScience37/cpp-stat-bench](https://gitlab.com/MusicScience37/cpp-stat-bench)
+- Mirror in GitHub: [https://github.com/MusicScience37/cpp-stat-bench](https://github.com/MusicScience37/cpp-stat-bench)
 
 ## Documentation
 
