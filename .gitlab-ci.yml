@@ -265,14 +265,14 @@ gcc-10-release:
   variables:
     BUILD_DIR: build_gcc10_release
 
-clang-11-release:
+clang-12-release:
   extends: .release-test-base
   stage: Test with Clang
   image: musicscience37/clang-ci:clang12-v3.4
   variables:
     BUILD_DIR: build_clang11_release
 
-clang-11-asan-ubsan:
+clang-12-asan-ubsan:
   extends: .debug-test-base
   stage: Test with Clang
   image: musicscience37/clang-ci:clang12-v3.4
@@ -289,7 +289,7 @@ clang-11-asan-ubsan:
     - cmake --build .
     - ctest -V
 
-clang-11-tsan:
+clang-12-tsan:
   extends: .debug-test-base
   stage: Test with Clang
   image: musicscience37/clang-ci:clang12-v3.4
@@ -306,7 +306,7 @@ clang-11-tsan:
     - cmake --build .
     - ctest -V
 
-clang-11-conan:
+clang-12-conan:
   extends: .retry setting
   stage: Test with Clang
   needs:
@@ -323,7 +323,7 @@ clang-11-conan:
     - pipenv run conan create --build missing . ${CONAN_USER}/${CONAN_CHANNEL}
     - pipenv run conan create --build missing --test-folder tests/conan_package . ${CONAN_USER}/${CONAN_CHANNEL}
 
-clang-11-conan-release:
+clang-12-conan-release:
   extends: .retry setting
   stage: Publish
   needs:
