@@ -119,8 +119,10 @@ void ConsoleReporter::measurement_failed(
     try {
         std::rethrow_exception(error);
     } catch (const std::exception& e) {
-        fmt::print(
-            file_, FMT_STRING(CONSOLE_TABLE_FORMAT_ERROR), case_info, e.what());
+        fmt::print(file_, FMT_STRING(CONSOLE_TABLE_FORMAT_ERROR),
+            fmt::format(
+                FMT_STRING("{} ({}) "), case_info.case_name(), cond.params()),
+            e.what());
     }
     std::fflush(file_);
 }
