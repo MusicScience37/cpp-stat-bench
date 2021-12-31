@@ -40,7 +40,7 @@ license_scanning:
 reset pipenv:
   extends: .retry setting
   stage: Reset
-  image: musicscience37/clang-ci:clang11-v3.2.2
+  image: musicscience37/clang-ci:clang12-v3.4
   script:
     - rm -rf .venv Pipfile.lock
     - mkdir .venv
@@ -58,7 +58,7 @@ reset pipenv:
 sync pipenv:
   extends: .retry setting
   stage: Prepare
-  image: musicscience37/clang-ci:clang11-v3.2.2
+  image: musicscience37/clang-ci:clang12-v3.4
   script:
     - mkdir -p .venv
     - pipenv install --dev
@@ -77,7 +77,7 @@ line count:
   extends: .retry setting
   stage: Prepare
   dependencies: []
-  image: registry.gitlab.com/musicscience37_ci/cloc-docker:v1-3
+  image: registry.gitlab.com/musicscience37_ci/cloc-docker:v1-4
   script:
     - mkdir -p line_count
     - cloc ./
@@ -99,7 +99,7 @@ pre-commit:
     - sync pipenv
   dependencies:
     - sync pipenv
-  image: musicscience37/clang-ci:clang11-v3.2.2
+  image: musicscience37/clang-ci:clang12-v3.4
   script:
     - pipenv run pre-commit run --all-files
 
@@ -110,7 +110,7 @@ static analysis:
     - sync pipenv
   dependencies:
     - sync pipenv
-  image: musicscience37/clang-ci:clang11-v3.2.2
+  image: musicscience37/clang-ci:clang12-v3.4
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   before_script:
@@ -212,7 +212,7 @@ static analysis:
 clang coverage:
   extends: .debug-test-base
   stage: Test with Clang
-  image: musicscience37/clang-ci:clang11-v3.2.2
+  image: musicscience37/clang-ci:clang12-v3.4
   variables:
     BUILD_DIR: build_clang_coverage
   script:
@@ -234,7 +234,7 @@ clang coverage:
 gcc coverage:
   extends: .debug-test-base
   stage: Test with GCC
-  image: musicscience37/gcc-ci:gcc10-v3.3
+  image: musicscience37/gcc-ci:gcc10-v3.4
   variables:
     BUILD_DIR: build_gcc_coverage
   script:
@@ -254,28 +254,28 @@ gcc coverage:
 gcc-10-debug:
   extends: .debug-test-base
   stage: Test with GCC
-  image: musicscience37/gcc-ci:gcc10-v3.3
+  image: musicscience37/gcc-ci:gcc10-v3.4
   variables:
     BUILD_DIR: build_gcc10_debug
 
 gcc-10-release:
   extends: .release-test-base
   stage: Test with GCC
-  image: musicscience37/gcc-ci:gcc10-v3.3
+  image: musicscience37/gcc-ci:gcc10-v3.4
   variables:
     BUILD_DIR: build_gcc10_release
 
 clang-11-release:
   extends: .release-test-base
   stage: Test with Clang
-  image: musicscience37/clang-ci:clang11-v3.2.2
+  image: musicscience37/clang-ci:clang12-v3.4
   variables:
     BUILD_DIR: build_clang11_release
 
 clang-11-asan-ubsan:
   extends: .debug-test-base
   stage: Test with Clang
-  image: musicscience37/clang-ci:clang11-v3.2.2
+  image: musicscience37/clang-ci:clang12-v3.4
   variables:
     BUILD_DIR: build_clang_asan_ubsan
   script:
@@ -292,7 +292,7 @@ clang-11-asan-ubsan:
 clang-11-tsan:
   extends: .debug-test-base
   stage: Test with Clang
-  image: musicscience37/clang-ci:clang11-v3.2.2
+  image: musicscience37/clang-ci:clang12-v3.4
   variables:
     BUILD_DIR: build_clang_tsan
   script:
@@ -313,7 +313,7 @@ clang-11-conan:
     - sync pipenv
   dependencies:
     - sync pipenv
-  image: musicscience37/clang-ci:clang11-v3.2.2
+  image: musicscience37/clang-ci:clang12-v3.4
   variables:
     CONAN_CHANNEL: "testing"
   script:
@@ -330,7 +330,7 @@ clang-11-conan-release:
     - sync pipenv
   dependencies:
     - sync pipenv
-  image: musicscience37/clang-ci:clang11-v3.2.2
+  image: musicscience37/clang-ci:clang12-v3.4
   variables:
     CONAN_CHANNEL: "stable"
   script:
@@ -389,7 +389,7 @@ doc:
     - sync pipenv
   dependencies:
     - sync pipenv
-  image: musicscience37/sphinx-doxygen:v3.3
+  image: musicscience37/sphinx-doxygen:v3.4
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
