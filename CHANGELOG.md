@@ -1,5 +1,18 @@
 # Change Log
 
+## On development
+
+### Features
+
+### Bug Fixes
+
+- Stabilize determination of number of iterations ([Issue #31](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/31)).
+- Fix parameters in outputs ([Issue #43](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/43)).
+
+### Others
+
+- Documentation of APIs for users ([Issue #32](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/32)).
+
 ## v0.1.0 (2021/12/30)
 
 First release with basic features.
