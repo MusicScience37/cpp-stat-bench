@@ -265,12 +265,39 @@ gcc-10-release:
   variables:
     BUILD_DIR: build_gcc10_release
 
+clang-12-debug:
+  extends: .debug-test-base
+  stage: Test with Clang
+  image: musicscience37/clang-ci:clang12-v3.4
+  variables:
+    BUILD_DIR: build_clang12_debug
+
 clang-12-release:
   extends: .release-test-base
   stage: Test with Clang
   image: musicscience37/clang-ci:clang12-v3.4
   variables:
-    BUILD_DIR: build_clang11_release
+    BUILD_DIR: build_clang12_release
+
+clang-12-release-cpp20:
+  extends: .release-test-base
+  stage: Test with Clang
+  image: musicscience37/clang-ci:clang12-v3.4
+  variables:
+    BUILD_DIR: build_clang12_release_cpp20
+  script:
+    - cmake -S ./ -B $BUILD_DIR
+      -DCMAKE_BUILD_TYPE=Release
+      -DSTAT_BENCH_TESTING:BOOL=ON
+      -DSTAT_BENCH_ENABLE_BENCH=ON
+      -DSTAT_BENCH_TEST_BENCHMARKS=ON
+      -DSTAT_BENCH_BUILD_EXAMPLES=ON
+      -DSTAT_BENCH_TEST_EXAMPLES=ON
+      -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+      -DCMAKE_CXX_STANDARD=20
+    - cd $BUILD_DIR
+    - cmake --build .
+    - ctest -V
 
 clang-12-asan-ubsan:
   extends: .debug-test-base
