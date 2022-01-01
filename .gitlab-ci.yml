@@ -402,7 +402,7 @@ msvc-release:
       -DSTAT_BENCH_TEST_EXAMPLES=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
     - cd $BUILD_DIR
-    - cmake --build . --config Release
+    - cmake --build . --config Release --parallel
     - ctest -V --build-config Release
   retry:
     max: 2
