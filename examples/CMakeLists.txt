@@ -13,3 +13,5 @@ function(add_example TARGET)
 endfunction()
 
 add_example(stat_bench_ex_bench_fibonacci bench_fibonacci.cpp)
+
+add_example(stat_bench_ex_bench_push_back bench_push_back.cpp)
