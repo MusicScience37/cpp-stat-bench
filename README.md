@@ -3,8 +3,8 @@
 [![GitLab Release](https://img.shields.io/gitlab/v/release/32226502?sort=semver)](https://gitlab.com/MusicScience37/cpp-stat-bench/-/releases)
 [![C++ standard](https://img.shields.io/badge/standard-C%2B%2B14-blue?logo=c%2B%2B)](https://en.cppreference.com/w/cpp/compiler_support/14)
 [![pipeline status](https://gitlab.com/MusicScience37/cpp-stat-bench/badges/develop/pipeline.svg)](https://gitlab.com/MusicScience37/cpp-stat-bench/-/commits/develop)
-[![coverage report](https://gitlab.com/MusicScience37/cpp-stat-bench/badges/develop/coverage.svg)](https://gitlab.com/MusicScience37/cpp-stat-bench/-/commits/develop)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
+[![codecov](https://codecov.io/gl/MusicScience37/cpp-stat-bench/branch/develop/graph/badge.svg?token=SC8WDCFSJT)](https://codecov.io/gl/MusicScience37/cpp-stat-bench)
 
 Benchmark library with statistics for C++.
 
