@@ -229,7 +229,6 @@ clang coverage:
     - ctest -V
     - cd ../
     - scripts/collect_llvm_coverage.sh build_clang_coverage
-  coverage: '/Line Coverage: \d+\.\d+/'
 
 gcc coverage:
   extends: .debug-test-base

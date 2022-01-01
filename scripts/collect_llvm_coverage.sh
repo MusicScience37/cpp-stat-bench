@@ -19,7 +19,3 @@ llvm-cov show -ignore-filename-regex='(test|.conan)/*' -instr-profile=$DIR/cover
 # output summary to stdout
 llvm-cov report -ignore-filename-regex='(test|.conan)/*' -instr-profile=$DIR/coverage/coverage.profdata $opts |
     tee $DIR/coverage/coverage_summary.txt
-
-# output line coverage for Gitlab CI to get the coverage value
-line_cov=$(cat $DIR/coverage/coverage_summary.txt | awk '{ if (NF > 0) { last = $NF } } END { print last }')
-echo "Line Coverage: $line_cov"
