@@ -5,6 +5,7 @@
     "choco",
     "cloc",
     "cmake",
+    "Codecov",
     "conanfile",
     "cond",
     "ctest",
