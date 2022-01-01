@@ -121,6 +121,9 @@ public:
     /*!
      * \brief Access to the command line interface definition.
      *
+     * \note For usage of `lyra::cli` objects, see [Lyra
+     * documentation](https://www.bfgroup.xyz/Lyra/).
+     *
      * \return Reference to the definition.
      */
     [[nodiscard]] auto cli() -> lyra::cli& { return cli_; }

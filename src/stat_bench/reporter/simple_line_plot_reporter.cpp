@@ -113,10 +113,10 @@ void SimpleLinePlotReporter::measurement_succeeded(
     y: [{}],
     mode: "lines",
     type: "scatter",
-    name: "{} (threads={})",
+    name: "{} ({})",
 }},)***"),
         fmt::join(x, ", "), fmt::join(y, ", "),
-        measurement.case_info().case_name(), measurement.cond().threads());
+        measurement.case_info().case_name(), measurement.cond().params());
 }
 
 void SimpleLinePlotReporter::measurement_failed(

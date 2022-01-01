@@ -5,4 +5,5 @@ pipenv run sphinx-autobuild \
     ${CMAKE_CURRENT_SOURCE_DIR}/src ${STAT_BENCH_HTML_ROOT} \
     -D plantuml="java -jar ${PLANTUML_JAR_PATH}" \
     -D release=${PROJECT_VERSION} \
+    -D breathe_projects.stat_bench="${STAT_BENCH_XML_ROOT}" \
     --port 8888
