@@ -4,6 +4,9 @@
 
 ### Features
 
+- Public API to get context variable name ([Issue #41](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/41)).
+- Colored output to console on errors ([Issue #42](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/42)).
+
 ### Bug Fixes
 
 - Stabilize determination of number of iterations ([Issue #31](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/31)).
