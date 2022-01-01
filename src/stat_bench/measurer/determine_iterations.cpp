@@ -33,11 +33,10 @@ auto determine_iterations(bench::IBenchmarkCase* bench_case,
     std::size_t iterations = 1;
     constexpr std::size_t trials = 10;
     for (std::size_t i = 0; i < trials; ++i) {
-        constexpr std::size_t samples = 1;
+        constexpr std::size_t samples = 2;
         const auto data = measure_once(
             bench_case, cond, measurer_name, iterations, samples, 0);
-        const double duration_sec =
-            data.durations_stat().mean() * static_cast<double>(iterations);
+        const double duration_sec = data.durations().at(0).at(1).seconds();
         if (duration_sec > min_sample_duration_sec) {
             break;
         }

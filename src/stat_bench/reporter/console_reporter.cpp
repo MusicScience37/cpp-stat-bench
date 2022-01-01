@@ -19,6 +19,7 @@
  */
 #include "stat_bench/reporter/console_reporter.h"
 
+#include <fmt/color.h>
 #include <fmt/format.h>
 
 #include "stat_bench/clock/monotone_clock_impl.h"
@@ -119,8 +120,11 @@ void ConsoleReporter::measurement_failed(
     try {
         std::rethrow_exception(error);
     } catch (const std::exception& e) {
-        fmt::print(
-            file_, FMT_STRING(CONSOLE_TABLE_FORMAT_ERROR), case_info, e.what());
+        fmt::print(file_, fmt::fg(fmt::color::red),
+            FMT_STRING(CONSOLE_TABLE_FORMAT_ERROR),
+            fmt::format(
+                FMT_STRING("{} ({}) "), case_info.case_name(), cond.params()),
+            e.what());
     }
     std::fflush(file_);
 }
