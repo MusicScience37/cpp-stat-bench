@@ -3,7 +3,7 @@
 
 from typing import Any, Dict
 from pathlib import Path
-import os
+from math import log10
 
 from aiohttp import web
 
@@ -58,6 +58,50 @@ async def get_line2d(_: web.Request) -> web.Response:
                       mode: "lines",
                       type: "scatter",
                       name: "b",
+                    },
+                ]
+            """
+        }),
+        content_type="html"
+    )
+
+
+@routes.get("/violin")
+async def get_violin(_: web.Request) -> web.Response:
+    return web.Response(
+        body=render_template("violin.html", {
+            "{{PLOT_NAME}}": "Test Violin",
+            "{{Y_TITLE}}": "y axis",
+            "{{Y_TYPE}}": "log",
+            "\"{{Y_MIN}}\"": str(log10(0.5)),
+            "\"{{Y_MAX}}\"": str(log10(10)),
+            "\"{{DATA}}\"": """
+                [
+                    {
+                        x: ["x1", "x1", "x1", "x1", "x1"],
+                        y: [1, 5, 3, 7, 5],
+                        type: "violin",
+                        name: "x1",
+                        box: {
+                            visible: true,
+                        },
+                        meanline: {
+                            visible: true,
+                        },
+                        points: "outliers",
+                    },
+                    {
+                        x: ["x2", "x2", "x2", "x2", "x2"],
+                        y: [4, 1, 4, 6, 8],
+                        type: "violin",
+                        name: "x2",
+                        box: {
+                            visible: true,
+                        },
+                        meanline: {
+                            visible: true,
+                        },
+                        points: "outliers",
                     },
                 ]
             """
