@@ -78,7 +78,6 @@ async def get_violin(_: web.Request) -> web.Response:
             "\"{{DATA}}\"": """
                 [
                     {
-                        x: ["x1", "x1", "x1", "x1", "x1"],
                         y: [1, 5, 3, 7, 5],
                         type: "violin",
                         name: "x1",
@@ -91,7 +90,6 @@ async def get_violin(_: web.Request) -> web.Response:
                         points: "outliers",
                     },
                     {
-                        x: ["x2", "x2", "x2", "x2", "x2"],
                         y: [4, 1, 4, 6, 8],
                         type: "violin",
                         name: "x2",

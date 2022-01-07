@@ -110,7 +110,6 @@ void ViolinPlotReporter::measurement_succeeded(
 
     const std::string name = fmt::format(FMT_STRING("{} ({})"),
         measurement.case_info().case_name(), measurement.cond().params());
-    const auto x = std::vector<std::string>(samples, '\"' + name + '\"');
 
     std::vector<double> y;
     y.reserve(samples);
@@ -123,7 +122,6 @@ void ViolinPlotReporter::measurement_succeeded(
     }
 
     fmt::format_to(std::back_inserter(data_buf_), FMT_STRING(R"***({{
-    x: [{}],
     y: [{}],
     type: "violin",
     name: "{}",
@@ -135,7 +133,7 @@ void ViolinPlotReporter::measurement_succeeded(
     }},
     points: "outliers",
 }},)***"),
-        fmt::join(x, ", "), fmt::join(y, ", "), name);
+        fmt::join(y, ", "), name);
 
     const double min_duration = measurement.durations_stat().min();
     const double max_duration = measurement.durations_stat().max();
