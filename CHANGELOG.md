@@ -1,6 +1,6 @@
 # Change Log
 
-## On development
+## v0.2.0 (2022/1/1)
 
 ### Features
 
