@@ -32,6 +32,7 @@
 #include "stat_bench/reporter/console_reporter.h"
 #include "stat_bench/reporter/json_reporter.h"
 #include "stat_bench/reporter/simple_line_plot_reporter.h"
+#include "stat_bench/reporter/violin_plot_reporter.h"
 
 namespace stat_bench {
 namespace runner {
@@ -94,6 +95,8 @@ void Runner::init() {
         reporters_.push_back(std::make_shared<reporter::SimpleLinePlotReporter>(
             config_.plot_prefix));
         reporters_.push_back(std::make_shared<reporter::CdfLinePlotReporter>(
+            config_.plot_prefix));
+        reporters_.push_back(std::make_shared<reporter::ViolinPlotReporter>(
             config_.plot_prefix));
     }
 
