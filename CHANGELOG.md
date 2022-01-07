@@ -1,5 +1,17 @@
 # Change Log
 
+## v0.3.0 (2022/1/8)
+
+Implemented violin plot.
+
+### Features
+
+- Violin plot ([Issue #48](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/48)).
+
+### Others
+
+- Added a simple benchmark example.
+
 ## v0.2.0 (2022/1/1)
 
 ### Features
