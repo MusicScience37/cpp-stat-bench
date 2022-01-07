@@ -347,7 +347,8 @@ clang-12-conan:
     - pipenv run conan profile new --detect default
     - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan create --build missing . ${CONAN_USER}/${CONAN_CHANNEL}
+    - pipenv run conan create --build missing -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
+    - pipenv run conan create --build missing -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
     - pipenv run conan create --build missing --test-folder tests/conan_package . ${CONAN_USER}/${CONAN_CHANNEL}
 
 clang-12-conan-release:
@@ -364,7 +365,8 @@ clang-12-conan-release:
     - pipenv run conan profile new --detect default
     - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan create --build missing --test-folder tests/conan_package . ${CONAN_USER}/${CONAN_CHANNEL}
+    - pipenv run conan create --build missing -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
+    - pipenv run conan create --build missing -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
     - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} pipenv run conan upload -r gitlab cpp_stat_bench/${STAT_BENCH_VERSION}@${CONAN_USER}/${CONAN_CHANNEL} --all
   only:
     - tags
