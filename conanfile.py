@@ -3,7 +3,7 @@ from conans import ConanFile, CMake
 
 class CppStatBenchConan(ConanFile):
     name = "cpp_stat_bench"
-    version = "0.3.0"
+    version = "0.3.1"
     description = "Benchmark library with statistics for C++."
     homepage = "https://gitlab.com/MusicScience37/cpp-stat-bench"
     url = "https://gitlab.com/MusicScience37/cpp-stat-bench.git"
