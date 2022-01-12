@@ -3,7 +3,7 @@ from conans import ConanFile, CMake
 
 class CppStatBenchConan(ConanFile):
     name = "cpp_stat_bench"
-    version = "0.3.0"
+    version = "0.3.1"
     description = "Benchmark library with statistics for C++."
     homepage = "https://gitlab.com/MusicScience37/cpp-stat-bench"
     url = "https://gitlab.com/MusicScience37/cpp-stat-bench.git"
@@ -46,7 +46,7 @@ class CppStatBenchConan(ConanFile):
         if self.options.requirements_for_tests:
             self.build_requires(
                 "catch2/3.0.0@MusicScience37+conan-extra-packages/stable")
-            self.build_requires("trompeloeil/41")
+            self.build_requires("trompeloeil/42")
 
     def build(self):
         cmake = CMake(self)
