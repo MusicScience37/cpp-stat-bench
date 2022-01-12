@@ -27,7 +27,7 @@
 #include <fmt/format.h>
 
 #include "stat_bench/reporter/render_template.h"
-#include "stat_bench/reporter/template/line2d.html.h"
+#include "stat_bench/reporter/template/violin.html.h"
 #include "stat_bench/util/prepare_directory.h"
 
 namespace stat_bench {
@@ -76,7 +76,7 @@ void ViolinPlotReporter::group_finished(const std::string& name) {
     min_duration_ /= margin_coeff;
     max_duration_ *= margin_coeff;
 
-    const std::string contents = render_template(line2d,
+    const std::string contents = render_template(violin,
         std::unordered_map<std::string, std::string>{
             {"{{PLOT_NAME}}", fmt::format("Violin Plot of {}", measurer_name_)},
             {"{{Y_TITLE}}", "Time [sec]"}, {"{{Y_TYPE}}", "log"},
