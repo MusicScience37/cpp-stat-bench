@@ -20,7 +20,7 @@
 #include "stat_bench/reporter/json_data_file_helper.h"
 
 #include <catch2/catch_test_macros.hpp>
-#include <catch2/matchers/catch_matchers_floating.hpp>
+#include <catch2/matchers/catch_matchers_floating_point.hpp>
 
 TEST_CASE("NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE definitions") {
     using stat_bench::reporter::data_file_spec::CustomOutputData;

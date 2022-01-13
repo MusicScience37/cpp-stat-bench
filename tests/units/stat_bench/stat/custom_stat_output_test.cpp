@@ -20,7 +20,7 @@
 #include "stat_bench/stat/custom_stat_output.h"
 
 #include <catch2/catch_test_macros.hpp>
-#include <catch2/matchers/catch_matchers_floating.hpp>
+#include <catch2/matchers/catch_matchers_floating_point.hpp>
 #include <catch2/matchers/catch_matchers_vector.hpp>
 
 #include "stat_bench/clock/duration.h"

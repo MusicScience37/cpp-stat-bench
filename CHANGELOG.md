@@ -1,10 +1,16 @@
 # Change Log
 
+## v0.4.0 (on development)
+
+### Others
+
+- Update dependencies ([Issue #51](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/51)).
+
 ## v0.3.1 (2022/1/13)
 
 ### Bug Fixes
 
-- Fix wrong axis names in violin plots ([Issue 50](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/50)).
+- Fix wrong axis names in violin plots ([Issue #50](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/50)).
 
 ## v0.3.0 (2022/1/8)
 
