@@ -5,6 +5,7 @@
 ### Others
 
 - Update dependencies ([Issue #51](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/51)).
+- Proper configuration of C++ standard libraries ([Issue #52](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/52)).
 
 ## v0.3.1 (2022/1/13)
 
