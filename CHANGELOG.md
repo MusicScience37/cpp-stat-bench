@@ -1,6 +1,12 @@
 # Change Log
 
-## v0.4.0 (on development)
+## v0.4.1 (2022/1/15)
+
+Stopped sort of benchmarks ([Issue #54](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/54)).
+
+## v0.4.0 (2022/1/15)
+
+Miscellaneous changes in configurations.
 
 ### Others
 
