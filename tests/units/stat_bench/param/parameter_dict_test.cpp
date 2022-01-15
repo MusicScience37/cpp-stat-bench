@@ -41,8 +41,8 @@ TEST_CASE("stat_bench::param::ParameterDict") {
         REQUIRE_THROWS((void)dict.get<int>("Param2"));
 
         REQUIRE_THAT(fmt::format("{}", dict),
-            Catch::Matchers::Contains("Param1=5") &&
-                Catch::Matchers::Contains("Param2=Value2") &&
-                Catch::Matchers::Contains(", "));
+            Catch::Matchers::ContainsSubstring("Param1=5") &&
+                Catch::Matchers::ContainsSubstring("Param2=Value2") &&
+                Catch::Matchers::ContainsSubstring(", "));
     }
 }
