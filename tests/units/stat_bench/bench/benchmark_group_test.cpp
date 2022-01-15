@@ -62,8 +62,8 @@ TEST_CASE("stat_bench::bench::BenchmarkGroup") {
             group.add(case1);
 
             REQUIRE(group.cases().size() == 2);
-            REQUIRE(group.cases().at(0)->info().case_name() == case_name1);
-            REQUIRE(group.cases().at(1)->info().case_name() == case_name2);
+            REQUIRE(group.cases().at(0)->info().case_name() == case_name2);
+            REQUIRE(group.cases().at(1)->info().case_name() == case_name1);
         }
     }
 }
