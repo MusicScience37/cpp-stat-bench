@@ -89,6 +89,8 @@ prepare lock files:
   needs: []
   image: musicscience37/clang-ci:clang12-v3.4
   script:
+    - apt update
+    - apt install -y libc++-12-dev libc++abi-12-dev
     - pipenv install --dev
     - pipenv run conan profile new --detect default
     - pipenv run conan profile update settings.compiler.libcxx=libc++ default
