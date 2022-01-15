@@ -8,7 +8,7 @@ endif()
 
 project(
     stat_bench
-    VERSION 0.3.1
+    VERSION 0.4.0
     DESCRIPTION "Benchmark library with statistics for C++."
     LANGUAGES CXX)
 set(FULL_PROJECT_NAME "cpp-stat-bench")
@@ -37,6 +37,9 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY $<1:${CMAKE_BINARY_DIR}/lib>)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $<1:${CMAKE_BINARY_DIR}/bin>)
 
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+set(CONAN_COMPILER ${CONAN_SETTINGS_COMPILER})
+set(CONAN_COMPILER_VERSION ${CONAN_SETTINGS_COMPILER_VERSION})
+set(CONAN_LIBCXX ${CONAN_SETTINGS_COMPILER_LIBCXX})
 conan_basic_setup()
 
 # find packages installed with Conan
