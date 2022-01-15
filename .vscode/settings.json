@@ -28,6 +28,7 @@
     "installargs",
     "Kabashima",
     "Kenta",
+    "libc",
     "libcxx",
     "libstdc",
     "maxdepth",
