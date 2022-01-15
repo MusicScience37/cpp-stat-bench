@@ -30,7 +30,8 @@ sast:
   needs: []
 gemnasium-dependency_scanning:
   rules:
-    - when: always
+    - if: $CI_COMMIT_BRANCH
+      when: on_success
 gemnasium-python-dependency_scanning:
   image:
     name: registry.gitlab.com/gitlab-org/security-products/analyzers/gemnasium-python:2-python-3.9
