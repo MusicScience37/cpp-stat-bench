@@ -1,6 +1,8 @@
 # Change Log
 
-## v0.4.0 (on development)
+## v0.4.0 (2022/1/15)
+
+Miscellaneous changes in configurations.
 
 ### Others
 
