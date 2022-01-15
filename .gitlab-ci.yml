@@ -21,7 +21,10 @@ include:
   - template: Security/License-Scanning.gitlab-ci.yml
 dependency_scanning:
   stage: Check
-  needs: []
+  needs:
+    - prepare lock files
+  dependencies:
+    - prepare lock files
 sast:
   stage: Check
   needs: []
@@ -30,7 +33,10 @@ gemnasium-python-dependency_scanning:
     name: registry.gitlab.com/gitlab-org/security-products/analyzers/gemnasium-python:2-python-3.9
 license_scanning:
   stage: Check
-  needs: []
+  needs:
+    - prepare lock files
+  dependencies:
+    - prepare lock files
 
 .retry setting:
   retry:
@@ -70,6 +76,18 @@ sync pipenv:
   artifacts:
     paths:
       - .venv
+      - Pipfile.lock
+    expire_in: "1 mos"
+
+prepare lock files:
+  extends: .retry setting
+  stage: Prepare
+  needs: []
+  image: musicscience37/clang-ci:clang12-v3.4
+  script:
+    - pipenv install --dev
+  artifacts:
+    paths:
       - Pipfile.lock
     expire_in: "1 mos"
 
