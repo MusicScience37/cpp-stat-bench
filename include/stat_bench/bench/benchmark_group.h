@@ -56,13 +56,7 @@ public:
      * \param[in] bench_case Case.
      */
     void add(std::shared_ptr<IBenchmarkCase> bench_case) {
-        const auto iter =
-            std::upper_bound(cases_.begin(), cases_.end(), bench_case,
-                [](const std::shared_ptr<IBenchmarkCase>& left,
-                    const std::shared_ptr<IBenchmarkCase>& right) {
-                    return left->info().case_name() < right->info().case_name();
-                });
-        cases_.insert(iter, std::move(bench_case));
+        cases_.push_back(std::move(bench_case));
     }
 
     /*!
