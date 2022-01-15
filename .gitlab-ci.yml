@@ -11,26 +11,36 @@ stages:
   - Publish
 
 variables:
-  STAT_BENCH_VERSION: "0.4.0"
+  STAT_BENCH_VERSION: "0.4.1"
   CONAN_USER: "MusicScience37+cpp-stat-bench"
   SECURE_LOG_LEVEL: debug
 
 include:
-  - template: Dependency-Scanning.gitlab-ci.yml
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
   - template: Jobs/SAST.gitlab-ci.yml
   - template: Security/License-Scanning.gitlab-ci.yml
 dependency_scanning:
   stage: Check
-  needs: []
+  needs:
+    - prepare lock files
+  dependencies:
+    - prepare lock files
 sast:
   stage: Check
   needs: []
+gemnasium-dependency_scanning:
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      when: on_success
 gemnasium-python-dependency_scanning:
   image:
     name: registry.gitlab.com/gitlab-org/security-products/analyzers/gemnasium-python:2-python-3.9
 license_scanning:
   stage: Check
-  needs: []
+  needs:
+    - prepare lock files
+  dependencies:
+    - prepare lock files
 
 .retry setting:
   retry:
@@ -71,6 +81,25 @@ sync pipenv:
     paths:
       - .venv
       - Pipfile.lock
+    expire_in: "1 mos"
+
+prepare lock files:
+  extends: .retry setting
+  stage: Prepare
+  needs: []
+  image: musicscience37/clang-ci:clang12-v3.4
+  script:
+    - apt update
+    - apt install -y libc++-12-dev libc++abi-12-dev
+    - pipenv install --dev
+    - pipenv run conan profile new --detect default
+    - pipenv run conan profile update settings.compiler.libcxx=libc++ default
+    - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
+    - pipenv run conan install --build=missing -s build_type=Debug .
+  artifacts:
+    paths:
+      - Pipfile.lock
+      - conan.lock
     expire_in: "1 mos"
 
 line count:
