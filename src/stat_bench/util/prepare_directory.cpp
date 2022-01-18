@@ -49,7 +49,7 @@ void prepare_directory(const std::string& path) {
         if (parent.empty() || path_exists(parent)) {
             continue;
         }
-        ::_mkdir(path.c_str());
+        ::_mkdir(parent.c_str());
         if (pos >= path.size()) {
             return;
         }
@@ -94,7 +94,7 @@ void prepare_directory(const std::string& path) {
             continue;
         }
         const auto mode = ::mode_t(0755);
-        ::mkdir(path.c_str(), mode);
+        ::mkdir(parent.c_str(), mode);
         if (pos >= path.size()) {
             return;
         }
