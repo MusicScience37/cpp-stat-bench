@@ -11,7 +11,7 @@ stages:
   - Publish
 
 variables:
-  STAT_BENCH_VERSION: "0.4.0"
+  STAT_BENCH_VERSION: "0.4.1"
   CONAN_USER: "MusicScience37+cpp-stat-bench"
   SECURE_LOG_LEVEL: debug
 
