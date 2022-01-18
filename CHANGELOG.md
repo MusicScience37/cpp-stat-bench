@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.5.0 (on development)
+
+- Separate directories of plots ([Issue #35](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/35)).
+
 ## v0.4.1 (2022/1/15)
 
 Stopped sort of benchmarks ([Issue #54](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/54)).
