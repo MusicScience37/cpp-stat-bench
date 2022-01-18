@@ -87,7 +87,7 @@ void ViolinPlotReporter::group_finished(const std::string& name) {
             {"\"{{DATA}}\"", std::string(data_buf_.data(), data_buf_.size())}});
 
     const std::string filepath = fmt::format(
-        FMT_STRING("{}{}_{}_violin.html"), prefix_, name, measurer_name_);
+        FMT_STRING("{}/{}/{}_violin.html"), prefix_, name, measurer_name_);
     util::prepare_directory_for(filepath);
     std::ofstream stream{filepath};
     stream << contents;
