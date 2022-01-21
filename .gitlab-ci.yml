@@ -1,7 +1,6 @@
 image: ubuntu:focal
 
 stages:
-  - Reset
   - Prepare
   - Check
   - Test with Clang
@@ -47,40 +46,19 @@ license_scanning:
     max: 2
     when: runner_system_failure
 
-reset pipenv:
-  extends: .retry setting
-  stage: Reset
-  image: musicscience37/clang-ci:clang12-v3.4
-  script:
-    - rm -rf .venv Pipfile.lock
-    - mkdir .venv
-    - pipenv install --dev
-  cache:
-    key: pipenv-$CI_COMMIT_REF_SLUG
-    paths:
-      - .venv
-      - Pipfile.lock
-  only:
-    - develop
-    - main
-    - tags
-
 sync pipenv:
   extends: .retry setting
   stage: Prepare
   image: musicscience37/clang-ci:clang12-v3.4
   script:
-    - mkdir -p .venv
-    - pipenv install --dev
+    - pipenv sync --dev
   cache:
     key: pipenv-$CI_COMMIT_REF_SLUG
     paths:
       - .venv
-      - Pipfile.lock
   artifacts:
     paths:
       - .venv
-      - Pipfile.lock
     expire_in: "1 mos"
 
 prepare lock files:
@@ -91,14 +69,13 @@ prepare lock files:
   script:
     - apt update
     - apt install -y libc++-12-dev libc++abi-12-dev
-    - pipenv install --dev
+    - pipenv sync --dev
     - pipenv run conan profile new --detect default
     - pipenv run conan profile update settings.compiler.libcxx=libc++ default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
     - pipenv run conan install --build=missing -s build_type=Debug .
   artifacts:
     paths:
-      - Pipfile.lock
       - conan.lock
     expire_in: "1 mos"
 
@@ -417,7 +394,7 @@ msvc-release:
     - choco install python --version=3.9.9 -y
     - RefreshEnv
     - pip install pipenv
-    - pipenv install
+    - pipenv sync
     - mkdir $BUILD_DIR
     - cd $BUILD_DIR
     - pipenv run conan profile new --detect default
