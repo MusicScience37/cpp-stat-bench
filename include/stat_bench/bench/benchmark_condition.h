@@ -20,6 +20,7 @@
 #pragma once
 
 #include <cstddef>
+#include <utility>
 
 #include "stat_bench/param/parameter_dict.h"
 

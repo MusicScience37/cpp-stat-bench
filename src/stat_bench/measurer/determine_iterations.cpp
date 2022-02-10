@@ -20,9 +20,11 @@
 #include "stat_bench/measurer/determine_iterations.h"
 
 #include <algorithm>  // std::min, std::max
-#include <limits>
+#include <vector>
 
+#include "stat_bench/clock/duration.h"
 #include "stat_bench/measurer/measure_once.h"
+#include "stat_bench/measurer/measurement.h"
 
 namespace stat_bench {
 namespace measurer {

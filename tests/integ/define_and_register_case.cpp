@@ -17,12 +17,19 @@
  * \file
  * \brief Test of macros to define and register cases.
  */
-#include <thread>
+#include <memory>
+#include <string>
+#include <vector>
 
 #include <catch2/catch_test_macros.hpp>
 
 #include "../units/stat_bench/param/create_ordinary_parameter_dict.h"
+#include "stat_bench/bench/benchmark_case_info.h"
+#include "stat_bench/bench/benchmark_case_registry.h"
 #include "stat_bench/bench/benchmark_condition.h"
+#include "stat_bench/bench/benchmark_group.h"
+#include "stat_bench/bench/i_benchmark_case.h"
+#include "stat_bench/bench/invocation_context.h"
 #include "stat_bench/benchmark_macros.h"
 
 static auto case_index() -> int& {

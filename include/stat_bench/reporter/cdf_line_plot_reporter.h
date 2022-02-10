@@ -20,7 +20,15 @@
 #pragma once
 
 #include <cstdio>
+#include <exception>
+#include <string>
 
+#include <fmt/format.h>
+
+#include "stat_bench/bench/benchmark_case_info.h"
+#include "stat_bench/bench/benchmark_condition.h"
+#include "stat_bench/clock/system_time_point.h"
+#include "stat_bench/measurer/measurement.h"
 #include "stat_bench/reporter/i_reporter.h"
 
 namespace stat_bench {

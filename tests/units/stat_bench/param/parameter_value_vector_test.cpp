@@ -19,6 +19,9 @@
  */
 #include "stat_bench/param/parameter_value_vector.h"
 
+#include <memory>
+#include <string>
+
 #include <catch2/catch_test_macros.hpp>
 
 TEST_CASE("stat_bench::param::ParameterValueVector") {

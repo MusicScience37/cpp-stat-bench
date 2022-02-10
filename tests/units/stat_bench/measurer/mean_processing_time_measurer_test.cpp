@@ -22,13 +22,18 @@
 #include <chrono>
 #include <memory>
 #include <thread>
+#include <type_traits>
+#include <vector>
 
+#include <catch2/catch_message.hpp>
 #include <catch2/catch_test_macros.hpp>
+#include <trompeloeil.hpp>
 
 #include "../bench/mock_benchmark_case.h"
 #include "../param/create_ordinary_parameter_dict.h"
 #include "stat_bench/bench/benchmark_case_info.h"
 #include "stat_bench/bench/benchmark_condition.h"
+#include "stat_bench/clock/duration.h"
 
 TEST_CASE("stat_bench::measurer::MeanProcessingTimeMeasurer") {
     constexpr double min_sample_duration_sec = 0.01;

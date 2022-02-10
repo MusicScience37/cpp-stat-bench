@@ -26,6 +26,7 @@
     "hicpp",
     "htmlreport",
     "installargs",
+    "IWYU",
     "Kabashima",
     "Kenta",
     "libc",

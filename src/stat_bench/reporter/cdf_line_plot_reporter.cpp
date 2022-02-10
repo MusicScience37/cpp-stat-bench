@@ -19,13 +19,18 @@
  */
 #include "stat_bench/reporter/cdf_line_plot_reporter.h"
 
+#include <cstdio>
 #include <fstream>
+#include <iterator>
+#include <unordered_map>
+#include <utility>
+#include <vector>
 
-#include <fmt/core.h>
 #include <fmt/format.h>
 
 #include "stat_bench/reporter/render_template.h"
 #include "stat_bench/reporter/template/line2d.html.h"
+#include "stat_bench/stat/statistics.h"
 #include "stat_bench/util/prepare_directory.h"
 
 namespace stat_bench {

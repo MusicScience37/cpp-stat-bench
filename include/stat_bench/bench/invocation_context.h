@@ -24,6 +24,7 @@
 #include <string>
 #include <unordered_map>
 #include <utility>
+#include <vector>
 
 #include "stat_bench/bench/benchmark_condition.h"
 #include "stat_bench/bench/threadable_invoker.h"

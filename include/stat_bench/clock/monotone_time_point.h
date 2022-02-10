@@ -22,6 +22,7 @@
 #include <cstdint>
 
 #include "stat_bench/clock/duration.h"
+#include "stat_bench/clock/monotone_clock_impl.h"
 
 namespace stat_bench {
 namespace clock {

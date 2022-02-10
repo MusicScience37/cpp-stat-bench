@@ -20,7 +20,8 @@
     "lextudio.restructuredtext",
     "trond-snekvik.simple-rst",
     "fredericbonnet.cmake-test-adapter",
-    "hbenl.vscode-test-explorer"
+    "hbenl.vscode-test-explorer",
+    "ms-azuretools.vscode-docker"
   ],
   "postCreateCommand": "bash ./.devcontainer/setup.bash"
 }

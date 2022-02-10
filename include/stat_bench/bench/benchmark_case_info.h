@@ -20,6 +20,8 @@
 #pragma once
 
 #include <memory>
+#include <string>
+#include <utility>
 
 #include <fmt/format.h>
 
