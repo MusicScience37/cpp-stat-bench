@@ -73,5 +73,8 @@
   "doxdocgen.c.triggerSequence": "/*!",
   "doxdocgen.cpp.ctorText": "Constructor.",
   "doxdocgen.cpp.dtorText": "Destructor.",
-  "restructuredtext.confPath": "${workspaceFolder}/doc/sphinx/src"
+  "restructuredtext.confPath": "${workspaceFolder}/doc/sphinx/src",
+  "C_Cpp.intelliSenseEngine": "Disabled",
+  "C_Cpp.autocomplete": "Disabled",
+  "C_Cpp.errorSquiggles": "Disabled"
 }

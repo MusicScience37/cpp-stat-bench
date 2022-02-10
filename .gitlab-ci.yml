@@ -51,6 +51,7 @@ sync pipenv:
   stage: Prepare
   image: musicscience37/clang-ci:clang12-v3.4
   script:
+    - mkdir -p .venv
     - pipenv sync --dev
   cache:
     key: pipenv-$CI_COMMIT_REF_SLUG

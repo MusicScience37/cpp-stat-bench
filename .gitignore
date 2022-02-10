@@ -221,3 +221,4 @@ cython_debug/
 
 !.vscode/cmake-variants.yaml
 /*.html
+/.conan
