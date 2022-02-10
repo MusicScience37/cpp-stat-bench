@@ -19,11 +19,12 @@
  */
 #include "stat_bench/clock/system_clock.h"
 
-#include <chrono>
-#include <thread>
+#include <string>
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers.hpp>
 #include <catch2/matchers/catch_matchers_string.hpp>
+#include <fmt/format.h>
 
 TEST_CASE("stat_bench::clock::SystemClock") {
     SECTION("get a timestamp") {

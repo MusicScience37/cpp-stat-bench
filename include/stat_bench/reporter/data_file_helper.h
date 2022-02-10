@@ -20,11 +20,17 @@
 #pragma once
 
 #include <memory>
+#include <string>
+#include <unordered_map>
+#include <utility>
 #include <vector>
 
+#include "stat_bench/clock/duration.h"
 #include "stat_bench/measurer/measurement.h"
+#include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/reporter/data_file_spec.h"
 #include "stat_bench/stat/custom_stat_output.h"
+#include "stat_bench/stat/statistics.h"
 
 namespace stat_bench {
 namespace reporter {

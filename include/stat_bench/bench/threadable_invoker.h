@@ -19,6 +19,8 @@
  */
 #pragma once
 
+// IWYU pragma: no_include  <stdlib.h>
+#include <cstdlib>
 #include <exception>
 #include <future>
 #include <iostream>

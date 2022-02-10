@@ -19,10 +19,15 @@
  */
 #include "stat_bench/bench/benchmark_group.h"
 
+#include <type_traits>
+
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers.hpp>
 #include <catch2/matchers/catch_matchers_container_properties.hpp>
+#include <trompeloeil.hpp>
 
 #include "mock_benchmark_case.h"
+#include "stat_bench/bench/benchmark_case_info.h"
 
 TEST_CASE("stat_bench::bench::BenchmarkGroup") {
     SECTION("construct") {

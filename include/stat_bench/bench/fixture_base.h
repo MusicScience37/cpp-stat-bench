@@ -20,6 +20,7 @@
 #pragma once
 
 #include "stat_bench/bench/benchmark_base.h"
+#include "stat_bench/bench/invocation_context.h"
 
 namespace stat_bench {
 namespace bench {

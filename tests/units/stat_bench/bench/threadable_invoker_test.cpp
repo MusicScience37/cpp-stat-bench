@@ -19,8 +19,12 @@
  */
 #include "stat_bench/bench/threadable_invoker.h"
 
+#include <mutex>
 #include <stdexcept>
+#include <string>
+#include <tuple>
 
+#include <catch2/catch_message.hpp>
 #include <catch2/catch_test_macros.hpp>
 
 TEST_CASE("stat_bench::bench::ThreadableInvoker") {

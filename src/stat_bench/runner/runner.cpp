@@ -19,15 +19,25 @@
  */
 #include "stat_bench/runner/runner.h"
 
+#include <cstddef>
 #include <exception>
 #include <memory>
 #include <stdexcept>
 
+#include <lyra/args.hpp>
+#include <lyra/opt.hpp>
+#include <lyra/parser.hpp>
+
 #include "stat_bench/bench/benchmark_case_registry.h"
 #include "stat_bench/bench/benchmark_condition.h"
+#include "stat_bench/bench/benchmark_group.h"
 #include "stat_bench/clock/system_clock.h"
+#include "stat_bench/clock/system_time_point.h"
 #include "stat_bench/measurer/mean_processing_time_measurer.h"
 #include "stat_bench/measurer/processing_time_measurer.h"
+#include "stat_bench/param/parameter_config.h"
+#include "stat_bench/param/parameter_generator.h"
+#include "stat_bench/param/parameter_value_vector.h"
 #include "stat_bench/reporter/cdf_line_plot_reporter.h"
 #include "stat_bench/reporter/console_reporter.h"
 #include "stat_bench/reporter/json_reporter.h"

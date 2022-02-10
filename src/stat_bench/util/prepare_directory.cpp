@@ -19,6 +19,9 @@
  */
 #include "stat_bench/util/prepare_directory.h"
 
+// IWYU pragma: no_include  <stddef.h>
+#include <cstddef>
+
 #ifdef _WIN32
 
 #include <Windows.h>  // GetFileAttributesA

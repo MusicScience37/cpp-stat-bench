@@ -27,8 +27,6 @@
  * For GCC and Clang with inline assembly.
  * *****************************************************************/
 
-#include <atomic>
-
 namespace stat_bench {
 namespace util {
 

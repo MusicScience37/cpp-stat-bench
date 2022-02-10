@@ -20,10 +20,14 @@
 #include "stat_bench/clock/monotone_clock.h"
 
 #include <chrono>
+#include <string>
 #include <thread>
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
+
+#include "stat_bench/clock/duration.h"
 
 TEST_CASE("stat_bench::clock::MonotoneClock") {
     SECTION("measure a duration") {

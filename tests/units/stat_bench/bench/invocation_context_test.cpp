@@ -19,10 +19,13 @@
  */
 #include "stat_bench/bench/invocation_context.h"
 
+#include <exception>
 #include <mutex>
+#include <ostream>
 #include <tuple>
 #include <utility>
 
+#include <catch2/catch_message.hpp>
 #include <catch2/catch_test_macros.hpp>
 
 #include "../param/create_ordinary_parameter_dict.h"

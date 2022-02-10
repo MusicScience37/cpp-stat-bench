@@ -19,10 +19,16 @@
  */
 #include "stat_bench/reporter/console_reporter.h"
 
+#include <memory>
+#include <utility>
+#include <vector>
+
 #include <fmt/color.h>
 #include <fmt/format.h>
 
 #include "stat_bench/clock/monotone_clock_impl.h"
+#include "stat_bench/stat/custom_stat_output.h"
+#include "stat_bench/stat/statistics.h"
 
 namespace stat_bench {
 namespace reporter {

@@ -19,9 +19,6 @@
  */
 #include "stat_bench/measurer/processing_time_measurer.h"
 
-#include <stdexcept>
-
-#include "stat_bench/bench/invocation_context.h"
 #include "stat_bench/measurer/determine_warming_up_samples.h"
 #include "stat_bench/measurer/measure_once.h"
 

@@ -19,6 +19,8 @@
  */
 #pragma once
 
+// IWYU pragma: no_include  <stddef.h>
+#include <cstddef>
 #include <string>
 
 #include "stat_bench/bench/benchmark_condition.h"
