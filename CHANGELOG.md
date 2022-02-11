@@ -2,7 +2,13 @@
 
 ## v0.5.0 (on development)
 
+### Features
+
 - Separate directories of plots ([Issue #35](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/35)).
+
+### Others
+
+- Updated headers included by source codes using IWYU ([Issue #58](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/58)).
 
 ## v0.4.1 (2022/1/15)
 
