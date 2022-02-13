@@ -54,7 +54,10 @@ sync pipenv:
     - mkdir -p .venv
     - pipenv sync --dev
   cache:
-    key: pipenv-$CI_COMMIT_REF_SLUG
+    key:
+      prefix: pipenv-linux
+      files:
+        - Pipfile.lock
     paths:
       - .venv
   artifacts:
@@ -75,6 +78,13 @@ prepare lock files:
     - pipenv run conan profile update settings.compiler.libcxx=libc++ default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
     - pipenv run conan install --build=missing -s build_type=Debug .
+  cache:
+    key:
+      prefix: pipenv-linux-prepare
+      files:
+        - Pipfile.lock
+    paths:
+      - .venv
   artifacts:
     paths:
       - conan.lock
