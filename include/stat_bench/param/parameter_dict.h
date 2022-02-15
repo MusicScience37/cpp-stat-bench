@@ -19,6 +19,7 @@
  */
 #pragma once
 
+#include <set>
 #include <string>
 #include <unordered_map>
 #include <utility>
@@ -70,13 +71,19 @@ public:
      */
     template <typename OutputIter>
     auto format_to(OutputIter out) const -> OutputIter {
-        auto pair_iter = data_.begin();
+        // Sort keys.
+        std::set<std::string> keys;
+        for (const auto& pair : data_) {
+            keys.insert(pair.first);
+        }
+
+        auto key_iter = keys.begin();
         out = fmt::format_to(
-            out, "{}={}", pair_iter->first, pair_iter->second.to_string());
-        ++pair_iter;
-        for (; pair_iter != data_.end(); ++pair_iter) {
-            out = fmt::format_to(out, ", {}={}", pair_iter->first,
-                pair_iter->second.to_string());
+            out, "{}={}", *key_iter, data_.at(*key_iter).to_string());
+        ++key_iter;
+        for (; key_iter != keys.end(); ++key_iter) {
+            out = fmt::format_to(
+                out, ", {}={}", *key_iter, data_.at(*key_iter).to_string());
         }
         return out;
     }
