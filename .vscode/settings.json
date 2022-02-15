@@ -77,5 +77,6 @@
   "restructuredtext.confPath": "${workspaceFolder}/doc/sphinx/src",
   "C_Cpp.intelliSenseEngine": "Disabled",
   "C_Cpp.autocomplete": "Disabled",
-  "C_Cpp.errorSquiggles": "Disabled"
+  "C_Cpp.errorSquiggles": "Disabled",
+  "cmakeFormat.exePath": "/workspaces/cpp-stat-bench/.venv/bin/cmake-format"
 }

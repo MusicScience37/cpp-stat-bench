@@ -20,6 +20,7 @@ set(SOURCE_FILES
     stat_bench/param/parameter_generator_test.cpp
     stat_bench/param/parameter_value_test.cpp
     stat_bench/param/parameter_value_vector_test.cpp
+    stat_bench/reporter/cdf_line_plot_reporter_test.cpp
     stat_bench/reporter/json_data_file_helper_test.cpp
     stat_bench/runner/runner_test.cpp
     stat_bench/stat/calc_stat_test.cpp
@@ -29,4 +30,5 @@ set(SOURCE_FILES
     stat_bench/util/memory_barrier_test.cpp
     stat_bench/util/prepare_directory_test.cpp
     stat_bench/util/use_pointer_test.cpp
+    test_main.cpp
 )

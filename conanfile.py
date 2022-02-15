@@ -47,6 +47,7 @@ class CppStatBenchConan(ConanFile):
             self.build_requires(
                 "catch2/3.0.0pre4@MusicScience37+conan-extra-packages/stable")
             self.build_requires("trompeloeil/42")
+            self.build_requires("approvaltests.cpp/10.12.1")
 
     def build(self):
         cmake = CMake(self)
