@@ -22,6 +22,7 @@ set(SOURCE_FILES
     stat_bench/param/parameter_value_vector_test.cpp
     stat_bench/reporter/cdf_line_plot_reporter_test.cpp
     stat_bench/reporter/json_data_file_helper_test.cpp
+    stat_bench/reporter/simple_line_plot_reporter_test.cpp
     stat_bench/runner/runner_test.cpp
     stat_bench/stat/calc_stat_test.cpp
     stat_bench/stat/custom_stat_output_test.cpp

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Measurement1</title>
+    <style>
+      html,
+      body,
+      .container {
+        height: 100%;
+        width: 100%;
+        margin: 0px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="plot" class="container"></div>
+
+    <!-- Import Plotly -->
+    <script src="https://cdn.plot.ly/plotly-2.8.3.min.js"></script>
+
+    <script type="text/javascript">
+      var data = [{
+    x: [1, 2],
+    y: [1e-06, 2e-06],
+    mode: "lines",
+    type: "scatter",
+    name: "Case1 (threads=1, param=value)",
+},{
+    x: [1, 2, 3],
+    y: [3e-06, 4e-06, 5e-06],
+    mode: "lines",
+    type: "scatter",
+    name: "Case2 (threads=1, param=value)",
+},];
+      var layout = {
+        title: "Measurement1",
+        xaxis: {
+          title: "Sample Index",
+          type: "-",
+        },
+        yaxis: {
+          title: "Time [sec]",
+          type: "log",
+        },
+        showlegend: true,
+      };
+
+      Plotly.newPlot("plot", data, layout, {
+        scrollZoom: true,
+        responsive: true,
+      });
+    </script>
+  </body>
+</html>
+
