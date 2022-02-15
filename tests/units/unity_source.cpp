@@ -22,6 +22,7 @@
 #include "stat_bench/reporter/cdf_line_plot_reporter_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/reporter/json_data_file_helper_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/reporter/simple_line_plot_reporter_test.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "stat_bench/reporter/violin_plot_reporter_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/runner/runner_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/stat/calc_stat_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/stat/custom_stat_output_test.cpp"  // NOLINT(bugprone-suspicious-include)
