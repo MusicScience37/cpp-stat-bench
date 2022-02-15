@@ -23,6 +23,7 @@ set(SOURCE_FILES
     stat_bench/reporter/cdf_line_plot_reporter_test.cpp
     stat_bench/reporter/console_reporter_test.cpp
     stat_bench/reporter/json_data_file_helper_test.cpp
+    stat_bench/reporter/json_reporter_test.cpp
     stat_bench/reporter/simple_line_plot_reporter_test.cpp
     stat_bench/reporter/violin_plot_reporter_test.cpp
     stat_bench/runner/runner_test.cpp
