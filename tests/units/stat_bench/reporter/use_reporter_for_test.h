@@ -29,6 +29,12 @@
 
 namespace stat_bench_test {
 
+[[nodiscard]] inline auto create_duration(double sec) {
+    using stat_bench::clock::Duration;
+    return Duration(static_cast<stat_bench::clock::TicksCount>(
+        sec * static_cast<double>(Duration::freq())));
+}
+
 inline void use_reporter_for_test(stat_bench::reporter::IReporter* reporter) {
     using stat_bench::clock::Duration;
     using stat_bench::clock::SystemClock;
@@ -43,7 +49,7 @@ inline void use_reporter_for_test(stat_bench::reporter::IReporter* reporter) {
     const auto measurement1 = stat_bench_test::create_test_measurement(
         group1_name, "Case1", measurer_name,
         std::vector<std::vector<Duration>>{
-            std::vector<Duration>{Duration(1000), Duration(2000)}});
+            std::vector<Duration>{create_duration(1.0), create_duration(2.0)}});
     reporter->case_starts(measurement1.case_info());
     reporter->measurement_succeeded(measurement1);
     reporter->case_finished(measurement1.case_info());
@@ -51,7 +57,7 @@ inline void use_reporter_for_test(stat_bench::reporter::IReporter* reporter) {
     const auto measurement2 = stat_bench_test::create_test_measurement(
         group1_name, "Case2", measurer_name,
         std::vector<std::vector<Duration>>{std::vector<Duration>{
-            Duration(3000), Duration(4000), Duration(5000)}});
+            create_duration(3.0), create_duration(4.0), create_duration(5.0)}});
     reporter->case_starts(measurement2.case_info());
     reporter->measurement_succeeded(measurement2);
     reporter->case_finished(measurement2.case_info());

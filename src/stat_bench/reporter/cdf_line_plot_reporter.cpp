@@ -108,8 +108,8 @@ void CdfLinePlotReporter::measurement_succeeded(
     }
 
     fmt::format_to(std::back_inserter(data_buf_), FMT_STRING(R"***({{
-    x: [{}],
-    y: [{}],
+    x: [{:.6e}],
+    y: [{:.6f}],
     mode: "lines",
     type: "scatter",
     name: "{} ({})",

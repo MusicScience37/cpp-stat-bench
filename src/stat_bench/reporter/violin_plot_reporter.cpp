@@ -87,9 +87,9 @@ void ViolinPlotReporter::group_finished(const std::string& name) {
             {"{{PLOT_NAME}}", fmt::format("Violin Plot of {}", measurer_name_)},
             {"{{Y_TITLE}}", "Time [sec]"}, {"{{Y_TYPE}}", "log"},
             {"\"{{Y_MIN}}\"",
-                fmt::format(FMT_STRING("{}"), std::log10(min_duration_))},
+                fmt::format(FMT_STRING("{:.6e}"), std::log10(min_duration_))},
             {"\"{{Y_MAX}}\"",
-                fmt::format(FMT_STRING("{}"), std::log10(max_duration_))},
+                fmt::format(FMT_STRING("{:.6e}"), std::log10(max_duration_))},
             {"\"{{DATA}}\"", std::string(data_buf_.data(), data_buf_.size())}});
 
     const std::string filepath = fmt::format(
@@ -128,7 +128,7 @@ void ViolinPlotReporter::measurement_succeeded(
     }
 
     fmt::format_to(std::back_inserter(data_buf_), FMT_STRING(R"***({{
-    y: [{}],
+    y: [{:.6e}],
     type: "violin",
     name: "{}",
     box: {{

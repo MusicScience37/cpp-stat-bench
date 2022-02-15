@@ -34,7 +34,7 @@ namespace stat_bench_test {
     using stat_bench::param::ParameterValue;
     using stat_bench::stat::CustomStatOutput;
 
-    constexpr std::size_t iterations = 1;
+    constexpr std::size_t iterations = 1000;
     const std::size_t samples = durations.front().size();
     const std::size_t threads = durations.size();
     return Measurement(BenchmarkCaseInfo(group_name, case_name),

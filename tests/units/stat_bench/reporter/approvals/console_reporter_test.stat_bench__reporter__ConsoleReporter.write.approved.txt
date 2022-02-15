@@ -8,8 +8,8 @@ Time resolution: <float3> sec.
 
                                                    Iterations  Samples    Mean [ms]     Max [ms] Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-Case1 (param=value, threads=1)                              1        2    <float3>    <float3> 
-Case2 (param=value, threads=1)                              1        3    <float3>    <float3> 
+Case1 (param=value, threads=1)                           1000        2        1.500        2.000 
+Case2 (param=value, threads=1)                           1000        3        4.000        5.000 
 e[38;2;255;000;000mCase3 (param=value, threads=1)                     Test exception.e[0m
 
 Benchmark finished at <time>
