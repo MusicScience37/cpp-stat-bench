@@ -19,7 +19,9 @@
  */
 #pragma once
 
+#include <exception>
 #include <memory>
+#include <stdexcept>
 
 #include "create_test_measurement.h"
 #include "stat_bench/clock/system_clock.h"
@@ -59,7 +61,7 @@ inline void use_reporter_for_test(stat_bench::reporter::IReporter* reporter) {
         std::vector<std::vector<Duration>>{std::vector<Duration>{Duration(0)}});
     reporter->case_starts(measurement3.case_info());
     reporter->measurement_failed(measurement3.case_info(), measurement3.cond(),
-        std::make_exception_ptr(fmt::runtime("Test exception.")));
+        std::make_exception_ptr(std::runtime_error("Test exception.")));
     reporter->case_finished(measurement3.case_info());
 
     reporter->group_finished(group1_name);
