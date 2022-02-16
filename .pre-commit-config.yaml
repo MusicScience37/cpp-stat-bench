@@ -34,3 +34,5 @@ repos:
         description: Check encoding of files.
         language: system
         entry: pipenv run python scripts/check_encoding.py
+# Automatically generated files should not be checked.
+exclude: "\\.approved\\."

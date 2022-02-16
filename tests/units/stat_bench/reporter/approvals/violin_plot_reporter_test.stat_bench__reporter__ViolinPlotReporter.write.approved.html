@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Violin Plot of Measurement1</title>
+    <style>
+      html,
+      body,
+      .container {
+        height: 100%;
+        width: 100%;
+        margin: 0px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="plot" class="container"></div>
+
+    <!-- Import Plotly -->
+    <script src="https://cdn.plot.ly/plotly-2.8.3.min.js"></script>
+
+    <script type="text/javascript">
+      var data = [{
+    y: [1.000000e-03, 2.000000e-03],
+    type: "violin",
+    name: "Case1 (param=value, threads=1)",
+    box: {
+        visible: true,
+    },
+    meanline: {
+        visible: true,
+    },
+    points: "outliers",
+},{
+    y: [3.000000e-03, 4.000000e-03, 5.000000e-03],
+    type: "violin",
+    name: "Case2 (param=value, threads=1)",
+    box: {
+        visible: true,
+    },
+    meanline: {
+        visible: true,
+    },
+    points: "outliers",
+},];
+      var layout = {
+        title: "Violin Plot of Measurement1",
+        yaxis: {
+          title: "Time [sec]",
+          type: "log",
+          constrain: "range",
+          range: [-3.176091e+00, -2.124939e+00],
+        },
+        showlegend: true,
+      };
+
+      Plotly.newPlot("plot", data, layout, {
+        scrollZoom: true,
+        responsive: true,
+      });
+    </script>
+  </body>
+</html>
+

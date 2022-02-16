@@ -1,0 +1,63 @@
+{
+  "finished_at": "<time>",
+  "measurements": [
+    {
+      "case_name": "Case1",
+      "custom_outputs": [],
+      "custom_stat_outputs": [],
+      "durations": {
+        "stat": {
+          "max": 2.000e-03,
+          "mean": 1.500e-03,
+          "min": 1.000e-03,
+          "standard_deviation": 7.071e-04,
+          "variance": 5.000e-07
+        },
+        "values": [
+          [
+            1.000e+00,
+            2.000e+00
+          ]
+        ]
+      },
+      "group_name": "Group1",
+      "iterations": 1000,
+      "measurer_name": "Measurement1",
+      "params": {
+        "param": "value",
+        "threads": "1"
+      },
+      "samples": 2
+    },
+    {
+      "case_name": "Case2",
+      "custom_outputs": [],
+      "custom_stat_outputs": [],
+      "durations": {
+        "stat": {
+          "max": 5.000e-03,
+          "mean": 4.000e-03,
+          "min": 3.000e-03,
+          "standard_deviation": 1.000e-03,
+          "variance": 1.000e-06
+        },
+        "values": [
+          [
+            3.000e+00,
+            4.000e+00,
+            5.000e+00
+          ]
+        ]
+      },
+      "group_name": "Group1",
+      "iterations": 1000,
+      "measurer_name": "Measurement1",
+      "params": {
+        "param": "value",
+        "threads": "1"
+      },
+      "samples": 3
+    }
+  ],
+  "started_at": "<time>"
+}
