@@ -78,5 +78,9 @@
   "cmakeFormat.exePath": "/workspaces/cpp-stat-bench/.venv/bin/cmake-format",
   "esbonio.sphinx.confDir": "${workspaceFolder}/doc/sphinx/src",
   "restructuredtext.linter.disabledLinters": ["rstcheck", "rst-lint"],
-  "esbonio.server.enabled": false
+  "esbonio.server.enabled": false,
+  "files.watcherExclude": {
+    "**/.conan/**": true,
+    "**/.venv/**": true
+  }
 }
