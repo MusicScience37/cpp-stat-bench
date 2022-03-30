@@ -19,6 +19,10 @@
  */
 #include "stat_bench/reporter/render_template.h"
 
+// IWYU pragma: no_include  <stddef.h>
+#include <cstddef>
+#include <utility>
+
 namespace stat_bench {
 namespace reporter {
 

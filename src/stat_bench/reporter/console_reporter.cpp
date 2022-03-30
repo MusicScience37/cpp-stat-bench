@@ -19,10 +19,16 @@
  */
 #include "stat_bench/reporter/console_reporter.h"
 
+#include <memory>
+#include <utility>
+#include <vector>
+
 #include <fmt/color.h>
 #include <fmt/format.h>
 
 #include "stat_bench/clock/monotone_clock_impl.h"
+#include "stat_bench/stat/custom_stat_output.h"
+#include "stat_bench/stat/statistics.h"
 
 namespace stat_bench {
 namespace reporter {
@@ -70,7 +76,7 @@ auto format_duration(double val) -> std::string {
 }  // namespace
 
 #define CONSOLE_TABLE_FORMAT "{:<50} {:>10} {:>8} {:>12} {:>12} "
-#define CONSOLE_TABLE_FORMAT_ERROR "{:<50} {}\n"
+#define CONSOLE_TABLE_FORMAT_ERROR "{:<50} {}"
 
 void ConsoleReporter::group_starts(const std::string& name) {
     fmt::print(file_, FMT_STRING("### {}\n\n"), name);
@@ -126,6 +132,7 @@ void ConsoleReporter::measurement_failed(
                 FMT_STRING("{} ({}) "), case_info.case_name(), cond.params()),
             e.what());
     }
+    fmt::print(file_, "\n");
     std::fflush(file_);
 }
 

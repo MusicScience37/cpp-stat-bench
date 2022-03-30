@@ -22,8 +22,11 @@
 #include <chrono>
 #include <memory>
 #include <thread>
+#include <type_traits>
+#include <vector>
 
 #include <catch2/catch_test_macros.hpp>
+#include <trompeloeil.hpp>
 
 #include "../bench/mock_benchmark_case.h"
 #include "../param/create_ordinary_parameter_dict.h"

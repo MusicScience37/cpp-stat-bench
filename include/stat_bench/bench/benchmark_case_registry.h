@@ -22,9 +22,12 @@
 #include <algorithm>
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
+#include "stat_bench/bench/benchmark_case_info.h"
 #include "stat_bench/bench/benchmark_group.h"
+#include "stat_bench/bench/i_benchmark_case.h"
 
 namespace stat_bench {
 namespace bench {

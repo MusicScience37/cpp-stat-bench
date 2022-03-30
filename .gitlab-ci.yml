@@ -1,7 +1,6 @@
-image: ubuntu:focal
+image: ubuntu
 
 stages:
-  - Reset
   - Prepare
   - Check
   - Test with Clang
@@ -11,7 +10,7 @@ stages:
   - Publish
 
 variables:
-  STAT_BENCH_VERSION: "0.4.1"
+  STAT_BENCH_VERSION: "0.5.0"
   CONAN_USER: "MusicScience37+cpp-stat-bench"
   SECURE_LOG_LEVEL: debug
 
@@ -47,58 +46,47 @@ license_scanning:
     max: 2
     when: runner_system_failure
 
-reset pipenv:
-  extends: .retry setting
-  stage: Reset
-  image: musicscience37/clang-ci:clang12-v3.4
-  script:
-    - rm -rf .venv Pipfile.lock
-    - mkdir .venv
-    - pipenv install --dev
-  cache:
-    key: pipenv-$CI_COMMIT_REF_SLUG
-    paths:
-      - .venv
-      - Pipfile.lock
-  only:
-    - develop
-    - main
-    - tags
-
 sync pipenv:
   extends: .retry setting
   stage: Prepare
-  image: musicscience37/clang-ci:clang12-v3.4
+  image: musicscience37/clang-ci:clang12-v4.2
   script:
     - mkdir -p .venv
-    - pipenv install --dev
+    - pipenv sync --dev
   cache:
-    key: pipenv-$CI_COMMIT_REF_SLUG
+    key:
+      prefix: pipenv-linux
+      files:
+        - Pipfile.lock
     paths:
       - .venv
-      - Pipfile.lock
   artifacts:
     paths:
       - .venv
-      - Pipfile.lock
     expire_in: "1 mos"
 
 prepare lock files:
   extends: .retry setting
   stage: Prepare
   needs: []
-  image: musicscience37/clang-ci:clang12-v3.4
+  image: musicscience37/clang-ci:clang12-v4.2
   script:
     - apt update
     - apt install -y libc++-12-dev libc++abi-12-dev
-    - pipenv install --dev
+    - pipenv sync --dev
     - pipenv run conan profile new --detect default
     - pipenv run conan profile update settings.compiler.libcxx=libc++ default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan install --build=missing -s build_type=Debug .
+    - pipenv run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Debug .
+  cache:
+    key:
+      prefix: pipenv-linux-prepare
+      files:
+        - Pipfile.lock
+    paths:
+      - .venv
   artifacts:
     paths:
-      - Pipfile.lock
       - conan.lock
     expire_in: "1 mos"
 
@@ -128,7 +116,7 @@ pre-commit:
     - sync pipenv
   dependencies:
     - sync pipenv
-  image: musicscience37/clang-ci:clang12-v3.4
+  image: musicscience37/clang-ci:clang12-v4.2
   script:
     - pipenv run pre-commit run --all-files
 
@@ -139,7 +127,7 @@ static analysis:
     - sync pipenv
   dependencies:
     - sync pipenv
-  image: musicscience37/clang-ci:clang12-v3.4
+  image: musicscience37/clang-ci:clang12-v4.2
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   before_script:
@@ -153,7 +141,7 @@ static analysis:
     - pipenv run conan profile new --detect default
     - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan install --build=missing ..
+    - pipenv run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True ..
     - cd ../
     - cmake -S ./ -B build_static_analysis
       -DSTAT_BENCH_ENABLE_CLANG_TIDY:BOOL=ON
@@ -192,7 +180,7 @@ static analysis:
     - pipenv run conan profile new --detect default
     - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan install --build=missing -s build_type=Release ..
+    - pipenv run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Release ..
     - cd ../
   script:
     - cmake -S ./ -B $BUILD_DIR
@@ -225,7 +213,7 @@ static analysis:
     - pipenv run conan profile new --detect default
     - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan install --build=missing -s build_type=Debug ..
+    - pipenv run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Debug ..
     - cd ../
   script:
     - cmake -S ./ -B $BUILD_DIR
@@ -238,10 +226,32 @@ static analysis:
     - cmake --build .
     - ctest -V
 
+.clang-release-test-base:
+  extends: .release-test-base
+  before_script:
+    - mkdir $BUILD_DIR
+    - cd $BUILD_DIR
+    - pipenv run conan profile new --detect default
+    - pipenv run conan profile update settings.compiler.libcxx=libc++ default
+    - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
+    - pipenv run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Release ..
+    - cd ../
+
+.clang-debug-test-base:
+  extends: .release-test-base
+  before_script:
+    - mkdir $BUILD_DIR
+    - cd $BUILD_DIR
+    - pipenv run conan profile new --detect default
+    - pipenv run conan profile update settings.compiler.libcxx=libc++ default
+    - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
+    - pipenv run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Debug ..
+    - cd ../
+
 clang coverage:
-  extends: .debug-test-base
+  extends: .clang-debug-test-base
   stage: Test with Clang
-  image: musicscience37/clang-ci:clang12-v3.4
+  image: musicscience37/clang-ci:clang12-v4.2
   variables:
     BUILD_DIR: build_clang_coverage
   script:
@@ -263,7 +273,7 @@ clang coverage:
 gcc coverage:
   extends: .debug-test-base
   stage: Test with GCC
-  image: musicscience37/gcc-ci:gcc10-v3.4
+  image: musicscience37/gcc-ci:gcc10-v4.1
   variables:
     BUILD_DIR: build_gcc_coverage
   script:
@@ -283,35 +293,35 @@ gcc coverage:
 gcc-10-debug:
   extends: .debug-test-base
   stage: Test with GCC
-  image: musicscience37/gcc-ci:gcc10-v3.4
+  image: musicscience37/gcc-ci:gcc10-v4.1
   variables:
     BUILD_DIR: build_gcc10_debug
 
 gcc-10-release:
   extends: .release-test-base
   stage: Test with GCC
-  image: musicscience37/gcc-ci:gcc10-v3.4
+  image: musicscience37/gcc-ci:gcc10-v4.1
   variables:
     BUILD_DIR: build_gcc10_release
 
 clang-12-debug:
-  extends: .debug-test-base
+  extends: .clang-debug-test-base
   stage: Test with Clang
-  image: musicscience37/clang-ci:clang12-v3.4
+  image: musicscience37/clang-ci:clang12-v4.2
   variables:
     BUILD_DIR: build_clang12_debug
 
 clang-12-release:
-  extends: .release-test-base
+  extends: .clang-release-test-base
   stage: Test with Clang
-  image: musicscience37/clang-ci:clang12-v3.4
+  image: musicscience37/clang-ci:clang12-v4.2
   variables:
     BUILD_DIR: build_clang12_release
 
 clang-12-release-cpp20:
-  extends: .release-test-base
+  extends: .clang-release-test-base
   stage: Test with Clang
-  image: musicscience37/clang-ci:clang12-v3.4
+  image: musicscience37/clang-ci:clang12-v4.2
   variables:
     BUILD_DIR: build_clang12_release_cpp20
   script:
@@ -329,9 +339,9 @@ clang-12-release-cpp20:
     - ctest -V
 
 clang-12-asan-ubsan:
-  extends: .debug-test-base
+  extends: .clang-debug-test-base
   stage: Test with Clang
-  image: musicscience37/clang-ci:clang12-v3.4
+  image: musicscience37/clang-ci:clang12-v4.2
   variables:
     BUILD_DIR: build_clang_asan_ubsan
   script:
@@ -346,9 +356,9 @@ clang-12-asan-ubsan:
     - ctest -V
 
 clang-12-tsan:
-  extends: .debug-test-base
+  extends: .clang-debug-test-base
   stage: Test with Clang
-  image: musicscience37/clang-ci:clang12-v3.4
+  image: musicscience37/clang-ci:clang12-v4.2
   variables:
     BUILD_DIR: build_clang_tsan
   script:
@@ -369,16 +379,15 @@ clang-12-conan:
     - sync pipenv
   dependencies:
     - sync pipenv
-  image: musicscience37/clang-ci:clang12-v3.4
+  image: musicscience37/clang-ci:clang12-v4.2
   variables:
     CONAN_CHANNEL: "testing"
   script:
     - pipenv run conan profile new --detect default
-    - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
+    - pipenv run conan profile update settings.compiler.libcxx=libc++ default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan create --build missing -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
-    - pipenv run conan create --build missing -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
-    - pipenv run conan create --build missing --test-folder tests/conan_package . ${CONAN_USER}/${CONAN_CHANNEL}
+    - pipenv run conan create --build missing --test-folder tests/conan_package -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
+    - pipenv run conan create --build missing --test-folder tests/conan_package -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
 
 clang-12-conan-release:
   extends: .retry setting
@@ -387,15 +396,15 @@ clang-12-conan-release:
     - sync pipenv
   dependencies:
     - sync pipenv
-  image: musicscience37/clang-ci:clang12-v3.4
+  image: musicscience37/clang-ci:clang12-v4.2
   variables:
     CONAN_CHANNEL: "stable"
   script:
     - pipenv run conan profile new --detect default
-    - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
+    - pipenv run conan profile update settings.compiler.libcxx=libc++ default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan create --build missing -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
-    - pipenv run conan create --build missing -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
+    - pipenv run conan create --build missing --test-folder tests/conan_package -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
+    - pipenv run conan create --build missing --test-folder tests/conan_package -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
     - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} pipenv run conan upload -r gitlab cpp_stat_bench/${STAT_BENCH_VERSION}@${CONAN_USER}/${CONAN_CHANNEL} --all
   only:
     - tags
@@ -417,12 +426,12 @@ msvc-release:
     - choco install python --version=3.9.9 -y
     - RefreshEnv
     - pip install pipenv
-    - pipenv install
+    - pipenv sync
     - mkdir $BUILD_DIR
     - cd $BUILD_DIR
     - pipenv run conan profile new --detect default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan install --build=missing -s build_type=Release ..
+    - pipenv run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Release ..
     - cd ../
   script:
     - cmake -S ./ -B $BUILD_DIR
@@ -447,16 +456,16 @@ doc:
     - sync pipenv
   dependencies:
     - sync pipenv
-  image: musicscience37/sphinx-doxygen:v3.4
+  image: musicscience37/sphinx-doxygen:clang12-v4.2
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
     - mkdir build_doc
     - cd build_doc
     - pipenv run conan profile new --detect default
-    - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
+    - pipenv run conan profile update settings.compiler.libcxx=libc++ default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan install --build=missing ..
+    - pipenv run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True ..
     - cd ../
     - cmake -S ./ -B build_doc
       -DSTAT_BENCH_BUILD_DOC:BOOL=ON

@@ -1,5 +1,17 @@
 # Change Log
 
+## v0.5.0 (2022/3/30)
+
+### Features
+
+- Separate directories of plots ([Issue #35](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/35)).
+
+### Others
+
+- Updated headers included by source codes using IWYU ([Issue #58](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/58)).
+- Added check of outputs from reporters in tests ([Issue #60](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/60)).
+- Updated Plotly.js to 2.11.1 ([Issue #59](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/59)).
+
 ## v0.4.1 (2022/1/15)
 
 Stopped sort of benchmarks ([Issue #54](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/54)).

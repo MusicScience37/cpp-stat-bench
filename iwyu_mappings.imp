@@ -1,0 +1,20 @@
+[
+  # https://github.com/include-what-you-use/include-what-you-use/blob/208fbfffa5d69364b9f78e427caa443441279283/libcxx.imp
+  { include: ["<__functional_base>", private, "<functional>", public ] },
+  { include: ["<__mutex_base>", private, "<mutex>", public ] },
+  { symbol: [ "std::declval", private, "<utility>", public ] },
+  { symbol: [ "std::forward", private, "<utility>", public ] },
+  { symbol: [ "std::move", private, "<utility>", public ] },
+  { symbol: [ "std::nullptr_t", private, "<cstddef>", public ] },
+  { symbol: [ "std::string", private, "<string>", public ] },
+  # Custom
+  { include: [ "<stddef.h>", public, "<cstddef>", public ] },
+  { include: [ "<stdint.h>", public, "<cstdint>", public ] },
+  { include: [ "<stdlib.h>", public, "<cstdlib>", public ] },
+  { symbol: [ "char_traits", private, "<string>", public ] },
+  { symbol: [ "nlohmann::json", private, "<nlohmann/json.hpp>", public ] },
+  { include: ["<fmt/core.h>", private, "<fmt/format.h>", public ] },
+  { include: ["@<nlohmann/detail/.*>", private, "<nlohmann/json.hpp>", public ] },
+  { symbol: [ "uint64_t", private, "<cstddef>", public ] },
+  { symbol: [ "std::uint64_t", private, "<cstddef>", public ] },
+]

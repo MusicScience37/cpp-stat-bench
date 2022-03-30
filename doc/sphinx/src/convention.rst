@@ -17,3 +17,13 @@ This project uses following tools for documentation:
 
 - `Doxygen <https://www.doxygen.nl/index.html>`_,
 - `Sphinx <https://www.sphinx-doc.org/>`_.
+
+This project uses following tools for dependency management:
+
+- `Pipenv <https://pipenv.pypa.io/en/latest/>`_ (Python),
+
+  - Update ``Pipfile.lock`` using command ``pipenv lock --keep-outdated``.
+
+- `Conan <https://conan.io/>`_ (C++).
+
+  - Install ``conan`` command using Pipenv.

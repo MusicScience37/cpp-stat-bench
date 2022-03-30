@@ -19,8 +19,13 @@
  */
 #include "stat_bench/reporter/json_data_file_helper.h"
 
+#include <initializer_list>
+#include <string>
+#include <unordered_map>
+#include <vector>
+
 #include <catch2/catch_test_macros.hpp>
-#include <catch2/matchers/catch_matchers_floating_point.hpp>
+#include <nlohmann/json.hpp>
 
 TEST_CASE("NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE definitions") {
     using stat_bench::reporter::data_file_spec::CustomOutputData;

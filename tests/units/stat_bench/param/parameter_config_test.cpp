@@ -21,6 +21,8 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include "stat_bench/param/parameter_dict.h"
+
 TEST_CASE("stat_bench::param::ParameterConfig") {
     SECTION("add parameters") {
         stat_bench::param::ParameterConfig config;

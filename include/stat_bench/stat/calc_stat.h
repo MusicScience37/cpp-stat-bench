@@ -19,6 +19,8 @@
  */
 #pragma once
 
+// IWYU pragma: no_include  <stddef.h>
+#include <cstddef>
 #include <vector>
 
 #include "stat_bench/clock/duration.h"

@@ -23,7 +23,9 @@
 #include <stdexcept>
 #include <vector>
 
+#include "stat_bench/clock/duration.h"
 #include "stat_bench/clock/monotone_clock.h"
+#include "stat_bench/clock/monotone_time_point.h"
 
 namespace stat_bench {
 namespace clock {

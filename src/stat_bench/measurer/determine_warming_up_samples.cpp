@@ -19,11 +19,7 @@
  */
 #include "stat_bench/measurer/determine_warming_up_samples.h"
 
-#include <algorithm>  // std::min, std::max
-#include <limits>
-
 #include "stat_bench/measurer/determine_iterations.h"
-#include "stat_bench/measurer/measure_once.h"
 
 namespace stat_bench {
 namespace measurer {

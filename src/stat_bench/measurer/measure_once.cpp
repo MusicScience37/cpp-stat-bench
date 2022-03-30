@@ -19,10 +19,16 @@
  */
 #include "stat_bench/measurer/measure_once.h"
 
+#include <memory>
+#include <stdexcept>
 #include <string>
+#include <utility>
+#include <vector>
 
 #include "stat_bench/bench/benchmark_condition.h"
 #include "stat_bench/bench/i_benchmark_case.h"
+#include "stat_bench/bench/invocation_context.h"
+#include "stat_bench/clock/duration.h"
 #include "stat_bench/measurer/measurement.h"
 
 namespace stat_bench {

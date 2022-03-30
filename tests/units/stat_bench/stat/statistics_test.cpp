@@ -20,10 +20,10 @@
 #include "stat_bench/stat/statistics.h"
 
 #include <cmath>
+#include <string>
 #include <vector>
 
 #include <catch2/catch_test_macros.hpp>
-#include <catch2/matchers/catch_matchers_container_properties.hpp>
 
 TEST_CASE("stat_bench::stat::Statistics") {
     SECTION("calculate") {

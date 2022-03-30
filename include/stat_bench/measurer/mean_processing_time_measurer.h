@@ -19,7 +19,14 @@
  */
 #pragma once
 
+// IWYU pragma: no_include  <stddef.h>
+#include <cstddef>
+#include <string>
+
+#include "stat_bench/bench/benchmark_condition.h"
+#include "stat_bench/bench/i_benchmark_case.h"
 #include "stat_bench/measurer/i_measurer.h"
+#include "stat_bench/measurer/measurement.h"
 
 namespace stat_bench {
 namespace measurer {

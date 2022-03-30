@@ -19,13 +19,18 @@
  */
 #include "stat_bench/reporter/cdf_line_plot_reporter.h"
 
+#include <cstdio>
 #include <fstream>
+#include <iterator>
+#include <unordered_map>
+#include <utility>
+#include <vector>
 
-#include <fmt/core.h>
 #include <fmt/format.h>
 
 #include "stat_bench/reporter/render_template.h"
 #include "stat_bench/reporter/template/line2d.html.h"
+#include "stat_bench/stat/statistics.h"
 #include "stat_bench/util/prepare_directory.h"
 
 namespace stat_bench {
@@ -74,7 +79,7 @@ void CdfLinePlotReporter::group_finished(const std::string& name) {
             {"\"{{DATA}}\"", std::string(data_buf_.data(), data_buf_.size())}});
 
     const std::string filepath = fmt::format(
-        FMT_STRING("{}{}_{}_cdf.html"), prefix_, name, measurer_name_);
+        FMT_STRING("{}/{}/{}_cdf.html"), prefix_, name, measurer_name_);
     util::prepare_directory_for(filepath);
     std::ofstream stream{filepath};
     stream << contents;
@@ -103,8 +108,8 @@ void CdfLinePlotReporter::measurement_succeeded(
     }
 
     fmt::format_to(std::back_inserter(data_buf_), FMT_STRING(R"***({{
-    x: [{}],
-    y: [{}],
+    x: [{:.6e}],
+    y: [{:.6f}],
     mode: "lines",
     type: "scatter",
     name: "{} ({})",

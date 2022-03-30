@@ -19,13 +19,19 @@
  */
 #include "stat_bench/bench/fixture_base.h"
 
+// IWYU pragma: no_include  <stddef.h>
+
+#include <cstddef>
 #include <stdexcept>
+#include <string>
+#include <type_traits>
 
 #include <catch2/catch_test_macros.hpp>
 #include <trompeloeil.hpp>
 
 #include "../param/create_ordinary_parameter_dict.h"
 #include "mock_fixture.h"
+#include "stat_bench/bench/benchmark_condition.h"
 #include "stat_bench/bench/i_benchmark_case.h"
 
 TEST_CASE("stat_bench::bench::FixtureBase") {
