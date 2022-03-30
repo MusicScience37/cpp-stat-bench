@@ -77,7 +77,7 @@ prepare lock files:
     - pipenv run conan profile new --detect default
     - pipenv run conan profile update settings.compiler.libcxx=libc++ default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan install --build missing -o requirements_for_tests=True -s build_type=Debug .
+    - pipenv run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Debug .
   cache:
     key:
       prefix: pipenv-linux-prepare
@@ -141,7 +141,7 @@ static analysis:
     - pipenv run conan profile new --detect default
     - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan install --build missing -o requirements_for_tests=True ..
+    - pipenv run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True ..
     - cd ../
     - cmake -S ./ -B build_static_analysis
       -DSTAT_BENCH_ENABLE_CLANG_TIDY:BOOL=ON
@@ -180,7 +180,7 @@ static analysis:
     - pipenv run conan profile new --detect default
     - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan install --build missing -o requirements_for_tests=True -s build_type=Release ..
+    - pipenv run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Release ..
     - cd ../
   script:
     - cmake -S ./ -B $BUILD_DIR
@@ -213,7 +213,7 @@ static analysis:
     - pipenv run conan profile new --detect default
     - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan install --build missing -o requirements_for_tests=True -s build_type=Debug ..
+    - pipenv run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Debug ..
     - cd ../
   script:
     - cmake -S ./ -B $BUILD_DIR
@@ -364,8 +364,8 @@ clang-12-conan:
     - pipenv run conan profile new --detect default
     - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan create --build missing -o requirements_for_tests=True --test-folder tests/conan_package -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
-    - pipenv run conan create --build missing -o requirements_for_tests=True --test-folder tests/conan_package -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
+    - pipenv run conan create --build missing -o cpp_stat_bench:requirements_for_tests=True --test-folder tests/conan_package -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
+    - pipenv run conan create --build missing -o cpp_stat_bench:requirements_for_tests=True --test-folder tests/conan_package -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
 
 clang-12-conan-release:
   extends: .retry setting
@@ -381,8 +381,8 @@ clang-12-conan-release:
     - pipenv run conan profile new --detect default
     - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan create --build missing -o requirements_for_tests=True --test-folder tests/conan_package -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
-    - pipenv run conan create --build missing -o requirements_for_tests=True --test-folder tests/conan_package -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
+    - pipenv run conan create --build missing -o cpp_stat_bench:requirements_for_tests=True --test-folder tests/conan_package -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
+    - pipenv run conan create --build missing -o cpp_stat_bench:requirements_for_tests=True --test-folder tests/conan_package -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
     - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} pipenv run conan upload -r gitlab cpp_stat_bench/${STAT_BENCH_VERSION}@${CONAN_USER}/${CONAN_CHANNEL} --all
   only:
     - tags
@@ -409,7 +409,7 @@ msvc-release:
     - cd $BUILD_DIR
     - pipenv run conan profile new --detect default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan install --build missing -o requirements_for_tests=True -s build_type=Release ..
+    - pipenv run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Release ..
     - cd ../
   script:
     - cmake -S ./ -B $BUILD_DIR
@@ -443,7 +443,7 @@ doc:
     - pipenv run conan profile new --detect default
     - pipenv run conan profile update settings.compiler.libcxx=libstdc++11 default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan install --build missing -o requirements_for_tests=True ..
+    - pipenv run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True ..
     - cd ../
     - cmake -S ./ -B build_doc
       -DSTAT_BENCH_BUILD_DOC:BOOL=ON
