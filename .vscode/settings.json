@@ -63,8 +63,6 @@
   ],
   "cmake.buildDirectory": "${workspaceFolder}/build/${buildType}",
   "cmake.preferredGenerators": ["Ninja"],
-  "restructuredtext.linter.name": "doc8",
-  "restructuredtext.languageServer.disabled": true,
   "doxdocgen.generic.returnTemplate": "\\return ",
   "doxdocgen.generic.paramTemplate": "\\param[in] {param} ",
   "doxdocgen.c.firstLine": "/*!",
@@ -74,9 +72,15 @@
   "doxdocgen.c.triggerSequence": "/*!",
   "doxdocgen.cpp.ctorText": "Constructor.",
   "doxdocgen.cpp.dtorText": "Destructor.",
-  "restructuredtext.confPath": "${workspaceFolder}/doc/sphinx/src",
   "C_Cpp.intelliSenseEngine": "Disabled",
   "C_Cpp.autocomplete": "Disabled",
   "C_Cpp.errorSquiggles": "Disabled",
-  "cmakeFormat.exePath": "/workspaces/cpp-stat-bench/.venv/bin/cmake-format"
+  "cmakeFormat.exePath": "/workspaces/cpp-stat-bench/.venv/bin/cmake-format",
+  "esbonio.sphinx.confDir": "${workspaceFolder}/doc/sphinx/src",
+  "restructuredtext.linter.disabledLinters": ["rstcheck", "rst-lint"],
+  "esbonio.server.enabled": false,
+  "files.watcherExclude": {
+    "**/.conan/**": true,
+    "**/.venv/**": true
+  }
 }
