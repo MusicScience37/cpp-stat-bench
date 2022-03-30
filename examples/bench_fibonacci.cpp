@@ -17,7 +17,13 @@
  * \file
  * \brief Benchmark of fibonacci.
  */
+// IWYU pragma: no_include  <stddef.h>
+#include <cstddef>
+#include <memory>
+
+#include "stat_bench/bench/invocation_context.h"
 #include "stat_bench/benchmark_macros.h"
+#include "stat_bench/param/parameter_value_vector.h"
 #include "stat_bench/util/do_not_optimize.h"
 
 [[nodiscard]] auto fibonacci(std::uint64_t number) -> std::uint64_t {

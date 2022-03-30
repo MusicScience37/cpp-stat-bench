@@ -19,6 +19,12 @@
  */
 #include "stat_bench/reporter/data_file_helper.h"
 
+// IWYU pragma: no_include  <stddef.h>
+#include <cstddef>
+
+#include "stat_bench/bench/benchmark_case_info.h"
+#include "stat_bench/bench/benchmark_condition.h"
+
 namespace stat_bench {
 namespace reporter {
 namespace data_file_spec {

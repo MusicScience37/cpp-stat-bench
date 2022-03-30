@@ -19,12 +19,8 @@
  */
 #include "stat_bench/measurer/mean_processing_time_measurer.h"
 
-#include <algorithm>
 #include <cstddef>
-#include <limits>
-#include <stdexcept>
 
-#include "stat_bench/bench/invocation_context.h"
 #include "stat_bench/measurer/determine_iterations.h"
 #include "stat_bench/measurer/determine_warming_up_samples.h"
 #include "stat_bench/measurer/measure_once.h"

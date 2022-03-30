@@ -31,7 +31,7 @@ Benchmark library with statistics for C++.
 
 ## Documentation
 
-- [Documentation build on develop branch](https://musicscience37.gitlab.io/cpp-stat-bench/)
+- [Documentation build on develop branch](https://cppstatbench.musicscience37.com/)
 - Examples are in `examples` directory.
 
 ## How to Use
@@ -69,7 +69,7 @@ you will require following dependencies:
 - C++ 14 Compiler
   - Following compilers are tested in CI:
     - GCC 10
-    - Clang 11
+    - Clang 12
     - MSVC 19
 
 Additionally, you will require following dependencies

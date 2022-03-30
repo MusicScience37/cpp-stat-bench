@@ -18,8 +18,12 @@
  * \brief Benchmark of fibonacci.
  */
 #include <cstddef>
+#include <memory>
 
+#include "stat_bench/bench/invocation_context.h"
 #include "stat_bench/benchmark_macros.h"
+#include "stat_bench/param/parameter_value_vector.h"
+#include "stat_bench/stat/custom_stat_output.h"
 #include "stat_bench/util/do_not_optimize.h"
 
 class Fixture : public stat_bench::FixtureBase {

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Cumulative Distribution Function of Measurement1</title>
+    <style>
+      html,
+      body,
+      .container {
+        height: 100%;
+        width: 100%;
+        margin: 0px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="plot" class="container"></div>
+
+    <!-- Import Plotly -->
+    <script src="https://cdn.plot.ly/plotly-2.11.1.min.js"></script>
+
+    <script type="text/javascript">
+      var data = [{
+    x: [1.000000e-03, 2.000000e-03],
+    y: [0.500000, 1.000000],
+    mode: "lines",
+    type: "scatter",
+    name: "Case1 (param=value, threads=1)",
+},{
+    x: [3.000000e-03, 4.000000e-03, 5.000000e-03],
+    y: [0.333333, 0.666667, 1.000000],
+    mode: "lines",
+    type: "scatter",
+    name: "Case2 (param=value, threads=1)",
+},];
+      var layout = {
+        title: "Cumulative Distribution Function of Measurement1",
+        xaxis: {
+          title: "Time [sec]",
+          type: "log",
+        },
+        yaxis: {
+          title: "Cumulative Probability",
+          type: "-",
+        },
+        showlegend: true,
+      };
+
+      Plotly.newPlot("plot", data, layout, {
+        scrollZoom: true,
+        responsive: true,
+      });
+    </script>
+  </body>
+</html>
+

@@ -20,14 +20,20 @@
 #include "stat_bench/reporter/violin_plot_reporter.h"
 
 #include <cmath>
+#include <cstdio>
 #include <fstream>
+#include <iterator>
 #include <limits>
+#include <unordered_map>
+#include <utility>
+#include <vector>
 
-#include <fmt/core.h>
 #include <fmt/format.h>
 
+#include "stat_bench/clock/duration.h"
 #include "stat_bench/reporter/render_template.h"
 #include "stat_bench/reporter/template/violin.html.h"
+#include "stat_bench/stat/statistics.h"
 #include "stat_bench/util/prepare_directory.h"
 
 namespace stat_bench {
@@ -81,13 +87,13 @@ void ViolinPlotReporter::group_finished(const std::string& name) {
             {"{{PLOT_NAME}}", fmt::format("Violin Plot of {}", measurer_name_)},
             {"{{Y_TITLE}}", "Time [sec]"}, {"{{Y_TYPE}}", "log"},
             {"\"{{Y_MIN}}\"",
-                fmt::format(FMT_STRING("{}"), std::log10(min_duration_))},
+                fmt::format(FMT_STRING("{:.6e}"), std::log10(min_duration_))},
             {"\"{{Y_MAX}}\"",
-                fmt::format(FMT_STRING("{}"), std::log10(max_duration_))},
+                fmt::format(FMT_STRING("{:.6e}"), std::log10(max_duration_))},
             {"\"{{DATA}}\"", std::string(data_buf_.data(), data_buf_.size())}});
 
     const std::string filepath = fmt::format(
-        FMT_STRING("{}{}_{}_violin.html"), prefix_, name, measurer_name_);
+        FMT_STRING("{}/{}/{}_violin.html"), prefix_, name, measurer_name_);
     util::prepare_directory_for(filepath);
     std::ofstream stream{filepath};
     stream << contents;
@@ -122,7 +128,7 @@ void ViolinPlotReporter::measurement_succeeded(
     }
 
     fmt::format_to(std::back_inserter(data_buf_), FMT_STRING(R"***({{
-    y: [{}],
+    y: [{:.6e}],
     type: "violin",
     name: "{}",
     box: {{

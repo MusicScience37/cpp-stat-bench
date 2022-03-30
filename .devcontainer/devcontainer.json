@@ -1,0 +1,27 @@
+{
+  "build": { "dockerfile": "Dockerfile" },
+  "containerEnv": {
+    "CONAN_USER_HOME": "${containerWorkspaceFolder}",
+    "PIPENV_VENV_IN_PROJECT": "1"
+  },
+  "extensions": [
+    "ms-vscode.cpptools",
+    "llvm-vs-code-extensions.vscode-clangd",
+    "twxs.cmake",
+    "ms-vscode.cmake-tools",
+    "cheshirekow.cmake-format",
+    "streetsidesoftware.code-spell-checker",
+    "cschlosser.doxdocgen",
+    "davidanson.vscode-markdownlint",
+    "jebbs.plantuml",
+    "esbenp.prettier-vscode",
+    "ms-python.python",
+    "njpwerner.autodocstring",
+    "lextudio.restructuredtext",
+    "trond-snekvik.simple-rst",
+    "fredericbonnet.cmake-test-adapter",
+    "hbenl.vscode-test-explorer",
+    "ms-azuretools.vscode-docker"
+  ],
+  "postCreateCommand": "bash ./.devcontainer/setup.bash"
+}

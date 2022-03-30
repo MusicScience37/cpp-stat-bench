@@ -1,5 +1,5 @@
 include(${CMAKE_CURRENT_SOURCE_DIR}/source_list.cmake)
-add_executable(stat_bench_test_units ${SOURCE_FILES})
+add_executable(stat_bench_test_units ${SOURCE_FILES} test_main.cpp)
 target_add_catch2(stat_bench_test_units)
 
 add_executable(stat_bench_test_units_unity EXCLUDE_FROM_ALL unity_source.cpp)

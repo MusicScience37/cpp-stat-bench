@@ -12,9 +12,15 @@ set(STAT_BENCH_TEMP_TEST_DIR
     CACHE PATH "directory used in test" FORCE)
 file(MAKE_DIRECTORY ${STAT_BENCH_TEMP_TEST_DIR})
 
+add_library(stat_bench_test_utils INTERFACE)
+target_include_directories(stat_bench_test_utils
+                           INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
 macro(target_add_catch2 TARGET)
-    target_link_libraries(${TARGET} PRIVATE Catch2::Catch2WithMain
-                                            trompeloeil::trompeloeil stat_bench)
+    target_link_libraries(
+        ${TARGET}
+        PRIVATE Catch2::Catch2WithMain trompeloeil::trompeloeil
+                ApprovalTests::ApprovalTests stat_bench stat_bench_test_utils)
 
     if(STAT_BENCH_WRITE_JUNIT)
         set(CATCH2_REPORT_OPTIONS -r junit -o

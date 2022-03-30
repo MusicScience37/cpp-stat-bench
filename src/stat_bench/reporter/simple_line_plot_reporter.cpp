@@ -19,11 +19,16 @@
  */
 #include "stat_bench/reporter/simple_line_plot_reporter.h"
 
+#include <cstdio>
 #include <fstream>
+#include <iterator>
+#include <unordered_map>
+#include <utility>
+#include <vector>
 
-#include <fmt/core.h>
 #include <fmt/format.h>
 
+#include "stat_bench/clock/duration.h"
 #include "stat_bench/reporter/render_template.h"
 #include "stat_bench/reporter/template/line2d.html.h"
 #include "stat_bench/util/prepare_directory.h"
@@ -72,7 +77,7 @@ void SimpleLinePlotReporter::group_finished(const std::string& name) {
             {"\"{{DATA}}\"", std::string(data_buf_.data(), data_buf_.size())}});
 
     const std::string filepath =
-        fmt::format(FMT_STRING("{}{}_{}.html"), prefix_, name, measurer_name_);
+        fmt::format(FMT_STRING("{}/{}/{}.html"), prefix_, name, measurer_name_);
     util::prepare_directory_for(filepath);
     std::ofstream stream{filepath};
     stream << contents;
@@ -110,7 +115,7 @@ void SimpleLinePlotReporter::measurement_succeeded(
 
     fmt::format_to(std::back_inserter(data_buf_), FMT_STRING(R"***({{
     x: [{}],
-    y: [{}],
+    y: [{:.6e}],
     mode: "lines",
     type: "scatter",
     name: "{} ({})",

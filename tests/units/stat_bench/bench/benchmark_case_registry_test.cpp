@@ -19,8 +19,12 @@
  */
 #include "stat_bench/bench/benchmark_case_registry.h"
 
+#include <type_traits>
+
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers.hpp>
 #include <catch2/matchers/catch_matchers_container_properties.hpp>
+#include <trompeloeil.hpp>
 
 #include "mock_benchmark_case.h"
 

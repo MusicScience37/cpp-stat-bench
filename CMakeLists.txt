@@ -51,6 +51,7 @@ find_package(nlohmann_json REQUIRED)
 if(STAT_BENCH_TESTING)
     find_package(Catch2 REQUIRED)
     find_package(trompeloeil REQUIRED)
+    find_package(ApprovalTests REQUIRED)
 endif()
 
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
