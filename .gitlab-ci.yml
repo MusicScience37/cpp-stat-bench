@@ -10,7 +10,7 @@ stages:
   - Publish
 
 variables:
-  STAT_BENCH_VERSION: "0.4.1"
+  STAT_BENCH_VERSION: "0.5.0"
   CONAN_USER: "MusicScience37+cpp-stat-bench"
   SECURE_LOG_LEVEL: debug
 
@@ -386,8 +386,8 @@ clang-12-conan:
     - pipenv run conan profile new --detect default
     - pipenv run conan profile update settings.compiler.libcxx=libc++ default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan create --build missing -o cpp_stat_bench:requirements_for_tests=True --test-folder tests/conan_package -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
-    - pipenv run conan create --build missing -o cpp_stat_bench:requirements_for_tests=True --test-folder tests/conan_package -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
+    - pipenv run conan create --build missing --test-folder tests/conan_package -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
+    - pipenv run conan create --build missing --test-folder tests/conan_package -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
 
 clang-12-conan-release:
   extends: .retry setting
@@ -403,8 +403,8 @@ clang-12-conan-release:
     - pipenv run conan profile new --detect default
     - pipenv run conan profile update settings.compiler.libcxx=libc++ default
     - pipenv run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
-    - pipenv run conan create --build missing -o cpp_stat_bench:requirements_for_tests=True --test-folder tests/conan_package -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
-    - pipenv run conan create --build missing -o cpp_stat_bench:requirements_for_tests=True --test-folder tests/conan_package -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
+    - pipenv run conan create --build missing --test-folder tests/conan_package -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
+    - pipenv run conan create --build missing --test-folder tests/conan_package -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
     - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} pipenv run conan upload -r gitlab cpp_stat_bench/${STAT_BENCH_VERSION}@${CONAN_USER}/${CONAN_CHANNEL} --all
   only:
     - tags
