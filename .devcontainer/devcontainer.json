@@ -2,7 +2,8 @@
   "build": { "dockerfile": "Dockerfile" },
   "containerEnv": {
     "CONAN_USER_HOME": "${containerWorkspaceFolder}",
-    "PIPENV_VENV_IN_PROJECT": "1"
+    "PIPENV_VENV_IN_PROJECT": "1",
+    "ASAN_OPTIONS": "alloc_dealloc_mismatch=0"
   },
   "extensions": [
     "ms-vscode.cpptools",
