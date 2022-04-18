@@ -457,7 +457,7 @@ doc:
     - sync pipenv
   dependencies:
     - sync pipenv
-  image: musicscience37/sphinx-doxygen:clang12-v4.2
+  image: musicscience37/sphinx-doxygen:clang14-v4.3
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   script:
