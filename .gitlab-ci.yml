@@ -424,7 +424,7 @@ msvc-release:
   before_script:
     - Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
     - choco install cmake -y --installargs 'ADD_CMAKE_TO_PATH=System'
-    - choco install python --version=3.9.9 -y
+    - choco install python --version=3.9.12 -y
     - RefreshEnv
     - pip install pipenv
     - pipenv sync
