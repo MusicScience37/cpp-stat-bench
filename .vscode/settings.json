@@ -37,6 +37,7 @@
     "MSVC",
     "MusicScience37",
     "nlohmann",
+    "nodiscard",
     "NOLINT",
     "NOLINTNEXTLINE",
     "pipenv",
