@@ -82,5 +82,6 @@
   "files.watcherExclude": {
     "**/.conan/**": true,
     "**/.venv/**": true
-  }
+  },
+  "python.formatting.provider": "black"
 }
