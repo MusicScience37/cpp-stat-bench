@@ -19,6 +19,8 @@
  */
 #pragma once
 
+#include <vector>
+
 #include <lyra/cli.hpp>
 #include <lyra/lyra.hpp>
 
