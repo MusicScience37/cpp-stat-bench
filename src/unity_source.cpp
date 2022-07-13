@@ -12,6 +12,7 @@
 #include "stat_bench/reporter/render_template.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/reporter/simple_line_plot_reporter.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/reporter/violin_plot_reporter.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "stat_bench/runner/command_line_parser.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/runner/runner.cpp"   // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/stat/calc_stat.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/stat/statistics.cpp"  // NOLINT(bugprone-suspicious-include)

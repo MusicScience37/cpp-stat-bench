@@ -47,72 +47,32 @@
 namespace stat_bench {
 namespace runner {
 
-Runner::Runner() {
-    cli_ |= lyra::opt(config_.show_help)["-h"]["--help"]("Show this help.");
-
-    cli_ |= lyra::opt(config_.plot_prefix, "prefix")["--plot"](
-        "Generate plots of results.");
-
-    cli_ |= lyra::opt(config_.json_file_path, "filepath")["--json"](
-        "Generate JSON data file.");
-
-    cli_ |= lyra::opt(config_.processing_time_samples, "num")["--samples"](
-        "Number of samples for measurements of processing time.")
-                .choices([](std::size_t val) { return val > 0; });
-
-    cli_ |= lyra::opt(
-        config_.mean_processing_time_samples, "num")["--mean_samples"](
-        "Number of samples for measurements of mean processing time.")
-                .choices([](std::size_t val) { return val > 0; });
-
-    cli_ |= lyra::opt(
-        config_.min_sample_duration_sec, "num")["--min_sample_duration"](
-        "Minimum duration of a sample for measurement of mean processing time. "
-        "[sec]")
-                .choices([](double val) { return val > 0.0; });
-
-    cli_ |= lyra::opt(config_.min_warming_up_iterations,
-        "num")["--min_warming_up_iterations"](
-        "Minimum number of iterations for warming up.");
-
-    cli_ |= lyra::opt(config_.min_warming_up_duration_sec,
-        "num")["--min_warming_up_duration_sec"](
-        "Minimum duration for warming up. [sec]")
-                .choices([](double val) { return val >= 0.0; });
-}
+Runner::Runner() = default;
 
 Runner::~Runner() = default;
 
-void Runner::parse_cli(int argc, const char** argv) {
-    const auto result = cli_.parse(lyra::args{argc, argv});
-    if (!result) {
-        throw std::runtime_error(result.message());
-    }
-}
-
-void Runner::init() {
+void Runner::init(const Config& config) {
     measurers_.push_back(std::make_shared<measurer::ProcessingTimeMeasurer>(
-        config_.processing_time_samples, config_.min_warming_up_iterations,
-        config_.min_warming_up_duration_sec));
+        config.processing_time_samples, config.min_warming_up_iterations,
+        config.min_warming_up_duration_sec));
     measurers_.push_back(std::make_shared<measurer::MeanProcessingTimeMeasurer>(
-        config_.min_sample_duration_sec, config_.mean_processing_time_samples,
-        config_.min_warming_up_iterations,
-        config_.min_warming_up_duration_sec));
+        config.min_sample_duration_sec, config.mean_processing_time_samples,
+        config.min_warming_up_iterations, config.min_warming_up_duration_sec));
 
     reporters_.push_back(std::make_shared<reporter::ConsoleReporter>());
 
-    if (!config_.plot_prefix.empty()) {
+    if (!config.plot_prefix.empty()) {
         reporters_.push_back(std::make_shared<reporter::SimpleLinePlotReporter>(
-            config_.plot_prefix));
+            config.plot_prefix));
         reporters_.push_back(std::make_shared<reporter::CdfLinePlotReporter>(
-            config_.plot_prefix));
-        reporters_.push_back(std::make_shared<reporter::ViolinPlotReporter>(
-            config_.plot_prefix));
+            config.plot_prefix));
+        reporters_.push_back(
+            std::make_shared<reporter::ViolinPlotReporter>(config.plot_prefix));
     }
 
-    if (!config_.json_file_path.empty()) {
+    if (!config.json_file_path.empty()) {
         reporters_.push_back(
-            std::make_shared<reporter::JsonReporter>(config_.json_file_path));
+            std::make_shared<reporter::JsonReporter>(config.json_file_path));
     }
 }
 
