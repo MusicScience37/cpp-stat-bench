@@ -19,41 +19,61 @@
  */
 #include "stat_bench/runner/command_line_parser.h"
 
+#include <lyra/opt.hpp>
+
 namespace stat_bench {
 namespace runner {
 
 CommandLineParser::CommandLineParser() {
-    cli_ |= lyra::opt(config_.show_help)["-h"]["--help"]("Show this help.");
+    cli_.add_argument(lyra::opt(config_.show_help)
+                          .name("-h")
+                          .name("--help")
+                          .optional()
+                          .help("Show this help."));
 
-    cli_ |= lyra::opt(config_.plot_prefix, "prefix")["--plot"](
-        "Generate plots of results.");
+    cli_.add_argument(lyra::opt(config_.plot_prefix, "prefix")
+                          .name("--plot")
+                          .optional()
+                          .help("Generate plots of results."));
 
-    cli_ |= lyra::opt(config_.json_file_path, "filepath")["--json"](
-        "Generate JSON data file.");
+    cli_.add_argument(lyra::opt(config_.json_file_path, "filepath")
+                          .name("--json")
+                          .optional()
+                          .help("Generate JSON data file of results."));
 
-    cli_ |= lyra::opt(config_.processing_time_samples, "num")["--samples"](
-        "Number of samples for measurements of processing time.")
-                .choices([](std::size_t val) { return val > 0; });
+    cli_.add_argument(
+        lyra::opt(config_.processing_time_samples, "num")
+            .name("--samples")
+            .optional()
+            .choices([](std::size_t val) { return val > 0; })
+            .help("Number of samples for measurements of processing time."));
 
-    cli_ |= lyra::opt(
-        config_.mean_processing_time_samples, "num")["--mean_samples"](
-        "Number of samples for measurements of mean processing time.")
-                .choices([](std::size_t val) { return val > 0; });
+    cli_.add_argument(
+        lyra::opt(config_.mean_processing_time_samples, "num")
+            .name("--mean_samples")
+            .optional()
+            .choices([](std::size_t val) { return val > 0; })
+            .help(
+                "Number of samples for measurements of mean processing time."));
 
-    cli_ |= lyra::opt(
-        config_.min_sample_duration_sec, "num")["--min_sample_duration"](
-        "Minimum duration of a sample for measurement of mean processing time. "
-        "[sec]")
-                .choices([](double val) { return val > 0.0; });
+    cli_.add_argument(lyra::opt(config_.min_sample_duration_sec, "num")
+                          .name("--min_sample_duration")
+                          .optional()
+                          .choices([](double val) { return val > 0.0; })
+                          .help("Minimum duration of a sample for measurement "
+                                "of mean processing time. [sec]"));
 
-    cli_ |= lyra::opt(config_.min_warming_up_iterations,
-        "num")["--min_warming_up_iterations"](
-        "Minimum number of iterations for warming up.");
+    cli_.add_argument(
+        lyra::opt(config_.min_warming_up_iterations, "num")
+            .name("--min_warming_up_iterations")
+            .optional()
+            .help("Minimum number of iterations for warming up."));
 
-    cli_ |= lyra::opt(config_.min_warming_up_duration_sec,
-        "num")["--min_warming_up_duration_sec"](
-        "Minimum duration for warming up. [sec]")
-                .choices([](double val) { return val >= 0.0; });
+    cli_.add_argument(lyra::opt(config_.min_warming_up_duration_sec, "num")
+                          .name("--min_warming_up_duration_sec")
+                          .optional()
+                          .choices([](double val) { return val >= 0.0; })
+                          .help("Minimum duration for warming up. [sec]"));
 }
 
 CommandLineParser::~CommandLineParser() = default;
