@@ -8,7 +8,7 @@ conan = "*"
 
 [dev-packages]
 aiohttp = "*"
-autopep8 = "*"
+black = "*"
 breathe = "*"
 cchardet = "*"
 cmakelang = "*"

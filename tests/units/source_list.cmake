@@ -26,6 +26,7 @@ set(SOURCE_FILES
     stat_bench/reporter/json_reporter_test.cpp
     stat_bench/reporter/simple_line_plot_reporter_test.cpp
     stat_bench/reporter/violin_plot_reporter_test.cpp
+    stat_bench/runner/command_line_parser_test.cpp
     stat_bench/runner/runner_test.cpp
     stat_bench/stat/calc_stat_test.cpp
     stat_bench/stat/custom_stat_output_test.cpp

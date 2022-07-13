@@ -15,6 +15,7 @@ Checks: >
   hicpp-*,
     -hicpp-no-array-decay,
   cert-*,
+   -cert-err58-cpp,
   bugprone-*,
   concurrency-*,
   boost-*,

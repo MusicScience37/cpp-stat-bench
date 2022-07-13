@@ -22,6 +22,7 @@
 #include <cstdlib>
 #include <iostream>
 
+#include "stat_bench/runner/command_line_parser.h"
 #include "stat_bench/runner/runner.h"
 
 namespace stat_bench {
@@ -36,13 +37,14 @@ namespace impl {
  */
 inline auto default_main(int argc, const char** argv) noexcept -> int {
     try {
-        stat_bench::runner::Runner runner;
-        runner.parse_cli(argc, argv);
-        if (runner.config().show_help) {
-            std::cout << runner.cli() << std::endl;
+        stat_bench::runner::CommandLineParser parser;
+        parser.parse_cli(argc, argv);
+        if (parser.config().show_help) {
+            std::cout << parser.cli() << std::endl;
             return EXIT_SUCCESS;
         }
-        runner.init();
+        stat_bench::runner::Runner runner;
+        runner.init(parser.config());
         runner.run();
         return EXIT_SUCCESS;
     } catch (const std::exception& e) {

@@ -9,7 +9,7 @@ class CppStatBenchConan(ConanFile):
     url = "https://gitlab.com/MusicScience37/cpp-stat-bench.git"
     license = "Apache-2.0"
     author = "Kenta Kabashima (kenta_program37@hotmail.co.jp)"
-    topics = ("Benchmark")
+    topics = "Benchmark"
     settings = "os", "compiler", "build_type", "arch"
     options = {
         "shared": [True, False],
@@ -44,8 +44,7 @@ class CppStatBenchConan(ConanFile):
 
     def build_requirements(self):
         if self.options.requirements_for_tests:
-            self.build_requires(
-                "catch2/3.0.0pre4@MusicScience37+conan-extra-packages/stable")
+            self.build_requires("catch2/3.0.1")
             self.build_requires("trompeloeil/42")
             self.build_requires("approvaltests.cpp/10.12.2")
 
@@ -65,6 +64,9 @@ class CppStatBenchConan(ConanFile):
     def package_info(self):
         self.cpp_info.components["stat_bench"].libs = ["stat_bench"]
         self.cpp_info.components["stat_bench"].requires = [
-            "fmt::fmt", "lyra::lyra", "nlohmann_json::nlohmann_json"]
+            "fmt::fmt",
+            "lyra::lyra",
+            "nlohmann_json::nlohmann_json",
+        ]
         if self.settings.os in ["Linux", "FreeBSD"]:
             self.cpp_info.components["stat_bench"].system_libs = ["pthread"]
