@@ -13,6 +13,7 @@ set(SOURCE_FILES
     stat_bench/reporter/render_template.cpp
     stat_bench/reporter/simple_line_plot_reporter.cpp
     stat_bench/reporter/violin_plot_reporter.cpp
+    stat_bench/runner/command_line_parser.cpp
     stat_bench/runner/runner.cpp
     stat_bench/stat/calc_stat.cpp
     stat_bench/stat/statistics.cpp
