@@ -35,74 +35,10 @@
 #include "stat_bench/measurer/i_measurer.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/reporter/i_reporter.h"
+#include "stat_bench/runner/config.h"
 
 namespace stat_bench {
 namespace runner {
-
-namespace impl {
-
-//! Default number of samples for measurements of processing time.
-static constexpr std::size_t default_processing_time_samples = 100;
-
-//! Default number of samples for measurement of mean processing time.
-static constexpr std::size_t default_mean_processing_time_samples = 30;
-
-/*!
- * \brief Default minimum duration of a sample for measurement of mean
- * processing time. [sec]
- */
-static constexpr double default_min_sample_duration_sec = 0.03;
-
-//! Default minimum number of iterations for warming up.
-static constexpr std::size_t default_min_warming_up_iterations = 1;
-
-//! Default minimum duration for warming up. [sec]
-static constexpr double default_min_warming_up_duration_sec = 0.03;
-
-}  // namespace impl
-
-/*!
- * \brief Class of configurations.
- */
-struct Config {
-    //! Whether to show help.
-    bool show_help{false};
-
-    //! Number of samples for measurements of processing time.
-    std::size_t processing_time_samples{impl::default_processing_time_samples};
-
-    //! Number of samples for measurements of mean processing time.
-    std::size_t mean_processing_time_samples{
-        impl::default_mean_processing_time_samples};
-
-    /*!
-     * \brief Minimum duration of a sample for measurement of mean processing
-     * time. [sec]
-     */
-    double min_sample_duration_sec{impl::default_min_sample_duration_sec};
-
-    //! Minimum number of iterations for warming up.
-    std::size_t min_warming_up_iterations{
-        impl::default_min_warming_up_iterations};
-
-    //! Minimum duration for warming up. [sec]
-    double min_warming_up_duration_sec{
-        impl::default_min_warming_up_duration_sec};
-
-    /*!
-     * \brief Prefix of filepaths to generate plots.
-     *
-     * Empty string specifies no output.
-     */
-    std::string plot_prefix{};
-
-    /*!
-     * \brief File path of JSON data file.
-     *
-     * Empty string specifies no output.
-     */
-    std::string json_file_path{};
-};
 
 /*!
  * \brief Class of runners of benchmarks.
@@ -125,34 +61,11 @@ public:
     ~Runner();
 
     /*!
-     * \brief Access to the command line interface definition.
-     *
-     * \note For usage of `lyra::cli` objects, see [Lyra
-     * documentation](https://www.bfgroup.xyz/Lyra/).
-     *
-     * \return Reference to the definition.
-     */
-    [[nodiscard]] auto cli() -> lyra::cli& { return cli_; }
-
-    /*!
-     * \brief Parse command line arguments.
-     *
-     * \param[in] argc Number of arguments.
-     * \param[in] argv Arguments.
-     */
-    void parse_cli(int argc, const char** argv);
-
-    /*!
-     * \brief Get the configuration.
-     *
-     * \return Configuration.
-     */
-    [[nodiscard]] auto config() -> const Config& { return config_; }
-
-    /*!
      * \brief Initialize.
+     *
+     * \param[in] config Configuration.
      */
-    void init();
+    void init(const Config& config);
 
     /*!
      * \brief Add a measurer.
@@ -205,12 +118,6 @@ private:
         const std::shared_ptr<measurer::IMeasurer>& measurer,
         const std::shared_ptr<bench::IBenchmarkCase>& bench_case,
         const bench::BenchmarkCondition& cond) const;
-
-    //! Configurations.
-    Config config_{};
-
-    //! Command line interface.
-    lyra::cli cli_{};
 
     //! Measurers.
     std::vector<std::shared_ptr<measurer::IMeasurer>> measurers_{};

@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """Helper script to install dependent Conan packages.
 """
 
@@ -35,18 +36,22 @@ def install_conan_dependencies(build_type: str, *additional_args: Iterable[str])
 
     os.makedirs(build_path, exist_ok=True)
 
-    command = [
-        "conan",
-        "install",
-        "--build",
-        "missing",
-        "-s",
-        "build_type=" + build_type,
-        "-o",
-        "requirements_for_tests=True",
-    ] + list(additional_args) + [
-        "../..",
-    ]
+    command = (
+        [
+            "conan",
+            "install",
+            "--build",
+            "missing",
+            "-s",
+            "build_type=" + build_type,
+            "-o",
+            "requirements_for_tests=True",
+        ]
+        + list(additional_args)
+        + [
+            "../..",
+        ]
+    )
     print(f"> run command: {command}")
     result = subprocess.run(command, check=False, cwd=build_path)
 
@@ -55,8 +60,7 @@ def install_conan_dependencies(build_type: str, *additional_args: Iterable[str])
 
 if __name__ == "__main__":
     if len(argv) == 1:
-        print(
-            f"Usage: python3 {argv[0]} <build_type> <optional_additional_args>...")
+        print(f"Usage: python3 {argv[0]} <build_type> <optional_additional_args>...")
         exit(1)
 
     install_conan_dependencies(*(argv[1:]))

@@ -37,6 +37,7 @@
     "MSVC",
     "MusicScience37",
     "nlohmann",
+    "nodiscard",
     "NOLINT",
     "NOLINTNEXTLINE",
     "pipenv",
@@ -82,5 +83,6 @@
   "files.watcherExclude": {
     "**/.conan/**": true,
     "**/.venv/**": true
-  }
+  },
+  "python.formatting.provider": "black"
 }
