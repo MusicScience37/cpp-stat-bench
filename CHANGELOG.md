@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.6.0 (2022/7/13)
+
+Updated developing environment, and refactored Runner class.
+
 ## v0.5.0 (2022/3/30)
 
 ### Features
