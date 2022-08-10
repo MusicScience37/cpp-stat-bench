@@ -3,7 +3,7 @@ from conans import ConanFile, CMake
 
 class CppStatBenchConan(ConanFile):
     name = "cpp_stat_bench"
-    version = "0.6.0"
+    version = "0.7.0"
     description = "Benchmark library with statistics for C++."
     homepage = "https://gitlab.com/MusicScience37/cpp-stat-bench"
     url = "https://gitlab.com/MusicScience37/cpp-stat-bench.git"
@@ -38,9 +38,9 @@ class CppStatBenchConan(ConanFile):
             raise ValueError("Shared library is not supported.")
 
     def requirements(self):
-        self.requires("fmt/8.1.1")
+        self.requires("fmt/9.0.0")
         self.requires("lyra/1.6.0")
-        self.requires("nlohmann_json/3.10.5")
+        self.requires("nlohmann_json/3.11.1")
 
     def build_requirements(self):
         if self.options.requirements_for_tests:

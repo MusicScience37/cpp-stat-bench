@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.7.0 (2022/8/11)
+
+Updated dependencies (fmt 9.0.0, nlohmann_json 3.11.1, plotly.js 2.14.0).
+
 ## v0.6.0 (2022/7/13)
 
 Updated developing environment, and refactored Runner class.
