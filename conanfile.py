@@ -38,14 +38,14 @@ class CppStatBenchConan(ConanFile):
             raise ValueError("Shared library is not supported.")
 
     def requirements(self):
-        self.requires("fmt/9.0.0")
-        self.requires("lyra/1.6.0")
-        self.requires("nlohmann_json/3.11.1")
+        self.requires("fmt/9.1.0")
+        self.requires("lyra/1.6.1")
+        self.requires("nlohmann_json/3.11.2")
 
     def build_requirements(self):
         if self.options.requirements_for_tests:
-            self.build_requires("catch2/3.0.1")
-            self.build_requires("trompeloeil/42")
+            self.build_requires("catch2/3.1.0")
+            self.build_requires("trompeloeil/43")
             self.build_requires("approvaltests.cpp/10.12.2")
 
     def build(self):
