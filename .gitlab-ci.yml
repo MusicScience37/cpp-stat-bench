@@ -10,7 +10,7 @@ stages:
   - Publish
 
 variables:
-  STAT_BENCH_VERSION: "0.7.0"
+  STAT_BENCH_VERSION: "0.8.0"
   CONAN_USER: "MusicScience37+cpp-stat-bench"
   SECURE_LOG_LEVEL: debug
 
@@ -424,7 +424,7 @@ msvc-release:
   before_script:
     - Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
     - choco install cmake -y --installargs 'ADD_CMAKE_TO_PATH=System'
-    - choco install python --version=3.9.12 -y
+    - choco install python --version=3.10.8 -y
     - RefreshEnv
     - pip install pipenv
     - pipenv sync

@@ -1,5 +1,9 @@
 # Change Log
 
+## v0.8.0 (2022/11/19)
+
+Updated dependencies (fmt 9.1.0, lyra 1.6.1, nlohmann_json 3.11.2).
+
 ## v0.7.0 (2022/8/11)
 
 Updated dependencies (fmt 9.0.0, nlohmann_json 3.11.1, plotly.js 2.14.0).
