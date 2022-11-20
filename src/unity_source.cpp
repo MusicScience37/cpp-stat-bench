@@ -1,3 +1,4 @@
+#include "stat_bench/bench/benchmark_group.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/clock/monotone_clock_impl.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/measurer/determine_iterations.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/measurer/determine_warming_up_samples.cpp"  // NOLINT(bugprone-suspicious-include)

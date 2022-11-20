@@ -2,77 +2,83 @@ buildType:
   default: debug
   description: Debug
   choices:
-    clang-asan-ubsan:
-      short: ClangAUSan
-      long: ASan and USan in Clang
+    clang-asan-ubsan-unit:
+      short: ClangAUSan-Unit
+      long: ASan and USan in Clang + Unit tests
       buildType: Debug
       settings:
         CMAKE_CXX_FLAGS: "-fsanitize=address,undefined"
         CMAKE_MODULE_LINKER_FLAGS: "-fsanitize=address,undefined"
-    debug:
-      short: Debug
-      long: Debug build
-      buildType: Debug
-      settings:
-        CMAKE_CXX_FLAGS: ""
-        CMAKE_MODULE_LINKER_FLAGS: ""
-    release with debug info:
-      short: RelWithDebInfo
-      long: Release build with debug info
-      buildType: RelWithDebInfo
-      settings:
-        CMAKE_CXX_FLAGS: ""
-        CMAKE_MODULE_LINKER_FLAGS: ""
-    release:
-      short: Release
-      long: Release build
-      buildType: Release
-      settings:
-        CMAKE_CXX_FLAGS: ""
-        CMAKE_MODULE_LINKER_FLAGS: ""
-
-tests:
-  default: unit only
-  choices:
-    none:
-      short: None
-      long: Don't set any test options
-    unit only:
-      short: UnitOnly
-      long: Unit tests only
-      settings:
         STAT_BENCH_TESTING: ON
         STAT_BENCH_WRITE_JUNIT: OFF
         STAT_BENCH_ENABLE_BENCH: ON
         STAT_BENCH_TEST_BENCHMARKS: OFF
         STAT_BENCH_BUILD_EXAMPLES: ON
-    unit and bench:
-      short: UnitAndBench
-      long: Unit tests and benchmarks
+        STAT_BENCH_BUILD_DOC: OFF
+    clang-asan-ubsan-unit-dox:
+      short: ClangAUSan-Unit-Dox
+      long: ASan and USan in Clang + Unit tests + Doxygen
+      buildType: Debug
       settings:
+        CMAKE_CXX_FLAGS: "-fsanitize=address,undefined"
+        CMAKE_MODULE_LINKER_FLAGS: "-fsanitize=address,undefined"
         STAT_BENCH_TESTING: ON
         STAT_BENCH_WRITE_JUNIT: OFF
         STAT_BENCH_ENABLE_BENCH: ON
-        STAT_BENCH_TEST_BENCHMARKS: ON
+        STAT_BENCH_TEST_BENCHMARKS: OFF
         STAT_BENCH_BUILD_EXAMPLES: ON
-
-docs:
-  default: docs on
-  choices:
-    docs on:
-      short: DocsON
-      long: Build documentation
-      settings:
-        STAT_BENCH_BUILD_DOC: ON
-        STAT_BENCH_BUILD_DOC_SPHINX: ON
-    doxygen only:
-      short: DoxOnly
-      long: Build documentation of doxygen only
-      settings:
         STAT_BENCH_BUILD_DOC: ON
         STAT_BENCH_BUILD_DOC_SPHINX: OFF
-    docs off:
-      short: DocsOFF
-      long: Don't build documentation
+    clang-asan-ubsan-unit-docs:
+      short: ClangAUSan-Unit-Docs
+      long: ASan and USan in Clang + Unit tests + Document
+      buildType: Debug
       settings:
+        CMAKE_CXX_FLAGS: "-fsanitize=address,undefined"
+        CMAKE_MODULE_LINKER_FLAGS: "-fsanitize=address,undefined"
+        STAT_BENCH_TESTING: ON
+        STAT_BENCH_WRITE_JUNIT: OFF
+        STAT_BENCH_ENABLE_BENCH: ON
+        STAT_BENCH_TEST_BENCHMARKS: OFF
+        STAT_BENCH_BUILD_EXAMPLES: ON
+        STAT_BENCH_BUILD_DOC: ON
+        STAT_BENCH_BUILD_DOC_SPHINX: ON
+    debug-unit:
+      short: Debug-Unit
+      long: Debug build + Unit tests
+      buildType: Debug
+      settings:
+        CMAKE_CXX_FLAGS: ""
+        CMAKE_MODULE_LINKER_FLAGS: ""
+        STAT_BENCH_TESTING: ON
+        STAT_BENCH_WRITE_JUNIT: OFF
+        STAT_BENCH_ENABLE_BENCH: ON
+        STAT_BENCH_TEST_BENCHMARKS: OFF
+        STAT_BENCH_BUILD_EXAMPLES: ON
+        STAT_BENCH_BUILD_DOC: OFF
+    relwithdebinfo-unit:
+      short: RelWithDebInfo-Unit
+      long: RelWithDebInfo build + Unit tests
+      buildType: RelWithDebInfo
+      settings:
+        CMAKE_CXX_FLAGS: ""
+        CMAKE_MODULE_LINKER_FLAGS: ""
+        STAT_BENCH_TESTING: ON
+        STAT_BENCH_WRITE_JUNIT: OFF
+        STAT_BENCH_ENABLE_BENCH: ON
+        STAT_BENCH_TEST_BENCHMARKS: OFF
+        STAT_BENCH_BUILD_EXAMPLES: ON
+        STAT_BENCH_BUILD_DOC: OFF
+    release-unit:
+      short: Release-Unit
+      long: Release build + Unit tests
+      buildType: Release
+      settings:
+        CMAKE_CXX_FLAGS: ""
+        CMAKE_MODULE_LINKER_FLAGS: ""
+        STAT_BENCH_TESTING: ON
+        STAT_BENCH_WRITE_JUNIT: OFF
+        STAT_BENCH_ENABLE_BENCH: ON
+        STAT_BENCH_TEST_BENCHMARKS: OFF
+        STAT_BENCH_BUILD_EXAMPLES: ON
         STAT_BENCH_BUILD_DOC: OFF
