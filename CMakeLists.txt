@@ -8,7 +8,7 @@ endif()
 
 project(
     stat_bench
-    VERSION 0.7.0
+    VERSION 0.8.0
     DESCRIPTION "Benchmark library with statistics for C++."
     LANGUAGES CXX)
 set(FULL_PROJECT_NAME "cpp-stat-bench")
