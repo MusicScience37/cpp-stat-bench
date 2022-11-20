@@ -40,25 +40,21 @@ public:
      *
      * \param[in] name Name.
      */
-    explicit BenchmarkGroup(std::string name) : name_(std::move(name)) {}
+    explicit BenchmarkGroup(std::string name);
 
     /*!
      * \brief Get the group name.
      *
      * \return Group name.
      */
-    [[nodiscard]] auto name() const noexcept -> const std::string& {
-        return name_;
-    }
+    [[nodiscard]] auto name() const noexcept -> const std::string&;
 
     /*!
      * \brief Add a case.
      *
      * \param[in] bench_case Case.
      */
-    void add(std::shared_ptr<IBenchmarkCase> bench_case) {
-        cases_.push_back(std::move(bench_case));
-    }
+    void add(std::shared_ptr<IBenchmarkCase> bench_case);
 
     /*!
      * \brief Get cases.
@@ -66,9 +62,7 @@ public:
      * \return Cases.
      */
     [[nodiscard]] auto cases() const noexcept
-        -> const std::vector<std::shared_ptr<IBenchmarkCase>>& {
-        return cases_;
-    }
+        -> const std::vector<std::shared_ptr<IBenchmarkCase>>&;
 
 private:
     //! Name.
