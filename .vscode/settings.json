@@ -53,6 +53,7 @@
     "tsan",
     "ubsan",
     "venv",
+    "virtualenvs",
     "xaxis",
     "yaxis"
   ],
