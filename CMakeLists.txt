@@ -57,7 +57,7 @@ endif()
 set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 include(CppWarningFlags)
 include(ConfigureClangTidy)
-include(pipenv)
+include(poetry)
 
 set(STAT_BENCH_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR})
 

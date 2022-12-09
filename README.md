@@ -58,18 +58,18 @@ you will require following dependencies:
 
 - [Python](https://www.python.org/) 3.9
   - You may want to use [pyenv](https://github.com/pyenv/pyenv).
-- [pipenv](https://pipenv.pypa.io/en/latest/)
-  - Required Python packages can be installed using pipenv.
-    Execute the command `pipenv install --dev` on this directory.
+- [poetry](https://python-poetry.org)
+  - Required Python packages can be installed using poetry.
+    Execute the command `poetry install` on this directory.
   - [pre-commit](https://pre-commit.com/)
-    will be installed via pipenv, and used for some checks.
-    Execute `pipenv run pre-commit install` on this directory
+    will be installed via poetry, and used for some checks.
+    Execute `poetry run pre-commit install` on this directory
     if you develop this library.
 - [CMake](https://cmake.org/)
 - C++ 14 Compiler
   - Following compilers are tested in CI:
     - GCC 10
-    - Clang 12
+    - Clang 14
     - MSVC 19
 
 Additionally, you will require following dependencies
@@ -84,12 +84,12 @@ to build documentation.
 After installing the above dependencies,
 execute the following commands:
 
-1. Start a shell of pipenv.
+1. Start a shell of poetry.
 
    ```bash
    cd <this-directory>
-   pipenv install --dev
-   pipenv shell
+   poetry install
+   poetry shell
    ```
 
 2. Add the Conan remote in GitLab. (Once in an environment.)
