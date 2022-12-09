@@ -432,7 +432,6 @@ msvc-release:
     - RefreshEnv
     - pip install poetry
     - poetry config virtualenvs.in-project true
-    - poetry env use 3.10
     - poetry install
     - mkdir $BUILD_DIR
     - cd $BUILD_DIR
