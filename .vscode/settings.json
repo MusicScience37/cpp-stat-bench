@@ -40,7 +40,6 @@
     "nodiscard",
     "NOLINT",
     "NOLINTNEXTLINE",
-    "pipenv",
     "Pipfile",
     "PlantUML",
     "Plotly",

@@ -22,17 +22,17 @@ repos:
         language: system
         files: (CMakeLists.txt|.*\.cmake)$
         exclude: source_list.cmake
-        entry: pipenv run cmake-format -i
+        entry: poetry run cmake-format -i
       - id: update-source-list-in-unit-test
         name: update-source-list-in-unit-test
         description: Update the list of source codes in unit test.
         language: system
         files: \.(h|cpp)$
-        entry: pipenv run python scripts/update_source_list.py
+        entry: poetry run python scripts/update_source_list.py
       - id: check-encoding
         name: check-encoding
         description: Check encoding of files.
         language: system
-        entry: pipenv run python scripts/check_encoding.py
+        entry: poetry run python scripts/check_encoding.py
 # Automatically generated files should not be checked.
 exclude: "\\.approved\\."

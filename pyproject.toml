@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "cpp-stat-bench"
+version = "0.0.0"
+description = ""
+authors = []
+readme = "README.md"
+packages = [{ include = "scripts" }]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+conan = "^1.55.0"
+
+[tool.poetry.group.dev.dependencies]
+aiohttp = "^3.8.3"
+black = "^22.10.0"
+breathe = "^4.34.0"
+cchardet = "^2.1.7"
+cmakelang = "^0.6.13"
+doc8 = "^0.11.2"
+myst-parser = "^0.18.1"
+pre-commit = "^2.20.0"
+pylint = "^2.15.8"
+sphinx = "^5.3.0"
+sphinx-autobuild = "^2021.3.14"
+sphinx-rtd-theme = "^1.1.1"
+sphinxcontrib-plantuml = "^0.24.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
