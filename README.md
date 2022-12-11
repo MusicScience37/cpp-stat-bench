@@ -1,10 +1,9 @@
 # cpp-stat-bench
 
-[![GitLab Release](https://img.shields.io/gitlab/v/release/32226502?sort=semver)](https://gitlab.com/MusicScience37/cpp-stat-bench/-/releases)
+[![GitLab Release](https://img.shields.io/gitlab/v/release/32226502?sort=semver)](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/releases)
 [![C++ standard](https://img.shields.io/badge/standard-C%2B%2B14-blue?logo=c%2B%2B)](https://en.cppreference.com/w/cpp/compiler_support/14)
-[![pipeline status](https://gitlab.com/MusicScience37/cpp-stat-bench/badges/develop/pipeline.svg)](https://gitlab.com/MusicScience37/cpp-stat-bench/-/commits/develop)
+[![pipeline status](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/badges/develop/pipeline.svg)](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/commits/develop)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
-[![codecov](https://codecov.io/gl/MusicScience37/cpp-stat-bench/branch/develop/graph/badge.svg?token=SC8WDCFSJT)](https://codecov.io/gl/MusicScience37/cpp-stat-bench)
 
 Benchmark library with statistics for C++.
 
@@ -26,7 +25,7 @@ Benchmark library with statistics for C++.
 
 ## Repositories
 
-- Main in GitLab: [https://gitlab.com/MusicScience37/cpp-stat-bench](https://gitlab.com/MusicScience37/cpp-stat-bench)
+- Main in GitLab: [https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench)
 - Mirror in GitHub: [https://github.com/MusicScience37/cpp-stat-bench](https://github.com/MusicScience37/cpp-stat-bench)
 
 ## Documentation
@@ -40,11 +39,11 @@ Benchmark library with statistics for C++.
 
 This library is packaged with [Conan](https://conan.io/),
 and available via
-[package registry in GitLab](https://gitlab.com/MusicScience37/cpp-stat-bench/-/packages).
+[package registry in GitLab](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/packages).
 
 To use this library,
 add the package
-`cpp_stat_bench/<version>@MusicScience37+cpp-stat-bench/stable`
+`cpp_stat_bench/<version>@MusicScience37Projects+utility-libraries+cpp-stat-bench/stable`
 with a version you want
 to your `conanfile.py` or `conanfile.txt`,
 and add the remote

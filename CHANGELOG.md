@@ -16,17 +16,17 @@ Updated developing environment, and refactored Runner class.
 
 ### Features
 
-- Separate directories of plots ([Issue #35](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/35)).
+- Separate directories of plots ([Issue #35](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/issues/35)).
 
 ### Others
 
-- Updated headers included by source codes using IWYU ([Issue #58](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/58)).
-- Added check of outputs from reporters in tests ([Issue #60](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/60)).
-- Updated Plotly.js to 2.11.1 ([Issue #59](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/59)).
+- Updated headers included by source codes using IWYU ([Issue #58](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/issues/58)).
+- Added check of outputs from reporters in tests ([Issue #60](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/issues/60)).
+- Updated Plotly.js to 2.11.1 ([Issue #59](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/issues/59)).
 
 ## v0.4.1 (2022/1/15)
 
-Stopped sort of benchmarks ([Issue #54](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/54)).
+Stopped sort of benchmarks ([Issue #54](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/issues/54)).
 
 ## v0.4.0 (2022/1/15)
 
@@ -34,14 +34,14 @@ Miscellaneous changes in configurations.
 
 ### Others
 
-- Update dependencies ([Issue #51](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/51)).
-- Proper configuration of C++ standard libraries ([Issue #52](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/52)).
+- Update dependencies ([Issue #51](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/issues/51)).
+- Proper configuration of C++ standard libraries ([Issue #52](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/issues/52)).
 
 ## v0.3.1 (2022/1/13)
 
 ### Bug Fixes
 
-- Fix wrong axis names in violin plots ([Issue #50](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/50)).
+- Fix wrong axis names in violin plots ([Issue #50](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/issues/50)).
 
 ## v0.3.0 (2022/1/8)
 
@@ -49,7 +49,7 @@ Implemented violin plot.
 
 ### Features
 
-- Violin plot ([Issue #48](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/48)).
+- Violin plot ([Issue #48](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/issues/48)).
 
 ### Others
 
@@ -59,17 +59,17 @@ Implemented violin plot.
 
 ### Features
 
-- Public API to get context variable name ([Issue #41](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/41)).
-- Colored output to console on errors ([Issue #42](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/42)).
+- Public API to get context variable name ([Issue #41](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/issues/41)).
+- Colored output to console on errors ([Issue #42](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/issues/42)).
 
 ### Bug Fixes
 
-- Stabilize determination of number of iterations ([Issue #31](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/31)).
-- Fix parameters in outputs ([Issue #43](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/43)).
+- Stabilize determination of number of iterations ([Issue #31](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/issues/31)).
+- Fix parameters in outputs ([Issue #43](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/issues/43)).
 
 ### Others
 
-- Documentation of APIs for users ([Issue #32](https://gitlab.com/MusicScience37/cpp-stat-bench/-/issues/32)).
+- Documentation of APIs for users ([Issue #32](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/issues/32)).
 
 ## v0.1.0 (2021/12/30)
 

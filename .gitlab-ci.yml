@@ -11,7 +11,7 @@ stages:
 
 variables:
   STAT_BENCH_VERSION: "0.8.0"
-  CONAN_USER: "MusicScience37+cpp-stat-bench"
+  CONAN_USER: "MusicScience37Projects+utility-libraries+cpp-stat-bench"
   SECURE_LOG_LEVEL: debug
 
 include:
@@ -31,9 +31,6 @@ gemnasium-dependency_scanning:
   rules:
     - if: $CI_COMMIT_BRANCH
       when: on_success
-gemnasium-python-dependency_scanning:
-  image:
-    name: registry.gitlab.com/gitlab-org/security-products/analyzers/gemnasium-python:2-python-3.9
 license_scanning:
   stage: Check
   needs:
@@ -96,7 +93,7 @@ line count:
   extends: .retry setting
   stage: Prepare
   dependencies: []
-  image: registry.gitlab.com/musicscience37/cloc-docker
+  image: registry.gitlab.com/musicscience37projects/docker/cloc-docker
   script:
     - mkdir -p line_count
     - cloc ./
