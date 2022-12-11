@@ -43,11 +43,11 @@ and available via
 
 To use this library,
 add the package
-`cpp_stat_bench/<version>@MusicScience37Projects+utility-libraries+cpp-stat-bench/stable`
+`cpp_stat_bench/<version>@MusicScience37/stable`
 with a version you want
 to your `conanfile.py` or `conanfile.txt`,
 and add the remote
-`https://gitlab.com/api/v4/packages/conan`
+`https://gitlab.com/api/v4/projects/32226502/packages/conan`
 to conan command.
 
 ## How to Build in this Repository
@@ -94,7 +94,7 @@ execute the following commands:
 2. Add the Conan remote in GitLab. (Once in an environment.)
 
    ```bash
-   conan remote add gitlab https://gitlab.com/api/v4/packages/conan
+   conan remote add cpp-stat-bench https://gitlab.com/api/v4/projects/32226502/packages/conan
    ```
 
 3. Download and install required Conan packages.

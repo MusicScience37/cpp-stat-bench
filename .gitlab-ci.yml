@@ -11,8 +11,9 @@ stages:
 
 variables:
   STAT_BENCH_VERSION: "0.8.0"
-  CONAN_USER: "MusicScience37Projects+utility-libraries+cpp-stat-bench"
+  CONAN_USER: "MusicScience37"
   SECURE_LOG_LEVEL: debug
+  CPP_STAT_BENCH_CONAN_REGISTRY: "https://gitlab.com/api/v4/projects/32226502/packages/conan"
 
 include:
   - template: Security/Dependency-Scanning.gitlab-ci.yml
@@ -75,7 +76,6 @@ prepare lock files:
     - poetry install
     - poetry run conan profile new --detect default
     - poetry run conan profile update settings.compiler.libcxx=libc++ default
-    - poetry run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
     - poetry run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Debug .
   cache:
     key:
@@ -141,7 +141,6 @@ static analysis:
     - cd build_static_analysis
     - poetry run conan profile new --detect default
     - poetry run conan profile update settings.compiler.libcxx=libstdc++11 default
-    - poetry run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
     - poetry run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True ..
     - cd ../
     - cmake -S ./ -B build_static_analysis
@@ -180,7 +179,6 @@ static analysis:
     - cd $BUILD_DIR
     - poetry run conan profile new --detect default
     - poetry run conan profile update settings.compiler.libcxx=libstdc++11 default
-    - poetry run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
     - poetry run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Release ..
     - cd ../
   script:
@@ -213,7 +211,6 @@ static analysis:
     - cd $BUILD_DIR
     - poetry run conan profile new --detect default
     - poetry run conan profile update settings.compiler.libcxx=libstdc++11 default
-    - poetry run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
     - poetry run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Debug ..
     - cd ../
   script:
@@ -234,7 +231,6 @@ static analysis:
     - cd $BUILD_DIR
     - poetry run conan profile new --detect default
     - poetry run conan profile update settings.compiler.libcxx=libc++ default
-    - poetry run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
     - poetry run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Release ..
     - cd ../
 
@@ -245,7 +241,6 @@ static analysis:
     - cd $BUILD_DIR
     - poetry run conan profile new --detect default
     - poetry run conan profile update settings.compiler.libcxx=libc++ default
-    - poetry run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
     - poetry run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Debug ..
     - cd ../
 
@@ -387,7 +382,7 @@ clang-14-conan:
   script:
     - poetry run conan profile new --detect default
     - poetry run conan profile update settings.compiler.libcxx=libc++ default
-    - poetry run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
+    - poetry run conan remote add cpp-stat-bench $CPP_STAT_BENCH_CONAN_REGISTRY
     - poetry run conan create --build missing --test-folder tests/conan_package -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
     - poetry run conan create --build missing --test-folder tests/conan_package -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
 
@@ -404,10 +399,10 @@ clang-14-conan-release:
   script:
     - poetry run conan profile new --detect default
     - poetry run conan profile update settings.compiler.libcxx=libc++ default
-    - poetry run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
+    - poetry run conan remote add cpp-stat-bench $CPP_STAT_BENCH_CONAN_REGISTRY
     - poetry run conan create --build missing --test-folder tests/conan_package -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
     - poetry run conan create --build missing --test-folder tests/conan_package -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
-    - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} poetry run conan upload -r gitlab cpp_stat_bench/${STAT_BENCH_VERSION}@${CONAN_USER}/${CONAN_CHANNEL} --all
+    - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} poetry run conan upload -r cpp-stat-bench cpp_stat_bench/${STAT_BENCH_VERSION}@${CONAN_USER}/${CONAN_CHANNEL} --all
   only:
     - tags
 
@@ -435,7 +430,6 @@ msvc-release:
     - mkdir $BUILD_DIR
     - cd $BUILD_DIR
     - poetry run conan profile new --detect default
-    - poetry run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
     - poetry run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Release ..
     - cd ../
   script:
@@ -469,7 +463,6 @@ doc:
     - cd build_doc
     - poetry run conan profile new --detect default
     - poetry run conan profile update settings.compiler.libcxx=libc++ default
-    - poetry run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
     - poetry run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True ..
     - cd ../
     - cmake -S ./ -B build_doc

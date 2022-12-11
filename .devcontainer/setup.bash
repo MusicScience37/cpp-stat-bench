@@ -6,7 +6,7 @@ poetry install
 
 poetry run conan profile new --detect default
 poetry run conan profile update settings.compiler.libcxx=libc++ default
-poetry run conan remote add gitlab https://gitlab.com/api/v4/packages/conan
+poetry run conan remote add cpp-stat-bench https://gitlab.com/api/v4/projects/32226502/packages/conan
 
 git config --global --add safe.directory $(pwd)
 poetry run pre-commit install
