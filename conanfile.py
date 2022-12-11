@@ -5,8 +5,12 @@ class CppStatBenchConan(ConanFile):
     name = "cpp_stat_bench"
     version = "0.8.0"
     description = "Benchmark library with statistics for C++."
-    homepage = "https://gitlab.com/MusicScience37/cpp-stat-bench"
-    url = "https://gitlab.com/MusicScience37/cpp-stat-bench.git"
+    homepage = (
+        "https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench"
+    )
+    url = (
+        "https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench.git"
+    )
     license = "Apache-2.0"
     author = "Kenta Kabashima (kenta_program37@hotmail.co.jp)"
     topics = "Benchmark"

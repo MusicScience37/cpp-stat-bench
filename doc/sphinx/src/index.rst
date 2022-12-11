@@ -4,7 +4,7 @@ cpp-stat-bench
 Benchmark library with statistics for C++.
 
 Developed at
-`https://gitlab.com/MusicScience37/cpp-stat-bench <https://gitlab.com/MusicScience37/cpp-stat-bench>`_.
+`https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench <https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench>`_.
 
 Full API reference generated using Doxygen can be viewed `here <api/index.html>`_.
 

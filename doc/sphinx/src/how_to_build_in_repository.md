@@ -42,7 +42,7 @@ execute the following commands:
 2. Add the Conan remote in GitLab. (Once in an environment.)
 
    ```bash
-   conan remote add gitlab https://gitlab.com/api/v4/packages/conan
+   conan remote add cpp-stat-bench https://gitlab.com/api/v4/projects/32226502/packages/conan
    ```
 
 3. Download and install required Conan packages.
