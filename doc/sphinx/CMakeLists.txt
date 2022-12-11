@@ -15,7 +15,7 @@ set(STAT_BENCH_SPHINX_OPTIONS
 add_custom_target(
     stat_bench_doc_sphinx_html ALL
     COMMAND
-        ${PIPENV_EXECUTABLE} run sphinx-build -b html -W
+        ${POETRY_EXECUTABLE} run sphinx-build -b html -W
         ${CMAKE_CURRENT_SOURCE_DIR}/src ${STAT_BENCH_HTML_ROOT}
         ${STAT_BENCH_SPHINX_OPTIONS} -q
     COMMENT "Generate Sphinx HTML API documentation for ${FULL_PROJECT_NAME}"

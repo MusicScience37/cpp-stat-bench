@@ -35,8 +35,8 @@ TEST_CASE("stat_bench::bench::BenchmarkGroup") {
 
         const stat_bench::bench::BenchmarkGroup group{group_name};
 
-        REQUIRE(group.name() == group_name);
-        REQUIRE_THAT(group.cases(), Catch::Matchers::IsEmpty());
+        CHECK(group.name() == group_name);
+        CHECK_THAT(group.cases(), Catch::Matchers::IsEmpty());
     }
 
     SECTION("add cases") {
@@ -63,12 +63,62 @@ TEST_CASE("stat_bench::bench::BenchmarkGroup") {
                 .RETURN(info2);
 
             stat_bench::bench::BenchmarkGroup group{group_name};
-            group.add(case2);
-            group.add(case1);
+            REQUIRE_NOTHROW(group.add(case2));
+            REQUIRE_NOTHROW(group.add(case1));
 
-            REQUIRE(group.cases().size() == 2);
-            REQUIRE(group.cases().at(0)->info().case_name() == case_name2);
-            REQUIRE(group.cases().at(1)->info().case_name() == case_name1);
+            CHECK(group.cases().size() == 2);
+            CHECK(group.cases().at(0)->info().case_name() == case_name2);
+            CHECK(group.cases().at(1)->info().case_name() == case_name1);
+        }
+    }
+
+    SECTION("duplicate case names") {
+        const std::string group_name = "Group";
+
+        const std::string case_name1 = "case1";
+        const std::string case_name2 = "case1";
+
+        const auto info1 =
+            stat_bench::bench::BenchmarkCaseInfo(group_name, case_name1);
+        const auto info2 =
+            stat_bench::bench::BenchmarkCaseInfo(group_name, case_name2);
+
+        const auto case1 =
+            std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
+        const auto case2 =
+            std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
+        {
+            ALLOW_CALL(*case1, info())
+                // NOLINTNEXTLINE
+                .RETURN(info1);
+            ALLOW_CALL(*case2, info())
+                // NOLINTNEXTLINE
+                .RETURN(info2);
+
+            stat_bench::bench::BenchmarkGroup group{group_name};
+            REQUIRE_NOTHROW(group.add(case2));
+            REQUIRE_THROWS(group.add(case1));
+        }
+    }
+
+    SECTION("wrong group name") {
+        const std::string group_name1 = "Group1";
+        const std::string group_name2 = "Group2";
+
+        const std::string case_name1 = "case1";
+
+        const auto info1 =
+            stat_bench::bench::BenchmarkCaseInfo(group_name1, case_name1);
+
+        const auto case1 =
+            std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
+        {
+            ALLOW_CALL(*case1, info())
+                // NOLINTNEXTLINE
+                .RETURN(info1);
+
+            stat_bench::bench::BenchmarkGroup group{group_name2};
+            REQUIRE_THROWS(group.add(case1));
         }
     }
 }

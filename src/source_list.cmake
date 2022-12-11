@@ -1,4 +1,5 @@
 set(SOURCE_FILES
+    stat_bench/bench/benchmark_group.cpp
     stat_bench/clock/monotone_clock_impl.cpp
     stat_bench/measurer/determine_iterations.cpp
     stat_bench/measurer/determine_warming_up_samples.cpp

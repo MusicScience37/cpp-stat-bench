@@ -20,10 +20,10 @@ This project uses following tools for documentation:
 
 This project uses following tools for dependency management:
 
-- `Pipenv <https://pipenv.pypa.io/en/latest/>`_ (Python),
+- `poetry <https://python-poetry.org>`_ (Python),
 
-  - Update ``Pipfile.lock`` using command ``pipenv lock --keep-outdated``.
+  - Update ``poetry.lock`` using command ``poetry lock``.
 
 - `Conan <https://conan.io/>`_ (C++).
 
-  - Install ``conan`` command using Pipenv.
+  - Install ``conan`` command using poetry.
