@@ -4,5 +4,6 @@ Change Log
 .. toctree::
     :maxdepth: 1
 
+    v0.8.2
     v0.8.1
     before_v0.8.1
