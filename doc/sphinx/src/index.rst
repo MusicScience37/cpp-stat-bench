@@ -14,6 +14,7 @@ Full API reference generated using Doxygen can be viewed `here <api/index.html>`
 
     about
     license
+    change_log/index
 
 .. toctree::
     :maxdepth: 2
