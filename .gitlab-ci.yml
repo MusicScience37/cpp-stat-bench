@@ -156,7 +156,9 @@ static analysis:
     - python3 -m junit2htmlreport clang_tidy_junit.xml clang_tidy_junit.html
   artifacts:
     paths:
-      - build_static_analysis
+      - $BUILD_DIR/bench
+      - $BUILD_DIR/junit
+      - $BUILD_DIR/temp_test
     reports:
       junit:
         - build_static_analysis/clang_tidy/clang_tidy_junit.xml
@@ -192,7 +194,9 @@ static analysis:
     - ctest -V
   artifacts:
     paths:
-      - $BUILD_DIR
+      - $BUILD_DIR/bench
+      - $BUILD_DIR/junit
+      - $BUILD_DIR/temp_test
       - "*.png"
       - "*.html"
     reports:
@@ -467,7 +471,7 @@ doc:
     - cmake --build build_doc --target stat_bench_doc
   artifacts:
     paths:
-      - build_doc
+      - build_doc/doc
     when: always
     expire_in: "3 mos"
 
