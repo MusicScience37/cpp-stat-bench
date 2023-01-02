@@ -28,7 +28,7 @@ RegexFilter::RegexFilter(std::string_view regex)
     : regex_(regex.data(), regex.size(),
           std::regex_constants::ECMAScript | std::regex_constants::optimize) {}
 
-auto RegexFilter::check(const bench::BenchmarkCaseInfo& name) const -> bool {
+auto RegexFilter::check(const bench::BenchmarkFullName& name) const -> bool {
     return std::regex_match(fmt::format("{}", name), regex_);
 }
 

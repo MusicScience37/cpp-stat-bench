@@ -45,11 +45,11 @@ TEST_CASE("stat_bench::bench::BenchmarkCaseRegistry") {
         const std::string case_name3 = "case3";
 
         const auto info1 =
-            stat_bench::bench::BenchmarkCaseInfo(group_name1, case_name1);
+            stat_bench::bench::BenchmarkFullName(group_name1, case_name1);
         const auto info2 =
-            stat_bench::bench::BenchmarkCaseInfo(group_name2, case_name2);
+            stat_bench::bench::BenchmarkFullName(group_name2, case_name2);
         const auto info3 =
-            stat_bench::bench::BenchmarkCaseInfo(group_name3, case_name3);
+            stat_bench::bench::BenchmarkFullName(group_name3, case_name3);
 
         const auto case1 =
             std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();

@@ -19,7 +19,7 @@
  */
 #pragma once
 
-#include "stat_bench/bench/benchmark_case_info.h"
+#include "stat_bench/bench/benchmark_full_name.h"
 
 namespace stat_bench {
 namespace filters {
@@ -36,7 +36,7 @@ public:
      * \retval true Input matched to this filter.
      * \retval false Input didn't match to this filter.
      */
-    [[nodiscard]] virtual auto check(const bench::BenchmarkCaseInfo& name) const
+    [[nodiscard]] virtual auto check(const bench::BenchmarkFullName& name) const
         -> bool = 0;
 
     INameFilter(const INameFilter&) = delete;

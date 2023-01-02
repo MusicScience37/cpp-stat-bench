@@ -29,7 +29,7 @@
 #include "../bench/mock_benchmark_case.h"
 #include "../measurer/mock_measurer.h"
 #include "../reporter/mock_reporter.h"
-#include "stat_bench/bench/benchmark_case_info.h"
+#include "stat_bench/bench/benchmark_full_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/param/parameter_config.h"
@@ -55,7 +55,7 @@ TEST_CASE("stat_bench::runner::Runner") {
         const std::string group_name1 = "Group1";
         const std::string case_name1 = "case1";
         const auto info1 =
-            stat_bench::bench::BenchmarkCaseInfo(group_name1, case_name1);
+            stat_bench::bench::BenchmarkFullName(group_name1, case_name1);
         const auto case1 =
             std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
 
@@ -127,7 +127,7 @@ TEST_CASE("stat_bench::runner::Runner") {
         const std::string group_name1 = "Group1";
         const std::string case_name1 = "case1";
         const auto info1 =
-            stat_bench::bench::BenchmarkCaseInfo(group_name1, case_name1);
+            stat_bench::bench::BenchmarkFullName(group_name1, case_name1);
         const auto case1 =
             std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
 
@@ -189,7 +189,7 @@ TEST_CASE("stat_bench::runner::Runner") {
         const std::string group_name1 = "Group1";
         const std::string case_name1 = "case1";
         const auto info1 =
-            stat_bench::bench::BenchmarkCaseInfo(group_name1, case_name1);
+            stat_bench::bench::BenchmarkFullName(group_name1, case_name1);
         const auto case1 =
             std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
         auto param_config = empty_param_config;

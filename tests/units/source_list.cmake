@@ -1,7 +1,7 @@
 set(SOURCE_FILES
-    stat_bench/bench/benchmark_case_info_test.cpp
     stat_bench/bench/benchmark_case_registry_test.cpp
     stat_bench/bench/benchmark_condition_test.cpp
+    stat_bench/bench/benchmark_full_name_test.cpp
     stat_bench/bench/benchmark_group_test.cpp
     stat_bench/bench/fixture_base_test.cpp
     stat_bench/bench/invocation_context_test.cpp

@@ -27,7 +27,7 @@
 #include <trompeloeil.hpp>
 
 #include "mock_benchmark_case.h"
-#include "stat_bench/bench/benchmark_case_info.h"
+#include "stat_bench/bench/benchmark_full_name.h"
 
 TEST_CASE("stat_bench::bench::BenchmarkGroup") {
     SECTION("construct") {
@@ -46,9 +46,9 @@ TEST_CASE("stat_bench::bench::BenchmarkGroup") {
         const std::string case_name2 = "case2";
 
         const auto info1 =
-            stat_bench::bench::BenchmarkCaseInfo(group_name, case_name1);
+            stat_bench::bench::BenchmarkFullName(group_name, case_name1);
         const auto info2 =
-            stat_bench::bench::BenchmarkCaseInfo(group_name, case_name2);
+            stat_bench::bench::BenchmarkFullName(group_name, case_name2);
 
         const auto case1 =
             std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
@@ -79,9 +79,9 @@ TEST_CASE("stat_bench::bench::BenchmarkGroup") {
         const std::string case_name2 = "case1";
 
         const auto info1 =
-            stat_bench::bench::BenchmarkCaseInfo(group_name, case_name1);
+            stat_bench::bench::BenchmarkFullName(group_name, case_name1);
         const auto info2 =
-            stat_bench::bench::BenchmarkCaseInfo(group_name, case_name2);
+            stat_bench::bench::BenchmarkFullName(group_name, case_name2);
 
         const auto case1 =
             std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
@@ -108,7 +108,7 @@ TEST_CASE("stat_bench::bench::BenchmarkGroup") {
         const std::string case_name1 = "case1";
 
         const auto info1 =
-            stat_bench::bench::BenchmarkCaseInfo(group_name1, case_name1);
+            stat_bench::bench::BenchmarkFullName(group_name1, case_name1);
 
         const auto case1 =
             std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();

@@ -22,7 +22,7 @@
 #include <regex>
 #include <string_view>
 
-#include "stat_bench/bench/benchmark_case_info.h"
+#include "stat_bench/bench/benchmark_full_name.h"
 #include "stat_bench/filters/i_name_filter.h"
 
 namespace stat_bench {
@@ -41,7 +41,7 @@ public:
     explicit RegexFilter(std::string_view regex);
 
     //! \copydoc stat_bench::filters::INameFilter::check
-    [[nodiscard]] auto check(const bench::BenchmarkCaseInfo& name) const
+    [[nodiscard]] auto check(const bench::BenchmarkFullName& name) const
         -> bool override;
 
     RegexFilter(const RegexFilter&) = delete;

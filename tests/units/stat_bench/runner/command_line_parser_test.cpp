@@ -29,7 +29,7 @@
 #include "../bench/mock_benchmark_case.h"
 #include "../measurer/mock_measurer.h"
 #include "../reporter/mock_reporter.h"
-#include "stat_bench/bench/benchmark_case_info.h"
+#include "stat_bench/bench/benchmark_full_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/param/parameter_config.h"

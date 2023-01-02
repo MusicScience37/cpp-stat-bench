@@ -29,7 +29,7 @@ class MockFixture final : public stat_bench::bench::FixtureBase {
 public:
     // NOLINTNEXTLINE
     MAKE_CONST_MOCK0(
-        info, const stat_bench::bench::BenchmarkCaseInfo&(), noexcept override);
+        info, const stat_bench::bench::BenchmarkFullName&(), noexcept override);
 
     // NOLINTNEXTLINE
     MAKE_MOCK1(setup, void(stat_bench::bench::InvocationContext&), override);
