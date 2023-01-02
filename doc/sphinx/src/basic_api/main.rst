@@ -18,7 +18,7 @@ Reporter
 
 .. doxygenclass:: stat_bench::reporter::IReporter
 
-.. doxygenclass:: stat_bench::bench::BenchmarkCaseInfo
+.. doxygenclass:: stat_bench::bench::BenchmarkFullName
     :members: group_name, case_name
 
 .. doxygenclass:: stat_bench::bench::BenchmarkCondition

@@ -46,16 +46,16 @@ package bench {
     }
     InvocationContext ..> StopWatch
 
-    class BenchmarkCaseInfo {
+    class BenchmarkFullName {
         + benchmark_name() : string
         + case_name() : string
     }
 
     interface IBenchmarkCase <<interface>> {
-        {abstract} + info() : BenchmarkCaseInfo
+        {abstract} + info() : BenchmarkFullName
         {abstract} + call(context: InvocationContext&) : void
     }
-    IBenchmarkCase ..> BenchmarkCaseInfo
+    IBenchmarkCase ..> BenchmarkFullName
     IBenchmarkCase ..> InvocationContext
 
     class BenchmarkGroup {
@@ -75,7 +75,7 @@ package bench {
 
 package measurer {
     class Measurement {
-        + case_info() : BenchmarkCaseInfo
+        + case_info() : BenchmarkFullName
         + measurer_name() : string
         + threads() : size_t
         + iterations() : size_t
@@ -83,7 +83,7 @@ package measurer {
         + started_at() : SystemTimePoint
         + durations() : vector<vector<Duration>>
     }
-    Measurement o-- BenchmarkCaseInfo
+    Measurement o-- BenchmarkFullName
     Measurement o-- SystemTimePoint
     Measurement o-- Duration
 
@@ -101,13 +101,13 @@ package reporter {
         {abstract} + experiment_finished(time_stamp: const SystemTimePoint&) : void
         {abstract} + benchmark_starts(name: const string&) : void
         {abstract} + benchmark_finished(name: const string&) : void
-        {abstract} + case_starts(case_info: const BenchmarkCaseInfo&) : void
-        {abstract} + case_finished(case_info: const BenchmarkCaseInfo&) : void
+        {abstract} + case_starts(case_info: const BenchmarkFullName&) : void
+        {abstract} + case_finished(case_info: const BenchmarkFullName&) : void
         {abstract} + measurement_succeeded(measurement: const Measurement&) : void
-        {abstract} + measurement_failed(case_info: const BenchmarkCaseInfo&, error: const exception_ptr&) : void
+        {abstract} + measurement_failed(case_info: const BenchmarkFullName&, error: const exception_ptr&) : void
     }
     IReporter ..> SystemTimePoint
-    IReporter ..> BenchmarkCaseInfo
+    IReporter ..> BenchmarkFullName
     IReporter ..> Measurement
 }
 

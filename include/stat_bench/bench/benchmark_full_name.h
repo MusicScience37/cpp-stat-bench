@@ -15,7 +15,7 @@
  */
 /*!
  * \file
- * \brief Definition of BenchmarkCaseInfo class.
+ * \brief Definition of BenchmarkFullName class.
  */
 #pragma once
 
@@ -31,7 +31,7 @@ namespace bench {
 /*!
  * \brief Class of information of cases in benchmarks.
  */
-class BenchmarkCaseInfo {
+class BenchmarkFullName {
 public:
     /*!
      * \brief Constructor.
@@ -39,7 +39,7 @@ public:
      * \param[in] group_name Name of the group of cases.
      * \param[in] case_name Name of the case in the benchmark.
      */
-    BenchmarkCaseInfo(std::string group_name, std::string case_name) noexcept
+    BenchmarkFullName(std::string group_name, std::string case_name) noexcept
         : group_name_(std::move(group_name)),
           case_name_(std::move(case_name)) {}
 
@@ -76,10 +76,10 @@ namespace fmt {
 
 /*!
  * \brief Implementation of fmt::formatter for
- * stat_bench::bench::BenchmarkCaseInfo.
+ * stat_bench::bench::BenchmarkFullName.
  */
 template <>
-struct formatter<stat_bench::bench::BenchmarkCaseInfo>
+struct formatter<stat_bench::bench::BenchmarkFullName>
     : public formatter<std::string> {
     /*!
      * \brief Format.
@@ -90,7 +90,7 @@ struct formatter<stat_bench::bench::BenchmarkCaseInfo>
      * \return Output iterator after formatting.
      */
     template <typename FormatContext>
-    auto format(const stat_bench::bench::BenchmarkCaseInfo& val,
+    auto format(const stat_bench::bench::BenchmarkFullName& val,
         FormatContext& context) -> decltype(context.out()) {
         return formatter<std::string>::format(
             fmt::format("{}/{}", val.group_name(), val.case_name()), context);

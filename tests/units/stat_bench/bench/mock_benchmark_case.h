@@ -29,7 +29,7 @@ class MockBenchmarkCase final : public stat_bench::bench::IBenchmarkCase {
 public:
     // NOLINTNEXTLINE
     MAKE_CONST_MOCK0(
-        info, const stat_bench::bench::BenchmarkCaseInfo&(), noexcept override);
+        info, const stat_bench::bench::BenchmarkFullName&(), noexcept override);
 
     // NOLINTNEXTLINE
     MAKE_CONST_MOCK0(

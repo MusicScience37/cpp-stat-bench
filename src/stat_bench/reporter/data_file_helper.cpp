@@ -22,8 +22,8 @@
 // IWYU pragma: no_include  <stddef.h>
 #include <cstddef>
 
-#include "stat_bench/bench/benchmark_case_info.h"
 #include "stat_bench/bench/benchmark_condition.h"
+#include "stat_bench/bench/benchmark_full_name.h"
 
 namespace stat_bench {
 namespace reporter {

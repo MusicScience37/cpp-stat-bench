@@ -33,6 +33,7 @@
 #include "stat_bench/bench/benchmark_group.h"
 #include "stat_bench/clock/system_clock.h"
 #include "stat_bench/clock/system_time_point.h"
+#include "stat_bench/filters/composed_filter.h"
 #include "stat_bench/measurer/mean_processing_time_measurer.h"
 #include "stat_bench/measurer/processing_time_measurer.h"
 #include "stat_bench/param/parameter_config.h"
@@ -47,11 +48,8 @@
 namespace stat_bench {
 namespace runner {
 
-Runner::Runner() = default;
-
-Runner::~Runner() = default;
-
-void Runner::init(const Config& config) {
+Runner::Runner(const Config& config, bench::BenchmarkCaseRegistry& registry)
+    : Runner(registry) {
     measurers_.push_back(std::make_shared<measurer::ProcessingTimeMeasurer>(
         config.processing_time_samples, config.min_warming_up_iterations,
         config.min_warming_up_duration_sec));
@@ -74,9 +72,22 @@ void Runner::init(const Config& config) {
         reporters_.push_back(
             std::make_shared<reporter::JsonReporter>(config.json_file_path));
     }
+
+    filters::ComposedFilter filter;
+    for (const auto& regex : config.include_regex) {
+        filter.include_with_regex(regex);
+    }
+    for (const auto& regex : config.exclude_regex) {
+        filter.exclude_with_regex(regex);
+    }
+    registry.filter_by(filter);
 }
 
-void Runner::run(const bench::BenchmarkCaseRegistry& registry) const {
+Runner::Runner(bench::BenchmarkCaseRegistry& registry) : registry_(registry) {}
+
+Runner::~Runner() = default;
+
+void Runner::run() const {
     auto time_stamp = clock::SystemClock::now();
     for (const auto& reporter : reporters_) {
         reporter->experiment_starts(time_stamp);
@@ -87,7 +98,7 @@ void Runner::run(const bench::BenchmarkCaseRegistry& registry) const {
             reporter->measurer_starts(measurer->name());
         }
 
-        for (const auto& group : registry.benchmarks()) {
+        for (const auto& group : registry_.benchmarks()) {
             for (const auto& reporter : reporters_) {
                 reporter->group_starts(group.name());
             }

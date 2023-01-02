@@ -24,9 +24,9 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include "../units/stat_bench/param/create_ordinary_parameter_dict.h"
-#include "stat_bench/bench/benchmark_case_info.h"
 #include "stat_bench/bench/benchmark_case_registry.h"
 #include "stat_bench/bench/benchmark_condition.h"
+#include "stat_bench/bench/benchmark_full_name.h"
 #include "stat_bench/bench/benchmark_group.h"
 #include "stat_bench/bench/i_benchmark_case.h"
 #include "stat_bench/bench/invocation_context.h"

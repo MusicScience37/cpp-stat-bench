@@ -15,19 +15,19 @@
  */
 /*!
  * \file
- * \brief Definition of BenchmarkCaseInfo class.
+ * \brief Definition of BenchmarkFullName class.
  */
-#include "stat_bench/bench/benchmark_case_info.h"
+#include "stat_bench/bench/benchmark_full_name.h"
 
 #include <catch2/catch_test_macros.hpp>
 
-TEST_CASE("stat_bench::bench::BenchmarkCaseInfo") {
+TEST_CASE("stat_bench::bench::BenchmarkFullName") {
     SECTION("construct") {
         const std::string group_name = "group";
         const std::string case_name = "case";
 
         const auto info =
-            stat_bench::bench::BenchmarkCaseInfo(group_name, case_name);
+            stat_bench::bench::BenchmarkFullName(group_name, case_name);
 
         REQUIRE(info.group_name() == group_name);
         REQUIRE(info.case_name() == case_name);
@@ -38,7 +38,7 @@ TEST_CASE("stat_bench::bench::BenchmarkCaseInfo") {
         const std::string case_name = "case";
 
         const auto info =
-            stat_bench::bench::BenchmarkCaseInfo(group_name, case_name);
+            stat_bench::bench::BenchmarkFullName(group_name, case_name);
 
         REQUIRE(fmt::format("{}", info) == "group/case");
     }

@@ -15,7 +15,7 @@
  */
 /*!
  * \file
- * \brief Definition of BenchmarkCaseInfo class.
+ * \brief Definition of InvocationContext class.
  */
 #pragma once
 

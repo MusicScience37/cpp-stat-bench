@@ -26,8 +26,8 @@
 #include <utility>
 #include <vector>
 
-#include "stat_bench/bench/benchmark_case_info.h"
 #include "stat_bench/bench/benchmark_condition.h"
+#include "stat_bench/bench/benchmark_full_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/stat/calc_stat.h"
 #include "stat_bench/stat/custom_stat_output.h"
@@ -53,7 +53,7 @@ public:
      * \param[in] custom_stat_outputs Custom outputs with statistics.
      * \param[in] custom_outputs Custom outputs without statistics.
      */
-    Measurement(bench::BenchmarkCaseInfo case_info,
+    Measurement(bench::BenchmarkFullName case_info,
         bench::BenchmarkCondition cond, std::string measurer_name,
         std::size_t iterations, std::size_t samples,
         std::vector<std::vector<clock::Duration>> durations,
@@ -82,7 +82,7 @@ public:
      * \return Information of the case.
      */
     [[nodiscard]] auto case_info() const noexcept
-        -> const bench::BenchmarkCaseInfo& {
+        -> const bench::BenchmarkFullName& {
         return case_info_;
     }
 
@@ -177,7 +177,7 @@ public:
 
 private:
     //! Information of the case.
-    bench::BenchmarkCaseInfo case_info_;
+    bench::BenchmarkFullName case_info_;
 
     //! Condition.
     bench::BenchmarkCondition cond_;
