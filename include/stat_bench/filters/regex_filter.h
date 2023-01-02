@@ -20,7 +20,7 @@
 #pragma once
 
 #include <regex>
-#include <string_view>
+#include <string>
 
 #include "stat_bench/bench/benchmark_full_name.h"
 #include "stat_bench/filters/i_name_filter.h"
@@ -38,7 +38,7 @@ public:
      *
      * \param[in] regex Regular expression.
      */
-    explicit RegexFilter(std::string_view regex);
+    explicit RegexFilter(const std::string& regex);
 
     //! \copydoc stat_bench::filters::INameFilter::check
     [[nodiscard]] auto check(const bench::BenchmarkFullName& name) const

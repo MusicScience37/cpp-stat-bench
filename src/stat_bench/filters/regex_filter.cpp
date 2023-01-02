@@ -24,8 +24,8 @@
 namespace stat_bench {
 namespace filters {
 
-RegexFilter::RegexFilter(std::string_view regex)
-    : regex_(regex.data(), regex.size(),
+RegexFilter::RegexFilter(const std::string& regex)
+    : regex_(regex,
           std::regex_constants::ECMAScript | std::regex_constants::optimize) {}
 
 auto RegexFilter::check(const bench::BenchmarkFullName& name) const -> bool {
