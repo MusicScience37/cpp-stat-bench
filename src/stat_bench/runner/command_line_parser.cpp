@@ -74,6 +74,20 @@ CommandLineParser::CommandLineParser() {
                           .optional()
                           .choices([](double val) { return val >= 0.0; })
                           .help("Minimum duration for warming up. [sec]"));
+
+    cli_.add_argument(
+        lyra::opt(config_.include_regex, "regex")
+            .name("--include_regex")
+            .cardinality(0, 0)
+            .help("Specify regular expressions of benchmark names to include."
+                  "When omitted, this option won't filter any benchmarks."));
+
+    cli_.add_argument(
+        lyra::opt(config_.exclude_regex, "regex")
+            .name("--exclude_regex")
+            .cardinality(0, 0)
+            .help("Specify regular expressions of benchmark names to exclude."
+                  "When omitted, this option won't filter any benchmarks."));
 }
 
 CommandLineParser::~CommandLineParser() = default;

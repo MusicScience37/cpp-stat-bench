@@ -73,8 +73,13 @@ Runner::Runner(const Config& config, bench::BenchmarkCaseRegistry& registry)
             std::make_shared<reporter::JsonReporter>(config.json_file_path));
     }
 
-    // TODO configure filter
     filters::ComposedFilter filter;
+    for (const auto& regex : config.include_regex) {
+        filter.include_with_regex(regex);
+    }
+    for (const auto& regex : config.exclude_regex) {
+        filter.exclude_with_regex(regex);
+    }
     registry.filter_by(filter);
 }
 
