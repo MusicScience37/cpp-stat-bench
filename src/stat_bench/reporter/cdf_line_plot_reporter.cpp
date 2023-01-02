@@ -86,12 +86,12 @@ void CdfLinePlotReporter::group_finished(const std::string& name) {
 }
 
 void CdfLinePlotReporter::case_starts(
-    const bench::BenchmarkCaseInfo& /*case_info*/) {
+    const bench::BenchmarkFullName& /*case_info*/) {
     // no operation
 }
 
 void CdfLinePlotReporter::case_finished(
-    const bench::BenchmarkCaseInfo& /*case_info*/) {
+    const bench::BenchmarkFullName& /*case_info*/) {
     // no operation
 }
 
@@ -119,7 +119,7 @@ void CdfLinePlotReporter::measurement_succeeded(
 }
 
 void CdfLinePlotReporter::measurement_failed(
-    const bench::BenchmarkCaseInfo& /*case_info*/,
+    const bench::BenchmarkFullName& /*case_info*/,
     const bench::BenchmarkCondition& /*cond*/,
     const std::exception_ptr& /*error*/) {
     // no operation

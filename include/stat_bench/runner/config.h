@@ -22,6 +22,7 @@
 // IWYU pragma: no_include  <stddef.h>
 #include <cstddef>
 #include <string>
+#include <vector>
 
 namespace stat_bench {
 namespace runner {
@@ -89,6 +90,12 @@ struct Config {
      * Empty string specifies no output.
      */
     std::string json_file_path{};
+
+    //! Regular expressions of benchmark names to include.
+    std::vector<std::string> include_regex{};
+
+    //! Regular expressions of benchmark names to exclude.
+    std::vector<std::string> exclude_regex{};
 };
 
 }  // namespace runner

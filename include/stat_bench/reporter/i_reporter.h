@@ -21,8 +21,8 @@
 
 #include <exception>
 
-#include "stat_bench/bench/benchmark_case_info.h"
 #include "stat_bench/bench/benchmark_condition.h"
+#include "stat_bench/bench/benchmark_full_name.h"
 #include "stat_bench/clock/system_time_point.h"
 #include "stat_bench/measurer/measurement.h"
 
@@ -83,14 +83,14 @@ public:
      *
      * \param[in] case_info Information.
      */
-    virtual void case_starts(const bench::BenchmarkCaseInfo& case_info) = 0;
+    virtual void case_starts(const bench::BenchmarkFullName& case_info) = 0;
 
     /*!
      * \brief Finished a case of a benchmark.
      *
      * \param[in] case_info Information.
      */
-    virtual void case_finished(const bench::BenchmarkCaseInfo& case_info) = 0;
+    virtual void case_finished(const bench::BenchmarkFullName& case_info) = 0;
 
     /*!
      * \brief Successfully finished a measurement.
@@ -107,7 +107,7 @@ public:
      * \param[in] cond Condition.
      * \param[in] error Error.
      */
-    virtual void measurement_failed(const bench::BenchmarkCaseInfo& case_info,
+    virtual void measurement_failed(const bench::BenchmarkFullName& case_info,
         const bench::BenchmarkCondition& cond,
         const std::exception_ptr& error) = 0;
 

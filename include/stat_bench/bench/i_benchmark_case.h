@@ -19,7 +19,7 @@
  */
 #pragma once
 
-#include "stat_bench/bench/benchmark_case_info.h"
+#include "stat_bench/bench/benchmark_full_name.h"
 #include "stat_bench/bench/invocation_context.h"
 #include "stat_bench/param/parameter_config.h"
 
@@ -37,7 +37,7 @@ public:
      * \return Information.
      */
     [[nodiscard]] virtual auto info() const noexcept
-        -> const BenchmarkCaseInfo& = 0;
+        -> const BenchmarkFullName& = 0;
 
     /*!
      * \brief Get parameters.

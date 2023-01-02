@@ -1,6 +1,9 @@
 set(SOURCE_FILES
+    stat_bench/bench/benchmark_case_registry.cpp
     stat_bench/bench/benchmark_group.cpp
     stat_bench/clock/monotone_clock_impl.cpp
+    stat_bench/filters/composed_filter.cpp
+    stat_bench/filters/regex_filter.cpp
     stat_bench/measurer/determine_iterations.cpp
     stat_bench/measurer/determine_warming_up_samples.cpp
     stat_bench/measurer/mean_processing_time_measurer.cpp

@@ -47,8 +47,21 @@ class Runner {
 public:
     /*!
      * \brief Constructor.
+     *
+     * \param[in] config Configuration.
+     * \param[in] registry Registry of benchmarks.
      */
-    Runner();
+    explicit Runner(const Config& config,
+        bench::BenchmarkCaseRegistry& registry =
+            bench::BenchmarkCaseRegistry::instance());
+
+    /*!
+     * \brief Constructor.
+     *
+     * \param[in] registry Registry of benchmarks.
+     */
+    explicit Runner(bench::BenchmarkCaseRegistry& registry =
+                        bench::BenchmarkCaseRegistry::instance());
 
     Runner(const Runner&) = delete;
     Runner(Runner&&) = delete;
@@ -59,13 +72,6 @@ public:
      * \brief Destructor.
      */
     ~Runner();
-
-    /*!
-     * \brief Initialize.
-     *
-     * \param[in] config Configuration.
-     */
-    void init(const Config& config);
 
     /*!
      * \brief Add a measurer.
@@ -88,14 +94,7 @@ public:
     /*!
      * \brief Run benchmarks.
      */
-    void run() const { run(bench::BenchmarkCaseRegistry::instance()); }
-
-    /*!
-     * \brief Run benchmarks.
-     *
-     * \param[in] registry Registry of benchmarks.
-     */
-    void run(const bench::BenchmarkCaseRegistry& registry) const;
+    void run() const;
 
 private:
     /*!
@@ -124,6 +123,9 @@ private:
 
     //! Reporters.
     std::vector<std::shared_ptr<reporter::IReporter>> reporters_{};
+
+    //! Registry.
+    bench::BenchmarkCaseRegistry& registry_;
 };
 
 }  // namespace runner

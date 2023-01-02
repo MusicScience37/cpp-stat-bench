@@ -21,7 +21,7 @@
 
 #include <string>
 
-#include "stat_bench/bench/benchmark_case_info.h"
+#include "stat_bench/bench/benchmark_full_name.h"
 
 namespace stat_bench {
 namespace bench {
@@ -46,12 +46,12 @@ protected:
 private:
     //! \copydoc stat_bench::bench::IBenchmarkCase::info
     [[nodiscard]] auto info() const noexcept
-        -> const bench::BenchmarkCaseInfo& final {
+        -> const bench::BenchmarkFullName& final {
         return info_;
     }
 
     //! Information of this case.
-    bench::BenchmarkCaseInfo info_;
+    bench::BenchmarkFullName info_;
 };
 
 }  // namespace bench

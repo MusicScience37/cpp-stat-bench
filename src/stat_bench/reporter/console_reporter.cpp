@@ -91,12 +91,12 @@ void ConsoleReporter::group_finished(const std::string& /*name*/) {
 }
 
 void ConsoleReporter::case_starts(
-    const bench::BenchmarkCaseInfo& /*case_info*/) {
+    const bench::BenchmarkFullName& /*case_info*/) {
     // no operation
 }
 
 void ConsoleReporter::case_finished(
-    const bench::BenchmarkCaseInfo& /*case_info*/) {
+    const bench::BenchmarkFullName& /*case_info*/) {
     // no operation
 }
 
@@ -121,7 +121,7 @@ void ConsoleReporter::measurement_succeeded(
 }
 
 void ConsoleReporter::measurement_failed(
-    const bench::BenchmarkCaseInfo& case_info,
+    const bench::BenchmarkFullName& case_info,
     const bench::BenchmarkCondition& cond, const std::exception_ptr& error) {
     try {
         std::rethrow_exception(error);

@@ -100,12 +100,12 @@ void ViolinPlotReporter::group_finished(const std::string& name) {
 }
 
 void ViolinPlotReporter::case_starts(
-    const bench::BenchmarkCaseInfo& /*case_info*/) {
+    const bench::BenchmarkFullName& /*case_info*/) {
     // no operation
 }
 
 void ViolinPlotReporter::case_finished(
-    const bench::BenchmarkCaseInfo& /*case_info*/) {
+    const bench::BenchmarkFullName& /*case_info*/) {
     // no operation
 }
 
@@ -152,7 +152,7 @@ void ViolinPlotReporter::measurement_succeeded(
 }
 
 void ViolinPlotReporter::measurement_failed(
-    const bench::BenchmarkCaseInfo& /*case_info*/,
+    const bench::BenchmarkFullName& /*case_info*/,
     const bench::BenchmarkCondition& /*cond*/,
     const std::exception_ptr& /*error*/) {
     // no operation

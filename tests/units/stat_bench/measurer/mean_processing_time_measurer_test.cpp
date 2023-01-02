@@ -31,8 +31,8 @@
 
 #include "../bench/mock_benchmark_case.h"
 #include "../param/create_ordinary_parameter_dict.h"
-#include "stat_bench/bench/benchmark_case_info.h"
 #include "stat_bench/bench/benchmark_condition.h"
+#include "stat_bench/bench/benchmark_full_name.h"
 #include "stat_bench/clock/duration.h"
 
 TEST_CASE("stat_bench::measurer::MeanProcessingTimeMeasurer") {
@@ -49,7 +49,7 @@ TEST_CASE("stat_bench::measurer::MeanProcessingTimeMeasurer") {
 
     SECTION("measure") {
         stat_bench_test::bench::MockBenchmarkCase bench_case;
-        const auto info = stat_bench::bench::BenchmarkCaseInfo("group", "case");
+        const auto info = stat_bench::bench::BenchmarkFullName("group", "case");
         const auto cond = stat_bench::bench::BenchmarkCondition(
             1, stat_bench_test::param::create_ordinary_parameter_dict());
 

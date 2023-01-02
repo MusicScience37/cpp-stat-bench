@@ -29,15 +29,13 @@
 #include "../bench/mock_benchmark_case.h"
 #include "../measurer/mock_measurer.h"
 #include "../reporter/mock_reporter.h"
-#include "stat_bench/bench/benchmark_case_info.h"
+#include "stat_bench/bench/benchmark_full_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/param/parameter_config.h"
 #include "stat_bench/param/parameter_value_vector.h"
 
 TEST_CASE("stat_bench::runner::Runner") {
-    stat_bench::runner::Runner runner;
-
     const auto measurer =
         std::make_shared<stat_bench_test::measurer::MockMeasurer>();
 
@@ -55,7 +53,7 @@ TEST_CASE("stat_bench::runner::Runner") {
         const std::string group_name1 = "Group1";
         const std::string case_name1 = "case1";
         const auto info1 =
-            stat_bench::bench::BenchmarkCaseInfo(group_name1, case_name1);
+            stat_bench::bench::BenchmarkFullName(group_name1, case_name1);
         const auto case1 =
             std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
 
@@ -68,6 +66,8 @@ TEST_CASE("stat_bench::runner::Runner") {
 
         stat_bench::bench::BenchmarkCaseRegistry registry;
         registry.add(case1);
+
+        stat_bench::runner::Runner runner{registry};
 
         runner.add(measurer);
         runner.add(reporter);
@@ -110,7 +110,7 @@ TEST_CASE("stat_bench::runner::Runner") {
         REQUIRE_CALL(*reporter, experiment_finished(trompeloeil::_))
             .IN_SEQUENCE(seq);
 
-        runner.run(registry);
+        runner.run();
 
         REQUIRE(measurement->case_info().group_name() == group_name1);
         REQUIRE(measurement->case_info().case_name() == case_name1);
@@ -127,7 +127,7 @@ TEST_CASE("stat_bench::runner::Runner") {
         const std::string group_name1 = "Group1";
         const std::string case_name1 = "case1";
         const auto info1 =
-            stat_bench::bench::BenchmarkCaseInfo(group_name1, case_name1);
+            stat_bench::bench::BenchmarkFullName(group_name1, case_name1);
         const auto case1 =
             std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
 
@@ -140,6 +140,8 @@ TEST_CASE("stat_bench::runner::Runner") {
 
         stat_bench::bench::BenchmarkCaseRegistry registry;
         registry.add(case1);
+
+        stat_bench::runner::Runner runner{registry};
 
         runner.add(measurer);
         runner.add(reporter);
@@ -179,7 +181,7 @@ TEST_CASE("stat_bench::runner::Runner") {
         REQUIRE_CALL(*reporter, experiment_finished(trompeloeil::_))
             .IN_SEQUENCE(seq);
 
-        runner.run(registry);
+        runner.run();
 
         REQUIRE(error);
         REQUIRE_THROWS_AS(std::rethrow_exception(error), std::runtime_error);
@@ -189,7 +191,7 @@ TEST_CASE("stat_bench::runner::Runner") {
         const std::string group_name1 = "Group1";
         const std::string case_name1 = "case1";
         const auto info1 =
-            stat_bench::bench::BenchmarkCaseInfo(group_name1, case_name1);
+            stat_bench::bench::BenchmarkFullName(group_name1, case_name1);
         const auto case1 =
             std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
         auto param_config = empty_param_config;
@@ -205,6 +207,8 @@ TEST_CASE("stat_bench::runner::Runner") {
 
         stat_bench::bench::BenchmarkCaseRegistry registry;
         registry.add(case1);
+
+        stat_bench::runner::Runner runner{registry};
 
         runner.add(measurer);
 
@@ -224,7 +228,7 @@ TEST_CASE("stat_bench::runner::Runner") {
             // NOLINTNEXTLINE
             .TIMES(6);
 
-        runner.run(registry);
+        runner.run();
 
         REQUIRE(conditions.size() == 6);
     }

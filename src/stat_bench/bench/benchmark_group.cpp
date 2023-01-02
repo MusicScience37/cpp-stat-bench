@@ -51,6 +51,16 @@ void BenchmarkGroup::add(std::shared_ptr<IBenchmarkCase> bench_case) {
     cases_.push_back(std::move(bench_case));
 }
 
+void BenchmarkGroup::filter_by(const filters::ComposedFilter& filter) {
+    for (auto iter = cases_.begin(); iter < cases_.end();) {
+        if (filter.check((**iter).info())) {
+            ++iter;
+        } else {
+            iter = cases_.erase(iter);
+        }
+    }
+}
+
 auto BenchmarkGroup::cases() const noexcept
     -> const std::vector<std::shared_ptr<IBenchmarkCase>>& {
     return cases_;

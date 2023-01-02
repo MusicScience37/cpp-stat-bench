@@ -27,7 +27,7 @@ TEST_CASE("stat_bench::measurer::Measurement") {
     using stat_bench::clock::Duration;
 
     SECTION("construct") {
-        const auto info = stat_bench::bench::BenchmarkCaseInfo("group", "case");
+        const auto info = stat_bench::bench::BenchmarkFullName("group", "case");
         const auto cond = stat_bench::bench::BenchmarkCondition(
             2, stat_bench_test::param::create_ordinary_parameter_dict());
         const auto measurer_name = std::string("measurer");
