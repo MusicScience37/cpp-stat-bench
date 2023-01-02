@@ -47,24 +47,14 @@ public:
      *
      * \param[in] bench_case Case.
      */
-    void add(std::shared_ptr<IBenchmarkCase> bench_case) {
-        const auto& group_name = bench_case->info().group_name();
-        auto iter = std::lower_bound(groups_.begin(), groups_.end(), group_name,
-            [](const BenchmarkGroup& group, const std::string& group_name_in) {
-                return group.name() < group_name_in;
-            });
-        if (iter != groups_.end() && iter->name() == group_name) {
-            iter->add(std::move(bench_case));
-            return;
-        }
+    void add(std::shared_ptr<IBenchmarkCase> bench_case);
 
-        iter = std::upper_bound(groups_.begin(), groups_.end(), group_name,
-            [](const std::string& group_name_in, const BenchmarkGroup& group) {
-                return group_name_in < group.name();
-            });
-        iter = groups_.emplace(iter, group_name);
-        iter->add(std::move(bench_case));
-    }
+    /*!
+     * \brief Filter.
+     *
+     * \param[in] filter Filter.
+     */
+    void filter_by(const filters::ComposedFilter& filter);
 
     /*!
      * \brief Get benchmarks.
@@ -72,19 +62,14 @@ public:
      * \return Benchmarks per group.
      */
     [[nodiscard]] auto benchmarks() const noexcept
-        -> const std::vector<BenchmarkGroup>& {
-        return groups_;
-    }
+        -> const std::vector<BenchmarkGroup>&;
 
     /*!
      * \brief Get an instance of the registry.
      *
      * \return Reference to the instance.
      */
-    [[nodiscard]] static auto instance() -> BenchmarkCaseRegistry& {
-        static BenchmarkCaseRegistry registry;
-        return registry;
-    }
+    [[nodiscard]] static auto instance() -> BenchmarkCaseRegistry&;
 
 private:
     //! Groups.

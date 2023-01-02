@@ -1,3 +1,4 @@
+#include "stat_bench/bench/benchmark_case_registry.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/bench/benchmark_group.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/clock/monotone_clock_impl.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/filters/composed_filter.cpp"  // NOLINT(bugprone-suspicious-include)

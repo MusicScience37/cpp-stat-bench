@@ -26,6 +26,7 @@
 #include <vector>
 
 #include "stat_bench/bench/i_benchmark_case.h"
+#include "stat_bench/filters/composed_filter.h"
 
 namespace stat_bench {
 namespace bench {
@@ -55,6 +56,13 @@ public:
      * \param[in] bench_case Case.
      */
     void add(std::shared_ptr<IBenchmarkCase> bench_case);
+
+    /*!
+     * \brief Filter.
+     *
+     * \param[in] filter Filter.
+     */
+    void filter_by(const filters::ComposedFilter& filter);
 
     /*!
      * \brief Get cases.

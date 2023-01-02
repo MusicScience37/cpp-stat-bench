@@ -43,8 +43,7 @@ inline auto default_main(int argc, const char** argv) noexcept -> int {
             std::cout << parser.cli() << std::endl;
             return EXIT_SUCCESS;
         }
-        stat_bench::runner::Runner runner;
-        runner.init(parser.config());
+        stat_bench::runner::Runner runner{parser.config()};
         runner.run();
         return EXIT_SUCCESS;
     } catch (const std::exception& e) {

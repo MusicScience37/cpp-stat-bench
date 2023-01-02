@@ -36,8 +36,6 @@
 #include "stat_bench/param/parameter_value_vector.h"
 
 TEST_CASE("stat_bench::runner::Runner") {
-    stat_bench::runner::Runner runner;
-
     const auto measurer =
         std::make_shared<stat_bench_test::measurer::MockMeasurer>();
 
@@ -68,6 +66,8 @@ TEST_CASE("stat_bench::runner::Runner") {
 
         stat_bench::bench::BenchmarkCaseRegistry registry;
         registry.add(case1);
+
+        stat_bench::runner::Runner runner{registry};
 
         runner.add(measurer);
         runner.add(reporter);
@@ -110,7 +110,7 @@ TEST_CASE("stat_bench::runner::Runner") {
         REQUIRE_CALL(*reporter, experiment_finished(trompeloeil::_))
             .IN_SEQUENCE(seq);
 
-        runner.run(registry);
+        runner.run();
 
         REQUIRE(measurement->case_info().group_name() == group_name1);
         REQUIRE(measurement->case_info().case_name() == case_name1);
@@ -140,6 +140,8 @@ TEST_CASE("stat_bench::runner::Runner") {
 
         stat_bench::bench::BenchmarkCaseRegistry registry;
         registry.add(case1);
+
+        stat_bench::runner::Runner runner{registry};
 
         runner.add(measurer);
         runner.add(reporter);
@@ -179,7 +181,7 @@ TEST_CASE("stat_bench::runner::Runner") {
         REQUIRE_CALL(*reporter, experiment_finished(trompeloeil::_))
             .IN_SEQUENCE(seq);
 
-        runner.run(registry);
+        runner.run();
 
         REQUIRE(error);
         REQUIRE_THROWS_AS(std::rethrow_exception(error), std::runtime_error);
@@ -206,6 +208,8 @@ TEST_CASE("stat_bench::runner::Runner") {
         stat_bench::bench::BenchmarkCaseRegistry registry;
         registry.add(case1);
 
+        stat_bench::runner::Runner runner{registry};
+
         runner.add(measurer);
 
         const std::size_t iterations = 7;
@@ -224,7 +228,7 @@ TEST_CASE("stat_bench::runner::Runner") {
             // NOLINTNEXTLINE
             .TIMES(6);
 
-        runner.run(registry);
+        runner.run();
 
         REQUIRE(conditions.size() == 6);
     }
