@@ -11,6 +11,7 @@
 #include "stat_bench/clock/monotone_time_point_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/clock/stop_watch_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/clock/system_clock_test.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "stat_bench/filters/regex_filter_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/measurer/mean_processing_time_measurer_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/measurer/measurement_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/measurer/processing_time_measurer_test.cpp"  // NOLINT(bugprone-suspicious-include)
