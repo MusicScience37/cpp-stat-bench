@@ -61,8 +61,7 @@ public:
      * \retval true Input matched to this filter.
      * \retval false Input didn't match to this filter.
      */
-    [[nodiscard]] auto check(const bench::BenchmarkFullName& name) const
-        -> bool;
+    [[nodiscard]] auto check(const BenchmarkFullName& name) const -> bool;
 
 private:
     //! Filter of benchmark names to include.

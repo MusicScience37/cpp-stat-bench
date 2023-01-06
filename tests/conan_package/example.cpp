@@ -18,7 +18,7 @@
  * \brief Benchmark of fibonacci.
  */
 #include "stat_bench/benchmark_macros.h"
-#include "stat_bench/util/do_not_optimize.h"
+#include "stat_bench/do_not_optimize.h"
 
 [[nodiscard]] auto fibonacci(std::uint64_t number) -> std::uint64_t {
     if (number < 2) {
@@ -30,24 +30,24 @@
 STAT_BENCH_CASE("Fibonacci", "Fibonacci10") {
     std::uint64_t number = 10;  // NOLINT
     STAT_BENCH_MEASURE() {
-        stat_bench::util::do_not_optimize(number);
-        stat_bench::util::do_not_optimize(fibonacci(number));
+        stat_bench::do_not_optimize(number);
+        stat_bench::do_not_optimize(fibonacci(number));
     };
 }
 
 STAT_BENCH_CASE("Fibonacci", "Fibonacci20") {
     std::uint64_t number = 20;  // NOLINT
     STAT_BENCH_MEASURE() {
-        stat_bench::util::do_not_optimize(number);
-        stat_bench::util::do_not_optimize(fibonacci(number));
+        stat_bench::do_not_optimize(number);
+        stat_bench::do_not_optimize(fibonacci(number));
     };
 }
 
 STAT_BENCH_CASE("Fibonacci", "Fibonacci30") {
     std::uint64_t number = 30;  // NOLINT
     STAT_BENCH_MEASURE() {
-        stat_bench::util::do_not_optimize(number);
-        stat_bench::util::do_not_optimize(fibonacci(number));
+        stat_bench::do_not_optimize(number);
+        stat_bench::do_not_optimize(fibonacci(number));
     };
 }
 

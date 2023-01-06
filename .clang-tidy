@@ -17,6 +17,7 @@ Checks: >
   cert-*,
    -cert-err58-cpp,
   bugprone-*,
+    -bugprone-easily-swappable-parameters,
   concurrency-*,
   boost-*,
 
@@ -27,6 +28,7 @@ Checks: >
 # - readability-function-cognitive-complexity: Even a simple tests cannot satisfy the limit.
 # - readability-convert-member-functions-to-static: For API consistency.
 # - hicpp-no-array-decay: This forces to use an external library.
+# - bugprone-easily-swappable-parameters is difficult to fix without performance degrade.
 
 CheckOptions:
   # Naming Conventions

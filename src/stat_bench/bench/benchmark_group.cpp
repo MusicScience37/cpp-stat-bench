@@ -17,14 +17,14 @@
  * \file
  * \brief Implementation of BenchmarkGroup class.
  */
-#include "stat_bench/bench/benchmark_group.h"
+#include "stat_bench/bench_impl/benchmark_group.h"
 
 #include <fmt/core.h>
 
 #include "stat_bench/stat_bench_exception.h"
 
 namespace stat_bench {
-namespace bench {
+namespace bench_impl {
 
 BenchmarkGroup::BenchmarkGroup(std::string name) : name_(std::move(name)) {}
 
@@ -66,5 +66,5 @@ auto BenchmarkGroup::cases() const noexcept
     return cases_;
 }
 
-}  // namespace bench
+}  // namespace bench_impl
 }  // namespace stat_bench

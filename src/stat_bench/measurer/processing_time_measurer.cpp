@@ -25,8 +25,8 @@
 namespace stat_bench {
 namespace measurer {
 
-auto ProcessingTimeMeasurer::measure(bench::IBenchmarkCase* bench_case,
-    const bench::BenchmarkCondition& cond) const -> Measurement {
+auto ProcessingTimeMeasurer::measure(bench_impl::IBenchmarkCase* bench_case,
+    const BenchmarkCondition& cond) const -> Measurement {
     constexpr std::size_t iterations = 1;
 
     const std::size_t warming_up_samples =

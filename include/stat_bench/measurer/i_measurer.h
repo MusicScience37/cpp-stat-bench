@@ -21,8 +21,8 @@
 
 #include <string>
 
-#include "stat_bench/bench/benchmark_condition.h"
-#include "stat_bench/bench/i_benchmark_case.h"
+#include "stat_bench/bench_impl/i_benchmark_case.h"
+#include "stat_bench/benchmark_condition.h"
 #include "stat_bench/measurer/measurement.h"
 
 namespace stat_bench {
@@ -47,8 +47,8 @@ public:
      * \param[in] cond Condition.
      * \return Result.
      */
-    [[nodiscard]] virtual auto measure(bench::IBenchmarkCase* bench_case,
-        const bench::BenchmarkCondition& cond) const -> Measurement = 0;
+    [[nodiscard]] virtual auto measure(bench_impl::IBenchmarkCase* bench_case,
+        const BenchmarkCondition& cond) const -> Measurement = 0;
 
     IMeasurer(const IMeasurer&) = delete;
     IMeasurer(IMeasurer&&) = delete;

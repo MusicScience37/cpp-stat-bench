@@ -26,8 +26,8 @@ namespace stat_bench_test {
 [[nodiscard]] inline auto create_test_measurement(const std::string& group_name,
     const std::string& case_name, const std::string& measurer_name,
     const std::vector<std::vector<stat_bench::clock::Duration>>& durations) {
-    using stat_bench::bench::BenchmarkCondition;
-    using stat_bench::bench::BenchmarkFullName;
+    using stat_bench::BenchmarkCondition;
+    using stat_bench::BenchmarkFullName;
     using stat_bench::clock::Duration;
     using stat_bench::measurer::Measurement;
     using stat_bench::param::ParameterDict;

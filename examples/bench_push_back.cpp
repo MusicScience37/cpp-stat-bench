@@ -24,22 +24,22 @@
 #include <list>
 #include <vector>
 
-#include "stat_bench/bench/invocation_context.h"
 #include "stat_bench/benchmark_macros.h"
-#include "stat_bench/util/do_not_optimize.h"
+#include "stat_bench/do_not_optimize.h"
+#include "stat_bench/invocation_context.h"
 
 class Fixture : public stat_bench::FixtureBase {
 public:
     Fixture() = default;
 
     template <typename Container>
-    void bench(stat_bench::bench::InvocationContext& STAT_BENCH_CONTEXT_NAME,
+    void bench(stat_bench::InvocationContext& STAT_BENCH_CONTEXT_NAME,
         Container& cont_vec) {
         STAT_BENCH_MEASURE_INDEXED(
             /*thread_index*/, sample_index, /*iteration_index*/) {
             cont_vec[sample_index].push_back(0);
         };
-        stat_bench::util::do_not_optimize(cont_vec);
+        stat_bench::do_not_optimize(cont_vec);
     }
 };
 

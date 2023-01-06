@@ -26,8 +26,8 @@
 #include <utility>
 #include <vector>
 
-#include "stat_bench/bench/benchmark_condition.h"
-#include "stat_bench/bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_condition.h"
+#include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/stat/calc_stat.h"
 #include "stat_bench/stat/custom_stat_output.h"
@@ -53,9 +53,8 @@ public:
      * \param[in] custom_stat_outputs Custom outputs with statistics.
      * \param[in] custom_outputs Custom outputs without statistics.
      */
-    Measurement(bench::BenchmarkFullName case_info,
-        bench::BenchmarkCondition cond, std::string measurer_name,
-        std::size_t iterations, std::size_t samples,
+    Measurement(BenchmarkFullName case_info, BenchmarkCondition cond,
+        std::string measurer_name, std::size_t iterations, std::size_t samples,
         std::vector<std::vector<clock::Duration>> durations,
         std::vector<std::shared_ptr<stat::CustomStatOutput>>
             custom_stat_outputs,
@@ -81,8 +80,7 @@ public:
      *
      * \return Information of the case.
      */
-    [[nodiscard]] auto case_info() const noexcept
-        -> const bench::BenchmarkFullName& {
+    [[nodiscard]] auto case_info() const noexcept -> const BenchmarkFullName& {
         return case_info_;
     }
 
@@ -91,8 +89,7 @@ public:
      *
      * \return Condition.
      */
-    [[nodiscard]] auto cond() const noexcept
-        -> const bench::BenchmarkCondition& {
+    [[nodiscard]] auto cond() const noexcept -> const BenchmarkCondition& {
         return cond_;
     }
 
@@ -177,10 +174,10 @@ public:
 
 private:
     //! Information of the case.
-    bench::BenchmarkFullName case_info_;
+    BenchmarkFullName case_info_;
 
     //! Condition.
-    bench::BenchmarkCondition cond_;
+    BenchmarkCondition cond_;
 
     //! Name of the measurer.
     std::string measurer_name_;

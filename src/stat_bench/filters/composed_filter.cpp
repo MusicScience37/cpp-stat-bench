@@ -35,7 +35,7 @@ void ComposedFilter::exclude_with_regex(const std::string& regex) {
     excluded_filter_.push_back(std::make_shared<RegexFilter>(regex));
 }
 
-auto ComposedFilter::check(const bench::BenchmarkFullName& name) const -> bool {
+auto ComposedFilter::check(const BenchmarkFullName& name) const -> bool {
     return (included_filter_.empty() ||
                std::any_of(included_filter_.begin(), included_filter_.end(),
                    [&name](const std::shared_ptr<INameFilter>& filter) {

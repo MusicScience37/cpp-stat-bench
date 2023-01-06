@@ -27,25 +27,25 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include "../units/stat_bench/param/create_ordinary_parameter_dict.h"
-#include "stat_bench/bench/benchmark_case_registry.h"
-#include "stat_bench/bench/benchmark_condition.h"
-#include "stat_bench/bench/benchmark_full_name.h"
-#include "stat_bench/bench/benchmark_group.h"
-#include "stat_bench/bench/i_benchmark_case.h"
-#include "stat_bench/bench/invocation_context.h"
+#include "stat_bench/bench_impl/benchmark_case_registry.h"
+#include "stat_bench/bench_impl/benchmark_group.h"
+#include "stat_bench/bench_impl/i_benchmark_case.h"
+#include "stat_bench/benchmark_condition.h"
+#include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/benchmark_macros.h"
+#include "stat_bench/invocation_context.h"
 
 static std::atomic<int> state{0};
 
 class Fixture : public stat_bench::FixtureBase {
 public:
-    void setup(stat_bench::bench::InvocationContext& context) override {
+    void setup(stat_bench::InvocationContext& context) override {
         const std::size_t size = context.iterations();
         input_.resize(size);
         state = 1;
     }
 
-    void tear_down(stat_bench::bench::InvocationContext& context) override {
+    void tear_down(stat_bench::InvocationContext& context) override {
         REQUIRE(state.load() == 2);
         state = 3;
     }
@@ -67,15 +67,15 @@ STAT_BENCH_CASE_F(Fixture, "Arithmetic", "Add") {
 
 TEST_CASE("STAT_BENCH_CASE_F") {
     const auto& benchmarks =
-        stat_bench::bench::BenchmarkCaseRegistry::instance().benchmarks();
+        stat_bench::bench_impl::BenchmarkCaseRegistry::instance().benchmarks();
 
     REQUIRE(benchmarks.size() == 1);
     REQUIRE(benchmarks.at(0).name() == "Arithmetic");
     REQUIRE(benchmarks.at(0).cases().size() == 1);
     REQUIRE(benchmarks.at(0).cases().at(0)->info().case_name() == "Add");
 
-    stat_bench::bench::InvocationContext context{
-        stat_bench::bench::BenchmarkCondition(
+    stat_bench::InvocationContext context{
+        stat_bench::BenchmarkCondition(
             1, stat_bench_test::param::create_ordinary_parameter_dict()),
         1, 1, 0};
 

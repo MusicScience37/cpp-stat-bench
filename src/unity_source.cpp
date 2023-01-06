@@ -21,4 +21,4 @@
 #include "stat_bench/stat/calc_stat.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/stat/statistics.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/util/prepare_directory.cpp"  // NOLINT(bugprone-suspicious-include)
-#include "stat_bench/util/use_pointer.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "use_pointer.cpp"  // NOLINT(bugprone-suspicious-include)

@@ -1,22 +1,24 @@
 set(SOURCE_FILES
-    stat_bench/bench/benchmark_case_registry_test.cpp
-    stat_bench/bench/benchmark_condition_test.cpp
-    stat_bench/bench/benchmark_full_name_test.cpp
-    stat_bench/bench/benchmark_group_test.cpp
-    stat_bench/bench/fixture_base_test.cpp
-    stat_bench/bench/invocation_context_test.cpp
-    stat_bench/bench/threadable_invoker_test.cpp
+    stat_bench/bench_impl/benchmark_case_registry_test.cpp
+    stat_bench/bench_impl/benchmark_group_test.cpp
+    stat_bench/bench_impl/threadable_invoker_test.cpp
+    stat_bench/benchmark_condition_test.cpp
+    stat_bench/benchmark_full_name_test.cpp
     stat_bench/clock/duration_test.cpp
     stat_bench/clock/monotone_clock_impl_test.cpp
     stat_bench/clock/monotone_clock_test.cpp
     stat_bench/clock/monotone_time_point_test.cpp
     stat_bench/clock/stop_watch_test.cpp
     stat_bench/clock/system_clock_test.cpp
+    stat_bench/do_not_optimize_test.cpp
     stat_bench/filters/composed_filter_test.cpp
     stat_bench/filters/regex_filter_test.cpp
+    stat_bench/fixture_base_test.cpp
+    stat_bench/invocation_context_test.cpp
     stat_bench/measurer/mean_processing_time_measurer_test.cpp
     stat_bench/measurer/measurement_test.cpp
     stat_bench/measurer/processing_time_measurer_test.cpp
+    stat_bench/memory_barrier_test.cpp
     stat_bench/param/parameter_config_test.cpp
     stat_bench/param/parameter_dict_test.cpp
     stat_bench/param/parameter_generator_test.cpp
@@ -33,9 +35,6 @@ set(SOURCE_FILES
     stat_bench/stat/calc_stat_test.cpp
     stat_bench/stat/custom_stat_output_test.cpp
     stat_bench/stat/statistics_test.cpp
-    stat_bench/util/do_not_optimize_test.cpp
-    stat_bench/util/memory_barrier_test.cpp
     stat_bench/util/prepare_directory_test.cpp
-    stat_bench/util/use_pointer_test.cpp
     test_main.cpp
 )

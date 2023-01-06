@@ -29,9 +29,9 @@
 #include <lyra/cli.hpp>
 #include <lyra/lyra.hpp>
 
-#include "stat_bench/bench/benchmark_case_registry.h"
-#include "stat_bench/bench/benchmark_condition.h"
-#include "stat_bench/bench/i_benchmark_case.h"
+#include "stat_bench/bench_impl/benchmark_case_registry.h"
+#include "stat_bench/bench_impl/i_benchmark_case.h"
+#include "stat_bench/benchmark_condition.h"
 #include "stat_bench/measurer/i_measurer.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/reporter/i_reporter.h"
@@ -52,16 +52,16 @@ public:
      * \param[in] registry Registry of benchmarks.
      */
     explicit Runner(const Config& config,
-        bench::BenchmarkCaseRegistry& registry =
-            bench::BenchmarkCaseRegistry::instance());
+        bench_impl::BenchmarkCaseRegistry& registry =
+            bench_impl::BenchmarkCaseRegistry::instance());
 
     /*!
      * \brief Constructor.
      *
      * \param[in] registry Registry of benchmarks.
      */
-    explicit Runner(bench::BenchmarkCaseRegistry& registry =
-                        bench::BenchmarkCaseRegistry::instance());
+    explicit Runner(bench_impl::BenchmarkCaseRegistry& registry =
+                        bench_impl::BenchmarkCaseRegistry::instance());
 
     Runner(const Runner&) = delete;
     Runner(Runner&&) = delete;
@@ -104,7 +104,7 @@ private:
      * \param[in] bench_case Case.
      */
     void run_case(const std::shared_ptr<measurer::IMeasurer>& measurer,
-        const std::shared_ptr<bench::IBenchmarkCase>& bench_case) const;
+        const std::shared_ptr<bench_impl::IBenchmarkCase>& bench_case) const;
 
     /*!
      * \brief Run a case.
@@ -115,8 +115,8 @@ private:
      */
     void run_case_with_condition(
         const std::shared_ptr<measurer::IMeasurer>& measurer,
-        const std::shared_ptr<bench::IBenchmarkCase>& bench_case,
-        const bench::BenchmarkCondition& cond) const;
+        const std::shared_ptr<bench_impl::IBenchmarkCase>& bench_case,
+        const BenchmarkCondition& cond) const;
 
     //! Measurers.
     std::vector<std::shared_ptr<measurer::IMeasurer>> measurers_{};
@@ -125,7 +125,7 @@ private:
     std::vector<std::shared_ptr<reporter::IReporter>> reporters_{};
 
     //! Registry.
-    bench::BenchmarkCaseRegistry& registry_;
+    bench_impl::BenchmarkCaseRegistry& registry_;
 };
 
 }  // namespace runner

@@ -23,8 +23,8 @@
 #include <cstddef>
 #include <string>
 
-#include "stat_bench/bench/benchmark_condition.h"
-#include "stat_bench/bench/i_benchmark_case.h"
+#include "stat_bench/bench_impl/i_benchmark_case.h"
+#include "stat_bench/benchmark_condition.h"
 #include "stat_bench/measurer/i_measurer.h"
 #include "stat_bench/measurer/measurement.h"
 
@@ -60,8 +60,8 @@ public:
     }
 
     //! \copydoc stat_bench::measurer::IMeasurer::measure
-    [[nodiscard]] auto measure(bench::IBenchmarkCase* bench_case,
-        const bench::BenchmarkCondition& cond) const -> Measurement override;
+    [[nodiscard]] auto measure(bench_impl::IBenchmarkCase* bench_case,
+        const BenchmarkCondition& cond) const -> Measurement override;
 
     MeanProcessingTimeMeasurer(const MeanProcessingTimeMeasurer&) = delete;
     MeanProcessingTimeMeasurer(MeanProcessingTimeMeasurer&&) = delete;

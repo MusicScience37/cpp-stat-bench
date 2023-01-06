@@ -10,7 +10,7 @@ Runner
 Benchmark Registry
 ------------------------
 
-.. doxygenclass:: stat_bench::bench::BenchmarkCaseRegistry
+.. doxygenclass:: stat_bench::bench_impl::BenchmarkCaseRegistry
     :members: BenchmarkCaseRegistry, add, instance
 
 Reporter
@@ -18,10 +18,10 @@ Reporter
 
 .. doxygenclass:: stat_bench::reporter::IReporter
 
-.. doxygenclass:: stat_bench::bench::BenchmarkFullName
+.. doxygenclass:: stat_bench::BenchmarkFullName
     :members: group_name, case_name
 
-.. doxygenclass:: stat_bench::bench::BenchmarkCondition
+.. doxygenclass:: stat_bench::BenchmarkCondition
     :members: threads, params
 
 .. doxygenclass:: stat_bench::param::ParameterDict

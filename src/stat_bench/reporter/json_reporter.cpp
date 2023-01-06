@@ -74,12 +74,11 @@ void JsonReporter::group_finished(const std::string& /*name*/) {
     // no operation
 }
 
-void JsonReporter::case_starts(const bench::BenchmarkFullName& /*case_info*/) {
+void JsonReporter::case_starts(const BenchmarkFullName& /*case_info*/) {
     // no operation
 }
 
-void JsonReporter::case_finished(
-    const bench::BenchmarkFullName& /*case_info*/) {
+void JsonReporter::case_finished(const BenchmarkFullName& /*case_info*/) {
     // no operation
 }
 
@@ -88,8 +87,8 @@ void JsonReporter::measurement_succeeded(
     data_.measurements.push_back(data_file_spec::convert(measurement));
 }
 
-void JsonReporter::measurement_failed(const bench::BenchmarkFullName& case_info,
-    const bench::BenchmarkCondition& cond, const std::exception_ptr& error) {
+void JsonReporter::measurement_failed(const BenchmarkFullName& case_info,
+    const BenchmarkCondition& cond, const std::exception_ptr& error) {
     // no operation
 }
 

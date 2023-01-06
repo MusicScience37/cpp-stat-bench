@@ -17,10 +17,10 @@
  * \file
  * \brief Implementation of BenchmarkCaseRegistry class.
  */
-#include "stat_bench/bench/benchmark_case_registry.h"
+#include "stat_bench/bench_impl/benchmark_case_registry.h"
 
 namespace stat_bench {
-namespace bench {
+namespace bench_impl {
 
 void BenchmarkCaseRegistry::add(std::shared_ptr<IBenchmarkCase> bench_case) {
     const auto& group_name = bench_case->info().group_name();
@@ -62,5 +62,5 @@ auto BenchmarkCaseRegistry::instance() -> BenchmarkCaseRegistry& {
     return registry;
 }
 
-}  // namespace bench
+}  // namespace bench_impl
 }  // namespace stat_bench

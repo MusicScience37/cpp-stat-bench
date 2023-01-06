@@ -21,11 +21,11 @@
 
 #include <catch2/catch_test_macros.hpp>
 
-#include "stat_bench/bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/filters/i_name_filter.h"
 
 TEST_CASE("stat_bench::filters::RegexFilter") {
-    using stat_bench::bench::BenchmarkFullName;
+    using stat_bench::BenchmarkFullName;
     using stat_bench::filters::INameFilter;
     using stat_bench::filters::RegexFilter;
 

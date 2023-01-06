@@ -84,12 +84,12 @@ void SimpleLinePlotReporter::group_finished(const std::string& name) {
 }
 
 void SimpleLinePlotReporter::case_starts(
-    const bench::BenchmarkFullName& /*case_info*/) {
+    const BenchmarkFullName& /*case_info*/) {
     // no operation
 }
 
 void SimpleLinePlotReporter::case_finished(
-    const bench::BenchmarkFullName& /*case_info*/) {
+    const BenchmarkFullName& /*case_info*/) {
     // no operation
 }
 
@@ -125,8 +125,7 @@ void SimpleLinePlotReporter::measurement_succeeded(
 }
 
 void SimpleLinePlotReporter::measurement_failed(
-    const bench::BenchmarkFullName& /*case_info*/,
-    const bench::BenchmarkCondition& /*cond*/,
+    const BenchmarkFullName& /*case_info*/, const BenchmarkCondition& /*cond*/,
     const std::exception_ptr& /*error*/) {
     // no operation
 }

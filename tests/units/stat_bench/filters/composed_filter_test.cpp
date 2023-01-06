@@ -21,10 +21,10 @@
 
 #include <catch2/catch_test_macros.hpp>
 
-#include "stat_bench/bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_full_name.h"
 
 TEST_CASE("stat_bench::filters::ComposedFilter") {
-    using stat_bench::bench::BenchmarkFullName;
+    using stat_bench::BenchmarkFullName;
     using stat_bench::filters::ComposedFilter;
 
     SECTION("empty filter") {

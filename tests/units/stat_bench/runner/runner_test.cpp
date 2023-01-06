@@ -26,10 +26,10 @@
 #include <catch2/catch_test_macros.hpp>
 #include <trompeloeil.hpp>
 
-#include "../bench/mock_benchmark_case.h"
 #include "../measurer/mock_measurer.h"
+#include "../mock_benchmark_case.h"
 #include "../reporter/mock_reporter.h"
-#include "stat_bench/bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/param/parameter_config.h"
@@ -53,9 +53,9 @@ TEST_CASE("stat_bench::runner::Runner") {
         const std::string group_name1 = "Group1";
         const std::string case_name1 = "case1";
         const auto info1 =
-            stat_bench::bench::BenchmarkFullName(group_name1, case_name1);
+            stat_bench::BenchmarkFullName(group_name1, case_name1);
         const auto case1 =
-            std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
+            std::make_shared<stat_bench_test::bench_impl::MockBenchmarkCase>();
 
         ALLOW_CALL(*case1, info())
             // NOLINTNEXTLINE
@@ -64,7 +64,7 @@ TEST_CASE("stat_bench::runner::Runner") {
             // NOLINTNEXTLINE
             .RETURN(empty_param_config);
 
-        stat_bench::bench::BenchmarkCaseRegistry registry;
+        stat_bench::bench_impl::BenchmarkCaseRegistry registry;
         registry.add(case1);
 
         stat_bench::runner::Runner runner{registry};
@@ -127,9 +127,9 @@ TEST_CASE("stat_bench::runner::Runner") {
         const std::string group_name1 = "Group1";
         const std::string case_name1 = "case1";
         const auto info1 =
-            stat_bench::bench::BenchmarkFullName(group_name1, case_name1);
+            stat_bench::BenchmarkFullName(group_name1, case_name1);
         const auto case1 =
-            std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
+            std::make_shared<stat_bench_test::bench_impl::MockBenchmarkCase>();
 
         ALLOW_CALL(*case1, info())
             // NOLINTNEXTLINE
@@ -138,7 +138,7 @@ TEST_CASE("stat_bench::runner::Runner") {
             // NOLINTNEXTLINE
             .RETURN(empty_param_config);
 
-        stat_bench::bench::BenchmarkCaseRegistry registry;
+        stat_bench::bench_impl::BenchmarkCaseRegistry registry;
         registry.add(case1);
 
         stat_bench::runner::Runner runner{registry};
@@ -191,9 +191,9 @@ TEST_CASE("stat_bench::runner::Runner") {
         const std::string group_name1 = "Group1";
         const std::string case_name1 = "case1";
         const auto info1 =
-            stat_bench::bench::BenchmarkFullName(group_name1, case_name1);
+            stat_bench::BenchmarkFullName(group_name1, case_name1);
         const auto case1 =
-            std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
+            std::make_shared<stat_bench_test::bench_impl::MockBenchmarkCase>();
         auto param_config = empty_param_config;
         param_config.add<int>("param1")->add(1)->add(2);          // NOLINT
         param_config.add<int>("param2")->add(3)->add(4)->add(5);  // NOLINT
@@ -205,7 +205,7 @@ TEST_CASE("stat_bench::runner::Runner") {
             // NOLINTNEXTLINE
             .RETURN(param_config);
 
-        stat_bench::bench::BenchmarkCaseRegistry registry;
+        stat_bench::bench_impl::BenchmarkCaseRegistry registry;
         registry.add(case1);
 
         stat_bench::runner::Runner runner{registry};
@@ -218,7 +218,7 @@ TEST_CASE("stat_bench::runner::Runner") {
             std::vector<std::vector<stat_bench::clock::Duration>>{
                 std::vector<stat_bench::clock::Duration>{
                     stat_bench::clock::Duration(123)}};
-        std::vector<stat_bench::bench::BenchmarkCondition> conditions;
+        std::vector<stat_bench::BenchmarkCondition> conditions;
         REQUIRE_CALL(*measurer, measure(trompeloeil::_, trompeloeil::_))
             // NOLINTNEXTLINE
             .LR_SIDE_EFFECT(conditions.push_back(_2))
