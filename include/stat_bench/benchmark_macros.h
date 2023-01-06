@@ -19,12 +19,12 @@
  */
 #pragma once
 
+#include "stat_bench/bench_impl/case_impl.h"
+#include "stat_bench/bench_impl/context_name.h"
+#include "stat_bench/bench_impl/default_main.h"
+#include "stat_bench/bench_impl/measure_impl.h"
+#include "stat_bench/bench_impl/unique_name.h"
 #include "stat_bench/fixture_base.h"
-#include "stat_bench/macros/case_impl.h"
-#include "stat_bench/macros/context_name.h"
-#include "stat_bench/macros/default_main.h"
-#include "stat_bench/macros/measure_impl.h"
-#include "stat_bench/macros/unique_name.h"
 
 /*!
  * \brief Macro of the name of variables of context objects.

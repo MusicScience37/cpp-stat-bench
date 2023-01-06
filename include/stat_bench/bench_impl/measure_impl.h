@@ -19,8 +19,8 @@
  */
 #pragma once
 
+#include "stat_bench/bench_impl/context_name.h"
 #include "stat_bench/invocation_context.h"
-#include "stat_bench/macros/context_name.h"
 
 namespace stat_bench {
 namespace impl {

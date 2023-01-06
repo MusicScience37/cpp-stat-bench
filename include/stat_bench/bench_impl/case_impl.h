@@ -22,8 +22,8 @@
 #include "stat_bench/bench_impl/benchmark_case_helper.h"
 #include "stat_bench/bench_impl/benchmark_case_register.h"
 #include "stat_bench/bench_impl/benchmark_case_registry.h"
+#include "stat_bench/bench_impl/context_name.h"
 #include "stat_bench/bench_impl/null_fixture.h"
-#include "stat_bench/macros/context_name.h"
 
 /*!
  * \brief Macro to define a case using a fixture.
