@@ -5,10 +5,7 @@ Base Class of Fixture
 -----------------------------
 
 .. doxygenclass:: stat_bench::FixtureBase
-    :members: setup, tear_down, run
-
-.. doxygenclass:: stat_bench::bench_impl::BenchmarkBase
-    :members: add_param, add_threads_param
+    :members: setup, tear_down, add_param, add_threads_param, run
 
 .. doxygenclass:: stat_bench::bench_impl::IBenchmarkCase
     :members: none

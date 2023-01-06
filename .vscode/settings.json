@@ -8,6 +8,7 @@
     "Codecov",
     "conanfile",
     "cond",
+    "copydoc",
     "ctest",
     "DCMAKE",
     "deallocate",
