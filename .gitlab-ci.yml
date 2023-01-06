@@ -116,6 +116,31 @@ pre-commit:
   script:
     - poetry run pre-commit run --all-files
 
+spell check:
+  stage: test
+  needs: []
+  image: node
+  script:
+    - npm install -g cspell
+    - cspell lint
+      "**/*.h"
+      "**/*.cpp"
+      "**/*.py"
+      "**/*.cmake"
+      "**/*.txt"
+      "**/*.md"
+      "**/*.rst"
+      "**/*.puml"
+      "**/*.bib"
+      "**/*.yaml"
+      "**/*.yml"
+      "**/*.json"
+      "**/*.toml"
+      "**/*.sh"
+      "**/*.bash"
+      --exclude "**/*.approved.*"
+  interruptible: true
+
 static analysis:
   extends: .retry setting
   stage: test

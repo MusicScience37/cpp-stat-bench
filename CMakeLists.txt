@@ -1,11 +1,5 @@
 cmake_minimum_required(VERSION 3.12)
 
-if(DEFINED PROJECT_NAME)
-    set(STAT_BENCH_SUBPROJECT ON)
-else()
-    set(STAT_BENCH_SUBPROJECT OFF)
-endif()
-
 project(
     stat_bench
     VERSION 0.9.0

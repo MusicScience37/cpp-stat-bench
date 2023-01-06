@@ -27,5 +27,5 @@
     "**/.venv/**": true
   },
   "python.formatting.provider": "black",
-  "cSpell.enableFiletypes": ["cmake", "shellscript", "toml"]
+  "cSpell.enableFiletypes": ["cmake", "plantuml", "shellscript", "toml"]
 }

@@ -54,7 +54,7 @@ function(target_check_clang_tidy _TARGET)
             # make the list of source codes
             get_target_property(TARGET_SOURCES ${_TARGET} SOURCES)
             list(FILTER TARGET_SOURCES INCLUDE REGEX ".[cpp|h]$")
-            # make a direcotory to output results
+            # make a directory to output results
             set(OUTPUT_DIR
                 "${${UPPER_PROJECT_NAME}_CLANG_TIDY_RESULTS_DIR}/${_TARGET}")
             file(MAKE_DIRECTORY ${OUTPUT_DIR})
