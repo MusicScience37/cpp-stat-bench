@@ -19,16 +19,25 @@
  */
 #pragma once
 
-#include "stat_bench/bench_impl/benchmark_base.h"
+#include <memory>
+
+#include "stat_bench/bench_impl/i_benchmark_case.h"
+#include "stat_bench/current_invocation_context.h"
 #include "stat_bench/invocation_context.h"
+#include "stat_bench/param/parameter_value_vector.h"
 
 namespace stat_bench {
 
 /*!
  * \brief Base class of fixtures.
  */
-class FixtureBase : public bench_impl::BenchmarkBase {
+class FixtureBase : public bench_impl::IBenchmarkCase {
 public:
+    /*!
+     * \name Virtual functions implemented in fixture classes.
+     */
+    ///@{
+
     /*!
      * \brief Setup before running actual process.
      *
@@ -54,15 +63,45 @@ public:
         // no operation in default implementation
     }
 
+    ///@}
+
+    /*!
+     * \name Functions to set parameters.
+     */
+    ///@{
+
+    /*!
+     * \brief Add a parameter.
+     *
+     * \tparam T Type of parameter values.
+     * \param[in] param_name Parameter name.
+     * \return Vector of parameter values.
+     */
+    template <typename T>
+    [[nodiscard]] auto add_param(const std::string& param_name)
+        -> std::shared_ptr<param::ParameterValueVector<T>> {
+        return params_.add<T>(param_name);
+    }
+
+    /*!
+     * \brief Add a parameter of the number of threads.
+     *
+     * \return Vector of parameter values.
+     */
+    auto add_threads_param()
+        -> std::shared_ptr<param::ParameterValueVector<std::size_t>> {
+        return add_param<std::size_t>("threads");
+    }
+
+    ///@}
+
     /*!
      * \brief Run actual process in each case.
      *
      * \note This will be implemented in each case, so don't implement in
      * fixtures.
-     *
-     * \param[in] context Context.
      */
-    virtual void run(InvocationContext& context) = 0;
+    virtual void run() = 0;
 
     FixtureBase(const FixtureBase&) = delete;
     FixtureBase(FixtureBase&&) = delete;
@@ -82,16 +121,25 @@ protected:
 
 private:
     //! \copydoc stat_bench::bench_impl::IBenchmarkCase::execute
-    void execute(InvocationContext& context) final {
+    void execute() final {
+        auto& context = current_invocation_context();
         setup(context);
         try {
-            run(context);
+            run();
             tear_down(context);
         } catch (...) {
             tear_down(context);
             throw;
         }
     }
+
+    //! \copydoc stat_bench::bench_impl::IBenchmarkCase::params
+    auto params() const noexcept -> const param::ParameterConfig& final {
+        return params_;
+    }
+
+    //! Parameters.
+    param::ParameterConfig params_{};
 };
 
 }  // namespace stat_bench

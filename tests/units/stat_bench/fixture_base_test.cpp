@@ -32,6 +32,7 @@
 #include "mock_fixture.h"
 #include "param/create_ordinary_parameter_dict.h"
 #include "stat_bench/bench_impl/i_benchmark_case.h"
+#include "stat_bench/bench_impl/invocation_context_registry.h"
 #include "stat_bench/benchmark_condition.h"
 
 TEST_CASE("stat_bench::FixtureBase") {
@@ -43,26 +44,26 @@ TEST_CASE("stat_bench::FixtureBase") {
     constexpr std::size_t iterations = 7;
     constexpr std::size_t samples = 13;
 
-    stat_bench::InvocationContext context{
+    stat_bench::bench_impl::InvocationContextRegistry::instance().create(
         stat_bench::BenchmarkCondition(
             threads, stat_bench_test::param::create_ordinary_parameter_dict()),
-        iterations, samples, 0};
+        iterations, samples, 0);
 
     SECTION("execute") {
         trompeloeil::sequence seq;
         REQUIRE_CALL(fixture, setup(trompeloeil::_)).TIMES(1).IN_SEQUENCE(seq);
-        REQUIRE_CALL(fixture, run(trompeloeil::_)).TIMES(1).IN_SEQUENCE(seq);
+        REQUIRE_CALL(fixture, run()).TIMES(1).IN_SEQUENCE(seq);
         REQUIRE_CALL(fixture, tear_down(trompeloeil::_))
             .TIMES(1)
             .IN_SEQUENCE(seq);
 
-        REQUIRE_NOTHROW(fixture_as_case.execute(context));
+        REQUIRE_NOTHROW(fixture_as_case.execute());
     }
 
     SECTION("execute to throw exception") {
         trompeloeil::sequence seq;
         REQUIRE_CALL(fixture, setup(trompeloeil::_)).TIMES(1).IN_SEQUENCE(seq);
-        REQUIRE_CALL(fixture, run(trompeloeil::_))
+        REQUIRE_CALL(fixture, run())
             .TIMES(1)
             .IN_SEQUENCE(seq)
             // NOLINTNEXTLINE
@@ -71,7 +72,8 @@ TEST_CASE("stat_bench::FixtureBase") {
             .TIMES(1)
             .IN_SEQUENCE(seq);
 
-        REQUIRE_THROWS_AS(
-            fixture_as_case.execute(context), std::invalid_argument);
+        REQUIRE_THROWS_AS(fixture_as_case.execute(), std::invalid_argument);
     }
+
+    stat_bench::bench_impl::InvocationContextRegistry::instance().clear();
 }

@@ -30,6 +30,7 @@
 #include "stat_bench/bench_impl/benchmark_case_registry.h"
 #include "stat_bench/bench_impl/benchmark_group.h"
 #include "stat_bench/bench_impl/i_benchmark_case.h"
+#include "stat_bench/bench_impl/invocation_context_registry.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/benchmark_macros.h"
@@ -74,12 +75,14 @@ TEST_CASE("STAT_BENCH_CASE_F") {
     REQUIRE(benchmarks.at(0).cases().size() == 1);
     REQUIRE(benchmarks.at(0).cases().at(0)->info().case_name() == "Add");
 
-    stat_bench::InvocationContext context{
+    stat_bench::bench_impl::InvocationContextRegistry::instance().create(
         stat_bench::BenchmarkCondition(
             1, stat_bench_test::param::create_ordinary_parameter_dict()),
-        1, 1, 0};
+        1, 1, 0);
 
     state = 1;
-    REQUIRE_NOTHROW(benchmarks.at(0).cases().at(0)->execute(context));
+    REQUIRE_NOTHROW(benchmarks.at(0).cases().at(0)->execute());
     REQUIRE(state.load() == 3);
+
+    stat_bench::bench_impl::InvocationContextRegistry::instance().clear();
 }

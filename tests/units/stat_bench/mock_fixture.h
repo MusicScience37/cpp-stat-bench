@@ -37,7 +37,7 @@ public:
     MAKE_MOCK1(tear_down, void(stat_bench::InvocationContext&), override);
 
     // NOLINTNEXTLINE
-    MAKE_MOCK1(run, void(stat_bench::InvocationContext&), override);
+    MAKE_MOCK0(run, void(), override);
 
     MockFixture() = default;
     MockFixture(const MockFixture&) = delete;

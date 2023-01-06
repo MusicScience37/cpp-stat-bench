@@ -20,7 +20,6 @@
 #pragma once
 
 #include "stat_bench/benchmark_full_name.h"
-#include "stat_bench/invocation_context.h"
 #include "stat_bench/param/parameter_config.h"
 
 namespace stat_bench {
@@ -49,10 +48,8 @@ public:
 
     /*!
      * \brief Execute this case.
-     *
-     * \param[in] context Context.
      */
-    virtual void execute(InvocationContext& context) = 0;
+    virtual void execute() = 0;
 
     IBenchmarkCase(const IBenchmarkCase&) = delete;
     IBenchmarkCase(IBenchmarkCase&&) = delete;
