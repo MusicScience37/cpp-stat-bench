@@ -33,7 +33,7 @@
 #include "stat_bench/util/memory_barrier.h"
 
 namespace stat_bench {
-namespace bench {
+namespace bench_impl {
 
 /*!
  * \brief Class to invoke functions measuring durations in threads if needed.
@@ -189,5 +189,5 @@ private:
     std::size_t warm_up_samples_;
 };
 
-}  // namespace bench
+}  // namespace bench_impl
 }  // namespace stat_bench

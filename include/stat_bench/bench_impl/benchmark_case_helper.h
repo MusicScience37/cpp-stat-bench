@@ -21,10 +21,10 @@
 
 #include <string>
 
-#include "stat_bench/bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_full_name.h"
 
 namespace stat_bench {
-namespace bench {
+namespace bench_impl {
 
 /*!
  * \brief Class to help definition of cases in benchmarks.
@@ -44,15 +44,14 @@ protected:
         : info_(group_name, case_name) {}
 
 private:
-    //! \copydoc stat_bench::bench::IBenchmarkCase::info
-    [[nodiscard]] auto info() const noexcept
-        -> const bench::BenchmarkFullName& final {
+    //! \copydoc stat_bench::bench_impl::IBenchmarkCase::info
+    [[nodiscard]] auto info() const noexcept -> const BenchmarkFullName& final {
         return info_;
     }
 
     //! Information of this case.
-    bench::BenchmarkFullName info_;
+    BenchmarkFullName info_;
 };
 
-}  // namespace bench
+}  // namespace bench_impl
 }  // namespace stat_bench

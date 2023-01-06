@@ -22,8 +22,8 @@
 #include <cstddef>
 #include <string>
 
-#include "stat_bench/bench/benchmark_condition.h"
-#include "stat_bench/bench/i_benchmark_case.h"
+#include "stat_bench/bench_impl/i_benchmark_case.h"
+#include "stat_bench/benchmark_condition.h"
 
 namespace stat_bench {
 namespace measurer {
@@ -40,7 +40,7 @@ namespace measurer {
  * \return Number of samples for warming up.
  */
 [[nodiscard]] auto determine_warming_up_samples(
-    bench::IBenchmarkCase* bench_case, const bench::BenchmarkCondition& cond,
+    bench_impl::IBenchmarkCase* bench_case, const BenchmarkCondition& cond,
     const std::string& measurer_name, std::size_t iterations,
     std::size_t min_iterations, double min_duration_sec) -> std::size_t;
 

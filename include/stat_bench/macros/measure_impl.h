@@ -19,7 +19,7 @@
  */
 #pragma once
 
-#include "stat_bench/bench/invocation_context.h"
+#include "stat_bench/invocation_context.h"
 #include "stat_bench/macros/context_name.h"
 
 namespace stat_bench {
@@ -35,8 +35,7 @@ public:
      *
      * \param[in] context Context.
      */
-    explicit FunctionMeasurer(bench::InvocationContext& context)
-        : context_(context) {}
+    explicit FunctionMeasurer(InvocationContext& context) : context_(context) {}
 
     /*!
      * \brief Measure a function.
@@ -51,7 +50,7 @@ public:
 
 private:
     //! Context.
-    bench::InvocationContext& context_;
+    InvocationContext& context_;
 };
 
 }  // namespace impl

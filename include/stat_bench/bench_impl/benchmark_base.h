@@ -21,11 +21,11 @@
 
 #include <memory>
 
-#include "stat_bench/bench/i_benchmark_case.h"
+#include "stat_bench/bench_impl/i_benchmark_case.h"
 #include "stat_bench/param/parameter_value_vector.h"
 
 namespace stat_bench {
-namespace bench {
+namespace bench_impl {
 
 /*!
  * \brief Base class of benchmarks.
@@ -72,7 +72,7 @@ protected:
     BenchmarkBase() = default;
 
 private:
-    //! \copydoc stat_bench::bench::IBenchmarkCase::params
+    //! \copydoc stat_bench::bench_impl::IBenchmarkCase::params
     auto params() const noexcept -> const param::ParameterConfig& final {
         return params_;
     }
@@ -81,5 +81,5 @@ private:
     param::ParameterConfig params_{};
 };
 
-}  // namespace bench
+}  // namespace bench_impl
 }  // namespace stat_bench

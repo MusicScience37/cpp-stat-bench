@@ -17,7 +17,7 @@
  * \file
  * \brief Definition of InvocationContext class.
  */
-#include "stat_bench/bench/invocation_context.h"
+#include "stat_bench/invocation_context.h"
 
 #include <exception>
 #include <mutex>
@@ -28,17 +28,17 @@
 #include <catch2/catch_message.hpp>
 #include <catch2/catch_test_macros.hpp>
 
-#include "../param/create_ordinary_parameter_dict.h"
+#include "param/create_ordinary_parameter_dict.h"
 
-TEST_CASE("stat_bench::bench::InvocationContext") {
+TEST_CASE("stat_bench::InvocationContext") {
     SECTION("construct") {
         constexpr std::size_t threads = 1;
         constexpr std::size_t iterations = 7;
         constexpr std::size_t samples = 13;
         constexpr std::size_t warming_up_samples = 1;
 
-        const stat_bench::bench::InvocationContext context{
-            stat_bench::bench::BenchmarkCondition(
+        const stat_bench::InvocationContext context{
+            stat_bench::BenchmarkCondition(
                 stat_bench_test::param::create_ordinary_parameter_dict()),
             iterations, samples, warming_up_samples};
 
@@ -53,8 +53,8 @@ TEST_CASE("stat_bench::bench::InvocationContext") {
         constexpr std::size_t iterations = 7;
         constexpr std::size_t samples = 13;
         constexpr std::size_t warming_up_samples = 1;
-        stat_bench::bench::InvocationContext context{
-            stat_bench::bench::BenchmarkCondition(threads,
+        stat_bench::InvocationContext context{
+            stat_bench::BenchmarkCondition(threads,
                 stat_bench_test::param::create_ordinary_parameter_dict()),
             iterations, samples, warming_up_samples};
 
@@ -97,8 +97,8 @@ TEST_CASE("stat_bench::bench::InvocationContext") {
         constexpr std::size_t iterations = 7;
         constexpr std::size_t samples = 13;
         constexpr std::size_t warming_up_samples = 1;
-        stat_bench::bench::InvocationContext context{
-            stat_bench::bench::BenchmarkCondition(threads,
+        stat_bench::InvocationContext context{
+            stat_bench::BenchmarkCondition(threads,
                 stat_bench_test::param::create_ordinary_parameter_dict()),
             iterations, samples, warming_up_samples};
 
@@ -125,8 +125,8 @@ TEST_CASE("stat_bench::bench::InvocationContext") {
         constexpr std::size_t iterations = 7;
         constexpr std::size_t samples = 13;
         constexpr std::size_t warming_up_samples = 1;
-        stat_bench::bench::InvocationContext context{
-            stat_bench::bench::BenchmarkCondition(threads,
+        stat_bench::InvocationContext context{
+            stat_bench::BenchmarkCondition(threads,
                 stat_bench_test::param::create_ordinary_parameter_dict()),
             iterations, samples, warming_up_samples};
 
@@ -143,8 +143,8 @@ TEST_CASE("stat_bench::bench::InvocationContext") {
         constexpr std::size_t iterations = 7;
         constexpr std::size_t samples = 13;
         constexpr std::size_t warming_up_samples = 1;
-        stat_bench::bench::InvocationContext context{
-            stat_bench::bench::BenchmarkCondition(threads,
+        stat_bench::InvocationContext context{
+            stat_bench::BenchmarkCondition(threads,
                 stat_bench_test::param::create_ordinary_parameter_dict()),
             iterations, samples, warming_up_samples};
 

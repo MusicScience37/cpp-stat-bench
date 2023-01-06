@@ -17,7 +17,7 @@
  * \file
  * \brief Test of BenchmarkCaseRegistry class.
  */
-#include "stat_bench/bench/benchmark_case_registry.h"
+#include "stat_bench/bench_impl/benchmark_case_registry.h"
 
 #include <type_traits>
 
@@ -26,12 +26,12 @@
 #include <catch2/matchers/catch_matchers_container_properties.hpp>
 #include <trompeloeil.hpp>
 
-#include "mock_benchmark_case.h"
+#include "../mock_benchmark_case.h"
 #include "stat_bench/filters/composed_filter.h"
 
-TEST_CASE("stat_bench::bench::BenchmarkCaseRegistry") {
+TEST_CASE("stat_bench::bench_impl::BenchmarkCaseRegistry") {
     SECTION("construct") {
-        stat_bench::bench::BenchmarkCaseRegistry registry;
+        stat_bench::bench_impl::BenchmarkCaseRegistry registry;
 
         REQUIRE_THAT(registry.benchmarks(), Catch::Matchers::IsEmpty());
     }
@@ -46,18 +46,18 @@ TEST_CASE("stat_bench::bench::BenchmarkCaseRegistry") {
         const std::string case_name3 = "case3";
 
         const auto info1 =
-            stat_bench::bench::BenchmarkFullName(group_name1, case_name1);
+            stat_bench::BenchmarkFullName(group_name1, case_name1);
         const auto info2 =
-            stat_bench::bench::BenchmarkFullName(group_name2, case_name2);
+            stat_bench::BenchmarkFullName(group_name2, case_name2);
         const auto info3 =
-            stat_bench::bench::BenchmarkFullName(group_name3, case_name3);
+            stat_bench::BenchmarkFullName(group_name3, case_name3);
 
         const auto case1 =
-            std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
+            std::make_shared<stat_bench_test::bench_impl::MockBenchmarkCase>();
         const auto case2 =
-            std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
+            std::make_shared<stat_bench_test::bench_impl::MockBenchmarkCase>();
         const auto case3 =
-            std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
+            std::make_shared<stat_bench_test::bench_impl::MockBenchmarkCase>();
         {
             ALLOW_CALL(*case1, info())
                 // NOLINTNEXTLINE
@@ -69,7 +69,7 @@ TEST_CASE("stat_bench::bench::BenchmarkCaseRegistry") {
                 // NOLINTNEXTLINE
                 .RETURN(info3);
 
-            stat_bench::bench::BenchmarkCaseRegistry registry;
+            stat_bench::bench_impl::BenchmarkCaseRegistry registry;
             registry.add(case2);
             registry.add(case1);
             registry.add(case3);
@@ -102,18 +102,18 @@ TEST_CASE("stat_bench::bench::BenchmarkCaseRegistry") {
         const std::string case_name3 = "case3";
 
         const auto info1 =
-            stat_bench::bench::BenchmarkFullName(group_name1, case_name1);
+            stat_bench::BenchmarkFullName(group_name1, case_name1);
         const auto info2 =
-            stat_bench::bench::BenchmarkFullName(group_name2, case_name2);
+            stat_bench::BenchmarkFullName(group_name2, case_name2);
         const auto info3 =
-            stat_bench::bench::BenchmarkFullName(group_name3, case_name3);
+            stat_bench::BenchmarkFullName(group_name3, case_name3);
 
         const auto case1 =
-            std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
+            std::make_shared<stat_bench_test::bench_impl::MockBenchmarkCase>();
         const auto case2 =
-            std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
+            std::make_shared<stat_bench_test::bench_impl::MockBenchmarkCase>();
         const auto case3 =
-            std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
+            std::make_shared<stat_bench_test::bench_impl::MockBenchmarkCase>();
 
         stat_bench::filters::ComposedFilter filter;
         filter.include_with_regex(group_name1 + "/.*");
@@ -129,7 +129,7 @@ TEST_CASE("stat_bench::bench::BenchmarkCaseRegistry") {
                 // NOLINTNEXTLINE
                 .RETURN(info3);
 
-            stat_bench::bench::BenchmarkCaseRegistry registry;
+            stat_bench::bench_impl::BenchmarkCaseRegistry registry;
             registry.add(case2);
             registry.add(case1);
             registry.add(case3);

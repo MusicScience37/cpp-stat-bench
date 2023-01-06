@@ -19,12 +19,12 @@
  */
 #pragma once
 
-#include "stat_bench/bench/benchmark_full_name.h"
-#include "stat_bench/bench/invocation_context.h"
+#include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/invocation_context.h"
 #include "stat_bench/param/parameter_config.h"
 
 namespace stat_bench {
-namespace bench {
+namespace bench_impl {
 
 /*!
  * \brief Interface of cases in benchmarks.
@@ -71,5 +71,5 @@ protected:
     IBenchmarkCase() = default;
 };
 
-}  // namespace bench
+}  // namespace bench_impl
 }  // namespace stat_bench

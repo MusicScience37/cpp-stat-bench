@@ -20,8 +20,8 @@
 #include <cstddef>
 #include <memory>
 
-#include "stat_bench/bench/invocation_context.h"
 #include "stat_bench/benchmark_macros.h"
+#include "stat_bench/invocation_context.h"
 #include "stat_bench/param/parameter_value_vector.h"
 #include "stat_bench/stat/custom_stat_output.h"
 #include "stat_bench/util/do_not_optimize.h"
@@ -33,13 +33,13 @@ public:
         add_param<std::uint64_t>("number")->add(20)->add(30);
     }
 
-    void setup(stat_bench::bench::InvocationContext& context) override {
+    void setup(stat_bench::InvocationContext& context) override {
         number_ = context.get_param<std::size_t>("number");
         throughput_stat_ = context.add_custom_stat("throughput_stat",
             stat_bench::stat::CustomOutputAnalysisType::rate_per_sec);
     }
 
-    void tear_down(stat_bench::bench::InvocationContext& context) override {
+    void tear_down(stat_bench::InvocationContext& context) override {
         context.add_custom_output("processed_numbers",
             static_cast<double>(context.samples()) *
                 static_cast<double>(context.iterations()));

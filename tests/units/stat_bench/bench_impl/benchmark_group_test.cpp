@@ -17,7 +17,7 @@
  * \file
  * \brief Test of BenchmarkGroup class.
  */
-#include "stat_bench/bench/benchmark_group.h"
+#include "stat_bench/bench_impl/benchmark_group.h"
 
 #include <type_traits>
 
@@ -26,14 +26,14 @@
 #include <catch2/matchers/catch_matchers_container_properties.hpp>
 #include <trompeloeil.hpp>
 
-#include "mock_benchmark_case.h"
-#include "stat_bench/bench/benchmark_full_name.h"
+#include "../mock_benchmark_case.h"
+#include "stat_bench/benchmark_full_name.h"
 
-TEST_CASE("stat_bench::bench::BenchmarkGroup") {
+TEST_CASE("stat_bench::bench_impl::BenchmarkGroup") {
     SECTION("construct") {
         const std::string group_name = "Group";
 
-        const stat_bench::bench::BenchmarkGroup group{group_name};
+        const stat_bench::bench_impl::BenchmarkGroup group{group_name};
 
         CHECK(group.name() == group_name);
         CHECK_THAT(group.cases(), Catch::Matchers::IsEmpty());
@@ -46,14 +46,14 @@ TEST_CASE("stat_bench::bench::BenchmarkGroup") {
         const std::string case_name2 = "case2";
 
         const auto info1 =
-            stat_bench::bench::BenchmarkFullName(group_name, case_name1);
+            stat_bench::BenchmarkFullName(group_name, case_name1);
         const auto info2 =
-            stat_bench::bench::BenchmarkFullName(group_name, case_name2);
+            stat_bench::BenchmarkFullName(group_name, case_name2);
 
         const auto case1 =
-            std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
+            std::make_shared<stat_bench_test::bench_impl::MockBenchmarkCase>();
         const auto case2 =
-            std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
+            std::make_shared<stat_bench_test::bench_impl::MockBenchmarkCase>();
         {
             ALLOW_CALL(*case1, info())
                 // NOLINTNEXTLINE
@@ -62,7 +62,7 @@ TEST_CASE("stat_bench::bench::BenchmarkGroup") {
                 // NOLINTNEXTLINE
                 .RETURN(info2);
 
-            stat_bench::bench::BenchmarkGroup group{group_name};
+            stat_bench::bench_impl::BenchmarkGroup group{group_name};
             REQUIRE_NOTHROW(group.add(case2));
             REQUIRE_NOTHROW(group.add(case1));
 
@@ -79,14 +79,14 @@ TEST_CASE("stat_bench::bench::BenchmarkGroup") {
         const std::string case_name2 = "case1";
 
         const auto info1 =
-            stat_bench::bench::BenchmarkFullName(group_name, case_name1);
+            stat_bench::BenchmarkFullName(group_name, case_name1);
         const auto info2 =
-            stat_bench::bench::BenchmarkFullName(group_name, case_name2);
+            stat_bench::BenchmarkFullName(group_name, case_name2);
 
         const auto case1 =
-            std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
+            std::make_shared<stat_bench_test::bench_impl::MockBenchmarkCase>();
         const auto case2 =
-            std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
+            std::make_shared<stat_bench_test::bench_impl::MockBenchmarkCase>();
         {
             ALLOW_CALL(*case1, info())
                 // NOLINTNEXTLINE
@@ -95,7 +95,7 @@ TEST_CASE("stat_bench::bench::BenchmarkGroup") {
                 // NOLINTNEXTLINE
                 .RETURN(info2);
 
-            stat_bench::bench::BenchmarkGroup group{group_name};
+            stat_bench::bench_impl::BenchmarkGroup group{group_name};
             REQUIRE_NOTHROW(group.add(case2));
             REQUIRE_THROWS(group.add(case1));
         }
@@ -108,16 +108,16 @@ TEST_CASE("stat_bench::bench::BenchmarkGroup") {
         const std::string case_name1 = "case1";
 
         const auto info1 =
-            stat_bench::bench::BenchmarkFullName(group_name1, case_name1);
+            stat_bench::BenchmarkFullName(group_name1, case_name1);
 
         const auto case1 =
-            std::make_shared<stat_bench_test::bench::MockBenchmarkCase>();
+            std::make_shared<stat_bench_test::bench_impl::MockBenchmarkCase>();
         {
             ALLOW_CALL(*case1, info())
                 // NOLINTNEXTLINE
                 .RETURN(info1);
 
-            stat_bench::bench::BenchmarkGroup group{group_name2};
+            stat_bench::bench_impl::BenchmarkGroup group{group_name2};
             REQUIRE_THROWS(group.add(case1));
         }
     }

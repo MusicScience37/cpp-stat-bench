@@ -15,7 +15,7 @@
  */
 /*!
  * \file
- * \brief Definition of BenchmarkCaseRegistry class.
+ * \brief Definition of BenchmarkGroup class.
  */
 #pragma once
 
@@ -25,22 +25,30 @@
 #include <utility>
 #include <vector>
 
-#include "stat_bench/bench/benchmark_full_name.h"
-#include "stat_bench/bench/benchmark_group.h"
-#include "stat_bench/bench/i_benchmark_case.h"
+#include "stat_bench/bench_impl/i_benchmark_case.h"
+#include "stat_bench/filters/composed_filter.h"
 
 namespace stat_bench {
-namespace bench {
+namespace bench_impl {
 
 /*!
- * \brief Class of registry of cases of benchmarks.
+ * \brief Class of groups of cases in benchmarks.
  */
-class BenchmarkCaseRegistry {
+class BenchmarkGroup {
 public:
     /*!
      * \brief Constructor.
+     *
+     * \param[in] name Name.
      */
-    BenchmarkCaseRegistry() = default;
+    explicit BenchmarkGroup(std::string name);
+
+    /*!
+     * \brief Get the group name.
+     *
+     * \return Group name.
+     */
+    [[nodiscard]] auto name() const noexcept -> const std::string&;
 
     /*!
      * \brief Add a case.
@@ -57,24 +65,20 @@ public:
     void filter_by(const filters::ComposedFilter& filter);
 
     /*!
-     * \brief Get benchmarks.
+     * \brief Get cases.
      *
-     * \return Benchmarks per group.
+     * \return Cases.
      */
-    [[nodiscard]] auto benchmarks() const noexcept
-        -> const std::vector<BenchmarkGroup>&;
-
-    /*!
-     * \brief Get an instance of the registry.
-     *
-     * \return Reference to the instance.
-     */
-    [[nodiscard]] static auto instance() -> BenchmarkCaseRegistry&;
+    [[nodiscard]] auto cases() const noexcept
+        -> const std::vector<std::shared_ptr<IBenchmarkCase>>&;
 
 private:
-    //! Groups.
-    std::vector<BenchmarkGroup> groups_{};
+    //! Name.
+    std::string name_;
+
+    //! Cases.
+    std::vector<std::shared_ptr<IBenchmarkCase>> cases_{};
 };
 
-}  // namespace bench
+}  // namespace bench_impl
 }  // namespace stat_bench

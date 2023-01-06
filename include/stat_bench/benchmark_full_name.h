@@ -26,7 +26,6 @@
 #include <fmt/format.h>
 
 namespace stat_bench {
-namespace bench {
 
 /*!
  * \brief Class of information of cases in benchmarks.
@@ -69,17 +68,16 @@ private:
     std::string case_name_;
 };
 
-}  // namespace bench
 }  // namespace stat_bench
 
 namespace fmt {
 
 /*!
  * \brief Implementation of fmt::formatter for
- * stat_bench::bench::BenchmarkFullName.
+ * stat_bench::BenchmarkFullName.
  */
 template <>
-struct formatter<stat_bench::bench::BenchmarkFullName>
+struct formatter<stat_bench::BenchmarkFullName>
     : public formatter<std::string> {
     /*!
      * \brief Format.
@@ -90,7 +88,7 @@ struct formatter<stat_bench::bench::BenchmarkFullName>
      * \return Output iterator after formatting.
      */
     template <typename FormatContext>
-    auto format(const stat_bench::bench::BenchmarkFullName& val,
+    auto format(const stat_bench::BenchmarkFullName& val,
         FormatContext& context) -> decltype(context.out()) {
         return formatter<std::string>::format(
             fmt::format("{}/{}", val.group_name(), val.case_name()), context);

@@ -26,13 +26,12 @@
 #include <utility>
 #include <vector>
 
-#include "stat_bench/bench/benchmark_condition.h"
-#include "stat_bench/bench/threadable_invoker.h"
+#include "stat_bench/bench_impl/threadable_invoker.h"
+#include "stat_bench/benchmark_condition.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/stat/custom_stat_output.h"
 
 namespace stat_bench {
-namespace bench {
 
 /*!
  * \brief Class of context of invocations of benchmarks.
@@ -140,7 +139,7 @@ public:
      */
     template <typename Func>
     inline void measure(const Func& func) {
-        durations_ = ThreadableInvoker(
+        durations_ = bench_impl::ThreadableInvoker(
             cond_.threads(), iterations_, samples_, warming_up_samples_)
                          .measure(func);
     }
@@ -200,5 +199,4 @@ private:
     std::vector<std::pair<std::string, double>> custom_outputs_{};
 };
 
-}  // namespace bench
 }  // namespace stat_bench

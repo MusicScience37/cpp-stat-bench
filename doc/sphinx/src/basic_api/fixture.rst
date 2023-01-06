@@ -4,21 +4,19 @@ Writing Fixture
 Base Class of Fixture
 -----------------------------
 
-.. doxygentypedef:: stat_bench::FixtureBase
-
-.. doxygenclass:: stat_bench::bench::FixtureBase
+.. doxygenclass:: stat_bench::FixtureBase
     :members: setup, tear_down, run
 
-.. doxygenclass:: stat_bench::bench::BenchmarkBase
+.. doxygenclass:: stat_bench::bench_impl::BenchmarkBase
     :members: add_param, add_threads_param
 
-.. doxygenclass:: stat_bench::bench::IBenchmarkCase
+.. doxygenclass:: stat_bench::bench_impl::IBenchmarkCase
     :members: none
 
 Classes Used with Fixtures
 -------------------------------------
 
-.. doxygenclass:: stat_bench::bench::InvocationContext
+.. doxygenclass:: stat_bench::InvocationContext
     :members: threads, iterations, samples, get_param, add_custom_stat, add_custom_output
 
 .. doxygenenum:: stat_bench::stat::CustomOutputAnalysisType

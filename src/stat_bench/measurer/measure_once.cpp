@@ -25,20 +25,20 @@
 #include <utility>
 #include <vector>
 
-#include "stat_bench/bench/benchmark_condition.h"
-#include "stat_bench/bench/i_benchmark_case.h"
-#include "stat_bench/bench/invocation_context.h"
+#include "stat_bench/bench_impl/i_benchmark_case.h"
+#include "stat_bench/benchmark_condition.h"
 #include "stat_bench/clock/duration.h"
+#include "stat_bench/invocation_context.h"
 #include "stat_bench/measurer/measurement.h"
 
 namespace stat_bench {
 namespace measurer {
 
-auto measure_once(bench::IBenchmarkCase* bench_case,
-    const bench::BenchmarkCondition& cond, const std::string& measurer_name,
+auto measure_once(bench_impl::IBenchmarkCase* bench_case,
+    const BenchmarkCondition& cond, const std::string& measurer_name,
     std::size_t iterations, std::size_t samples, std::size_t warming_up_samples)
     -> Measurement {
-    bench::InvocationContext context{
+    InvocationContext context{
         cond, iterations, samples + warming_up_samples, warming_up_samples};
     bench_case->execute(context);
     if (context.durations().empty()) {

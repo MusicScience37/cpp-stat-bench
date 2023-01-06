@@ -17,7 +17,7 @@
  * \file
  * \brief Test of ThreadableInvoker class.
  */
-#include "stat_bench/bench/threadable_invoker.h"
+#include "stat_bench/bench_impl/threadable_invoker.h"
 
 #include <mutex>
 #include <stdexcept>
@@ -27,14 +27,14 @@
 #include <catch2/catch_message.hpp>
 #include <catch2/catch_test_macros.hpp>
 
-TEST_CASE("stat_bench::bench::ThreadableInvoker") {
+TEST_CASE("stat_bench::bench_impl::ThreadableInvoker") {
     SECTION("measure using single thread") {
         constexpr std::size_t threads = 1;
         constexpr std::size_t iterations = 7;
         constexpr std::size_t samples = 13;
         constexpr std::size_t warm_up_samples = 5;
 
-        const stat_bench::bench::ThreadableInvoker invoker{
+        const stat_bench::bench_impl::ThreadableInvoker invoker{
             threads, iterations, samples, warm_up_samples};
 
         std::vector<std::tuple<std::size_t, std::size_t, std::size_t>>
@@ -76,7 +76,7 @@ TEST_CASE("stat_bench::bench::ThreadableInvoker") {
         constexpr std::size_t samples = 13;
         constexpr std::size_t warm_up_samples = 5;
 
-        const stat_bench::bench::ThreadableInvoker invoker{
+        const stat_bench::bench_impl::ThreadableInvoker invoker{
             threads, iterations, samples, warm_up_samples};
 
         REQUIRE_THROWS(invoker.measure(
@@ -92,7 +92,7 @@ TEST_CASE("stat_bench::bench::ThreadableInvoker") {
         constexpr std::size_t samples = 13;
         constexpr std::size_t warm_up_samples = 5;
 
-        const stat_bench::bench::ThreadableInvoker invoker{
+        const stat_bench::bench_impl::ThreadableInvoker invoker{
             threads, iterations, samples, warm_up_samples};
 
         std::vector<std::tuple<std::size_t, std::size_t, std::size_t>>
@@ -118,7 +118,7 @@ TEST_CASE("stat_bench::bench::ThreadableInvoker") {
         constexpr std::size_t samples = 13;
         constexpr std::size_t warm_up_samples = 5;
 
-        const stat_bench::bench::ThreadableInvoker invoker{
+        const stat_bench::bench_impl::ThreadableInvoker invoker{
             threads, iterations, samples, warm_up_samples};
 
         REQUIRE_THROWS(invoker.measure(
@@ -129,9 +129,13 @@ TEST_CASE("stat_bench::bench::ThreadableInvoker") {
     }
 
     SECTION("invalid arguments") {
-        REQUIRE_THROWS((void)stat_bench::bench::ThreadableInvoker(0, 1, 1, 0));
-        REQUIRE_THROWS((void)stat_bench::bench::ThreadableInvoker(1, 0, 1, 0));
-        REQUIRE_THROWS((void)stat_bench::bench::ThreadableInvoker(1, 1, 0, 0));
-        REQUIRE_THROWS((void)stat_bench::bench::ThreadableInvoker(1, 1, 1, 1));
+        REQUIRE_THROWS(
+            (void)stat_bench::bench_impl::ThreadableInvoker(0, 1, 1, 0));
+        REQUIRE_THROWS(
+            (void)stat_bench::bench_impl::ThreadableInvoker(1, 0, 1, 0));
+        REQUIRE_THROWS(
+            (void)stat_bench::bench_impl::ThreadableInvoker(1, 1, 0, 0));
+        REQUIRE_THROWS(
+            (void)stat_bench::bench_impl::ThreadableInvoker(1, 1, 1, 1));
     }
 }

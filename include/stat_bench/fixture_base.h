@@ -19,16 +19,15 @@
  */
 #pragma once
 
-#include "stat_bench/bench/benchmark_base.h"
-#include "stat_bench/bench/invocation_context.h"
+#include "stat_bench/bench_impl/benchmark_base.h"
+#include "stat_bench/invocation_context.h"
 
 namespace stat_bench {
-namespace bench {
 
 /*!
  * \brief Base class of fixtures.
  */
-class FixtureBase : public BenchmarkBase {
+class FixtureBase : public bench_impl::BenchmarkBase {
 public:
     /*!
      * \brief Setup before running actual process.
@@ -82,7 +81,7 @@ protected:
     FixtureBase() = default;
 
 private:
-    //! \copydoc stat_bench::bench::IBenchmarkCase::execute
+    //! \copydoc stat_bench::bench_impl::IBenchmarkCase::execute
     void execute(InvocationContext& context) final {
         setup(context);
         try {
@@ -95,5 +94,4 @@ private:
     }
 };
 
-}  // namespace bench
 }  // namespace stat_bench

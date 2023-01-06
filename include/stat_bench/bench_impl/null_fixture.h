@@ -19,10 +19,10 @@
  */
 #pragma once
 
-#include "stat_bench/bench/fixture_base.h"
+#include "stat_bench/fixture_base.h"
 
 namespace stat_bench {
-namespace bench {
+namespace bench_impl {
 
 /*!
  * \brief Class of fixtures without set up and tear down operations.
@@ -47,18 +47,18 @@ protected:
     NullFixture() = default;
 
 private:
-    //! \copydoc stat_bench::bench::FixtureBase::setup
+    //! \copydoc stat_bench::FixtureBase::setup
     void setup(InvocationContext& context) final {
         (void)context;
         // no operation
     }
 
-    //! \copydoc stat_bench::bench::FixtureBase::tear_down
+    //! \copydoc stat_bench::FixtureBase::tear_down
     void tear_down(InvocationContext& context) final {
         (void)context;
         // no operation
     }
 };
 
-}  // namespace bench
+}  // namespace bench_impl
 }  // namespace stat_bench

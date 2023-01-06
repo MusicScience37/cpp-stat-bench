@@ -28,10 +28,10 @@
 #include <catch2/catch_test_macros.hpp>
 #include <trompeloeil.hpp>
 
-#include "../bench/mock_benchmark_case.h"
+#include "../mock_benchmark_case.h"
 #include "../param/create_ordinary_parameter_dict.h"
-#include "stat_bench/bench/benchmark_condition.h"
-#include "stat_bench/bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_condition.h"
+#include "stat_bench/benchmark_full_name.h"
 
 TEST_CASE("stat_bench::measurer::ProcessingTimeMeasurer") {
     constexpr std::size_t samples = 3;
@@ -44,9 +44,9 @@ TEST_CASE("stat_bench::measurer::ProcessingTimeMeasurer") {
     SECTION("get name") { REQUIRE(measurer->name() == "Processing Time"); }
 
     SECTION("measure") {
-        stat_bench_test::bench::MockBenchmarkCase bench_case;
-        const auto info = stat_bench::bench::BenchmarkFullName("group", "case");
-        const auto cond = stat_bench::bench::BenchmarkCondition(
+        stat_bench_test::bench_impl::MockBenchmarkCase bench_case;
+        const auto info = stat_bench::BenchmarkFullName("group", "case");
+        const auto cond = stat_bench::BenchmarkCondition(
             1, stat_bench_test::param::create_ordinary_parameter_dict());
 
         // NOLINTNEXTLINE

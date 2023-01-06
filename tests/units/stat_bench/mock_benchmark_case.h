@@ -19,24 +19,24 @@
  */
 #pragma once
 
-#include "../../trompeloeil.h"
-#include "stat_bench/bench/i_benchmark_case.h"
+#include "../trompeloeil.h"
+#include "stat_bench/bench_impl/i_benchmark_case.h"
 
 namespace stat_bench_test {
-namespace bench {
+namespace bench_impl {
 
-class MockBenchmarkCase final : public stat_bench::bench::IBenchmarkCase {
+class MockBenchmarkCase final : public stat_bench::bench_impl::IBenchmarkCase {
 public:
     // NOLINTNEXTLINE
     MAKE_CONST_MOCK0(
-        info, const stat_bench::bench::BenchmarkFullName&(), noexcept override);
+        info, const stat_bench::BenchmarkFullName&(), noexcept override);
 
     // NOLINTNEXTLINE
     MAKE_CONST_MOCK0(
         params, const stat_bench::param::ParameterConfig&(), noexcept override);
 
     // NOLINTNEXTLINE
-    MAKE_MOCK1(execute, void(stat_bench::bench::InvocationContext&), override);
+    MAKE_MOCK1(execute, void(stat_bench::InvocationContext&), override);
 
     MockBenchmarkCase() = default;
     MockBenchmarkCase(const MockBenchmarkCase&) = delete;
@@ -46,5 +46,5 @@ public:
     ~MockBenchmarkCase() override = default;
 };
 
-}  // namespace bench
+}  // namespace bench_impl
 }  // namespace stat_bench_test

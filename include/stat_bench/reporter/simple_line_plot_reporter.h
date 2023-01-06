@@ -25,8 +25,8 @@
 
 #include <fmt/format.h>
 
-#include "stat_bench/bench/benchmark_condition.h"
-#include "stat_bench/bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_condition.h"
+#include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/clock/system_time_point.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/reporter/i_reporter.h"
@@ -65,18 +65,18 @@ public:
     void group_finished(const std::string& name) override;
 
     //! \copydoc stat_bench::reporter::IReporter::case_starts
-    void case_starts(const bench::BenchmarkFullName& case_info) override;
+    void case_starts(const BenchmarkFullName& case_info) override;
 
     //! \copydoc stat_bench::reporter::IReporter::case_finished
-    void case_finished(const bench::BenchmarkFullName& case_info) override;
+    void case_finished(const BenchmarkFullName& case_info) override;
 
     //! \copydoc stat_bench::reporter::IReporter::measurement_succeeded
     void measurement_succeeded(
         const measurer::Measurement& measurement) override;
 
     //! \copydoc stat_bench::reporter::IReporter::measurement_failed
-    void measurement_failed(const bench::BenchmarkFullName& case_info,
-        const bench::BenchmarkCondition& cond,
+    void measurement_failed(const BenchmarkFullName& case_info,
+        const BenchmarkCondition& cond,
         const std::exception_ptr& error) override;
 
 private:

@@ -22,8 +22,8 @@
 #include <string>
 
 #include "../../trompeloeil.h"
-#include "stat_bench/bench/benchmark_condition.h"
-#include "stat_bench/bench/i_benchmark_case.h"
+#include "stat_bench/bench_impl/i_benchmark_case.h"
+#include "stat_bench/benchmark_condition.h"
 #include "stat_bench/measurer/i_measurer.h"
 #include "stat_bench/measurer/measurement.h"
 
@@ -37,8 +37,9 @@ public:
 
     // NOLINTNEXTLINE
     MAKE_CONST_MOCK2(measure,
-        stat_bench::measurer::Measurement(stat_bench::bench::IBenchmarkCase*,
-            const stat_bench::bench::BenchmarkCondition&),
+        stat_bench::measurer::Measurement(
+            stat_bench::bench_impl::IBenchmarkCase*,
+            const stat_bench::BenchmarkCondition&),
         override);
 
     MockMeasurer() = default;

@@ -25,7 +25,6 @@
 #include "stat_bench/param/parameter_dict.h"
 
 namespace stat_bench {
-namespace bench {
 
 /*!
  * \brief Class of conditions of benchmarks.
@@ -75,5 +74,4 @@ private:
     param::ParameterDict params_;
 };
 
-}  // namespace bench
 }  // namespace stat_bench

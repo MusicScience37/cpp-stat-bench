@@ -24,13 +24,13 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include "../units/stat_bench/param/create_ordinary_parameter_dict.h"
-#include "stat_bench/bench/benchmark_case_registry.h"
-#include "stat_bench/bench/benchmark_condition.h"
-#include "stat_bench/bench/benchmark_full_name.h"
-#include "stat_bench/bench/benchmark_group.h"
-#include "stat_bench/bench/i_benchmark_case.h"
-#include "stat_bench/bench/invocation_context.h"
+#include "stat_bench/bench_impl/benchmark_case_registry.h"
+#include "stat_bench/bench_impl/benchmark_group.h"
+#include "stat_bench/bench_impl/i_benchmark_case.h"
+#include "stat_bench/benchmark_condition.h"
+#include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/benchmark_macros.h"
+#include "stat_bench/invocation_context.h"
 
 static auto case_index() -> int& {
     static int index = 0;
@@ -56,7 +56,7 @@ STAT_BENCH_CASE("Group2", "Case3") {
 
 TEST_CASE("STAT_BENCH_CASE") {
     const auto& benchmarks =
-        stat_bench::bench::BenchmarkCaseRegistry::instance().benchmarks();
+        stat_bench::bench_impl::BenchmarkCaseRegistry::instance().benchmarks();
 
     REQUIRE(benchmarks.size() == 2);
     REQUIRE(benchmarks.at(0).name() == "Group1");
@@ -64,8 +64,8 @@ TEST_CASE("STAT_BENCH_CASE") {
     REQUIRE(benchmarks.at(0).cases().size() == 2);
     REQUIRE(benchmarks.at(1).cases().size() == 1);
 
-    stat_bench::bench::InvocationContext context{
-        stat_bench::bench::BenchmarkCondition(
+    stat_bench::InvocationContext context{
+        stat_bench::BenchmarkCondition(
             1, stat_bench_test::param::create_ordinary_parameter_dict()),
         1, 1, 0};
 

@@ -17,20 +17,20 @@
  * \file
  * \brief Test of BenchmarkCondition class.
  */
-#include "stat_bench/bench/benchmark_condition.h"
+#include "stat_bench/benchmark_condition.h"
 
 #include <string>
 
 #include <catch2/catch_test_macros.hpp>
 #include <fmt/format.h>
 
-#include "../param/create_ordinary_parameter_dict.h"
+#include "param/create_ordinary_parameter_dict.h"
 
-TEST_CASE("stat_bench::bench::BenchmarkCondition") {
+TEST_CASE("stat_bench::BenchmarkCondition") {
     SECTION("construct") {
         constexpr std::size_t threads = 7;
 
-        const auto cond = stat_bench::bench::BenchmarkCondition(
+        const auto cond = stat_bench::BenchmarkCondition(
             threads, stat_bench_test::param::create_ordinary_parameter_dict());
 
         REQUIRE(cond.threads() == threads);

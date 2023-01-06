@@ -17,7 +17,7 @@
  * \file
  * \brief Test of FixtureBase class.
  */
-#include "stat_bench/bench/fixture_base.h"
+#include "stat_bench/fixture_base.h"
 
 // IWYU pragma: no_include  <stddef.h>
 
@@ -29,22 +29,22 @@
 #include <catch2/catch_test_macros.hpp>
 #include <trompeloeil.hpp>
 
-#include "../param/create_ordinary_parameter_dict.h"
 #include "mock_fixture.h"
-#include "stat_bench/bench/benchmark_condition.h"
-#include "stat_bench/bench/i_benchmark_case.h"
+#include "param/create_ordinary_parameter_dict.h"
+#include "stat_bench/bench_impl/i_benchmark_case.h"
+#include "stat_bench/benchmark_condition.h"
 
-TEST_CASE("stat_bench::bench::FixtureBase") {
-    stat_bench_test::bench::MockFixture fixture;
+TEST_CASE("stat_bench::FixtureBase") {
+    stat_bench_test::MockFixture fixture;
 
-    stat_bench::bench::IBenchmarkCase& fixture_as_case = fixture;
+    stat_bench::bench_impl::IBenchmarkCase& fixture_as_case = fixture;
 
     constexpr std::size_t threads = 1;
     constexpr std::size_t iterations = 7;
     constexpr std::size_t samples = 13;
 
-    stat_bench::bench::InvocationContext context{
-        stat_bench::bench::BenchmarkCondition(
+    stat_bench::InvocationContext context{
+        stat_bench::BenchmarkCondition(
             threads, stat_bench_test::param::create_ordinary_parameter_dict()),
         iterations, samples, 0};
 

@@ -19,27 +19,25 @@
  */
 #pragma once
 
-#include "../../trompeloeil.h"
-#include "stat_bench/bench/fixture_base.h"
+#include "../trompeloeil.h"
+#include "stat_bench/fixture_base.h"
 
 namespace stat_bench_test {
-namespace bench {
 
-class MockFixture final : public stat_bench::bench::FixtureBase {
+class MockFixture final : public stat_bench::FixtureBase {
 public:
     // NOLINTNEXTLINE
     MAKE_CONST_MOCK0(
-        info, const stat_bench::bench::BenchmarkFullName&(), noexcept override);
+        info, const stat_bench::BenchmarkFullName&(), noexcept override);
 
     // NOLINTNEXTLINE
-    MAKE_MOCK1(setup, void(stat_bench::bench::InvocationContext&), override);
+    MAKE_MOCK1(setup, void(stat_bench::InvocationContext&), override);
 
     // NOLINTNEXTLINE
-    MAKE_MOCK1(
-        tear_down, void(stat_bench::bench::InvocationContext&), override);
+    MAKE_MOCK1(tear_down, void(stat_bench::InvocationContext&), override);
 
     // NOLINTNEXTLINE
-    MAKE_MOCK1(run, void(stat_bench::bench::InvocationContext&), override);
+    MAKE_MOCK1(run, void(stat_bench::InvocationContext&), override);
 
     MockFixture() = default;
     MockFixture(const MockFixture&) = delete;
@@ -49,5 +47,4 @@ public:
     ~MockFixture() override = default;
 };
 
-}  // namespace bench
 }  // namespace stat_bench_test
