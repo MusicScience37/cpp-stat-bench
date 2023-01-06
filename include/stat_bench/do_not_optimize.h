@@ -15,12 +15,12 @@
  */
 /*!
  * \file
- * \brief Declaration of use_pointer function.
+ * \brief Definition of do_not_optimize function.
  */
 #pragma once
 
 namespace stat_bench {
-namespace util {
+namespace impl {
 
 /*!
  * \brief Use a pointer to prevent deletion of a variable.
@@ -29,5 +29,19 @@ namespace util {
  */
 void use_pointer(void* ptr) noexcept;
 
-}  // namespace util
+}  // namespace impl
+
+/*!
+ * \brief Prevent compilers to optimize away a value.
+ *
+ * \warning This won't prevent optimizations in processes to evaluate the value.
+ *
+ * \tparam T Type.
+ * \param[in] val Value.
+ */
+template <typename T>
+inline void do_not_optimize(T&& val) noexcept {
+    impl::use_pointer(reinterpret_cast<void*>(&val));
+}
+
 }  // namespace stat_bench

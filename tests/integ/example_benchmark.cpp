@@ -20,7 +20,7 @@
 #include <cstdint>
 
 #include "stat_bench/benchmark_macros.h"
-#include "stat_bench/util/do_not_optimize.h"
+#include "stat_bench/do_not_optimize.h"
 
 [[nodiscard]] auto fibonacci(std::uint64_t number) -> std::uint64_t {
     if (number < 2) {
@@ -32,8 +32,8 @@
 STAT_BENCH_CASE("Fibonacci", "Fibonacci") {
     std::uint64_t number = 30;  // NOLINT
     STAT_BENCH_MEASURE() {
-        stat_bench::util::do_not_optimize(number);
-        stat_bench::util::do_not_optimize(fibonacci(number));
+        stat_bench::do_not_optimize(number);
+        stat_bench::do_not_optimize(fibonacci(number));
     };
 }
 

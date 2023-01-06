@@ -19,7 +19,7 @@
  *
  * \note Separate implementation to prevent optimization.
  */
-#include "stat_bench/util/use_pointer.h"
+#include "stat_bench/do_not_optimize.h"
 
 #if defined(__GNUC__) || defined(__clang__)
 
@@ -28,14 +28,14 @@
  * *****************************************************************/
 
 namespace stat_bench {
-namespace util {
+namespace impl {
 
 void use_pointer(void* ptr) noexcept {
     // NOLINTNEXTLINE
     asm volatile("" : : "g"(ptr) : "memory");
 }
 
-}  // namespace util
+}  // namespace impl
 }  // namespace stat_bench
 
 #else
@@ -47,7 +47,7 @@ void use_pointer(void* ptr) noexcept {
 #include <atomic>
 
 namespace stat_bench {
-namespace util {
+namespace impl {
 
 void use_pointer(void* ptr) noexcept {
     std::atomic_signal_fence(std::memory_order_acq_rel);
@@ -56,7 +56,7 @@ void use_pointer(void* ptr) noexcept {
     std::atomic_signal_fence(std::memory_order_acq_rel);
 }
 
-}  // namespace util
+}  // namespace impl
 }  // namespace stat_bench
 
 #endif

@@ -15,17 +15,19 @@
  */
 /*!
  * \file
- * \brief Test of do_not_optimize function.
+ * \brief Definition of memory_barrier function.
  */
-#include "stat_bench/util/do_not_optimize.h"
+#pragma once
 
-#include <string>
+#include <atomic>
 
-#include <catch2/catch_test_macros.hpp>
+namespace stat_bench {
 
-TEST_CASE("stat_bench::util::do_not_optimize") {
-    SECTION("use pointer") {
-        int val = 0;
-        REQUIRE_NOTHROW(stat_bench::util::do_not_optimize(val));
-    }
+/*!
+ * \brief Prevent optimizers to move memory access beyond this function call.
+ */
+inline void memory_barrier() noexcept {
+    std::atomic_signal_fence(std::memory_order_acq_rel);
 }
+
+}  // namespace stat_bench

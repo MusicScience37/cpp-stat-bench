@@ -21,10 +21,10 @@
 #include <memory>
 
 #include "stat_bench/benchmark_macros.h"
+#include "stat_bench/do_not_optimize.h"
 #include "stat_bench/invocation_context.h"
 #include "stat_bench/param/parameter_value_vector.h"
 #include "stat_bench/stat/custom_stat_output.h"
-#include "stat_bench/util/do_not_optimize.h"
 
 class Fixture : public stat_bench::FixtureBase {
 public:
@@ -61,8 +61,8 @@ protected:
 STAT_BENCH_CASE_F(Fixture, "FibonacciParametrized", "Fibonacci") {
     STAT_BENCH_MEASURE_INDEXED(
         thread_index, sample_index, /*iteration_index*/) {
-        stat_bench::util::do_not_optimize(number_);
-        stat_bench::util::do_not_optimize(fibonacci(number_));
+        stat_bench::do_not_optimize(number_);
+        stat_bench::do_not_optimize(fibonacci(number_));
         throughput_stat_->add(thread_index, sample_index, 1.0);
     };
 }

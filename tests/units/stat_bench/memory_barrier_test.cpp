@@ -15,17 +15,14 @@
  */
 /*!
  * \file
- * \brief Test of use_pointer function.
+ * \brief Test of memory_barrier function.
  */
-#include "stat_bench/util/use_pointer.h"
+#include "stat_bench/memory_barrier.h"
 
 #include <string>
 
 #include <catch2/catch_test_macros.hpp>
 
-TEST_CASE("stat_bench::util::use_pointer") {
-    SECTION("use pointer") {
-        int val = 0;
-        REQUIRE_NOTHROW(stat_bench::util::use_pointer(&val));
-    }
+TEST_CASE("stat_bench::memory_barrier") {
+    SECTION("memory barrier") { REQUIRE_NOTHROW(stat_bench::memory_barrier()); }
 }

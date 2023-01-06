@@ -22,9 +22,9 @@
 #include <memory>
 
 #include "stat_bench/benchmark_macros.h"
+#include "stat_bench/do_not_optimize.h"
 #include "stat_bench/invocation_context.h"
 #include "stat_bench/param/parameter_value_vector.h"
-#include "stat_bench/util/do_not_optimize.h"
 
 [[nodiscard]] auto fibonacci(std::uint64_t number) -> std::uint64_t {
     if (number < 2) {
@@ -50,8 +50,8 @@ protected:
 
 STAT_BENCH_CASE_F(Fixture, "Fibonacci", "Fibonacci") {
     STAT_BENCH_MEASURE() {
-        stat_bench::util::do_not_optimize(number_);
-        stat_bench::util::do_not_optimize(fibonacci(number_));
+        stat_bench::do_not_optimize(number_);
+        stat_bench::do_not_optimize(fibonacci(number_));
     };
 }
 

@@ -29,8 +29,8 @@
 
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/clock/stop_watch.h"
+#include "stat_bench/memory_barrier.h"
 #include "stat_bench/stat_bench_exception.h"
-#include "stat_bench/util/memory_barrier.h"
 
 namespace stat_bench {
 namespace bench_impl {
@@ -136,23 +136,23 @@ private:
         // warming up
         std::size_t sample_index = 0;
         for (; sample_index < warm_up_samples_; ++sample_index) {
-            util::memory_barrier();
+            memory_barrier();
             for (std::size_t iteration_index = 0; iteration_index < iterations_;
                  ++iteration_index) {
                 func(thread_index, sample_index, iteration_index);
             }
-            util::memory_barrier();
+            memory_barrier();
         }
 
         // actual measurement
         watch.start(samples_);
         for (; sample_index < samples_; ++sample_index) {
-            util::memory_barrier();
+            memory_barrier();
             for (std::size_t iteration_index = 0; iteration_index < iterations_;
                  ++iteration_index) {
                 func(thread_index, sample_index, iteration_index);
             }
-            util::memory_barrier();
+            memory_barrier();
             watch.lap();
         }
         return watch.calc_durations();
