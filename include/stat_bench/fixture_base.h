@@ -22,6 +22,7 @@
 #include <memory>
 
 #include "stat_bench/bench_impl/i_benchmark_case.h"
+#include "stat_bench/current_invocation_context.h"
 #include "stat_bench/invocation_context.h"
 #include "stat_bench/param/parameter_value_vector.h"
 
@@ -99,10 +100,8 @@ public:
      *
      * \note This will be implemented in each case, so don't implement in
      * fixtures.
-     *
-     * \param[in] context Context.
      */
-    virtual void run(InvocationContext& context) = 0;
+    virtual void run() = 0;
 
     FixtureBase(const FixtureBase&) = delete;
     FixtureBase(FixtureBase&&) = delete;
@@ -122,10 +121,11 @@ protected:
 
 private:
     //! \copydoc stat_bench::bench_impl::IBenchmarkCase::execute
-    void execute(InvocationContext& context) final {
+    void execute() final {
+        auto& context = current_invocation_context();
         setup(context);
         try {
-            run(context);
+            run();
             tear_down(context);
         } catch (...) {
             tear_down(context);

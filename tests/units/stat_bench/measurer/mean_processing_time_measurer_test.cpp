@@ -34,6 +34,7 @@
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/clock/duration.h"
+#include "stat_bench/current_invocation_context.h"
 
 TEST_CASE("stat_bench::measurer::MeanProcessingTimeMeasurer") {
     constexpr double min_sample_duration_sec = 0.01;
@@ -55,10 +56,10 @@ TEST_CASE("stat_bench::measurer::MeanProcessingTimeMeasurer") {
 
         // NOLINTNEXTLINE
         ALLOW_CALL(bench_case, info()).RETURN(info);
-        REQUIRE_CALL(bench_case, execute(trompeloeil::_))
+        REQUIRE_CALL(bench_case, execute())
             .TIMES(AT_LEAST(2))
             // NOLINTNEXTLINE
-            .SIDE_EFFECT(_1.measure(
+            .SIDE_EFFECT(stat_bench::current_invocation_context().measure(
                 [](std::size_t /*thread_index*/, std::size_t /*sample_index*/,
                     std::size_t /*iteration_index*/) {
                     // NOLINTNEXTLINE

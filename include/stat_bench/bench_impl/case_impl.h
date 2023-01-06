@@ -22,7 +22,6 @@
 #include "stat_bench/bench_impl/benchmark_case_helper.h"
 #include "stat_bench/bench_impl/benchmark_case_register.h"
 #include "stat_bench/bench_impl/benchmark_case_registry.h"
-#include "stat_bench/bench_impl/context_name.h"
 #include "stat_bench/bench_impl/null_fixture.h"
 
 /*!
@@ -44,9 +43,7 @@
     public:                                                                \
         CLASS_NAME() : BenchCaseHelper(GROUP_NAME, CASE_NAME) {}           \
                                                                            \
-        void run(                                                          \
-            ::stat_bench::InvocationContext& STAT_BENCH_IMPL_CONTEXT_NAME) \
-            override;                                                      \
+        void run() override;                                               \
     };                                                                     \
                                                                            \
     static ::stat_bench::bench_impl::BenchmarkCaseRegister<CLASS_NAME>     \
@@ -54,8 +51,7 @@
                                                                            \
     } /* namespace */                                                      \
                                                                            \
-    void CLASS_NAME::run(                                                  \
-        ::stat_bench::InvocationContext& STAT_BENCH_IMPL_CONTEXT_NAME)
+    void CLASS_NAME::run()
 
 /*!
  * \brief Macro to define a case.

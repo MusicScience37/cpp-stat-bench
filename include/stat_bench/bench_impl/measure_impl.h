@@ -19,7 +19,7 @@
  */
 #pragma once
 
-#include "stat_bench/bench_impl/context_name.h"
+#include "stat_bench/current_invocation_context.h"
 #include "stat_bench/invocation_context.h"
 
 namespace stat_bench {
@@ -35,7 +35,9 @@ public:
      *
      * \param[in] context Context.
      */
-    explicit FunctionMeasurer(InvocationContext& context) : context_(context) {}
+    explicit FunctionMeasurer(
+        InvocationContext& context = current_invocation_context())
+        : context_(context) {}
 
     /*!
      * \brief Measure a function.
@@ -65,6 +67,6 @@ private:
  */
 #define STAT_BENCH_IMPL_MEASURE_IMPL(                                      \
     THREAD_INDEX_VAR, SAMPLE_INDEX_VAR, ITERATION_INDEX_VAR)               \
-    ::stat_bench::impl::FunctionMeasurer(STAT_BENCH_IMPL_CONTEXT_NAME)     \
+    ::stat_bench::impl::FunctionMeasurer()                                 \
         << [&](std::size_t THREAD_INDEX_VAR, std::size_t SAMPLE_INDEX_VAR, \
                std::size_t ITERATION_INDEX_VAR)

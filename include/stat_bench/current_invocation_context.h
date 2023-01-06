@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 MusicScience37 (Kenta Kabashima)
+ * Copyright 2023 MusicScience37 (Kenta Kabashima)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,22 @@
  */
 /*!
  * \file
- * \brief Definition of STAT_BENCH_IMPL_CONTEXT_NAME macro.
+ * \brief Definition of current_invocation_context function.
  */
 #pragma once
 
+#include "stat_bench/bench_impl/invocation_context_registry.h"
+#include "stat_bench/invocation_context.h"
+
+namespace stat_bench {
+
 /*!
- * \brief Macro of the name of variables of context objects.
+ * \brief Get the current invocation context.
+ *
+ * \return Reference to the current invocation context.
  */
-#define STAT_BENCH_IMPL_CONTEXT_NAME stat_bench_context
+[[nodiscard]] inline auto current_invocation_context() -> InvocationContext& {
+    return bench_impl::InvocationContextRegistry::instance().get();
+}
+
+}  // namespace stat_bench

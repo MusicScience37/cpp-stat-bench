@@ -16,6 +16,7 @@
     "doxygenclass",
     "doxygendefine",
     "doxygenenum",
+    "doxygenfunction",
     "doxygentypedef",
     "DSTAT",
     "dylib",

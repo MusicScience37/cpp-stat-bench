@@ -13,9 +13,6 @@ Base Class of Fixture
 Classes Used with Fixtures
 -------------------------------------
 
-.. doxygenclass:: stat_bench::InvocationContext
-    :members: threads, iterations, samples, get_param, add_custom_stat, add_custom_output
-
 .. doxygenenum:: stat_bench::stat::CustomOutputAnalysisType
 
 .. doxygenclass:: stat_bench::stat::CustomStatOutput

@@ -9,6 +9,6 @@ API Reference
     :maxdepth: 2
     :caption: Contents
 
-    macros
+    bench
     fixture
     main

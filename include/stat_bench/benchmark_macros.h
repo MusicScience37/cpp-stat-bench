@@ -20,16 +20,10 @@
 #pragma once
 
 #include "stat_bench/bench_impl/case_impl.h"
-#include "stat_bench/bench_impl/context_name.h"
 #include "stat_bench/bench_impl/default_main.h"
 #include "stat_bench/bench_impl/measure_impl.h"
 #include "stat_bench/bench_impl/unique_name.h"
 #include "stat_bench/fixture_base.h"
-
-/*!
- * \brief Macro of the name of variables of context objects.
- */
-#define STAT_BENCH_CONTEXT_NAME STAT_BENCH_IMPL_CONTEXT_NAME
 
 /*!
  * \brief Macro to define a case.
