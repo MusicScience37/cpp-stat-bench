@@ -3,7 +3,7 @@ option(STAT_BENCH_WRITE_JUNIT
 if(STAT_BENCH_WRITE_JUNIT)
     set(STAT_BENCH_JUNIT_DIR
         "${CMAKE_BINARY_DIR}/junit"
-        CACHE PATH "directory to which JUnit XML files are outputed" FORCE)
+        CACHE PATH "directory to which JUnit XML files are written" FORCE)
     file(MAKE_DIRECTORY ${STAT_BENCH_JUNIT_DIR})
 endif()
 

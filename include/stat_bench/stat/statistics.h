@@ -57,7 +57,7 @@ public:
     void add(double val);
 
     /*!
-     * \brief Calculate statictics.
+     * \brief Calculate statistics.
      */
     void calc();
 

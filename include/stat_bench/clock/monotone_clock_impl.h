@@ -15,7 +15,7 @@
  */
 /*!
  * \file
- * \brief Declration of functions for monotone clocks.
+ * \brief Declaration of functions for monotone clocks.
  */
 #pragma once
 
