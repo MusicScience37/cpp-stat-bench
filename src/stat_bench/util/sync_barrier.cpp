@@ -25,6 +25,13 @@
 
 #include "stat_bench/stat_bench_exception.h"
 
+#ifdef __linux__
+
+#define STAT_BENCH_USE_PTHREAD_SYNC_BARRIER 1
+#include "pthread_sync_barrier.h"
+
+#endif
+
 namespace stat_bench {
 namespace util {
 
@@ -97,7 +104,12 @@ auto create_mutex_sync_barrier(std::size_t num_waiting_threads)
 
 auto create_sync_barrier(std::size_t num_waiting_threads)
     -> std::shared_ptr<ISyncBarrier> {
-    return create_mutex_sync_barrier(num_waiting_threads);
+#ifdef STAT_BENCH_USE_PTHREAD_SYNC_BARRIER
+    using Barrier = PthreadSyncBarrier;
+#else
+    using Barrier = MutexSyncBarrier;
+#endif
+    return std::make_shared<Barrier>(num_waiting_threads);
 }
 
 }  // namespace util
