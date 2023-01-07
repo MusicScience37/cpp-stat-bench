@@ -23,5 +23,6 @@ set(SOURCE_FILES
     stat_bench/stat/calc_stat.cpp
     stat_bench/stat/statistics.cpp
     stat_bench/util/prepare_directory.cpp
+    stat_bench/util/sync_barrier.cpp
     use_pointer.cpp
 )
