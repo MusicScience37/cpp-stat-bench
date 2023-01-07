@@ -222,6 +222,7 @@ static analysis:
       - $BUILD_DIR/bench
       - $BUILD_DIR/junit
       - $BUILD_DIR/temp_test
+      - $BUILD_DIR/coverage
       - "*.png"
       - "*.html"
     reports:
