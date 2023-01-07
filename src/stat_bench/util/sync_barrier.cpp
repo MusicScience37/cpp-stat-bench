@@ -25,11 +25,14 @@
 
 #include "stat_bench/stat_bench_exception.h"
 
-#ifdef __linux__
-
+#if defined(_WIN32)
+// Windows
+#define STAT_BENCH_USE_WINDOWS_SYNC_BARRIER 1
+#include "windows_sync_barrier.h"
+#elif defined(__linux__)
+// Linux
 #define STAT_BENCH_USE_PTHREAD_SYNC_BARRIER 1
 #include "pthread_sync_barrier.h"
-
 #endif
 
 namespace stat_bench {
@@ -104,7 +107,9 @@ auto create_mutex_sync_barrier(std::size_t num_waiting_threads)
 
 auto create_sync_barrier(std::size_t num_waiting_threads)
     -> std::shared_ptr<ISyncBarrier> {
-#ifdef STAT_BENCH_USE_PTHREAD_SYNC_BARRIER
+#if defined(STAT_BENCH_USE_WINDOWS_SYNC_BARRIER)
+    using Barrier = WindowsSyncBarrier;
+#elif defined(STAT_BENCH_USE_PTHREAD_SYNC_BARRIER)
     using Barrier = PthreadSyncBarrier;
 #else
     using Barrier = MutexSyncBarrier;
