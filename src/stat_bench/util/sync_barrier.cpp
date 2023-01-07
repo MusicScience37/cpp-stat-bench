@@ -19,6 +19,7 @@
  */
 #include "stat_bench/util/sync_barrier.h"
 
+#include <condition_variable>
 #include <memory>
 #include <mutex>
 

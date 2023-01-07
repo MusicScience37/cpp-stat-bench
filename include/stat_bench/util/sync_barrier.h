@@ -19,10 +19,8 @@
  */
 #pragma once
 
-#include <condition_variable>
 #include <cstddef>
 #include <memory>
-#include <mutex>
 
 namespace stat_bench {
 namespace util {
@@ -55,6 +53,8 @@ protected:
  *
  * \param[in] num_waiting_threads Number of threads to wait.
  * \return Barrier.
+ *
+ * \warning This function exists for testing purpose only.
  */
 [[nodiscard]] auto create_mutex_sync_barrier(std::size_t num_waiting_threads)
     -> std::shared_ptr<ISyncBarrier>;
