@@ -31,6 +31,7 @@
 #include "stat_bench/clock/stop_watch.h"
 #include "stat_bench/memory_barrier.h"
 #include "stat_bench/stat_bench_exception.h"
+#include "stat_bench/util/sync_barrier.h"
 
 namespace stat_bench {
 namespace bench_impl {
@@ -68,6 +69,9 @@ public:
             throw StatBenchException(
                 "Number of samples for measurement must be at least one.");
         }
+        if (num_threads_ >= 2U) {
+            barrier_ = util::create_sync_barrier(num_threads_);
+        }
     }
 
     /*!
@@ -99,6 +103,7 @@ public:
         try {
             for (std::size_t i = 0; i < num_threads_; ++i) {
                 threads.emplace_back([this, &func, i, &promises]() noexcept {
+                    barrier_->wait();
                     measure_here(func, i, promises[i]);
                 });
             }
@@ -187,6 +192,9 @@ private:
 
     //! Number of samples for warming up.
     std::size_t warm_up_samples_;
+
+    //! Barrier to synchronize threads.
+    std::shared_ptr<util::ISyncBarrier> barrier_;
 };
 
 }  // namespace bench_impl

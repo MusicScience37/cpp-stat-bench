@@ -35,4 +35,5 @@
 #include "stat_bench/stat/custom_stat_output_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/stat/statistics_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/util/prepare_directory_test.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "stat_bench/util/sync_barrier_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "test_main.cpp"  // NOLINT(bugprone-suspicious-include)
