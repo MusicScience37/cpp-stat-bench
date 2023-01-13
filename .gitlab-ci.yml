@@ -282,6 +282,7 @@ test clang debug:
   parallel:
     matrix:
       - COMPILER_TYPE: ["clang14"]
+  image: musicscience37/clang-ci:${COMPILER_TYPE}
   variables:
     CONAN_LIBCXX: libc++
 
@@ -349,11 +350,7 @@ clang-14-asan-ubsan:
     - ctest -V
 
 clang-14-tsan:
-  extends: test clang debug
-  parallel:
-    matrix:
-      - COMPILER_TYPE: "clang14"
-  image: musicscience37/clang-ci:clang14
+  extends: clang-14-asan-ubsan
   variables:
     BUILD_DIR: build_clang_tsan
   script:
