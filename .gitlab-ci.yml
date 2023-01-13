@@ -190,8 +190,7 @@ static analysis:
     when: always
     expire_in: "3 mos"
 
-test gcc release:
-  extends: .retry setting
+test release:
   needs:
     - sync poetry
   dependencies:
@@ -199,12 +198,21 @@ test gcc release:
   parallel:
     matrix:
       - COMPILER_TYPE: ["gcc10", "gcc12"]
-  image: musicscience37/gcc-ci:${COMPILER_TYPE}
+        IMAGE_PATH: "musicscience37/gcc-ci"
+        CONAN_LIBCXX: libstdc++11
+        CXX_STANDARD: 14
+      - COMPILER_TYPE: ["clang14", "clang15"]
+        IMAGE_PATH: "musicscience37/clang-ci"
+        CONAN_LIBCXX: libc++
+        CXX_STANDARD: 14
+      - COMPILER_TYPE: ["clang14"]
+        IMAGE_PATH: "musicscience37/clang-ci"
+        CONAN_LIBCXX: libc++
+        CXX_STANDARD: 20
+  image: ${IMAGE_PATH}:${COMPILER_TYPE}
   variables:
     BUILD_TYPE: Release
     BUILD_DIR: build_${COMPILER_TYPE}_release
-    CONAN_LIBCXX: libstdc++11
-    CXX_STANDARD: 14
   before_script:
     - mkdir $BUILD_DIR
     - cd $BUILD_DIR
@@ -239,11 +247,18 @@ test gcc release:
     when: always
     expire_in: "1 mos"
 
-test gcc debug:
-  extends: test gcc release
+test debug:
+  extends: test release
   parallel:
     matrix:
       - COMPILER_TYPE: ["gcc10"]
+        IMAGE_PATH: "musicscience37/gcc-ci"
+        CONAN_LIBCXX: libstdc++11
+        CXX_STANDARD: 14
+      - COMPILER_TYPE: ["clang14"]
+        IMAGE_PATH: "musicscience37/clang-ci"
+        CONAN_LIBCXX: libc++
+        CXX_STANDARD: 14
   variables:
     BUILD_TYPE: Debug
     BUILD_DIR: build_${COMPILER_TYPE}_debug
@@ -258,39 +273,14 @@ test gcc debug:
     - cmake --build .
     - ctest -V
 
-test clang release:
-  extends: test gcc release
-  parallel:
-    matrix:
-      - COMPILER_TYPE: ["clang14", "clang15"]
-  image: musicscience37/clang-ci:${COMPILER_TYPE}
-  variables:
-    CONAN_LIBCXX: libc++
-
-test clang release cpp20:
-  extends: test clang release
-  parallel:
-    matrix:
-      - COMPILER_TYPE: ["clang14"]
-  image: musicscience37/clang-ci:${COMPILER_TYPE}
-  variables:
-    CONAN_LIBCXX: libc++
-    CXX_STANDARD: 20
-
-test clang debug:
-  extends: test gcc debug
-  parallel:
-    matrix:
-      - COMPILER_TYPE: ["clang14"]
-  image: musicscience37/clang-ci:${COMPILER_TYPE}
-  variables:
-    CONAN_LIBCXX: libc++
-
 clang coverage:
-  extends: test clang debug
+  extends: test debug
   parallel:
     matrix:
       - COMPILER_TYPE: "clang14"
+        IMAGE_PATH: "musicscience37/clang-ci"
+        CONAN_LIBCXX: libc++
+        CXX_STANDARD: 14
   variables:
     BUILD_DIR: build_clang_coverage
   script:
@@ -310,10 +300,13 @@ clang coverage:
     - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
 
 gcc coverage:
-  extends: test gcc debug
+  extends: test debug
   parallel:
     matrix:
       - COMPILER_TYPE: "gcc10"
+        IMAGE_PATH: "musicscience37/gcc-ci"
+        CONAN_LIBCXX: libstdc++11
+        CXX_STANDARD: 14
   variables:
     BUILD_DIR: build_gcc_coverage
   script:
@@ -331,10 +324,13 @@ gcc coverage:
   coverage: '/Total:\|\s*(\d+\.?\d+?)%/'
 
 clang-14-asan-ubsan:
-  extends: test clang debug
+  extends: test debug
   parallel:
     matrix:
       - COMPILER_TYPE: "clang14"
+        IMAGE_PATH: "musicscience37/clang-ci"
+        CONAN_LIBCXX: libc++
+        CXX_STANDARD: 14
   variables:
     BUILD_DIR: build_clang_asan_ubsan
     ASAN_OPTIONS: alloc_dealloc_mismatch=0
@@ -402,7 +398,7 @@ clang-14-conan-release:
     - tags
 
 msvc-release:
-  extends: test clang debug
+  extends: test debug
   parallel:
     matrix:
       - COMPILER_TYPE: "msvc"
