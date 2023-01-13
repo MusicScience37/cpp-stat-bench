@@ -263,6 +263,7 @@ test clang release:
   parallel:
     matrix:
       - COMPILER_TYPE: ["clang14", "clang15"]
+  image: musicscience37/clang-ci:${COMPILER_TYPE}
   variables:
     CONAN_LIBCXX: libc++
 
@@ -271,6 +272,7 @@ test clang release cpp20:
   parallel:
     matrix:
       - COMPILER_TYPE: ["clang14"]
+  image: musicscience37/clang-ci:${COMPILER_TYPE}
   variables:
     CONAN_LIBCXX: libc++
     CXX_STANDARD: 20
