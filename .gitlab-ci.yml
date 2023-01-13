@@ -38,7 +38,7 @@ license_scanning:
 
 .retry setting:
   retry:
-    max: 2
+    max: 1
     when: runner_system_failure
 
 sync poetry:
@@ -54,13 +54,13 @@ sync poetry:
     key:
       prefix: poetry-linux
       files:
-        - Pipfile.lock
+        - poetry.lock
     paths:
       - .venv
   artifacts:
     paths:
       - .venv
-    expire_in: "1 mos"
+    expire_in: "1 week"
 
 prepare lock files:
   extends: .retry setting
@@ -190,30 +190,38 @@ static analysis:
     when: always
     expire_in: "3 mos"
 
-.release-test-base:
+test gcc release:
   extends: .retry setting
   needs:
     - sync poetry
   dependencies:
     - sync poetry
+  parallel:
+    matrix:
+      - COMPILER_TYPE: ["gcc10", "gcc12"]
+  image: musicscience37/gcc-ci:${COMPILER_TYPE}
   variables:
-    GIT_SUBMODULE_STRATEGY: recursive
+    BUILD_TYPE: Release
+    BUILD_DIR: build_${COMPILER_TYPE}_release
+    CONAN_LIBCXX: libstdc++11
+    CXX_STANDARD: 14
   before_script:
     - mkdir $BUILD_DIR
     - cd $BUILD_DIR
     - poetry run conan profile new --detect default
-    - poetry run conan profile update settings.compiler.libcxx=libstdc++11 default
-    - poetry run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Release ..
+    - poetry run conan profile update settings.compiler.libcxx=$CONAN_LIBCXX default
+    - poetry run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=$BUILD_TYPE ..
     - cd ../
   script:
     - cmake -S ./ -B $BUILD_DIR
-      -DCMAKE_BUILD_TYPE=Release
+      -DCMAKE_BUILD_TYPE=$BUILD_TYPE
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_ENABLE_BENCH=ON
       -DSTAT_BENCH_TEST_BENCHMARKS=ON
       -DSTAT_BENCH_BUILD_EXAMPLES=ON
       -DSTAT_BENCH_TEST_EXAMPLES=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+      -DCMAKE_CXX_STANDARD=$CXX_STANDARD
     - cd $BUILD_DIR
     - cmake --build .
     - ctest -V
@@ -231,18 +239,17 @@ static analysis:
     when: always
     expire_in: "1 mos"
 
-.debug-test-base:
-  extends: .release-test-base
-  before_script:
-    - mkdir $BUILD_DIR
-    - cd $BUILD_DIR
-    - poetry run conan profile new --detect default
-    - poetry run conan profile update settings.compiler.libcxx=libstdc++11 default
-    - poetry run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Debug ..
-    - cd ../
+test gcc debug:
+  extends: test gcc release
+  parallel:
+    matrix:
+      - COMPILER_TYPE: ["gcc10"]
+  variables:
+    BUILD_TYPE: Debug
+    BUILD_DIR: build_${COMPILER_TYPE}_debug
   script:
     - cmake -S ./ -B $BUILD_DIR
-      -DCMAKE_BUILD_TYPE=Debug
+      -DCMAKE_BUILD_TYPE=$BUILD_TYPE
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_BUILD_EXAMPLES=ON
       -DSTAT_BENCH_TEST_EXAMPLES=ON
@@ -251,30 +258,36 @@ static analysis:
     - cmake --build .
     - ctest -V
 
-.clang-release-test-base:
-  extends: .release-test-base
-  before_script:
-    - mkdir $BUILD_DIR
-    - cd $BUILD_DIR
-    - poetry run conan profile new --detect default
-    - poetry run conan profile update settings.compiler.libcxx=libc++ default
-    - poetry run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Release ..
-    - cd ../
+test clang release:
+  extends: test gcc release
+  parallel:
+    matrix:
+      - COMPILER_TYPE: ["clang14", "clang15"]
+  variables:
+    CONAN_LIBCXX: libc++
 
-.clang-debug-test-base:
-  extends: .release-test-base
-  before_script:
-    - mkdir $BUILD_DIR
-    - cd $BUILD_DIR
-    - poetry run conan profile new --detect default
-    - poetry run conan profile update settings.compiler.libcxx=libc++ default
-    - poetry run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Debug ..
-    - cd ../
+test clang release cpp20:
+  extends: test clang release
+  parallel:
+    matrix:
+      - COMPILER_TYPE: ["clang14"]
+  variables:
+    CONAN_LIBCXX: libc++
+    CXX_STANDARD: 20
+
+test clang debug:
+  extends: test gcc debug
+  parallel:
+    matrix:
+      - COMPILER_TYPE: ["clang14"]
+  variables:
+    CONAN_LIBCXX: libc++
 
 clang coverage:
-  extends: .clang-debug-test-base
-  stage: test
-  image: musicscience37/clang-ci:clang14
+  extends: test clang debug
+  parallel:
+    matrix:
+      - COMPILER_TYPE: "clang14"
   variables:
     BUILD_DIR: build_clang_coverage
   script:
@@ -294,9 +307,10 @@ clang coverage:
     - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
 
 gcc coverage:
-  extends: .debug-test-base
-  stage: test
-  image: musicscience37/gcc-ci:gcc10
+  extends: test gcc debug
+  parallel:
+    matrix:
+      - COMPILER_TYPE: "gcc10"
   variables:
     BUILD_DIR: build_gcc_coverage
   script:
@@ -313,58 +327,11 @@ gcc coverage:
     - scripts/collect_gcc_coverage.sh build_gcc_coverage
   coverage: '/Total:\|\s*(\d+\.?\d+?)%/'
 
-gcc-10-debug:
-  extends: .debug-test-base
-  stage: test
-  image: musicscience37/gcc-ci:gcc10
-  variables:
-    BUILD_DIR: build_gcc10_debug
-
-gcc-10-release:
-  extends: .release-test-base
-  stage: test
-  image: musicscience37/gcc-ci:gcc10
-  variables:
-    BUILD_DIR: build_gcc10_release
-
-clang-14-debug:
-  extends: .clang-debug-test-base
-  stage: test
-  image: musicscience37/clang-ci:clang14
-  variables:
-    BUILD_DIR: build_clang12_debug
-
-clang-14-release:
-  extends: .clang-release-test-base
-  stage: test
-  image: musicscience37/clang-ci:clang14
-  variables:
-    BUILD_DIR: build_clang12_release
-
-clang-14-release-cpp20:
-  extends: .clang-release-test-base
-  stage: test
-  image: musicscience37/clang-ci:clang14
-  variables:
-    BUILD_DIR: build_clang12_release_cpp20
-  script:
-    - cmake -S ./ -B $BUILD_DIR
-      -DCMAKE_BUILD_TYPE=Release
-      -DSTAT_BENCH_TESTING:BOOL=ON
-      -DSTAT_BENCH_ENABLE_BENCH=ON
-      -DSTAT_BENCH_TEST_BENCHMARKS=ON
-      -DSTAT_BENCH_BUILD_EXAMPLES=ON
-      -DSTAT_BENCH_TEST_EXAMPLES=ON
-      -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
-      -DCMAKE_CXX_STANDARD=20
-    - cd $BUILD_DIR
-    - cmake --build .
-    - ctest -V
-
 clang-14-asan-ubsan:
-  extends: .clang-debug-test-base
-  stage: test
-  image: musicscience37/clang-ci:clang14
+  extends: test clang debug
+  parallel:
+    matrix:
+      - COMPILER_TYPE: "clang14"
   variables:
     BUILD_DIR: build_clang_asan_ubsan
     ASAN_OPTIONS: alloc_dealloc_mismatch=0
@@ -380,8 +347,10 @@ clang-14-asan-ubsan:
     - ctest -V
 
 clang-14-tsan:
-  extends: .clang-debug-test-base
-  stage: test
+  extends: test clang debug
+  parallel:
+    matrix:
+      - COMPILER_TYPE: "clang14"
   image: musicscience37/clang-ci:clang14
   variables:
     BUILD_DIR: build_clang_tsan
@@ -434,7 +403,10 @@ clang-14-conan-release:
     - tags
 
 msvc-release:
-  extends: .release-test-base
+  extends: test clang debug
+  parallel:
+    matrix:
+      - COMPILER_TYPE: "msvc"
   tags:
     - shared-windows
     - windows
