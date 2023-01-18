@@ -415,7 +415,7 @@ static analysis:
       -DSTAT_BENCH_ENABLE_CPP_WARNINGS:BOOL=ON
     - cmake --build build_static_analysis
       --target stat_bench_clang_tidy
-    - scripts/check_clang_tidy.sh build_static_analysis/clang_tidy
+    - poetry run clang-tidy-checker -b ${BUILD_DIR}
 
 doc:
   stage: test
