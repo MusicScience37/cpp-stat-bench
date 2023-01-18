@@ -102,7 +102,7 @@ public:
         std::exception_ptr error;
         try {
             for (std::size_t i = 0; i < num_threads_; ++i) {
-                threads.emplace_back([this, &func, i, &promises]() noexcept {
+                threads.emplace_back([this, &func, i, &promises]() {
                     barrier_->wait();
                     measure_here(func, i, promises[i]);
                 });
@@ -173,7 +173,7 @@ private:
      */
     template <typename Func>
     inline void measure_here(const Func& func, std::size_t thread_index,
-        std::promise<std::vector<clock::Duration>>& promise) const noexcept {
+        std::promise<std::vector<clock::Duration>>& promise) const {
         try {
             promise.set_value(measure_here(func, thread_index));
         } catch (...) {
