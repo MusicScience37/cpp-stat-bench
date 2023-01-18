@@ -133,54 +133,6 @@ spell check:
       --exclude "**/*.approved.*"
   interruptible: true
 
-static analysis:
-  stage: test
-  needs:
-    - sync poetry
-  dependencies:
-    - sync poetry
-  image: musicscience37/clang-ci:clang14
-  variables:
-    GIT_SUBMODULE_STRATEGY: recursive
-  before_script:
-    - apt update
-    - apt install -y libstdc++-10-dev
-    - pip3 install junit2html
-    - mkdir build_static_analysis
-    - cd build_static_analysis
-    - git clone https://github.com/PSPDFKit-labs/clang-tidy-to-junit.git
-    - cd ../
-  script:
-    - cd build_static_analysis
-    - poetry run conan profile new --detect default
-    - poetry run conan profile update settings.compiler.libcxx=libstdc++11 default
-    - poetry run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True ..
-    - cd ../
-    - cmake -S ./ -B build_static_analysis
-      -DSTAT_BENCH_ENABLE_CLANG_TIDY:BOOL=ON
-      -DSTAT_BENCH_TESTING:BOOL=ON
-      -DSTAT_BENCH_ENABLE_BENCH=ON
-      -DSTAT_BENCH_BUILD_EXAMPLES=ON
-      -DSTAT_BENCH_ENABLE_CPP_WARNINGS:BOOL=ON
-    - cmake --build build_static_analysis
-      --target stat_bench_clang_tidy
-    - scripts/check_clang_tidy.sh build_static_analysis/clang_tidy
-  after_script:
-    - cd build_static_analysis/clang_tidy
-    - cat $(find $1 -name '*.txt') |
-      python3 ../clang-tidy-to-junit/clang-tidy-to-junit.py $(dirname $(pwd)) > clang_tidy_junit.xml
-    - python3 -m junit2htmlreport clang_tidy_junit.xml clang_tidy_junit.html
-  artifacts:
-    paths:
-      - $BUILD_DIR/bench
-      - $BUILD_DIR/junit
-      - $BUILD_DIR/temp_test
-    reports:
-      junit:
-        - build_static_analysis/clang_tidy/clang_tidy_junit.xml
-    when: always
-    expire_in: "3 mos"
-
 test release:
   needs:
     - sync poetry
@@ -442,6 +394,28 @@ msvc-release:
   retry:
     max: 2
     when: always
+
+static analysis:
+  extends: test release
+  parallel:
+    matrix:
+      - COMPILER_TYPE: "clang14"
+        IMAGE_PATH: "musicscience37/clang-ci"
+        CONAN_LIBCXX: libc++
+        CXX_STANDARD: 14
+  variables:
+    BUILD_TYPE: Debug
+    BUILD_DIR: build_static_analysis
+  script:
+    - cmake -S ./ -B $BUILD_DIR
+      -DSTAT_BENCH_ENABLE_CLANG_TIDY:BOOL=ON
+      -DSTAT_BENCH_TESTING:BOOL=ON
+      -DSTAT_BENCH_ENABLE_BENCH=ON
+      -DSTAT_BENCH_BUILD_EXAMPLES=ON
+      -DSTAT_BENCH_ENABLE_CPP_WARNINGS:BOOL=ON
+    - cmake --build build_static_analysis
+      --target stat_bench_clang_tidy
+    - scripts/check_clang_tidy.sh build_static_analysis/clang_tidy
 
 doc:
   stage: test
