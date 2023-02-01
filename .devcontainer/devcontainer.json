@@ -22,7 +22,8 @@
     "fredericbonnet.cmake-test-adapter",
     "hbenl.vscode-test-explorer",
     "ms-azuretools.vscode-docker",
-    "tamasfe.even-better-toml"
+    "tamasfe.even-better-toml",
+    "redhat.vscode-yaml"
   ],
   "postCreateCommand": "bash ./.devcontainer/setup.bash"
 }
