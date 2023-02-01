@@ -90,6 +90,7 @@
     "threadable",
     "toctree",
     "TOUPPER",
+    "tqdm",
     "trompeloeil",
     "tsan",
     "ubsan",
