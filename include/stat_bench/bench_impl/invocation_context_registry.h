@@ -19,8 +19,10 @@
  */
 #pragma once
 
+#include <cstddef>
 #include <memory>
 
+#include "stat_bench/benchmark_condition.h"
 #include "stat_bench/invocation_context.h"
 
 namespace stat_bench {

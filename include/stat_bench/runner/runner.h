@@ -20,20 +20,14 @@
 #pragma once
 
 // IWYU pragma: no_include  <stddef.h>
-#include <cstddef>
 #include <memory>
-#include <string>
 #include <utility>
 #include <vector>
-
-#include <lyra/cli.hpp>
-#include <lyra/lyra.hpp>
 
 #include "stat_bench/bench_impl/benchmark_case_registry.h"
 #include "stat_bench/bench_impl/i_benchmark_case.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/measurer/i_measurer.h"
-#include "stat_bench/measurer/measurement.h"
 #include "stat_bench/reporter/i_reporter.h"
 #include "stat_bench/runner/config.h"
 

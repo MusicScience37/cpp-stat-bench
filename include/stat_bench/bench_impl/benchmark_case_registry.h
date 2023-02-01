@@ -19,15 +19,12 @@
  */
 #pragma once
 
-#include <algorithm>
 #include <memory>
-#include <string>
-#include <utility>
 #include <vector>
 
 #include "stat_bench/bench_impl/benchmark_group.h"
 #include "stat_bench/bench_impl/i_benchmark_case.h"
-#include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/filters/composed_filter.h"
 
 namespace stat_bench {
 namespace bench_impl {

@@ -19,10 +19,8 @@
  */
 #pragma once
 
-#include <algorithm>
 #include <memory>
 #include <string>
-#include <utility>
 #include <vector>
 
 #include "stat_bench/bench_impl/i_benchmark_case.h"

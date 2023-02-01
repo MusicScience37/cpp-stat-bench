@@ -20,6 +20,7 @@
 #include "stat_bench/reporter/console_reporter.h"
 
 #include <memory>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 

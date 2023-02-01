@@ -23,6 +23,7 @@
 #include <string>
 #include <vector>
 
+#include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/filters/i_name_filter.h"
 
 namespace stat_bench {

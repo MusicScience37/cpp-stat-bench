@@ -19,8 +19,6 @@
  */
 #pragma once
 
-#include <cstdint>
-
 #include "stat_bench/clock/monotone_clock_impl.h"
 
 namespace stat_bench {
