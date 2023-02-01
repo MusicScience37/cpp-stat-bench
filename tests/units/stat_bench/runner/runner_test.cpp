@@ -19,8 +19,10 @@
  */
 #include "stat_bench/runner/runner.h"
 
+#include <cstddef>
 #include <exception>
 #include <stdexcept>
+#include <string>
 #include <type_traits>
 
 #include <catch2/catch_test_macros.hpp>

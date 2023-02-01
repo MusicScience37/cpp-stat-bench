@@ -18,7 +18,8 @@
  * \brief Header to include trompeloeil library properly.
  */
 // clang-format off
-#include <catch2/catch_test_macros.hpp>
-#include <catch2/catch_version_macros.hpp>
-#include <catch2/trompeloeil.hpp>
+#include <catch2/catch_test_macros.hpp>     // IWYU pragma: keep
+#include <catch2/catch_version_macros.hpp>  // IWYU pragma: keep
+#include <catch2/trompeloeil.hpp>           // IWYU pragma: export
+#include <trompeloeil.hpp>                  // IWYU pragma: export
 // clang-format on

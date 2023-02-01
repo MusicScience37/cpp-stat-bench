@@ -20,9 +20,13 @@
 #pragma once
 
 #include <cstdlib>
+#include <exception>
 #include <iostream>
 
+#include <lyra/cli.hpp>
+
 #include "stat_bench/runner/command_line_parser.h"
+#include "stat_bench/runner/config.h"
 #include "stat_bench/runner/runner.h"
 
 namespace stat_bench {

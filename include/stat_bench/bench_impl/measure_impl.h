@@ -19,6 +19,10 @@
  */
 #pragma once
 
+// IWYU pragma: no_include <exception>
+// IWYU pragma: no_include <vector>
+#include <cstddef>
+
 #include "stat_bench/current_invocation_context.h"
 #include "stat_bench/invocation_context.h"
 

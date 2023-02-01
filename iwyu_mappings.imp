@@ -28,11 +28,12 @@
   { include: [ "<stdint.h>", public, "<cstdint>", public ] },
   { include: [ "<stdlib.h>", public, "<cstdlib>", public ] },
   # Custom (STL - Integers)
-  { symbol: [ "uint64_t", private, "<cstddef>", public ] },
-  { symbol: [ "std::uint64_t", private, "<cstddef>", public ] },
+  { symbol: [ "uint64_t", private, "<cstdint>", public ] },
+  { symbol: [ "std::uint64_t", private, "<cstdint>", public ] },
   # Custom (STL - Others)
   { symbol: [ "char_traits", private, "<string>", public ] },
   { symbol: [ "condition_variable", private, "<condition_variable>", public ] },
+  { symbol: [ "std::condition_variable", private, "<condition_variable>", public ] },
   { symbol: [ "FILE", private, "<cstdio>", public ] },
   # Custom (external)
   { symbol: [ "nlohmann::json", private, "<nlohmann/json.hpp>", public ] },

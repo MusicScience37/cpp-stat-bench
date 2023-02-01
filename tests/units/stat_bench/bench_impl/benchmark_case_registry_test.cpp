@@ -19,6 +19,7 @@
  */
 #include "stat_bench/bench_impl/benchmark_case_registry.h"
 
+#include <string>
 #include <type_traits>
 
 #include <catch2/catch_test_macros.hpp>
@@ -27,6 +28,7 @@
 #include <trompeloeil.hpp>
 
 #include "../mock_benchmark_case.h"
+#include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/filters/composed_filter.h"
 
 TEST_CASE("stat_bench::bench_impl::BenchmarkCaseRegistry") {

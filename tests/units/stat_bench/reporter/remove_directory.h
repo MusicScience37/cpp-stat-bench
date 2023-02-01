@@ -26,8 +26,7 @@
 #include <direct.h>   // _rmdir
 #include <fileapi.h>  // GetFileAttributesA
 #else
-#include <sys/stat.h>  // stat
-#include <unistd.h>    // rmdir
+#include <unistd.h>  // rmdir
 #endif
 
 inline void remove_directory(const std::string& dir_path) {

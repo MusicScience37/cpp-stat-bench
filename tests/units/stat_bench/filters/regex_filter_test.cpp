@@ -19,6 +19,8 @@
  */
 #include "stat_bench/filters/regex_filter.h"
 
+#include <memory>
+
 #include <catch2/catch_test_macros.hpp>
 
 #include "stat_bench/benchmark_full_name.h"

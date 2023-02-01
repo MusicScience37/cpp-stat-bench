@@ -22,13 +22,11 @@
 #include <chrono>
 #include <condition_variable>
 #include <cstdlib>
-#include <exception>
-#include <future>
 #include <memory>
 #include <mutex>
-#include <ratio>
-#include <stdexcept>
+#include <string>
 #include <thread>
+#include <vector>
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/generators/catch_generators.hpp>
