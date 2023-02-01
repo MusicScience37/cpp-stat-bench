@@ -7,14 +7,36 @@
   { symbol: [ "std::move", private, "<utility>", public ] },
   { symbol: [ "std::nullptr_t", private, "<cstddef>", public ] },
   { symbol: [ "std::string", private, "<string>", public ] },
-  # Custom
+  # Custom (STL - Internal headers)
+  { include: ["@<__memory/.*>", private, "<memory>", public ] },
+  { include: ["@<__functional/.*>", private, "<functional>", public ] },
+  { include: ["@<__iterator/.*>", private, "<iterator>", public ] },
+  { include: ["@<__utility/.*>", private, "<utility>", public ] },
+  { include: ["@<__compare/.*>", private, "<compare>", public ] },
+  { include: ["@<__chrono/.*>", private, "<chrono>", public ] },
+  { include: ["@<__filesystem/.*>", private, "<filesystem>", public ] },
+  { include: ["@<__algorithm/.*>", private, "<algorithm>", public ] },
+  { include: ["@<__variant/.*>", private, "<variant>", public ] },
+  { include: ["@<__numeric/.*>", private, "<numeric>", public ] },
+  { include: ["<__tuple>", private, "<tuple>", public ] },
+  { include: ["<__tuple>", private, "<utility>", public ] },
+  { include: ["<__tuple>", private, "<unordered_map>", public ] },
+  { include: ["<__bit_reference>", private, "<vector>", public ] },
+  { include: ["<__tree>", private, "<set>", public ] },
+  # Custom (STL - C headers)
   { include: [ "<stddef.h>", public, "<cstddef>", public ] },
   { include: [ "<stdint.h>", public, "<cstdint>", public ] },
   { include: [ "<stdlib.h>", public, "<cstdlib>", public ] },
+  # Custom (STL - Integers)
+  { symbol: [ "uint64_t", private, "<cstdint>", public ] },
+  { symbol: [ "std::uint64_t", private, "<cstdint>", public ] },
+  # Custom (STL - Others)
   { symbol: [ "char_traits", private, "<string>", public ] },
+  { symbol: [ "condition_variable", private, "<condition_variable>", public ] },
+  { symbol: [ "std::condition_variable", private, "<condition_variable>", public ] },
+  { symbol: [ "FILE", private, "<cstdio>", public ] },
+  # Custom (external)
   { symbol: [ "nlohmann::json", private, "<nlohmann/json.hpp>", public ] },
-  { include: ["<fmt/core.h>", private, "<fmt/format.h>", public ] },
   { include: ["@<nlohmann/detail/.*>", private, "<nlohmann/json.hpp>", public ] },
-  { symbol: [ "uint64_t", private, "<cstddef>", public ] },
-  { symbol: [ "std::uint64_t", private, "<cstddef>", public ] },
+  { include: ["<fmt/core.h>", private, "<fmt/format.h>", public ] },
 ]

@@ -19,8 +19,12 @@
  */
 #include "stat_bench/bench_impl/benchmark_group.h"
 
-#include <fmt/core.h>
+#include <algorithm>
+#include <utility>
 
+#include <fmt/format.h>
+
+#include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/stat_bench_exception.h"
 
 namespace stat_bench {

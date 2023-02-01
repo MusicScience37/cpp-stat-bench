@@ -19,10 +19,9 @@
  */
 #pragma once
 
-#include "stat_bench/bench_impl/benchmark_case_helper.h"
+#include "stat_bench/bench_impl/benchmark_case_helper.h"  // IWYU pragma: keep
 #include "stat_bench/bench_impl/benchmark_case_register.h"
-#include "stat_bench/bench_impl/benchmark_case_registry.h"
-#include "stat_bench/bench_impl/null_fixture.h"
+#include "stat_bench/bench_impl/null_fixture.h"  // IWYU pragma: keep
 
 /*!
  * \brief Macro to define a case using a fixture.

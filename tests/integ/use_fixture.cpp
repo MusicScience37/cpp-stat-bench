@@ -34,6 +34,7 @@
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/benchmark_macros.h"
+#include "stat_bench/fixture_base.h"
 #include "stat_bench/invocation_context.h"
 
 static std::atomic<int> state{0};

@@ -19,10 +19,9 @@
  */
 #pragma once
 
-#include <vector>
-
-#include <lyra/cli.hpp>
-#include <lyra/lyra.hpp>
+// Following is required for build using GCC.
+#include <lyra/lyra.hpp>  // IWYU pragma: keep
+// IWYU pragma: no_include <lyra/cli.hpp>
 
 #include "stat_bench/runner/config.h"
 

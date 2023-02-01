@@ -20,6 +20,7 @@
 #include "stat_bench/bench_impl/invocation_context_registry.h"
 
 #include <memory>
+#include <utility>
 
 #include "stat_bench/invocation_context.h"
 #include "stat_bench/stat_bench_exception.h"

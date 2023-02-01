@@ -19,7 +19,7 @@
  */
 #include "stat_bench/util/sync_barrier.h"
 
-#include <condition_variable>
+#include <condition_variable>  // IWYU pragma: keep
 #include <memory>
 #include <mutex>
 

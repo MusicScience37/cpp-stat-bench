@@ -19,6 +19,8 @@
  */
 #pragma once
 
+#include <cstddef>
+
 #include <fmt/format.h>
 #include <pthread.h>
 

@@ -31,7 +31,6 @@
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/benchmark_macros.h"
-#include "stat_bench/invocation_context.h"
 
 static auto case_index() -> int& {
     static int index = 0;

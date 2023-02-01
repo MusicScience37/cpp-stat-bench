@@ -21,6 +21,7 @@
 
 // IWYU pragma: no_include  <stddef.h>
 #include <cstddef>
+#include <utility>  // IWYU pragma: keep
 #include <vector>
 
 #include "stat_bench/param/parameter_value.h"

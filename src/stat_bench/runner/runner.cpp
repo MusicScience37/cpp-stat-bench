@@ -22,11 +22,7 @@
 #include <cstddef>
 #include <exception>
 #include <memory>
-#include <stdexcept>
-
-#include <lyra/args.hpp>
-#include <lyra/opt.hpp>
-#include <lyra/parser.hpp>
+#include <string>
 
 #include "stat_bench/bench_impl/benchmark_case_registry.h"
 #include "stat_bench/bench_impl/benchmark_group.h"

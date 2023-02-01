@@ -19,11 +19,14 @@
  */
 #pragma once
 
+#include <cstddef>
 #include <memory>
+#include <string>
 
 #include "stat_bench/bench_impl/i_benchmark_case.h"
 #include "stat_bench/current_invocation_context.h"
 #include "stat_bench/invocation_context.h"
+#include "stat_bench/param/parameter_config.h"
 #include "stat_bench/param/parameter_value_vector.h"
 
 namespace stat_bench {
