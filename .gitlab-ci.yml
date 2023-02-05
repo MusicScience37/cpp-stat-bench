@@ -7,7 +7,6 @@ stages:
   - release
 
 variables:
-  STAT_BENCH_VERSION: "0.9.0"
   CONAN_USER: "MusicScience37"
   SECURE_LOG_LEVEL: debug
   CPP_STAT_BENCH_CONAN_REGISTRY: "https://gitlab.com/api/v4/projects/32226502/packages/conan"
@@ -337,7 +336,7 @@ clang-14-conan-release:
     - poetry run conan remote add cpp-stat-bench $CPP_STAT_BENCH_CONAN_REGISTRY
     - poetry run conan create --build missing --test-folder tests/conan_package -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
     - poetry run conan create --build missing --test-folder tests/conan_package -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
-    - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} poetry run conan upload -r cpp-stat-bench cpp_stat_bench/${STAT_BENCH_VERSION}@${CONAN_USER}/${CONAN_CHANNEL} --all
+    - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} poetry run conan upload -r cpp-stat-bench cpp_stat_bench -c --all
   only:
     - tags
 
