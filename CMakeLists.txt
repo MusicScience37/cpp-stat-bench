@@ -1,8 +1,13 @@
 cmake_minimum_required(VERSION 3.12)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+include(ParseVersion)
+parse_version(${CMAKE_CURRENT_SOURCE_DIR}/include/stat_bench/version.h
+              STAT_BENCH)
+
 project(
     stat_bench
-    VERSION 0.9.0
+    VERSION ${STAT_BENCH_VERSION}
     DESCRIPTION "Benchmark library with statistics for C++."
     LANGUAGES CXX)
 set(FULL_PROJECT_NAME "cpp-stat-bench")
@@ -48,7 +53,6 @@ if(STAT_BENCH_TESTING)
     find_package(ApprovalTests REQUIRED)
 endif()
 
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake" ${CMAKE_MODULE_PATH})
 include(CppWarningFlags)
 include(ConfigureClangTidy)
 include(poetry)
