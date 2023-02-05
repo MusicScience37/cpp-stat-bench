@@ -20,9 +20,10 @@
 #pragma once
 
 #include <exception>
+#include <string>
 
-#include "stat_bench/bench/benchmark_condition.h"
-#include "stat_bench/bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_condition.h"
+#include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/clock/system_time_point.h"
 #include "stat_bench/measurer/measurement.h"
 
@@ -83,14 +84,14 @@ public:
      *
      * \param[in] case_info Information.
      */
-    virtual void case_starts(const bench::BenchmarkFullName& case_info) = 0;
+    virtual void case_starts(const BenchmarkFullName& case_info) = 0;
 
     /*!
      * \brief Finished a case of a benchmark.
      *
      * \param[in] case_info Information.
      */
-    virtual void case_finished(const bench::BenchmarkFullName& case_info) = 0;
+    virtual void case_finished(const BenchmarkFullName& case_info) = 0;
 
     /*!
      * \brief Successfully finished a measurement.
@@ -107,9 +108,8 @@ public:
      * \param[in] cond Condition.
      * \param[in] error Error.
      */
-    virtual void measurement_failed(const bench::BenchmarkFullName& case_info,
-        const bench::BenchmarkCondition& cond,
-        const std::exception_ptr& error) = 0;
+    virtual void measurement_failed(const BenchmarkFullName& case_info,
+        const BenchmarkCondition& cond, const std::exception_ptr& error) = 0;
 
     IReporter(const IReporter&) = delete;
     IReporter(IReporter&&) = delete;

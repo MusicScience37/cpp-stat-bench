@@ -19,7 +19,12 @@
  */
 #pragma once
 
+#include <cstddef>
+#include <string>
+#include <unordered_map>
+
 #include "stat_bench/param/parameter_dict.h"
+#include "stat_bench/param/parameter_value.h"
 
 namespace stat_bench_test {
 namespace param {

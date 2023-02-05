@@ -23,8 +23,8 @@
 #include <string>
 
 #include "../../trompeloeil.h"
-#include "stat_bench/bench/benchmark_condition.h"
-#include "stat_bench/bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_condition.h"
+#include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/clock/system_time_point.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/reporter/i_reporter.h"
@@ -55,12 +55,12 @@ public:
     MAKE_MOCK1(group_finished, void(const std::string&), override);
 
     // NOLINTNEXTLINE
-    MAKE_MOCK1(case_starts, void(const stat_bench::bench::BenchmarkFullName&),
-        override);
+    MAKE_MOCK1(
+        case_starts, void(const stat_bench::BenchmarkFullName&), override);
 
     // NOLINTNEXTLINE
-    MAKE_MOCK1(case_finished, void(const stat_bench::bench::BenchmarkFullName&),
-        override);
+    MAKE_MOCK1(
+        case_finished, void(const stat_bench::BenchmarkFullName&), override);
 
     // NOLINTNEXTLINE
     MAKE_MOCK1(measurement_succeeded,
@@ -68,8 +68,8 @@ public:
 
     // NOLINTNEXTLINE
     MAKE_MOCK3(measurement_failed,
-        void(const stat_bench::bench::BenchmarkFullName&,
-            const stat_bench::bench::BenchmarkCondition&,
+        void(const stat_bench::BenchmarkFullName&,
+            const stat_bench::BenchmarkCondition&,
             const std::exception_ptr& error),
         override);
 

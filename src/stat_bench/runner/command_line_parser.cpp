@@ -19,7 +19,15 @@
  */
 #include "stat_bench/runner/command_line_parser.h"
 
+#include <cstddef>
+#include <memory>
+#include <stdexcept>
+#include <string>
+#include <vector>
+
+#include <lyra/args.hpp>
 #include <lyra/opt.hpp>
+#include <lyra/parser.hpp>
 
 namespace stat_bench {
 namespace runner {

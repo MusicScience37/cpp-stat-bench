@@ -23,6 +23,7 @@
 #include <string>
 #include <vector>
 
+#include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/filters/i_name_filter.h"
 
 namespace stat_bench {
@@ -61,8 +62,7 @@ public:
      * \retval true Input matched to this filter.
      * \retval false Input didn't match to this filter.
      */
-    [[nodiscard]] auto check(const bench::BenchmarkFullName& name) const
-        -> bool;
+    [[nodiscard]] auto check(const BenchmarkFullName& name) const -> bool;
 
 private:
     //! Filter of benchmark names to include.

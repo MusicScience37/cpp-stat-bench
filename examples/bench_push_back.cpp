@@ -24,58 +24,67 @@
 #include <list>
 #include <vector>
 
-#include "stat_bench/bench/invocation_context.h"
 #include "stat_bench/benchmark_macros.h"
-#include "stat_bench/util/do_not_optimize.h"
+#include "stat_bench/current_invocation_context.h"
+#include "stat_bench/do_not_optimize.h"
+#include "stat_bench/fixture_base.h"
+#include "stat_bench/invocation_context.h"
 
 class Fixture : public stat_bench::FixtureBase {
 public:
     Fixture() = default;
 
     template <typename Container>
-    void bench(stat_bench::bench::InvocationContext& STAT_BENCH_CONTEXT_NAME,
-        Container& cont_vec) {
+    void bench(Container& cont_vec) {
         STAT_BENCH_MEASURE_INDEXED(
             /*thread_index*/, sample_index, /*iteration_index*/) {
             cont_vec[sample_index].push_back(0);
         };
-        stat_bench::util::do_not_optimize(cont_vec);
+        stat_bench::do_not_optimize(cont_vec);
     }
 };
 
 STAT_BENCH_CASE_F(Fixture, "push_back", "vector") {
-    const std::size_t iterations = STAT_BENCH_CONTEXT_NAME.iterations();
-    const std::size_t samples = STAT_BENCH_CONTEXT_NAME.samples();
+    const std::size_t iterations =
+        stat_bench::current_invocation_context().iterations();
+    const std::size_t samples =
+        stat_bench::current_invocation_context().samples();
     std::vector<std::vector<int>> cont_vec;
     cont_vec.resize(samples);
-    bench(STAT_BENCH_CONTEXT_NAME, cont_vec);
+    bench(cont_vec);
 }
 
 STAT_BENCH_CASE_F(Fixture, "push_back", "vector_reserved") {
-    const std::size_t iterations = STAT_BENCH_CONTEXT_NAME.iterations();
-    const std::size_t samples = STAT_BENCH_CONTEXT_NAME.samples();
+    const std::size_t iterations =
+        stat_bench::current_invocation_context().iterations();
+    const std::size_t samples =
+        stat_bench::current_invocation_context().samples();
     std::vector<std::vector<int>> cont_vec;
     cont_vec.resize(samples);
     for (std::size_t i = 0; i < samples; ++i) {
         cont_vec.at(i).reserve(iterations);
     }
-    bench(STAT_BENCH_CONTEXT_NAME, cont_vec);
+    bench(cont_vec);
 }
 
 STAT_BENCH_CASE_F(Fixture, "push_back", "deque") {
-    const std::size_t iterations = STAT_BENCH_CONTEXT_NAME.iterations();
-    const std::size_t samples = STAT_BENCH_CONTEXT_NAME.samples();
+    const std::size_t iterations =
+        stat_bench::current_invocation_context().iterations();
+    const std::size_t samples =
+        stat_bench::current_invocation_context().samples();
     std::vector<std::deque<int>> cont_vec;
     cont_vec.resize(samples);
-    bench(STAT_BENCH_CONTEXT_NAME, cont_vec);
+    bench(cont_vec);
 }
 
 STAT_BENCH_CASE_F(Fixture, "push_back", "list") {
-    const std::size_t iterations = STAT_BENCH_CONTEXT_NAME.iterations();
-    const std::size_t samples = STAT_BENCH_CONTEXT_NAME.samples();
+    const std::size_t iterations =
+        stat_bench::current_invocation_context().iterations();
+    const std::size_t samples =
+        stat_bench::current_invocation_context().samples();
     std::vector<std::list<int>> cont_vec;
     cont_vec.resize(samples);
-    bench(STAT_BENCH_CONTEXT_NAME, cont_vec);
+    bench(cont_vec);
 }
 
 STAT_BENCH_MAIN

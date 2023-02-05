@@ -19,12 +19,14 @@
  */
 // IWYU pragma: no_include  <stddef.h>
 #include <cstddef>
+#include <cstdint>
 #include <memory>
 
-#include "stat_bench/bench/invocation_context.h"
 #include "stat_bench/benchmark_macros.h"
+#include "stat_bench/do_not_optimize.h"
+#include "stat_bench/fixture_base.h"
+#include "stat_bench/invocation_context.h"
 #include "stat_bench/param/parameter_value_vector.h"
-#include "stat_bench/util/do_not_optimize.h"
 
 [[nodiscard]] auto fibonacci(std::uint64_t number) -> std::uint64_t {
     if (number < 2) {
@@ -40,7 +42,7 @@ public:
         add_param<std::uint64_t>("number")->add(10)->add(20)->add(30);
     }
 
-    void setup(stat_bench::bench::InvocationContext& context) override {
+    void setup(stat_bench::InvocationContext& context) override {
         number_ = context.get_param<std::size_t>("number");
     }
 
@@ -50,8 +52,8 @@ protected:
 
 STAT_BENCH_CASE_F(Fixture, "Fibonacci", "Fibonacci") {
     STAT_BENCH_MEASURE() {
-        stat_bench::util::do_not_optimize(number_);
-        stat_bench::util::do_not_optimize(fibonacci(number_));
+        stat_bench::do_not_optimize(number_);
+        stat_bench::do_not_optimize(fibonacci(number_));
     };
 }
 

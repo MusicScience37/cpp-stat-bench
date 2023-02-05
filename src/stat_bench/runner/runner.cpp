@@ -22,15 +22,11 @@
 #include <cstddef>
 #include <exception>
 #include <memory>
-#include <stdexcept>
+#include <string>
 
-#include <lyra/args.hpp>
-#include <lyra/opt.hpp>
-#include <lyra/parser.hpp>
-
-#include "stat_bench/bench/benchmark_case_registry.h"
-#include "stat_bench/bench/benchmark_condition.h"
-#include "stat_bench/bench/benchmark_group.h"
+#include "stat_bench/bench_impl/benchmark_case_registry.h"
+#include "stat_bench/bench_impl/benchmark_group.h"
+#include "stat_bench/benchmark_condition.h"
 #include "stat_bench/clock/system_clock.h"
 #include "stat_bench/clock/system_time_point.h"
 #include "stat_bench/filters/composed_filter.h"
@@ -48,7 +44,8 @@
 namespace stat_bench {
 namespace runner {
 
-Runner::Runner(const Config& config, bench::BenchmarkCaseRegistry& registry)
+Runner::Runner(
+    const Config& config, bench_impl::BenchmarkCaseRegistry& registry)
     : Runner(registry) {
     measurers_.push_back(std::make_shared<measurer::ProcessingTimeMeasurer>(
         config.processing_time_samples, config.min_warming_up_iterations,
@@ -83,7 +80,8 @@ Runner::Runner(const Config& config, bench::BenchmarkCaseRegistry& registry)
     registry.filter_by(filter);
 }
 
-Runner::Runner(bench::BenchmarkCaseRegistry& registry) : registry_(registry) {}
+Runner::Runner(bench_impl::BenchmarkCaseRegistry& registry)
+    : registry_(registry) {}
 
 Runner::~Runner() = default;
 
@@ -124,7 +122,7 @@ void Runner::run() const {
 }
 
 void Runner::run_case(const std::shared_ptr<measurer::IMeasurer>& measurer,
-    const std::shared_ptr<bench::IBenchmarkCase>& bench_case) const {
+    const std::shared_ptr<bench_impl::IBenchmarkCase>& bench_case) const {
     auto params = bench_case->params();
     if (!params.has("threads")) {
         params.add<std::size_t>("threads")->add(1);
@@ -132,7 +130,7 @@ void Runner::run_case(const std::shared_ptr<measurer::IMeasurer>& measurer,
     auto generator = params.create_generator();
 
     while (true) {
-        const auto cond = bench::BenchmarkCondition(generator.generate());
+        const auto cond = BenchmarkCondition(generator.generate());
 
         run_case_with_condition(measurer, bench_case, cond);
 
@@ -144,8 +142,8 @@ void Runner::run_case(const std::shared_ptr<measurer::IMeasurer>& measurer,
 
 void Runner::run_case_with_condition(
     const std::shared_ptr<measurer::IMeasurer>& measurer,
-    const std::shared_ptr<bench::IBenchmarkCase>& bench_case,
-    const bench::BenchmarkCondition& cond) const {
+    const std::shared_ptr<bench_impl::IBenchmarkCase>& bench_case,
+    const BenchmarkCondition& cond) const {
     for (const auto& reporter : reporters_) {
         reporter->case_starts(bench_case->info());
     }

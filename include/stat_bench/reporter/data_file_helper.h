@@ -15,7 +15,7 @@
  */
 /*!
  * \file
- * \brief Decleration of functions to help output of data files.
+ * \brief Declaration of functions to help output of data files.
  */
 #pragma once
 

@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 3.12)
 
-project(
-    stat_bench_test
-    VERSION 0.9.0
-    LANGUAGES CXX)
+project(stat_bench_test LANGUAGES CXX)
 message(STATUS "stat_bench_test version ${PROJECT_VERSION}")
 message(STATUS "build type: ${CMAKE_BUILD_TYPE}")
 

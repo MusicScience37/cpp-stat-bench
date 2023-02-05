@@ -20,15 +20,15 @@
 #include "stat_bench/reporter/console_reporter.h"
 
 #include <algorithm>
-#include <exception>
+#include <functional>
 #include <memory>
 
 #include <ApprovalTests.hpp>
 #include <catch2/catch_test_macros.hpp>
-#include <fmt/core.h>
 
 #include "read_file.h"
-#include "remove_directory.h"
+#include "stat_bench/clock/duration.h"
+#include "stat_bench/clock/system_clock.h"
 #include "use_reporter_for_test.h"
 
 TEST_CASE("stat_bench::reporter::ConsoleReporter") {

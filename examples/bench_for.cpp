@@ -22,7 +22,7 @@
 #include <vector>
 
 #include "stat_bench/benchmark_macros.h"
-#include "stat_bench/util/do_not_optimize.h"
+#include "stat_bench/do_not_optimize.h"
 
 constexpr std::size_t size = 100000;
 
@@ -33,7 +33,7 @@ STAT_BENCH_CASE("for", "indexed access") {
         for (std::size_t i = 0; i < vec.size(); ++i) {
             ++vec[i];
         }
-        stat_bench::util::do_not_optimize(vec);
+        stat_bench::do_not_optimize(vec);
     };
 }
 
@@ -44,7 +44,7 @@ STAT_BENCH_CASE("for", "indexed access (cached size)") {
         for (std::size_t i = 0, vec_size = vec.size(); i < vec_size; ++i) {
             ++vec[i];
         }
-        stat_bench::util::do_not_optimize(vec);
+        stat_bench::do_not_optimize(vec);
     };
 }
 
@@ -55,7 +55,7 @@ STAT_BENCH_CASE("for", "iterator") {
         for (auto iter = vec.begin(); iter != vec.end(); ++iter) {
             ++(*iter);
         }
-        stat_bench::util::do_not_optimize(vec);
+        stat_bench::do_not_optimize(vec);
     };
 }
 
@@ -65,7 +65,7 @@ STAT_BENCH_CASE("for", "range for") {
         for (int& val : vec) {
             ++val;
         }
-        stat_bench::util::do_not_optimize(vec);
+        stat_bench::do_not_optimize(vec);
     };
 }
 

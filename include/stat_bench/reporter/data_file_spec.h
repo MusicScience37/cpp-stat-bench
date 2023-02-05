@@ -19,6 +19,7 @@
  */
 #pragma once
 
+#include <cstddef>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -119,7 +120,7 @@ struct MeasurementData {
  * \brief Struct of root objects in data files.
  */
 struct RootData {
-    //! Timestamp on beggining.
+    //! Timestamp on beginning.
     std::string started_at{};
 
     //! Timestamp on end.

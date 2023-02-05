@@ -1,9 +1,11 @@
 from conans import ConanFile, CMake
+from conans.tools import load
+import os
+import re
 
 
 class CppStatBenchConan(ConanFile):
     name = "cpp_stat_bench"
-    version = "0.9.0"
     description = "Benchmark library with statistics for C++."
     homepage = (
         "https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench"
@@ -35,6 +37,15 @@ class CppStatBenchConan(ConanFile):
     no_copy_source = True
     generators = "cmake", "cmake_find_package"
 
+    def set_version(self):
+        contents = load(
+            os.path.join(self.recipe_folder, "include/stat_bench/version.h")
+        )
+        major_version = re.search(r"VERSION_MAJOR (\d+)", contents).group(1)
+        minor_version = re.search(r"VERSION_MINOR (\d+)", contents).group(1)
+        patch_version = re.search(r"VERSION_PATCH (\d+)", contents).group(1)
+        self.version = f"{major_version}.{minor_version}.{patch_version}"
+
     def config_options(self):
         if self.settings.os == "Windows":
             del self.options.fPIC
@@ -48,7 +59,7 @@ class CppStatBenchConan(ConanFile):
 
     def build_requirements(self):
         if self.options.requirements_for_tests:
-            self.build_requires("catch2/3.1.0")
+            self.build_requires("catch2/3.3.0")
             self.build_requires("trompeloeil/43")
             self.build_requires("approvaltests.cpp/10.12.2")
 

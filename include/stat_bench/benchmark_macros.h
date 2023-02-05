@@ -19,26 +19,11 @@
  */
 #pragma once
 
-#include "stat_bench/bench/fixture_base.h"
-#include "stat_bench/macros/case_impl.h"
-#include "stat_bench/macros/context_name.h"
-#include "stat_bench/macros/default_main.h"
-#include "stat_bench/macros/measure_impl.h"
-#include "stat_bench/macros/unique_name.h"
-
-namespace stat_bench {
-
-/*!
- * \brief Base class of fixtures.
- */
-using FixtureBase = ::stat_bench::bench::FixtureBase;
-
-}  // namespace stat_bench
-
-/*!
- * \brief Macro of the name of variables of context objects.
- */
-#define STAT_BENCH_CONTEXT_NAME STAT_BENCH_IMPL_CONTEXT_NAME
+#include "stat_bench/bench_impl/case_impl.h"
+#include "stat_bench/bench_impl/default_main.h"
+#include "stat_bench/bench_impl/measure_impl.h"
+#include "stat_bench/bench_impl/unique_name.h"
+#include "stat_bench/fixture_base.h"
 
 /*!
  * \brief Macro to define a case.

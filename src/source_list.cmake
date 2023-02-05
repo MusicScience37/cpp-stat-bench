@@ -1,6 +1,7 @@
 set(SOURCE_FILES
-    stat_bench/bench/benchmark_case_registry.cpp
-    stat_bench/bench/benchmark_group.cpp
+    stat_bench/bench_impl/benchmark_case_registry.cpp
+    stat_bench/bench_impl/benchmark_group.cpp
+    stat_bench/bench_impl/invocation_context_registry.cpp
     stat_bench/clock/monotone_clock_impl.cpp
     stat_bench/filters/composed_filter.cpp
     stat_bench/filters/regex_filter.cpp
@@ -22,5 +23,6 @@ set(SOURCE_FILES
     stat_bench/stat/calc_stat.cpp
     stat_bench/stat/statistics.cpp
     stat_bench/util/prepare_directory.cpp
-    stat_bench/util/use_pointer.cpp
+    stat_bench/util/sync_barrier.cpp
+    use_pointer.cpp
 )

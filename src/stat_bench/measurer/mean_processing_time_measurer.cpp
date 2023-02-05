@@ -28,8 +28,8 @@
 namespace stat_bench {
 namespace measurer {
 
-auto MeanProcessingTimeMeasurer::measure(bench::IBenchmarkCase* bench_case,
-    const bench::BenchmarkCondition& cond) const -> Measurement {
+auto MeanProcessingTimeMeasurer::measure(bench_impl::IBenchmarkCase* bench_case,
+    const BenchmarkCondition& cond) const -> Measurement {
     const std::size_t iterations =
         determine_iterations(bench_case, cond, name_, min_sample_duration_sec_);
 

@@ -20,6 +20,7 @@
 #include "stat_bench/reporter/console_reporter.h"
 
 #include <memory>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -90,13 +91,11 @@ void ConsoleReporter::group_finished(const std::string& /*name*/) {
     // no operation
 }
 
-void ConsoleReporter::case_starts(
-    const bench::BenchmarkFullName& /*case_info*/) {
+void ConsoleReporter::case_starts(const BenchmarkFullName& /*case_info*/) {
     // no operation
 }
 
-void ConsoleReporter::case_finished(
-    const bench::BenchmarkFullName& /*case_info*/) {
+void ConsoleReporter::case_finished(const BenchmarkFullName& /*case_info*/) {
     // no operation
 }
 
@@ -120,9 +119,8 @@ void ConsoleReporter::measurement_succeeded(
     std::fflush(file_);
 }
 
-void ConsoleReporter::measurement_failed(
-    const bench::BenchmarkFullName& case_info,
-    const bench::BenchmarkCondition& cond, const std::exception_ptr& error) {
+void ConsoleReporter::measurement_failed(const BenchmarkFullName& case_info,
+    const BenchmarkCondition& cond, const std::exception_ptr& error) {
     try {
         std::rethrow_exception(error);
     } catch (const std::exception& e) {

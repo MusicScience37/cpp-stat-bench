@@ -1,0 +1,6 @@
+build_dir: build/Debug
+file_patterns:
+  - src/unity_source.cpp
+  - tests/units/unity_source.cpp
+extra_args:
+  - "--extra-arg=-isystem/usr/lib/llvm-14/include/c++/v1"
