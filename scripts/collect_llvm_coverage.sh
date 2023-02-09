@@ -16,6 +16,10 @@ llvm-cov show -ignore-filename-regex='(test|.conan)/*' -instr-profile=$DIR/cover
 llvm-cov show -ignore-filename-regex='(test|.conan)/*' -instr-profile=$DIR/coverage/coverage.profdata $opts \
     -format=html -output-dir=$DIR/coverage/html
 
+# output in lcov's format
+llvm-cov export -ignore-filename-regex='(test|.conan)/*' -instr-profile=$DIR/coverage/coverage.profdata $opts \
+    -format=lcov > $DIR/coverage/coverage
+
 # output summary to stdout
 llvm-cov report -ignore-filename-regex='(test|.conan)/*' -instr-profile=$DIR/coverage/coverage.profdata $opts |
     tee $DIR/coverage/coverage_summary.txt
