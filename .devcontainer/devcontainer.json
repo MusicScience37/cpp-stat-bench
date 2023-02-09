@@ -4,26 +4,35 @@
     "CONAN_USER_HOME": "${containerWorkspaceFolder}",
     "ASAN_OPTIONS": "alloc_dealloc_mismatch=0"
   },
-  "extensions": [
-    "ms-vscode.cpptools",
-    "llvm-vs-code-extensions.vscode-clangd",
-    "twxs.cmake",
-    "ms-vscode.cmake-tools",
-    "cheshirekow.cmake-format",
-    "streetsidesoftware.code-spell-checker",
-    "cschlosser.doxdocgen",
-    "davidanson.vscode-markdownlint",
-    "jebbs.plantuml",
-    "esbenp.prettier-vscode",
-    "ms-python.python",
-    "njpwerner.autodocstring",
-    "lextudio.restructuredtext",
-    "trond-snekvik.simple-rst",
-    "fredericbonnet.cmake-test-adapter",
-    "hbenl.vscode-test-explorer",
-    "ms-azuretools.vscode-docker",
-    "tamasfe.even-better-toml",
-    "redhat.vscode-yaml"
-  ],
+  "customizations": {
+    // Configure properties specific to VS Code.
+    "vscode": {
+      // Add the IDs of extensions you want installed when the container is created.
+      "extensions": [
+        "ms-vscode.cpptools",
+        "llvm-vs-code-extensions.vscode-clangd",
+        "twxs.cmake",
+        "ms-vscode.cmake-tools",
+        "cheshirekow.cmake-format",
+        "streetsidesoftware.code-spell-checker",
+        "cschlosser.doxdocgen",
+        "davidanson.vscode-markdownlint",
+        "jebbs.plantuml",
+        "esbenp.prettier-vscode",
+        "ms-python.python",
+        "njpwerner.autodocstring",
+        "lextudio.restructuredtext",
+        "trond-snekvik.simple-rst",
+        "fredericbonnet.cmake-test-adapter",
+        "hbenl.vscode-test-explorer",
+        "ms-azuretools.vscode-docker",
+        "tamasfe.even-better-toml",
+        "redhat.vscode-yaml"
+      ],
+      "settings": {
+        "cmakeFormat.exePath": "/workspaces/cpp-hash-tables/.venv/bin/cmake-format"
+      }
+    }
+  },
   "postCreateCommand": "bash ./.devcontainer/setup.bash"
 }
