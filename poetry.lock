@@ -739,6 +739,24 @@ files = [
 ]
 
 [[package]]
+name = "lcov-cobertura"
+version = "2.0.2"
+description = "LCOV to Cobertura XML converter"
+category = "dev"
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "lcov_cobertura-2.0.2-py3-none-any.whl", hash = "sha256:fc40cdc21cebb3ac9a62a277d64552734d3cd5e96c5eff95ac7eef90e1a2966c"},
+    {file = "lcov_cobertura-2.0.2.tar.gz", hash = "sha256:c6ce347bf3ee67f8d5d020cd662626a3594cf2be727cc634aa0d11fa3f7f1374"},
+]
+
+[package.extras]
+all = ["coverage[toml]", "pytest", "pytest-cov", "recommonmark", "sphinx", "sphinx-rtd-theme", "sphinxcontrib-apidoc", "xmldiff"]
+cov = ["coverage[toml]", "pytest-cov"]
+doc = ["recommonmark", "sphinx", "sphinx-rtd-theme", "sphinxcontrib-apidoc"]
+test = ["pytest", "xmldiff"]
+
+[[package]]
 name = "livereload"
 version = "2.6.3"
 description = "Python LiveReload is an awesome tool for web developers"
@@ -1824,4 +1842,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.11"
-content-hash = "a7d6a81e7df2e22b30a8b09bb144010e161acdb24b2b711c3a351c41ff0d4273"
+content-hash = "a781f39b343d1fa1d3dcb5efad38f14a253637583900524a25dd8257d783c37d"

@@ -27,5 +27,11 @@
     "**/.venv/**": true
   },
   "python.formatting.provider": "black",
-  "cSpell.enableFiletypes": ["cmake", "plantuml", "shellscript", "toml"]
+  "cSpell.enableFiletypes": ["cmake", "plantuml", "shellscript", "toml"],
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

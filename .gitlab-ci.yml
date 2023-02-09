@@ -242,31 +242,24 @@ clang coverage:
     - ctest -V
     - cd ../
     - scripts/collect_llvm_coverage.sh build_clang_coverage
-    - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
-
-gcc coverage:
-  extends: test debug
-  parallel:
-    matrix:
-      - COMPILER_TYPE: "gcc10"
-        IMAGE_PATH: "musicscience37/gcc-ci"
-        CONAN_LIBCXX: libstdc++11
-        CXX_STANDARD: 14
-  variables:
-    BUILD_DIR: build_gcc_coverage
-  script:
-    - cmake -S ./ -B $BUILD_DIR
-      -DCMAKE_BUILD_TYPE=Debug
-      -DSTAT_BENCH_TESTING:BOOL=ON
-      -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
-      "-DCMAKE_CXX_FLAGS=--coverage"
-      "-DCMAKE_MODULE_LINKER_FLAGS=--coverage"
-    - cd $BUILD_DIR
-    - cmake --build .
-    - ctest -V
-    - cd ../
-    - scripts/collect_gcc_coverage.sh build_gcc_coverage
-  coverage: '/Total:\|\s*(\d+\.?\d+?)%/'
+    - poetry run lcov_cobertura $BUILD_DIR/coverage/coverage --output $BUILD_DIR/coverage.xml
+  coverage: '/[^\s]+%\s+\d+\s+\d+\s+\s[^\s]+%/'
+  artifacts:
+    paths:
+      - $BUILD_DIR/bench
+      - $BUILD_DIR/junit
+      - $BUILD_DIR/temp_test
+      - $BUILD_DIR/coverage
+      - "*.png"
+      - "*.html"
+    reports:
+      junit:
+        - $BUILD_DIR/junit/*.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: $BUILD_DIR/coverage.xml
+    when: always
+    expire_in: "1 mos"
 
 clang-14-asan-ubsan:
   extends: test debug
