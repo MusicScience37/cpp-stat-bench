@@ -11,6 +11,7 @@
 #include "stat_bench/clock/system_clock_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/do_not_optimize_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/filters/composed_filter_test.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "stat_bench/filters/glob_filter_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/filters/regex_filter_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/fixture_base_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/invocation_context_test.cpp"  // NOLINT(bugprone-suspicious-include)

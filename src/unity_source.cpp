@@ -3,6 +3,7 @@
 #include "stat_bench/bench_impl/invocation_context_registry.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/clock/monotone_clock_impl.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/filters/composed_filter.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "stat_bench/filters/glob_filter.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/filters/regex_filter.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/measurer/determine_iterations.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/measurer/determine_warming_up_samples.cpp"  // NOLINT(bugprone-suspicious-include)

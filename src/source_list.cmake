@@ -4,6 +4,7 @@ set(SOURCE_FILES
     stat_bench/bench_impl/invocation_context_registry.cpp
     stat_bench/clock/monotone_clock_impl.cpp
     stat_bench/filters/composed_filter.cpp
+    stat_bench/filters/glob_filter.cpp
     stat_bench/filters/regex_filter.cpp
     stat_bench/measurer/determine_iterations.cpp
     stat_bench/measurer/determine_warming_up_samples.cpp

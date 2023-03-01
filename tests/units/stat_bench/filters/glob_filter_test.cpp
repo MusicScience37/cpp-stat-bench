@@ -15,9 +15,9 @@
  */
 /*!
  * \file
- * \brief Test of RegexFilter class.
+ * \brief Implementation of GlobFilter class.
  */
-#include "stat_bench/filters/regex_filter.h"
+#include "stat_bench/filters/glob_filter.h"
 
 #include <memory>
 
@@ -26,16 +26,16 @@
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/filters/i_name_filter.h"
 
-TEST_CASE("stat_bench::filters::RegexFilter") {
+TEST_CASE("stat_bench::filters::GlobFilter") {
     using stat_bench::BenchmarkFullName;
+    using stat_bench::filters::GlobFilter;
     using stat_bench::filters::INameFilter;
-    using stat_bench::filters::RegexFilter;
 
     SECTION("check") {
         const std::shared_ptr<INameFilter> filter =
-            std::make_shared<RegexFilter>("a[bc]+/.*");
+            std::make_shared<GlobFilter>("*/test");
 
-        CHECK(filter->check(BenchmarkFullName("abc", "def")));
-        CHECK_FALSE(filter->check(BenchmarkFullName("a", "abc")));
+        CHECK(filter->check(BenchmarkFullName("any", "test")));
+        CHECK_FALSE(filter->check(BenchmarkFullName("any", "1test")));
     }
 }
