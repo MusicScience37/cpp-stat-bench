@@ -22,6 +22,7 @@ set(SOURCE_FILES
     stat_bench/runner/runner.cpp
     stat_bench/stat/calc_stat.cpp
     stat_bench/stat/statistics.cpp
+    stat_bench/util/check_glob_pattern.cpp
     stat_bench/util/prepare_directory.cpp
     stat_bench/util/sync_barrier.cpp
     use_pointer.cpp
