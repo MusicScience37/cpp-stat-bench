@@ -34,6 +34,22 @@ TEST_CASE("stat_bench::filters::ComposedFilter") {
         CHECK(filter.check(BenchmarkFullName("jkl", "ghi")));
     }
 
+    SECTION("include_with_glob") {
+        ComposedFilter filter;
+        filter.include_with_glob("*/ghi");
+        CHECK_FALSE(filter.check(BenchmarkFullName("abc", "def")));
+        CHECK(filter.check(BenchmarkFullName("abc", "ghi")));
+        CHECK(filter.check(BenchmarkFullName("jkl", "ghi")));
+    }
+
+    SECTION("exclude_with_glob") {
+        ComposedFilter filter;
+        filter.exclude_with_glob("jkl/*");
+        CHECK(filter.check(BenchmarkFullName("abc", "def")));
+        CHECK(filter.check(BenchmarkFullName("abc", "ghi")));
+        CHECK_FALSE(filter.check(BenchmarkFullName("jkl", "ghi")));
+    }
+
     SECTION("include_with_regex") {
         ComposedFilter filter;
         filter.include_with_regex("[a-z]+/ghi");

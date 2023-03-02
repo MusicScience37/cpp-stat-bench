@@ -12,6 +12,7 @@ set(SOURCE_FILES
     stat_bench/clock/system_clock_test.cpp
     stat_bench/do_not_optimize_test.cpp
     stat_bench/filters/composed_filter_test.cpp
+    stat_bench/filters/glob_filter_test.cpp
     stat_bench/filters/regex_filter_test.cpp
     stat_bench/fixture_base_test.cpp
     stat_bench/invocation_context_test.cpp
@@ -35,6 +36,7 @@ set(SOURCE_FILES
     stat_bench/stat/calc_stat_test.cpp
     stat_bench/stat/custom_stat_output_test.cpp
     stat_bench/stat/statistics_test.cpp
+    stat_bench/util/check_glob_pattern_test.cpp
     stat_bench/util/prepare_directory_test.cpp
     stat_bench/util/sync_barrier_test.cpp
     test_main.cpp

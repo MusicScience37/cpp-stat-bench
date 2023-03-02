@@ -12,6 +12,7 @@ Checks: >
     -readability-function-cognitive-complexity,
     -readability-convert-member-functions-to-static,
   modernize-*,
+    -modernize-return-braced-init-list,
   hicpp-*,
     -hicpp-no-array-decay,
   cert-*,
@@ -29,6 +30,7 @@ Checks: >
 # - readability-convert-member-functions-to-static: For API consistency.
 # - hicpp-no-array-decay: This forces to use an external library.
 # - bugprone-easily-swappable-parameters is difficult to fix without performance degrade.
+# - modernize-return-braced-init-list reduces readability.
 
 CheckOptions:
   # Naming Conventions

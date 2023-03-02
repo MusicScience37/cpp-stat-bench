@@ -91,6 +91,12 @@ struct Config {
      */
     std::string json_file_path{};
 
+    //! Glob patterns of benchmark names to include.
+    std::vector<std::string> include_glob{};
+
+    //! Glob patterns of benchmark names to exclude.
+    std::vector<std::string> exclude_glob{};
+
     //! Regular expressions of benchmark names to include.
     std::vector<std::string> include_regex{};
 

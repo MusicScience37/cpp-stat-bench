@@ -21,4 +21,4 @@ IncludeCategories:
 
 NamespaceMacros: []
 
-CommentPragmas: "\\copydoc"
+CommentPragmas: "\\copydoc|NOLINT"
