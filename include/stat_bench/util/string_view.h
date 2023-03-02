@@ -110,22 +110,6 @@ public:
         return StringView(data_ + pos, size_ - pos);
     }
 
-    /*!
-     * \brief Get a part of the string.
-     *
-     * \param[in] pos Index of the starting position.
-     * \param[in] count Number of characters.
-     * \return Created part of the string.
-     */
-    [[nodiscard]] auto substr(std::size_t pos, std::size_t count) const
-        -> StringView {
-        if (count > size_ || pos + count > size_) {
-            throw StatBenchException(
-                "Invalid arguments in StringView::substr.");
-        }
-        return StringView(data_ + pos, count);
-    }
-
 private:
     //! Pointer to the string.
     const char* data_;
