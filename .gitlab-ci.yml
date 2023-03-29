@@ -171,6 +171,7 @@ test release:
       -DSTAT_BENCH_BUILD_EXAMPLES=ON
       -DSTAT_BENCH_TEST_EXAMPLES=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+      -DSTAT_BENCH_USE_CONAN:BOOL=ON
       -DCMAKE_CXX_STANDARD=$CXX_STANDARD
     - cd $BUILD_DIR
     - cmake --build .
@@ -214,6 +215,7 @@ test debug:
       -DSTAT_BENCH_BUILD_EXAMPLES=ON
       -DSTAT_BENCH_TEST_EXAMPLES=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+      -DSTAT_BENCH_USE_CONAN:BOOL=ON
     - cd $BUILD_DIR
     - cmake --build .
     - ctest -V
@@ -233,6 +235,7 @@ clang coverage:
       -DCMAKE_BUILD_TYPE=Debug
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+      -DSTAT_BENCH_USE_CONAN:BOOL=ON
       "-DCMAKE_CXX_FLAGS=-fprofile-instr-generate -fcoverage-mapping"
       "-DCMAKE_MODULE_LINKER_FLAGS=-fprofile-instr-generate -fcoverage-mapping"
     - cd $BUILD_DIR
@@ -277,6 +280,7 @@ clang-14-asan-ubsan:
       -DCMAKE_BUILD_TYPE=Debug
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+      -DSTAT_BENCH_USE_CONAN:BOOL=ON
       -DCMAKE_CXX_FLAGS=-fsanitize=address,undefined
       -DCMAKE_MODULE_LINKER_FLAGS=-fsanitize=address,undefined
     - cd $BUILD_DIR
@@ -292,6 +296,7 @@ clang-14-tsan:
       -DCMAKE_BUILD_TYPE=Debug
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+      -DSTAT_BENCH_USE_CONAN:BOOL=ON
       -DCMAKE_CXX_FLAGS=-fsanitize=thread
       -DCMAKE_MODULE_LINKER_FLAGS=-fsanitize=thread
     - cd $BUILD_DIR
@@ -371,6 +376,7 @@ msvc-release:
       -DSTAT_BENCH_BUILD_EXAMPLES=ON
       -DSTAT_BENCH_TEST_EXAMPLES=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+      -DSTAT_BENCH_USE_CONAN:BOOL=ON
     - cd $BUILD_DIR
     - cmake --build . --config Release --parallel
     - ctest -V --build-config Release
@@ -409,6 +415,7 @@ static analysis:
       -DSTAT_BENCH_ENABLE_BENCH=ON
       -DSTAT_BENCH_BUILD_EXAMPLES=ON
       -DSTAT_BENCH_ENABLE_CPP_WARNINGS:BOOL=ON
+      -DSTAT_BENCH_USE_CONAN:BOOL=ON
     - cmake --build build_static_analysis
       --target stat_bench_clang_tidy
     - poetry run clang-tidy-checker -b ${BUILD_DIR}
@@ -431,6 +438,7 @@ doc:
     - cd ../
     - cmake -S ./ -B build_doc
       -DSTAT_BENCH_BUILD_DOC:BOOL=ON
+      -DSTAT_BENCH_USE_CONAN:BOOL=ON
     - cmake --build build_doc --target stat_bench_doc
   artifacts:
     paths:
