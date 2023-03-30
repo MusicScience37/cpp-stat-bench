@@ -131,6 +131,7 @@ spell check:
       "**/*.sh"
       "**/*.bash"
       --exclude "**/*.approved.*"
+      --exclude "vcpkg/*"
   interruptible: true
 
 test release:
@@ -430,8 +431,8 @@ doc:
     - apt-get update
     - apt-get install -y --no-install-recommends curl zip unzip tar
     - ./vcpkg/bootstrap-vcpkg.sh
-    - mkdir $BUILD_DIR
-    - cd $BUILD_DIR
+    - mkdir build_doc
+    - cd build_doc
     - cmake ..
       -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
       -DSTAT_BENCH_BUILD_DOC:BOOL=ON
