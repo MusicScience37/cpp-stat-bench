@@ -7,7 +7,6 @@ stages:
   - release
 
 variables:
-  GIT_SUBMODULE_STRATEGY: recursive
   CONAN_USER: "MusicScience37"
   SECURE_LOG_LEVEL: debug
   CPP_STAT_BENCH_CONAN_REGISTRY: "https://gitlab.com/api/v4/projects/32226502/packages/conan"
@@ -155,6 +154,7 @@ test release:
         CXX_STANDARD: 20
   image: ${IMAGE_PATH}:${COMPILER_TYPE}
   variables:
+    GIT_SUBMODULE_STRATEGY: recursive
     BUILD_TYPE: Release
     BUILD_DIR: build_${COMPILER_TYPE}_release
   before_script:
@@ -351,6 +351,7 @@ msvc-release:
   dependencies: []
   variables:
     BUILD_DIR: build_msvc
+    GIT_SUBMODULE_STRATEGY: recursive
     # workaround in https://github.com/python-poetry/poetry/issues/1917#issuecomment-1235998997
     PYTHON_KEYRING_BACKEND: keyring.backends.null.Keyring
   before_script:
@@ -427,6 +428,8 @@ doc:
   dependencies:
     - sync poetry
   image: musicscience37/sphinx-doxygen:clang14
+  variables:
+    GIT_SUBMODULE_STRATEGY: recursive
   script:
     - apt-get update
     - apt-get install -y --no-install-recommends curl zip unzip tar
