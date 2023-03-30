@@ -157,6 +157,8 @@ test release:
     BUILD_TYPE: Release
     BUILD_DIR: build_${COMPILER_TYPE}_release
   before_script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends curl zip unzip tar
     - ./vcpkg/bootstrap-vcpkg.sh
     - mkdir $BUILD_DIR
   script:
@@ -425,6 +427,8 @@ doc:
     - sync poetry
   image: musicscience37/sphinx-doxygen:clang14
   script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends curl zip unzip tar
     - ./vcpkg/bootstrap-vcpkg.sh
     - mkdir $BUILD_DIR
     - cd $BUILD_DIR
