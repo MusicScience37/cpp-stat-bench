@@ -6,6 +6,9 @@
   ],
   "cmake.buildDirectory": "${workspaceFolder}/build/${buildType}",
   "cmake.preferredGenerators": ["Ninja"],
+  "cmake.configureSettings": {
+    "CMAKE_TOOLCHAIN_FILE": "${workspaceFolder}/vcpkg/scripts/buildsystems/vcpkg.cmake"
+  },
   "doxdocgen.generic.returnTemplate": "\\return ",
   "doxdocgen.generic.paramTemplate": "\\param[in] {param} ",
   "doxdocgen.c.firstLine": "/*!",
