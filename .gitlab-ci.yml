@@ -368,7 +368,7 @@ msvc-release:
   script:
     - cd $BUILD_DIR
     - cmake ..
-      -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+      "-DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake"
       -DCMAKE_BUILD_TYPE=Release
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_ENABLE_BENCH=ON
