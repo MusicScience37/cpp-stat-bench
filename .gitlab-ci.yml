@@ -170,7 +170,6 @@ test release:
       -DSTAT_BENCH_BUILD_EXAMPLES=ON
       -DSTAT_BENCH_TEST_EXAMPLES=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
-      -DSTAT_BENCH_USE_CONAN:BOOL=ON
       -DCMAKE_CXX_STANDARD=$CXX_STANDARD
     - cmake --build .
     - ctest -V
@@ -215,7 +214,6 @@ test debug:
       -DSTAT_BENCH_BUILD_EXAMPLES=ON
       -DSTAT_BENCH_TEST_EXAMPLES=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
-      -DSTAT_BENCH_USE_CONAN:BOOL=ON
     - cmake --build .
     - ctest -V
 
@@ -236,7 +234,6 @@ clang coverage:
       -DCMAKE_BUILD_TYPE=Debug
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
-      -DSTAT_BENCH_USE_CONAN:BOOL=ON
       "-DCMAKE_CXX_FLAGS=-fprofile-instr-generate -fcoverage-mapping"
       "-DCMAKE_MODULE_LINKER_FLAGS=-fprofile-instr-generate -fcoverage-mapping"
     - mkdir coverage
@@ -282,7 +279,6 @@ clang-14-asan-ubsan:
       -DCMAKE_BUILD_TYPE=Debug
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
-      -DSTAT_BENCH_USE_CONAN:BOOL=ON
       -DCMAKE_CXX_FLAGS=-fsanitize=address,undefined
       -DCMAKE_MODULE_LINKER_FLAGS=-fsanitize=address,undefined
     - cmake --build .
@@ -299,7 +295,6 @@ clang-14-tsan:
       -DCMAKE_BUILD_TYPE=Debug
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
-      -DSTAT_BENCH_USE_CONAN:BOOL=ON
       -DCMAKE_CXX_FLAGS=-fsanitize=thread
       -DCMAKE_MODULE_LINKER_FLAGS=-fsanitize=thread
     - cmake --build .
@@ -419,7 +414,6 @@ static analysis:
       -DSTAT_BENCH_ENABLE_BENCH=ON
       -DSTAT_BENCH_BUILD_EXAMPLES=ON
       -DSTAT_BENCH_ENABLE_CPP_WARNINGS:BOOL=ON
-      -DSTAT_BENCH_USE_CONAN:BOOL=ON
     - cd ..
     - poetry run clang-tidy-checker -b ${BUILD_DIR}
 
@@ -437,7 +431,6 @@ doc:
     - cmake ..
       -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
       -DSTAT_BENCH_BUILD_DOC:BOOL=ON
-      -DSTAT_BENCH_USE_CONAN:BOOL=ON
     - cmake --build . --target stat_bench_doc
   artifacts:
     paths:
