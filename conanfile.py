@@ -65,6 +65,7 @@ class CppStatBenchConan(ConanFile):
 
     def build(self):
         cmake = CMake(self)
+        cmake.definitions["STAT_BENCH_USE_CONAN"] = True
         cmake.configure()
         cmake.build()
 
