@@ -32,9 +32,9 @@
 
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/reporter/render_template.h"
-#include "stat_bench/reporter/template/violin.html.h"
 #include "stat_bench/stat/statistics.h"
 #include "stat_bench/util/prepare_directory.h"
+#include "template/violin.h"
 
 namespace stat_bench {
 namespace reporter {

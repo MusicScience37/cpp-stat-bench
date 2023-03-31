@@ -13,13 +13,3 @@ target_link_libraries(stat_bench PUBLIC Threads::Threads)
 if(MSVC)
     target_compile_options(stat_bench PUBLIC /EHsc /utf-8)
 endif()
-
-function(preprocess_template PATH VAR_NAME)
-    file(READ "${CMAKE_CURRENT_SOURCE_DIR}/${PATH}" CONTENTS)
-    file(
-        WRITE "${CMAKE_BINARY_DIR}/include/${PATH}.h"
-        "#pragma once\nstatic constexpr const char* ${VAR_NAME} = R\"(${CONTENTS})\";"
-    )
-endfunction()
-preprocess_template(reporter/template/line2d.html line2d)
-preprocess_template(reporter/template/violin.html violin)
