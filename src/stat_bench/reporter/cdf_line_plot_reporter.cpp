@@ -29,9 +29,9 @@
 #include <fmt/format.h>
 
 #include "stat_bench/reporter/render_template.h"
-#include "stat_bench/reporter/template/line2d.html.h"
 #include "stat_bench/stat/statistics.h"
 #include "stat_bench/util/prepare_directory.h"
+#include "template/line2d.h"
 
 namespace stat_bench {
 namespace reporter {
