@@ -88,7 +88,7 @@ def generate_template_header(template_path: pathlib.Path) -> None:
 @click.argument("template_paths", nargs=-1)
 def main(template_paths: typing.List[str]) -> None:
     """Generate C++ header files of HTML templates."""
-    template_path_objs = [pathlib.Path(path) for path in template_paths]
+    template_path_objs = [pathlib.Path(path).absolute() for path in template_paths]
     if not template_path_objs:
         template_path_objs = collect_templates()
     for path in template_path_objs:
