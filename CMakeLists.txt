@@ -26,31 +26,52 @@ option(BUILD_SHARED_LIBS "Build shared library" ON)
 option(STAT_BENCH_BUILD_DOC "build documentation of ${FULL_PROJECT_NAME}" OFF)
 option(STAT_BENCH_TESTING "enable tests of ${FULL_PROJECT_NAME}" OFF)
 option(STAT_BENCH_BUILD_EXAMPLES "build examples of ${FULL_PROJECT_NAME}" OFF)
+option(STAT_BENCH_ENABLE_INSTALL
+       "enable CMake target to install ${FULL_PROJECT_NAME}" ON)
 
 set(CMAKE_CXX_STANDARD
     14
     CACHE STRING "C++ standard")
 
+include(GNUInstallDirs)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY $<1:${CMAKE_BINARY_DIR}/lib>)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY $<1:${CMAKE_BINARY_DIR}/lib>)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $<1:${CMAKE_BINARY_DIR}/bin>)
 
-include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-set(CONAN_COMPILER ${CONAN_SETTINGS_COMPILER})
-set(CONAN_COMPILER_VERSION ${CONAN_SETTINGS_COMPILER_VERSION})
-set(CONAN_LIBCXX ${CONAN_SETTINGS_COMPILER_LIBCXX})
-conan_basic_setup()
+option(STAT_BENCH_USE_CONAN "Use Conan as the package manager for C++." OFF)
+if(STAT_BENCH_USE_CONAN)
+    include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
+    set(CONAN_COMPILER ${CONAN_SETTINGS_COMPILER})
+    set(CONAN_COMPILER_VERSION ${CONAN_SETTINGS_COMPILER_VERSION})
+    set(CONAN_LIBCXX ${CONAN_SETTINGS_COMPILER_LIBCXX})
+    conan_basic_setup()
+    list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
+    list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR})
+    find_package(fmt REQUIRED)
+    find_package(lyra REQUIRED)
+    find_package(nlohmann_json REQUIRED)
+    if(STAT_BENCH_TESTING)
+        find_package(Catch2 REQUIRED)
+        find_package(trompeloeil REQUIRED)
+        find_package(ApprovalTests REQUIRED)
+    endif()
+else()
+    # Via vcpkg.
+    find_package(fmt REQUIRED)
+    find_package(lyra REQUIRED)
+    find_package(nlohmann_json REQUIRED)
+    if(STAT_BENCH_TESTING)
+        find_package(Catch2 REQUIRED)
+        find_package(trompeloeil REQUIRED)
 
-# find packages installed with Conan
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
-list(APPEND CMAKE_PREFIX_PATH ${CMAKE_BINARY_DIR})
-find_package(fmt REQUIRED)
-find_package(lyra REQUIRED)
-find_package(nlohmann_json REQUIRED)
-if(STAT_BENCH_TESTING)
-    find_package(Catch2 REQUIRED)
-    find_package(trompeloeil REQUIRED)
-    find_package(ApprovalTests REQUIRED)
+        # ApprovalTests.
+        find_path(APPROVAL_TESTS_CPP_INCLUDE_DIRS "ApprovalTests.hpp")
+        add_library(ApprovalTests_ApprovalTests INTERFACE)
+        target_include_directories(ApprovalTests_ApprovalTests
+                                   INTERFACE ${APPROVAL_TESTS_CPP_INCLUDE_DIRS})
+        add_library(ApprovalTests::ApprovalTests ALIAS
+                    ApprovalTests_ApprovalTests)
+    endif()
 endif()
 
 include(CppWarningFlags)
@@ -71,4 +92,29 @@ endif()
 
 if(STAT_BENCH_BUILD_EXAMPLES)
     add_subdirectory(examples)
+endif()
+
+if(STAT_BENCH_ENABLE_INSTALL)
+    install(
+        TARGETS stat_bench
+        EXPORT cpp_stat_bench-targets
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        FRAMEWORK DESTINATION ${CMAKE_INSTALL_PREFIX})
+
+    install(
+        DIRECTORY ${STAT_BENCH_SOURCE_DIR}/include/stat_bench
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+        FILES_MATCHING
+        PATTERN "*.h*")
+
+    export(
+        TARGETS stat_bench
+        NAMESPACE cpp_stat_bench::
+        FILE ${CMAKE_BINARY_DIR}/cpp_stat_bench-targets.cmake)
+    install(
+        EXPORT cpp_stat_bench-targets
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/cpp_stat_bench
+        NAMESPACE cpp_stat_bench::)
 endif()

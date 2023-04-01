@@ -22,10 +22,19 @@
 #include <algorithm>
 #include <memory>
 
+#include "stat_bench/filters/glob_filter.h"
 #include "stat_bench/filters/regex_filter.h"
 
 namespace stat_bench {
 namespace filters {
+
+void ComposedFilter::include_with_glob(const std::string& pattern) {
+    included_filter_.push_back(std::make_shared<GlobFilter>(pattern));
+}
+
+void ComposedFilter::exclude_with_glob(const std::string& pattern) {
+    excluded_filter_.push_back(std::make_shared<GlobFilter>(pattern));
+}
 
 void ComposedFilter::include_with_regex(const std::string& regex) {
     included_filter_.push_back(std::make_shared<RegexFilter>(regex));

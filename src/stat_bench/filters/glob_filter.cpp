@@ -15,15 +15,24 @@
  */
 /*!
  * \file
- * \brief Definition of macros of versions.
+ * \brief Implementation of GlobFilter class.
  */
-#pragma once
+#include "stat_bench/filters/glob_filter.h"
 
-//! Major version of cpp-stat-bench project.
-#define STAT_BENCH_VERSION_MAJOR 0
+#include <utility>
 
-//! Minor version of cpp-stat-bench project.
-#define STAT_BENCH_VERSION_MINOR 11
+#include <fmt/format.h>
 
-//! Patch version of cpp-stat-bench project.
-#define STAT_BENCH_VERSION_PATCH 0
+#include "stat_bench/util/check_glob_pattern.h"
+
+namespace stat_bench {
+namespace filters {
+
+GlobFilter::GlobFilter(std::string pattern) : pattern_(std::move(pattern)) {}
+
+auto GlobFilter::check(const BenchmarkFullName& name) const -> bool {
+    return util::check_glob_pattern(pattern_, fmt::format("{}", name));
+}
+
+}  // namespace filters
+}  // namespace stat_bench

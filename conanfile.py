@@ -59,12 +59,13 @@ class CppStatBenchConan(ConanFile):
 
     def build_requirements(self):
         if self.options.requirements_for_tests:
-            self.build_requires("catch2/3.3.0")
+            self.build_requires("catch2/3.3.1")
             self.build_requires("trompeloeil/43")
             self.build_requires("approvaltests.cpp/10.12.2")
 
     def build(self):
         cmake = CMake(self)
+        cmake.definitions["STAT_BENCH_USE_CONAN"] = True
         cmake.configure()
         cmake.build()
 

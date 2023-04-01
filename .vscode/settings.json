@@ -5,7 +5,11 @@
     "-header-insertion=iwyu"
   ],
   "cmake.buildDirectory": "${workspaceFolder}/build/${buildType}",
+  "cmake.installPrefix": "${workspaceFolder}/install/${buildType}",
   "cmake.preferredGenerators": ["Ninja"],
+  "cmake.configureSettings": {
+    "CMAKE_TOOLCHAIN_FILE": "${workspaceFolder}/vcpkg/scripts/buildsystems/vcpkg.cmake"
+  },
   "doxdocgen.generic.returnTemplate": "\\return ",
   "doxdocgen.generic.paramTemplate": "\\param[in] {param} ",
   "doxdocgen.c.firstLine": "/*!",
@@ -27,5 +31,11 @@
     "**/.venv/**": true
   },
   "python.formatting.provider": "black",
-  "cSpell.enableFiletypes": ["cmake", "plantuml", "shellscript", "toml"]
+  "cSpell.enableFiletypes": ["cmake", "plantuml", "shellscript", "toml"],
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
 }

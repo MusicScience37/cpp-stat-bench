@@ -71,6 +71,12 @@ Runner::Runner(
     }
 
     filters::ComposedFilter filter;
+    for (const auto& pattern : config.include_glob) {
+        filter.include_with_glob(pattern);
+    }
+    for (const auto& pattern : config.exclude_glob) {
+        filter.exclude_with_glob(pattern);
+    }
     for (const auto& regex : config.include_regex) {
         filter.include_with_regex(regex);
     }

@@ -40,6 +40,20 @@ public:
     ComposedFilter() = default;
 
     /*!
+     * \brief Add a filter of benchmark names to include using glob patterns.
+     *
+     * \param[in] pattern Glob pattern.
+     */
+    void include_with_glob(const std::string& pattern);
+
+    /*!
+     * \brief Add a filter of benchmark names to exclude using glob patterns.
+     *
+     * \param[in] pattern Glob pattern.
+     */
+    void exclude_with_glob(const std::string& pattern);
+
+    /*!
      * \brief Add a filter of benchmark names to include using regular
      * expressions.
      *
