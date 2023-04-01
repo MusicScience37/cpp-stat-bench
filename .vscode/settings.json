@@ -5,6 +5,7 @@
     "-header-insertion=iwyu"
   ],
   "cmake.buildDirectory": "${workspaceFolder}/build/${buildType}",
+  "cmake.installPrefix": "${workspaceFolder}/install/${buildType}",
   "cmake.preferredGenerators": ["Ninja"],
   "cmake.configureSettings": {
     "CMAKE_TOOLCHAIN_FILE": "${workspaceFolder}/vcpkg/scripts/buildsystems/vcpkg.cmake"

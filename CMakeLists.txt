@@ -26,11 +26,14 @@ option(BUILD_SHARED_LIBS "Build shared library" ON)
 option(STAT_BENCH_BUILD_DOC "build documentation of ${FULL_PROJECT_NAME}" OFF)
 option(STAT_BENCH_TESTING "enable tests of ${FULL_PROJECT_NAME}" OFF)
 option(STAT_BENCH_BUILD_EXAMPLES "build examples of ${FULL_PROJECT_NAME}" OFF)
+option(STAT_BENCH_ENABLE_INSTALL
+       "enable CMake target to install ${FULL_PROJECT_NAME}" ON)
 
 set(CMAKE_CXX_STANDARD
     14
     CACHE STRING "C++ standard")
 
+include(GNUInstallDirs)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY $<1:${CMAKE_BINARY_DIR}/lib>)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY $<1:${CMAKE_BINARY_DIR}/lib>)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $<1:${CMAKE_BINARY_DIR}/bin>)
@@ -89,4 +92,29 @@ endif()
 
 if(STAT_BENCH_BUILD_EXAMPLES)
     add_subdirectory(examples)
+endif()
+
+if(STAT_BENCH_ENABLE_INSTALL)
+    install(
+        TARGETS stat_bench
+        EXPORT cpp_stat_bench-targets
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+        FRAMEWORK DESTINATION ${CMAKE_INSTALL_PREFIX})
+
+    install(
+        DIRECTORY ${STAT_BENCH_SOURCE_DIR}/include/stat_bench
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+        FILES_MATCHING
+        PATTERN "*.h*")
+
+    export(
+        TARGETS stat_bench
+        NAMESPACE cpp_stat_bench::
+        FILE ${CMAKE_BINARY_DIR}/cpp_stat_bench-targets.cmake)
+    install(
+        EXPORT cpp_stat_bench-targets
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/cpp_stat_bench
+        NAMESPACE cpp_stat_bench::)
 endif()
