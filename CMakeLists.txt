@@ -111,7 +111,15 @@ if(STAT_BENCH_ENABLE_INSTALL)
 
     install(
         EXPORT cpp-stat-bench-targets
-        FILE cpp-stat-bench-config.cmake
         DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/cpp-stat-bench
         NAMESPACE cpp_stat_bench::)
+
+    include(CMakePackageConfigHelpers)
+    configure_package_config_file(
+        cmake/cpp-stat-bench-config.cmake.in
+        "${CMAKE_CURRENT_BINARY_DIR}/cpp-stat-bench-config.cmake"
+        INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/cpp-stat-bench")
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/cpp-stat-bench-config.cmake"
+            DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/cpp-stat-bench")
 endif()
