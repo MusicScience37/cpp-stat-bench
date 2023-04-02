@@ -26,4 +26,4 @@
 #define STAT_BENCH_VERSION_MINOR 11
 
 //! Patch version of cpp-stat-bench project.
-#define STAT_BENCH_VERSION_PATCH 0
+#define STAT_BENCH_VERSION_PATCH 1
