@@ -97,7 +97,7 @@ endif()
 if(STAT_BENCH_ENABLE_INSTALL)
     install(
         TARGETS stat_bench
-        EXPORT cpp_stat_bench-targets
+        EXPORT cpp-stat-bench-targets
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
         ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
         RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
@@ -109,12 +109,17 @@ if(STAT_BENCH_ENABLE_INSTALL)
         FILES_MATCHING
         PATTERN "*.h*")
 
-    export(
-        TARGETS stat_bench
-        NAMESPACE cpp_stat_bench::
-        FILE ${CMAKE_BINARY_DIR}/cpp_stat_bench-targets.cmake)
     install(
-        EXPORT cpp_stat_bench-targets
-        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/cpp_stat_bench
+        EXPORT cpp-stat-bench-targets
+        DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/cpp-stat-bench
         NAMESPACE cpp_stat_bench::)
+
+    include(CMakePackageConfigHelpers)
+    configure_package_config_file(
+        cmake/cpp-stat-bench-config.cmake.in
+        "${CMAKE_CURRENT_BINARY_DIR}/cpp-stat-bench-config.cmake"
+        INSTALL_DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/cpp-stat-bench")
+
+    install(FILES "${CMAKE_CURRENT_BINARY_DIR}/cpp-stat-bench-config.cmake"
+            DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/cpp-stat-bench")
 endif()
