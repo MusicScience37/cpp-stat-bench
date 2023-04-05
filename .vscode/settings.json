@@ -27,12 +27,18 @@
   "restructuredtext.linter.disabledLinters": ["rstcheck", "rst-lint"],
   "esbonio.server.enabled": false,
   "files.watcherExclude": {
-    "**/.conan/**": true,
+    "**/vcpkg/buildtrees/**": true,
+    "**/vcpkg/downloads/**": true,
+    "**/vcpkg/installed/**": true,
+    "**/vcpkg/packages/**": true,
     "**/.venv/**": true
   },
   "python.formatting.provider": "black",
   "cSpell.enableFiletypes": ["cmake", "plantuml", "shellscript", "toml"],
   "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[yaml]": {
