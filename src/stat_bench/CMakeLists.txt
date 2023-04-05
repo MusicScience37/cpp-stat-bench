@@ -9,7 +9,6 @@ set_target_properties(stat_bench PROPERTIES VERSION ${PROJECT_VERSION})
 target_compile_features(stat_bench PUBLIC cxx_std_14)
 target_check_clang_tidy(stat_bench)
 
-find_package(Threads REQUIRED)
 target_link_libraries(stat_bench PUBLIC Threads::Threads)
 
 if(MSVC)

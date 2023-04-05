@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/c++,visualstudiocode,cmake,python,conan
-# Edit at https://www.toptal.com/developers/gitignore?templates=c++,visualstudiocode,cmake,python,conan
+# Created by https://www.toptal.com/developers/gitignore/api/c++,visualstudiocode,cmake,python,vcpkg
+# Edit at https://www.toptal.com/developers/gitignore?templates=c++,visualstudiocode,cmake,python,vcpkg
 
 ### C++ ###
 # Prerequisites
@@ -51,13 +51,6 @@ _deps
 ### CMake Patch ###
 # External projects
 *-prefix/
-
-### Conan ###
-# Conan build information
-conan.lock
-conanbuildinfo.*
-conaninfo.txt
-graph_info.json
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
@@ -153,9 +146,24 @@ ipython_config.py
 #   However, in case of collaboration, if having platform-specific dependencies or dependencies
 #   having no cross-platform support, pipenv may install dependencies that don't work, or not
 #   install all needed dependencies.
-# Pipfile.lock
+#Pipfile.lock
 
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+# poetry
+#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
+#   This is especially recommended for binary packages to ensure reproducibility, and is more
+#   commonly ignored for libraries.
+#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
+#poetry.lock
+
+# pdm
+#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
+#pdm.lock
+#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
+#   in version control.
+#   https://pdm.fming.dev/#use-with-ide
+.pdm.toml
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
 __pypackages__/
 
 # Celery stuff
@@ -198,29 +206,53 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+# PyCharm
+#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
+#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
+#  and can be added to the global gitignore or merged into this file.  For a more nuclear
+#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
+#.idea/
+
+### Python Patch ###
+# Poetry local configuration file - https://python-poetry.org/docs/configuration/#local-configuration
+poetry.toml
+
+# ruff
+.ruff_cache/
+
+# LSP config files
+pyrightconfig.json
+
+### vcpkg ###
+# Vcpkg
+
+vcpkg-manifest-install.log
+
+## Manifest Mode
+vcpkg_installed/
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-*.code-workspace
+!.vscode/*.code-snippets
 
 # Local History for Visual Studio Code
 .history/
+
+# Built Visual Studio Code Extensions
+*.vsix
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
 .ionide
 
-# Support for Project snippet scope
-!.vscode/*.code-snippets
-
-# End of https://www.toptal.com/developers/gitignore/api/c++,visualstudiocode,cmake,python,conan
+# End of https://www.toptal.com/developers/gitignore/api/c++,visualstudiocode,cmake,python,vcpkg
 
 !.vscode/cmake-variants.yaml
 /*.html
-/.conan
 *.received.*
 /install/
