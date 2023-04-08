@@ -5,8 +5,10 @@
 from typing import Any, Dict
 from pathlib import Path
 from math import log10
+import json
 
 from aiohttp import web
+import jinja2
 
 
 THIS_DIR = Path(__file__).absolute().parent
@@ -16,54 +18,62 @@ TEMPLATES_DIR = (THIS_DIR.parent) / "src" / "stat_bench" / "reporter" / "templat
 routes = web.RouteTableDef()
 
 
-def render_template(name: str, params: Dict[str, Any]) -> str:
-    """Render a template.
+def escape_for_html(input: str) -> str:
+    temp = input
+    temp = temp.replace("&", "&amp;")
+    temp = temp.replace("<", "&lt;")
+    temp = temp.replace(">", "&gt;")
+    temp = temp.replace('"', "&quot;")
+    temp = temp.replace("'", "&#x27;")
+    return temp
 
-    Args:
-        name (str): Template name.
-        params (Dict[str, Any]): Parameters.
 
-    Returns:
-        str: Rendering result.
-    """
-
-    with open(str(TEMPLATES_DIR / name), mode="r") as file:
-        contents = file.read()
-    for key, val in params.items():
-        contents = contents.replace(key, str(val))
-    return contents
+jinja2_env = jinja2.Environment(loader=jinja2.FileSystemLoader(str(TEMPLATES_DIR)))
+# Use custom function for escapes to use the same algorithm as in C++.
+jinja2_env.globals["escape_for_html"] = escape_for_html
 
 
 @routes.get("/line2d")
 async def get_line2d(_: web.Request) -> web.Response:
     return web.Response(
-        body=render_template(
-            "line2d.html",
-            {
-                "{{PLOT_NAME}}": "Test Line",
-                "{{X_TITLE}}": "x axis",
-                "{{X_TYPE}}": "-",
-                "{{Y_TITLE}}": "y axis",
-                "{{Y_TYPE}}": "log",
-                '"{{DATA}}"': """
-                [
-                    {
-                      x: [0, 1, 2, 3, 4],
-                      y: [1, 5, 3, 7, 5],
-                      mode: "lines",
-                      type: "scatter",
-                      name: "a",
+        body=jinja2_env.get_template("plotly_plot.jinja").render(
+            title="Test Line",
+            dataset=json.dumps(
+                {
+                    "data": [
+                        {
+                            "x": [0, 1, 2, 3, 4],
+                            "y": [1, 5, 3, 7, 5],
+                            "mode": "lines",
+                            "type": "scatter",
+                            "name": "a",
+                        },
+                        {
+                            "x": [1, 2, 3, 4, 5],
+                            "y": [4, 1, 4, 6, 8],
+                            "mode": "lines",
+                            "type": "scatter",
+                            "name": "b",
+                        },
+                    ],
+                    "layout": {
+                        "title": "Test Line &<>'\"",
+                        "xaxis": {
+                            "title": "x axis",
+                            "type": "-",
+                        },
+                        "yaxis": {
+                            "title": "y axis",
+                            "type": "log",
+                        },
+                        "showlegend": True,
                     },
-                    {
-                      x: [1, 2, 3, 4, 5],
-                      y: [4, 1, 4, 6, 8],
-                      mode: "lines",
-                      type: "scatter",
-                      name: "b",
+                    "config": {
+                        "scrollZoom": True,
+                        "responsive": True,
                     },
-                ]
-            """,
-            },
+                }
+            ),
         ),
         content_type="html",
     )
@@ -72,43 +82,56 @@ async def get_line2d(_: web.Request) -> web.Response:
 @routes.get("/violin")
 async def get_violin(_: web.Request) -> web.Response:
     return web.Response(
-        body=render_template(
-            "violin.html",
-            {
-                "{{PLOT_NAME}}": "Test Violin",
-                "{{Y_TITLE}}": "y axis",
-                "{{Y_TYPE}}": "log",
-                '"{{Y_MIN}}"': str(log10(0.5)),
-                '"{{Y_MAX}}"': str(log10(10)),
-                '"{{DATA}}"': """
-                [
-                    {
-                        y: [1, 5, 3, 7, 5],
-                        type: "violin",
-                        name: "x1",
-                        box: {
-                            visible: true,
+        body=jinja2_env.get_template("plotly_plot.jinja").render(
+            title="Test Line",
+            dataset=json.dumps(
+                {
+                    "data": [
+                        {
+                            "y": [1, 5, 3, 7, 5],
+                            "type": "violin",
+                            "name": "x1",
+                            "box": {
+                                "visible": True,
+                            },
+                            "meanline": {
+                                "visible": True,
+                            },
+                            "points": "outliers",
                         },
-                        meanline: {
-                            visible: true,
+                        {
+                            "y": [4, 1, 4, 6, 8],
+                            "type": "violin",
+                            "name": "x2",
+                            "box": {
+                                "visible": True,
+                            },
+                            "meanline": {
+                                "visible": True,
+                            },
+                            "points": "outliers",
                         },
-                        points: "outliers",
+                    ],
+                    "layout": {
+                        "title": "Test Line &<>'\"",
+                        "xaxis": {
+                            "title": "x axis",
+                            "type": "-",
+                        },
+                        "yaxis": {
+                            "title": "y axis",
+                            "type": "log",
+                            "constrain": "range",
+                            "range": [log10(0.5), log10(10)],
+                        },
+                        "showlegend": True,
                     },
-                    {
-                        y: [4, 1, 4, 6, 8],
-                        type: "violin",
-                        name: "x2",
-                        box: {
-                            visible: true,
-                        },
-                        meanline: {
-                            visible: true,
-                        },
-                        points: "outliers",
+                    "config": {
+                        "scrollZoom": True,
+                        "responsive": True,
                     },
-                ]
-            """,
-            },
+                }
+            ),
         ),
         content_type="html",
     )

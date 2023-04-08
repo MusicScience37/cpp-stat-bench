@@ -11,8 +11,10 @@ Checks: >
     readability-identifier-naming,
     -readability-function-cognitive-complexity,
     -readability-convert-member-functions-to-static,
+    -readability-identifier-length,
   modernize-*,
     -modernize-return-braced-init-list,
+    -modernize-concat-nested-namespaces,
   hicpp-*,
     -hicpp-no-array-decay,
   cert-*,
@@ -28,9 +30,11 @@ Checks: >
 # - google-readability-todo: I want not to write names.
 # - readability-function-cognitive-complexity: Even a simple tests cannot satisfy the limit.
 # - readability-convert-member-functions-to-static: For API consistency.
+# - readability-identifier-length: This prevents use of traditional variable names.
 # - hicpp-no-array-decay: This forces to use an external library.
 # - bugprone-easily-swappable-parameters is difficult to fix without performance degrade.
 # - modernize-return-braced-init-list reduces readability.
+# - modernize-concat-nested-namespaces: This cannot be used in C++ 14.
 
 CheckOptions:
   # Naming Conventions

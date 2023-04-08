@@ -24,5 +24,6 @@
 #include "stat/statistics.cpp"          // NOLINT(bugprone-suspicious-include)
 #include "use_pointer.cpp"              // NOLINT(bugprone-suspicious-include)
 #include "util/check_glob_pattern.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "util/escape_for_html.cpp"     // NOLINT(bugprone-suspicious-include)
 #include "util/prepare_directory.cpp"   // NOLINT(bugprone-suspicious-include)
 #include "util/sync_barrier.cpp"        // NOLINT(bugprone-suspicious-include)

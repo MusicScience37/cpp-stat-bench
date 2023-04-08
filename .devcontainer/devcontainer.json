@@ -32,7 +32,8 @@
         "hbenl.vscode-test-explorer",
         "ms-azuretools.vscode-docker",
         "tamasfe.even-better-toml",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "samuelcolvin.jinjahtml"
       ],
       "settings": {
         "cmakeFormat.exePath": "/workspaces/cpp-hash-tables/.venv/bin/cmake-format"
