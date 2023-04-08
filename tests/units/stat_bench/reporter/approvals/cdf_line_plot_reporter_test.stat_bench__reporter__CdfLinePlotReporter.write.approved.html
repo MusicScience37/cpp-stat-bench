@@ -1,57 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <title>Cumulative Distribution Function of Measurement1</title>
     <style>
-      html,
-      body,
-      .container {
-        height: 100%;
-        width: 100%;
-        margin: 0px;
-      }
+        html,
+        body,
+        .container {
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+        }
     </style>
-  </head>
+</head>
 
-  <body>
+<body>
     <div id="plot" class="container"></div>
 
     <!-- Import Plotly -->
     <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
 
-    <script type="text/javascript">
-      var data = [{
-    x: [1.000000e-03, 2.000000e-03],
-    y: [0.500000, 1.000000],
-    mode: "lines",
-    type: "scatter",
-    name: "Case1 (param=value, threads=1)",
-},{
-    x: [3.000000e-03, 4.000000e-03, 5.000000e-03],
-    y: [0.333333, 0.666667, 1.000000],
-    mode: "lines",
-    type: "scatter",
-    name: "Case2 (param=value, threads=1)",
-},];
-      var layout = {
-        title: "Cumulative Distribution Function of Measurement1",
-        xaxis: {
-          title: "Time [sec]",
-          type: "log",
-        },
-        yaxis: {
-          title: "Cumulative Probability",
-          type: "-",
-        },
-        showlegend: true,
-      };
+    <div id="dataset" style="display:none">
+        {&quot;config&quot;:{&quot;responsive&quot;:true,&quot;scrollZoom&quot;:true},&quot;data&quot;:[{&quot;mode&quot;:&quot;lines&quot;,&quot;name&quot;:&quot;Case1 (param=value, threads=1)&quot;,&quot;type&quot;:&quot;scatter&quot;,&quot;x&quot;:[0.001,0.002],&quot;y&quot;:[0.5,1.0]},{&quot;mode&quot;:&quot;lines&quot;,&quot;name&quot;:&quot;Case2 (param=value, threads=1)&quot;,&quot;type&quot;:&quot;scatter&quot;,&quot;x&quot;:[0.003,0.004,0.005],&quot;y&quot;:[0.3333333333333333,0.6666666666666666,1.0]}],&quot;layout&quot;:{&quot;showlegend&quot;:true,&quot;title&quot;:&quot;Cumulative Distribution Function of Measurement1&quot;,&quot;xaxis&quot;:{&quot;title&quot;:&quot;Time [sec]&quot;,&quot;type&quot;:&quot;log&quot;},&quot;yaxis&quot;:{&quot;title&quot;:&quot;Cumulative Probability&quot;,&quot;type&quot;:&quot;-&quot;}}}
+    </div>
 
-      Plotly.newPlot("plot", data, layout, {
-        scrollZoom: true,
-        responsive: true,
-      });
+    <script type="text/javascript">
+        var dataset_str = document.querySelector('#dataset').textContent
+        var dataset = JSON.parse(dataset_str);
+
+        Plotly.newPlot("plot", dataset.data, dataset.layout, dataset.config);
     </script>
-  </body>
+</body>
+
 </html>
 

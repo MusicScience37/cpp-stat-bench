@@ -21,6 +21,7 @@
 
 #include <exception>
 #include <string>
+#include <vector>
 
 #include <fmt/format.h>
 
@@ -86,8 +87,8 @@ private:
     //! Measurer name.
     std::string measurer_name_{};
 
-    //! Buffer of formatted data.
-    fmt::memory_buffer data_buf_{};
+    //! Measurements.
+    std::vector<measurer::Measurement> measurements_{};
 };
 
 }  // namespace reporter
