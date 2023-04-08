@@ -20,11 +20,11 @@ routes = web.RouteTableDef()
 
 def escape_for_html(input: str) -> str:
     temp = input
-    temp.replace("&", "&amp;")
-    temp.replace("<", "&lt;")
-    temp.replace(">", "&gt;")
-    temp.replace('"', "&quot;")
-    temp.replace("'", "&#x27;")
+    temp = temp.replace("&", "&amp;")
+    temp = temp.replace("<", "&lt;")
+    temp = temp.replace(">", "&gt;")
+    temp = temp.replace('"', "&quot;")
+    temp = temp.replace("'", "&#x27;")
     return temp
 
 
