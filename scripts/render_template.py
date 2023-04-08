@@ -18,24 +18,6 @@ TEMPLATES_DIR = (THIS_DIR.parent) / "src" / "stat_bench" / "reporter" / "templat
 routes = web.RouteTableDef()
 
 
-def render_template(name: str, params: Dict[str, Any]) -> str:
-    """Render a template.
-
-    Args:
-        name (str): Template name.
-        params (Dict[str, Any]): Parameters.
-
-    Returns:
-        str: Rendering result.
-    """
-
-    with open(str(TEMPLATES_DIR / name), mode="r") as file:
-        contents = file.read()
-    for key, val in params.items():
-        contents = contents.replace(key, str(val))
-    return contents
-
-
 def escape_for_html(input: str) -> str:
     temp = input
     temp.replace("&", "&amp;")
