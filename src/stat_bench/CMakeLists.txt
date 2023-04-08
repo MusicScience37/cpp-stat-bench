@@ -7,6 +7,7 @@ target_link_libraries(stat_bench PUBLIC fmt::fmt bfg::lyra
                                         nlohmann_json::nlohmann_json)
 set_target_properties(stat_bench PROPERTIES VERSION ${PROJECT_VERSION})
 target_compile_features(stat_bench PUBLIC cxx_std_14)
+target_compile_features(stat_bench PRIVATE cxx_std_17)
 target_check_clang_tidy(stat_bench)
 
 target_link_libraries(stat_bench PUBLIC Threads::Threads)

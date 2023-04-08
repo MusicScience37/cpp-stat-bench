@@ -25,6 +25,7 @@ set(SOURCE_FILES
     stat/statistics.cpp
     use_pointer.cpp
     util/check_glob_pattern.cpp
+    util/escape_for_html.cpp
     util/prepare_directory.cpp
     util/sync_barrier.cpp
 )
