@@ -54,7 +54,7 @@ jinja2_env.globals["escape_for_html"] = escape_for_html
 @routes.get("/line2d")
 async def get_line2d(_: web.Request) -> web.Response:
     return web.Response(
-        body=jinja2_env.get_template("line2d.jinja").render(
+        body=jinja2_env.get_template("plotly_plot.jinja").render(
             title="Test Line",
             dataset=json.dumps(
                 {
@@ -100,43 +100,56 @@ async def get_line2d(_: web.Request) -> web.Response:
 @routes.get("/violin")
 async def get_violin(_: web.Request) -> web.Response:
     return web.Response(
-        body=render_template(
-            "violin.html",
-            {
-                "{{PLOT_NAME}}": "Test Violin",
-                "{{Y_TITLE}}": "y axis",
-                "{{Y_TYPE}}": "log",
-                '"{{Y_MIN}}"': str(log10(0.5)),
-                '"{{Y_MAX}}"': str(log10(10)),
-                '"{{DATA}}"': """
-                [
-                    {
-                        y: [1, 5, 3, 7, 5],
-                        type: "violin",
-                        name: "x1",
-                        box: {
-                            visible: true,
+        body=jinja2_env.get_template("plotly_plot.jinja").render(
+            title="Test Line",
+            dataset=json.dumps(
+                {
+                    "data": [
+                        {
+                            "y": [1, 5, 3, 7, 5],
+                            "type": "violin",
+                            "name": "x1",
+                            "box": {
+                                "visible": True,
+                            },
+                            "meanline": {
+                                "visible": True,
+                            },
+                            "points": "outliers",
                         },
-                        meanline: {
-                            visible: true,
+                        {
+                            "y": [4, 1, 4, 6, 8],
+                            "type": "violin",
+                            "name": "x2",
+                            "box": {
+                                "visible": True,
+                            },
+                            "meanline": {
+                                "visible": True,
+                            },
+                            "points": "outliers",
                         },
-                        points: "outliers",
+                    ],
+                    "layout": {
+                        "title": "Test Line &<>'\"",
+                        "xaxis": {
+                            "title": "x axis",
+                            "type": "-",
+                        },
+                        "yaxis": {
+                            "title": "y axis",
+                            "type": "log",
+                            "constrain": "range",
+                            "range": [log10(0.5), log10(10)],
+                        },
+                        "showlegend": True,
                     },
-                    {
-                        y: [4, 1, 4, 6, 8],
-                        type: "violin",
-                        name: "x2",
-                        box: {
-                            visible: true,
-                        },
-                        meanline: {
-                            visible: true,
-                        },
-                        points: "outliers",
+                    "config": {
+                        "scrollZoom": True,
+                        "responsive": True,
                     },
-                ]
-            """,
-            },
+                }
+            ),
         ),
         content_type="html",
     )
