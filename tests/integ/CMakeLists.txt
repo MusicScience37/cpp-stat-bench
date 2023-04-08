@@ -6,6 +6,7 @@ endfunction()
 
 stat_bench_test_integ_add_bench(groups_and_cases)
 stat_bench_test_integ_add_bench(error_in_benchmark)
+stat_bench_test_integ_add_bench(parametrized_benchmark)
 
 add_test(
     NAME stat_bench_test_integ

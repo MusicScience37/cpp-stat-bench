@@ -55,3 +55,8 @@ def groups_and_cases(bin_dir: pathlib.Path) -> pathlib.Path:
 @pytest.fixture
 def error_in_benchmark(bin_dir: pathlib.Path) -> pathlib.Path:
     return bin_dir / "stat_bench_test_integ_error_in_benchmark"
+
+
+@pytest.fixture
+def parametrized_benchmark(bin_dir: pathlib.Path) -> pathlib.Path:
+    return bin_dir / "stat_bench_test_integ_parametrized_benchmark"
