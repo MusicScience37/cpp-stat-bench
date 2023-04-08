@@ -5,8 +5,10 @@
 from typing import Any, Dict
 from pathlib import Path
 from math import log10
+import json
 
 from aiohttp import web
+import jinja2
 
 
 THIS_DIR = Path(__file__).absolute().parent
@@ -34,36 +36,62 @@ def render_template(name: str, params: Dict[str, Any]) -> str:
     return contents
 
 
+def escape_for_html(input: str) -> str:
+    temp = input
+    temp.replace("&", "&amp;")
+    temp.replace("<", "&lt;")
+    temp.replace(">", "&gt;")
+    temp.replace('"', "&quot;")
+    temp.replace("'", "&#x27;")
+    return temp
+
+
+jinja2_env = jinja2.Environment(loader=jinja2.FileSystemLoader(str(TEMPLATES_DIR)))
+# Use custom function for escapes to use the same algorithm as in C++.
+jinja2_env.globals["escape_for_html"] = escape_for_html
+
+
 @routes.get("/line2d")
 async def get_line2d(_: web.Request) -> web.Response:
     return web.Response(
-        body=render_template(
-            "line2d.html",
-            {
-                "{{PLOT_NAME}}": "Test Line",
-                "{{X_TITLE}}": "x axis",
-                "{{X_TYPE}}": "-",
-                "{{Y_TITLE}}": "y axis",
-                "{{Y_TYPE}}": "log",
-                '"{{DATA}}"': """
-                [
-                    {
-                      x: [0, 1, 2, 3, 4],
-                      y: [1, 5, 3, 7, 5],
-                      mode: "lines",
-                      type: "scatter",
-                      name: "a",
+        body=jinja2_env.get_template("line2d.jinja").render(
+            title="Test Line",
+            dataset=json.dumps(
+                {
+                    "data": [
+                        {
+                            "x": [0, 1, 2, 3, 4],
+                            "y": [1, 5, 3, 7, 5],
+                            "mode": "lines",
+                            "type": "scatter",
+                            "name": "a",
+                        },
+                        {
+                            "x": [1, 2, 3, 4, 5],
+                            "y": [4, 1, 4, 6, 8],
+                            "mode": "lines",
+                            "type": "scatter",
+                            "name": "b",
+                        },
+                    ],
+                    "layout": {
+                        "title": "Test Line &<>'\"",
+                        "xaxis": {
+                            "title": "x axis",
+                            "type": "-",
+                        },
+                        "yaxis": {
+                            "title": "y axis",
+                            "type": "log",
+                        },
+                        "showlegend": True,
                     },
-                    {
-                      x: [1, 2, 3, 4, 5],
-                      y: [4, 1, 4, 6, 8],
-                      mode: "lines",
-                      type: "scatter",
-                      name: "b",
+                    "config": {
+                        "scrollZoom": True,
+                        "responsive": True,
                     },
-                ]
-            """,
-            },
+                }
+            ),
         ),
         content_type="html",
     )
