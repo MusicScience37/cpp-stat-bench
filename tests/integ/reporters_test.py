@@ -39,11 +39,14 @@ class TestJson:
     """Test of JSON output."""
 
     def test_json(
-        self, bench_executor: BenchExecutor, groups_and_cases: pathlib.Path
+        self, bench_executor: BenchExecutor, parametrized_benchmark: pathlib.Path
     ) -> None:
         """Test of JSON output."""
         result = bench_executor.execute(
-            groups_and_cases, "--json", f"{bench_executor.test_name}.json", verify=False
+            parametrized_benchmark,
+            "--json",
+            f"{bench_executor.test_name}.json",
+            verify=False,
         )
 
         assert result.returncode == 0
