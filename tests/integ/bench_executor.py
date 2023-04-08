@@ -1,6 +1,7 @@
 """Function to execute benchmarks."""
 
 import pathlib
+import shutil
 import subprocess
 import typing
 
@@ -18,8 +19,16 @@ class BenchExecutor:
         request: pytest.FixtureRequest,
         temp_test_dir: pathlib.Path,
     ) -> None:
-        self._test_name = request.node.name
+        self._test_name = request.node.nodeid.split("::", 1)[1].replace("::", ".")
         self._temp_test_dir = temp_test_dir
+
+    @property
+    def test_name(self) -> str:
+        return self._test_name
+
+    @property
+    def temp_test_dir(self) -> pathlib.Path:
+        return self._temp_test_dir
 
     def execute(
         self,
@@ -30,6 +39,7 @@ class BenchExecutor:
         min_sample_duration: float = 0.001,
         min_warming_up_iterations: int = 1,
         min_warming_up_duration_sec: float = 0.001,
+        cwd: typing.Optional[str] = None,
         verify: bool = True,
     ) -> subprocess.CompletedProcess[str]:
         args: typing.List[str] = []
@@ -52,10 +62,14 @@ class BenchExecutor:
         args = args + list(additional_args)
 
         command = [str(bench_bin_path)] + args
+
+        if not cwd:
+            cwd = self._temp_test_dir
+
         result = subprocess.run(
             command,
             check=False,
-            cwd=self._temp_test_dir,
+            cwd=cwd,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             encoding="utf8",
