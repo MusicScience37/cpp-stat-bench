@@ -11,7 +11,10 @@ import multiprocessing
 import click
 import tqdm
 
-CLANG_INCLUDE_OPTION = ["-isystem", "/usr/lib/llvm-14/include/c++/v1/"]
+CLANG_INCLUDE_OPTION = [
+    #    "-isystem",
+    #    "/usr/lib/llvm-14/include/c++/v1/",
+]
 
 ROOT_DIR = pathlib.Path(__file__).absolute().parent.parent
 IWYU_MAPPING_PATH = ROOT_DIR / "iwyu_mappings.imp"
@@ -24,7 +27,6 @@ class IwyuProcessError(RuntimeError):
 
 
 def remove_correct_lines(target: str) -> str:
-
     result = ""
     prev_line_removed = False
     for line in target.splitlines():
@@ -50,7 +52,6 @@ async def apply_iwyu_to_file(
     limiter: asyncio.Semaphore,
     stop_on_error: bool,
 ):
-
     global IS_SUCCESS
 
     async with limiter:
@@ -129,7 +130,6 @@ async def apply_iwyu_to_files(
 
 
 def get_files_in(path: pathlib.Path) -> list[str]:
-
     filepaths: list[str] = []
     for child in path.iterdir():
         if child.is_file():

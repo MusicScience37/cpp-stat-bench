@@ -1,0 +1,29 @@
+exit_code:
+0
+stdout:
+Benchmark start at <time>
+
+Time resolution: 1.0000000 sec.
+
+## Processing Time
+
+### Group1
+
+                                                   Iterations  Samples    Mean [ms]     Max [ms] Custom Outputs (mean)
+------------------------------------------------------------------------------------------------------------------------
+Case1 (threads=1)                                           1        3       1.0000       1.0000 
+Case2 (threads=1)                                           1        3       1.0000       1.0000 
+
+## Mean Processing Time
+
+### Group1
+
+                                                   Iterations  Samples    Mean [ms]     Max [ms] Custom Outputs (mean)
+------------------------------------------------------------------------------------------------------------------------
+Case1 (threads=1)                                           1        2       1.0000       1.0000 
+Case2 (threads=1)                                           1        2       1.0000       1.0000 
+
+Benchmark finished at <time>
+
+stderr:
+

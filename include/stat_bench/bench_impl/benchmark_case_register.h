@@ -19,23 +19,15 @@
  */
 #pragma once
 
+#include <cstdlib>
 #include <exception>
+#include <iostream>
 #include <memory>
 
 #include "stat_bench/bench_impl/benchmark_case_registry.h"
 
 namespace stat_bench {
 namespace bench_impl {
-
-/*!
- * \brief Get the storage of errors in BenchmarkCaseRegister.
- *
- * \return Reference to the error.
- */
-inline auto get_register_error() noexcept -> std::exception_ptr& {
-    static std::exception_ptr error;
-    return error;
-}
 
 /*!
  * \brief Class to register benchmarks.
@@ -52,8 +44,10 @@ public:
         try {
             BenchmarkCaseRegistry::instance().add(
                 std::make_shared<Benchmark>());
-        } catch (...) {
-            get_register_error() = std::current_exception();
+        } catch (const std::exception& e) {
+            std::cerr << "Failed to append a benchmark: " << e.what()
+                      << std::endl;
+            std::exit(1);  // NOLINT(concurrency-mt-unsafe)
         }
     }
 };

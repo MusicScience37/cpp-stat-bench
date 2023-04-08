@@ -1,0 +1,26 @@
+exit_code:
+0
+stdout:
+USAGE:
+  stat_bench_test_integ_simple_benchmark [-h|--help] [--plot <prefix>] [--json <filepath>] [--samples <num>] [--mean_samples <num>] [--min_sample_duration <num>] [--min_warming_up_iterations <num>] [--min_warming_up_duration_sec <num>] [--include <pattern>] [--exclude <pattern>] [--include_regex <regex>] [--exclude_regex <regex>]
+
+OPTIONS, ARGUMENTS:
+  -h, --help              Show this help.
+  --plot <prefix>         Generate plots of results.
+  --json <filepath>       Generate JSON data file of results.
+  --samples <num>         Number of samples for measurements of processing time.
+  --mean_samples <num>    Number of samples for measurements of mean processing time.
+  --min_sample_duration <num>
+                          Minimum duration of a sample for measurement of mean processing time. [sec]
+  --min_warming_up_iterations <num>
+                          Minimum number of iterations for warming up.
+  --min_warming_up_duration_sec <num>
+                          Minimum duration for warming up. [sec]
+  --include <pattern>     Specify glob patterns of benchmark names to include.When omitted, this option won't filter any benchmarks.
+  --exclude <pattern>     Specify glob patterns of benchmark names to exclude.When omitted, this option won't filter any benchmarks.
+  --include_regex <regex> Specify regular expressions of benchmark names to include.When omitted, this option won't filter any benchmarks.
+  --exclude_regex <regex> Specify regular expressions of benchmark names to exclude.When omitted, this option won't filter any benchmarks.
+
+
+stderr:
+

@@ -1,0 +1,27 @@
+exit_code:
+0
+stdout:
+Benchmark start at <time>
+
+Time resolution: 1.0000000 sec.
+
+## Processing Time
+
+### Error
+
+                                                   Iterations  Samples    Mean [ms]     Max [ms] Custom Outputs (mean)
+------------------------------------------------------------------------------------------------------------------------
+[38;2;255;000;000mthrowing function (threads=1)                      Test exception.[0m
+
+## Mean Processing Time
+
+### Error
+
+                                                   Iterations  Samples    Mean [ms]     Max [ms] Custom Outputs (mean)
+------------------------------------------------------------------------------------------------------------------------
+[38;2;255;000;000mthrowing function (threads=1)                      Test exception.[0m
+
+Benchmark finished at <time>
+
+stderr:
+

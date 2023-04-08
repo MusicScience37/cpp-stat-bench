@@ -1,30 +1,19 @@
-add_executable(stat_bench_test_integ_define_and_register_case
-               define_and_register_case.cpp)
-target_add_catch2(stat_bench_test_integ_define_and_register_case)
-
-add_executable(stat_bench_test_integ_use_fixture use_fixture.cpp)
-target_add_catch2(stat_bench_test_integ_use_fixture)
-
-function(add_bench_test EXE_NAME)
-    add_test(
-        NAME ${EXE_NAME}
-        COMMAND ${EXE_NAME} --plot "${EXE_NAME}/" --json
-                "${EXE_NAME}/${EXE_NAME}.json" --samples 5 --mean_samples 5
-        WORKING_DIRECTORY ${STAT_BENCH_TEMP_TEST_DIR})
+function(stat_bench_test_integ_add_bench BENCH_NAME)
+    add_executable(stat_bench_test_integ_${BENCH_NAME} ${BENCH_NAME}.cpp)
+    target_link_libraries(stat_bench_test_integ_${BENCH_NAME}
+                          PRIVATE stat_bench)
 endfunction()
 
-add_executable(stat_bench_test_integ_example_benchmark example_benchmark.cpp)
-target_link_libraries(stat_bench_test_integ_example_benchmark
-                      PRIVATE stat_bench)
-add_bench_test(stat_bench_test_integ_example_benchmark)
+stat_bench_test_integ_add_bench(simple_benchmark)
+stat_bench_test_integ_add_bench(groups_and_cases)
+stat_bench_test_integ_add_bench(error_in_benchmark)
+stat_bench_test_integ_add_bench(parametrized_benchmark)
+stat_bench_test_integ_add_bench(duplicate_cases)
 
-add_executable(stat_bench_test_integ_parametrized_benchmark
-               parametrized_benchmark.cpp)
-target_link_libraries(stat_bench_test_integ_parametrized_benchmark
-                      PRIVATE stat_bench)
-add_bench_test(stat_bench_test_integ_parametrized_benchmark)
-
-add_executable(stat_bench_test_integ_error_in_benchmark error_in_benchmark.cpp)
-target_link_libraries(stat_bench_test_integ_error_in_benchmark
-                      PRIVATE stat_bench)
-add_bench_test(stat_bench_test_integ_error_in_benchmark)
+add_test(
+    NAME stat_bench_test_integ
+    COMMAND
+        ${POETRY_EXECUTABLE} run pytest
+        "--junit-xml=${CMAKE_BINARY_DIR}/junit/stat_bench_test_integ.xml"
+        --build ${CMAKE_BINARY_DIR} ${CMAKE_CURRENT_SOURCE_DIR}
+    WORKING_DIRECTORY ${STAT_BENCH_SOURCE_DIR})
