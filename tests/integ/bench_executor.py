@@ -27,9 +27,11 @@ class BenchExecutor:
         *additional_args: str,
         samples: typing.Optional[int] = 3,
         mean_samples: typing.Optional[int] = 2,
-        min_sample_duration: float = 0.01,
+        min_sample_duration: float = 0.001,
+        min_warming_up_iterations: int = 1,
+        min_warming_up_duration_sec: float = 0.001,
         verify: bool = True,
-    ) -> None:
+    ) -> subprocess.CompletedProcess[str]:
         args: typing.List[str] = []
         if samples is not None:
             args = args + ["--samples", str(samples)]
@@ -37,6 +39,16 @@ class BenchExecutor:
             args = args + ["--mean_samples", str(mean_samples)]
         if min_sample_duration is not None:
             args = args + ["--min_sample_duration", str(min_sample_duration)]
+        if min_warming_up_iterations is not None:
+            args = args + [
+                "--min_warming_up_iterations",
+                str(min_warming_up_iterations),
+            ]
+        if min_warming_up_duration_sec is not None:
+            args = args + [
+                "--min_warming_up_duration_sec",
+                str(min_warming_up_duration_sec),
+            ]
         args = args + list(additional_args)
 
         command = [str(bench_bin_path)] + args
@@ -48,6 +60,7 @@ class BenchExecutor:
             stderr=subprocess.PIPE,
             encoding="utf8",
         )
+
         if verify:
             approvaltests.verify(
                 f"""exit_code:
@@ -59,3 +72,5 @@ stderr:
 """,
                 options=approvaltests.Options().with_scrubber(scrub_console),
             )
+
+        return result

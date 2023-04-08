@@ -22,7 +22,7 @@
 
 #include "stat_bench/benchmark_macros.h"
 
-static constexpr auto duration = std::chrono::milliseconds(50);
+static constexpr auto duration = std::chrono::milliseconds(10);
 
 STAT_BENCH_CASE("Group1", "Case1") {
     STAT_BENCH_MEASURE() { std::this_thread::sleep_for(duration); };
