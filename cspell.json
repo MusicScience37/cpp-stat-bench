@@ -72,6 +72,7 @@
     "MSVC",
     "MusicScience37",
     "nlohmann",
+    "nodeid",
     "nodiscard",
     "NOLINT",
     "NOLINTNEXTLINE",
