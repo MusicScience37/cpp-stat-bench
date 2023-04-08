@@ -1,5 +1,11 @@
-add_executable(stat_bench_test_integ_groups_and_cases groups_and_cases.cpp)
-target_link_libraries(stat_bench_test_integ_groups_and_cases PRIVATE stat_bench)
+function(stat_bench_test_integ_add_bench BENCH_NAME)
+    add_executable(stat_bench_test_integ_${BENCH_NAME} ${BENCH_NAME}.cpp)
+    target_link_libraries(stat_bench_test_integ_${BENCH_NAME}
+                          PRIVATE stat_bench)
+endfunction()
+
+stat_bench_test_integ_add_bench(groups_and_cases)
+stat_bench_test_integ_add_bench(error_in_benchmark)
 
 add_test(
     NAME stat_bench_test_integ
