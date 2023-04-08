@@ -1,65 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <title>Violin Plot of Measurement1</title>
     <style>
-      html,
-      body,
-      .container {
-        height: 100%;
-        width: 100%;
-        margin: 0px;
-      }
+        html,
+        body,
+        .container {
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+        }
     </style>
-  </head>
+</head>
 
-  <body>
+<body>
     <div id="plot" class="container"></div>
 
     <!-- Import Plotly -->
     <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
 
-    <script type="text/javascript">
-      var data = [{
-    y: [1.000000e-03, 2.000000e-03],
-    type: "violin",
-    name: "Case1 (param=value, threads=1)",
-    box: {
-        visible: true,
-    },
-    meanline: {
-        visible: true,
-    },
-    points: "outliers",
-},{
-    y: [3.000000e-03, 4.000000e-03, 5.000000e-03],
-    type: "violin",
-    name: "Case2 (param=value, threads=1)",
-    box: {
-        visible: true,
-    },
-    meanline: {
-        visible: true,
-    },
-    points: "outliers",
-},];
-      var layout = {
-        title: "Violin Plot of Measurement1",
-        yaxis: {
-          title: "Time [sec]",
-          type: "log",
-          constrain: "range",
-          range: [-3.176091e+00, -2.124939e+00],
-        },
-        showlegend: true,
-      };
+    <div id="dataset" style="display:none">
+        {&quot;config&quot;:{&quot;responsive&quot;:true,&quot;scrollZoom&quot;:true},&quot;data&quot;:[{&quot;box&quot;:{&quot;visible&quot;:true},&quot;meanline&quot;:{&quot;visible&quot;:true},&quot;name&quot;:&quot;Case1 (param=value, threads=1)&quot;,&quot;points&quot;:&quot;outliers&quot;,&quot;type&quot;:&quot;violin&quot;,&quot;y&quot;:[0.001,0.002]},{&quot;box&quot;:{&quot;visible&quot;:true},&quot;meanline&quot;:{&quot;visible&quot;:true},&quot;name&quot;:&quot;Case2 (param=value, threads=1)&quot;,&quot;points&quot;:&quot;outliers&quot;,&quot;type&quot;:&quot;violin&quot;,&quot;y&quot;:[0.003,0.004,0.005]}],&quot;layout&quot;:{&quot;showlegend&quot;:true,&quot;title&quot;:&quot;Violin Plot of Measurement1&quot;,&quot;yaxis&quot;:{&quot;constrain&quot;:&quot;range&quot;,&quot;range&quot;:[-3.1760912590556813,-2.1249387366083],&quot;title&quot;:&quot;Time [sec]&quot;,&quot;type&quot;:&quot;log&quot;}}}
+    </div>
 
-      Plotly.newPlot("plot", data, layout, {
-        scrollZoom: true,
-        responsive: true,
-      });
+    <script type="text/javascript">
+        var dataset_str = document.querySelector('#dataset').textContent
+        var dataset = JSON.parse(dataset_str);
+
+        Plotly.newPlot("plot", dataset.data, dataset.layout, dataset.config);
     </script>
-  </body>
+</body>
+
 </html>
 
