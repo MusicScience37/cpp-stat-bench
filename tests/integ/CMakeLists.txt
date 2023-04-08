@@ -28,3 +28,6 @@ add_executable(stat_bench_test_integ_error_in_benchmark error_in_benchmark.cpp)
 target_link_libraries(stat_bench_test_integ_error_in_benchmark
                       PRIVATE stat_bench)
 add_bench_test(stat_bench_test_integ_error_in_benchmark)
+
+add_executable(stat_bench_test_integ_groups_and_cases groups_and_cases.cpp)
+target_link_libraries(stat_bench_test_integ_groups_and_cases PRIVATE stat_bench)
