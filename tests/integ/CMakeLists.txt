@@ -4,9 +4,11 @@ function(stat_bench_test_integ_add_bench BENCH_NAME)
                           PRIVATE stat_bench)
 endfunction()
 
+stat_bench_test_integ_add_bench(simple_benchmark)
 stat_bench_test_integ_add_bench(groups_and_cases)
 stat_bench_test_integ_add_bench(error_in_benchmark)
 stat_bench_test_integ_add_bench(parametrized_benchmark)
+stat_bench_test_integ_add_bench(duplicate_cases)
 
 add_test(
     NAME stat_bench_test_integ

@@ -48,6 +48,11 @@ def bin_dir(build_dir: pathlib.Path) -> pathlib.Path:
 
 
 @pytest.fixture
+def simple_benchmark(bin_dir: pathlib.Path) -> pathlib.Path:
+    return bin_dir / "stat_bench_test_integ_simple_benchmark"
+
+
+@pytest.fixture
 def groups_and_cases(bin_dir: pathlib.Path) -> pathlib.Path:
     return bin_dir / "stat_bench_test_integ_groups_and_cases"
 
@@ -60,3 +65,8 @@ def error_in_benchmark(bin_dir: pathlib.Path) -> pathlib.Path:
 @pytest.fixture
 def parametrized_benchmark(bin_dir: pathlib.Path) -> pathlib.Path:
     return bin_dir / "stat_bench_test_integ_parametrized_benchmark"
+
+
+@pytest.fixture
+def duplicate_cases(bin_dir: pathlib.Path) -> pathlib.Path:
+    return bin_dir / "stat_bench_test_integ_duplicate_cases"

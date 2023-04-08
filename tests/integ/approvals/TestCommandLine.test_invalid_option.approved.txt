@@ -1,0 +1,7 @@
+exit_code:
+1
+stdout:
+
+stderr:
+Error: Unrecognized token: --any
+
