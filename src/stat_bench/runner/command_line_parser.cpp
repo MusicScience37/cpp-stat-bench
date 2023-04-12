@@ -49,6 +49,11 @@ CommandLineParser::CommandLineParser() {
                           .optional()
                           .help("Generate JSON data file of results."));
 
+    cli_.add_argument(lyra::opt(config_.msgpack_file_path, "filepath")
+                          .name("--msgpack")
+                          .optional()
+                          .help("Generate MsgPack data file of results."));
+
     cli_.add_argument(
         lyra::opt(config_.processing_time_samples, "num")
             .name("--samples")
