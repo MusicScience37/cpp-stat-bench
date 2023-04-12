@@ -91,6 +91,13 @@ struct Config {
      */
     std::string json_file_path{};
 
+    /*!
+     * \brief File path of MsgPack data file.
+     *
+     * Empty string specifies no output.
+     */
+    std::string msgpack_file_path{};
+
     //! Glob patterns of benchmark names to include.
     std::vector<std::string> include_glob{};
 

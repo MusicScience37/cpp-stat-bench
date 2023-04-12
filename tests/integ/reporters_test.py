@@ -1,6 +1,8 @@
 """Test of reporters."""
 
 
+import json
+import msgpack
 import pathlib
 from .bench_executor import BenchExecutor
 
@@ -50,7 +52,31 @@ class TestJson:
         )
 
         assert result.returncode == 0
-        assert (
-            bench_executor.temp_test_dir / f"{bench_executor.test_name}.json"
-        ).exists()
+        data_path = bench_executor.temp_test_dir / f"{bench_executor.test_name}.json"
+        assert data_path.exists()
+        with open(data_path, mode="r") as data_file:
+            data = json.load(data_file)
         # TODO: Test of data structure.
+        del data
+
+
+class TestMsgPack:
+    """Test of MsgPack output."""
+
+    def test_msgpack(
+        self, bench_executor: BenchExecutor, parametrized_benchmark: pathlib.Path
+    ) -> None:
+        """Test of MsgPack output."""
+        result = bench_executor.execute(
+            parametrized_benchmark,
+            "--msgpack",
+            f"{bench_executor.test_name}.data",
+            verify=False,
+        )
+        assert result.returncode == 0
+        data_path = bench_executor.temp_test_dir / f"{bench_executor.test_name}.data"
+        assert data_path.exists()
+        with open(data_path, mode="rb") as data_file:
+            data = msgpack.unpack(data_file)
+        # TODO: Test of data structure.
+        del data
