@@ -33,19 +33,19 @@ namespace data_file_spec {
  */
 struct StatData {
     //! Mean.
-    double mean{};
+    float mean{};
 
     //! Max.
-    double max{};
+    float max{};
 
     //! Min.
-    double min{};
+    float min{};
 
     //! Variance.
-    double variance{};
+    float variance{};
 
     //! Standard deviation.
-    double standard_deviation{};
+    float standard_deviation{};
 };
 
 /*!
@@ -56,7 +56,7 @@ struct DurationData {
     StatData stat{};
 
     //! Values.
-    std::vector<std::vector<double>> values{};
+    std::vector<std::vector<float>> values{};
 };
 
 /*!
@@ -70,7 +70,7 @@ struct CustomStatOutputData {
     StatData stat{};
 
     //! Values.
-    std::vector<std::vector<double>> values{};
+    std::vector<std::vector<float>> values{};
 };
 
 /*!
@@ -81,7 +81,7 @@ struct CustomOutputData {
     std::string name{};
 
     //! Value.
-    double value{};
+    float value{};
 };
 
 /*!

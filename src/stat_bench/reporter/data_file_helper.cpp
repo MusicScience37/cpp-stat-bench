@@ -35,20 +35,22 @@ auto convert(const param::ParameterDict& params)
 }
 
 auto convert(const stat::Statistics& stat) -> StatData {
-    return StatData{stat.mean(), stat.max(), stat.min(), stat.variance(),
-        stat.standard_deviation()};
+    return StatData{static_cast<float>(stat.mean()),
+        static_cast<float>(stat.max()), static_cast<float>(stat.min()),
+        static_cast<float>(stat.variance()),
+        static_cast<float>(stat.standard_deviation())};
 }
 
 auto convert(const std::vector<std::vector<clock::Duration>>& durations,
     const stat::Statistics& durations_stat) -> DurationData {
-    std::vector<std::vector<double>> values;
+    std::vector<std::vector<float>> values;
     values.reserve(durations.size());
     for (const auto& durations_per_thread : durations) {
         values.emplace_back();
         auto& values_per_thread = values.back();
         values_per_thread.reserve(durations_per_thread.size());
         for (const auto& duration : durations_per_thread) {
-            values_per_thread.push_back(duration.seconds());
+            values_per_thread.push_back(static_cast<float>(duration.seconds()));
         }
     }
     return DurationData{convert(durations_stat), std::move(values)};
@@ -56,9 +58,17 @@ auto convert(const std::vector<std::vector<clock::Duration>>& durations,
 
 auto convert(const std::shared_ptr<stat::CustomStatOutput>& stat_output,
     const stat::Statistics& stat) -> CustomStatOutputData {
-    std::vector<std::vector<double>> data;
-    return CustomStatOutputData{
-        stat_output->name(), convert(stat), stat_output->data()};
+    std::vector<std::vector<float>> data;
+    data.reserve(stat_output->data().size());
+    for (const auto& vec : stat_output->data()) {
+        std::vector<float> vec_copy;
+        vec_copy.reserve(vec.size());
+        for (const double val : vec) {
+            vec_copy.push_back(static_cast<float>(val));
+        }
+        data.push_back(std::move(vec_copy));
+    }
+    return CustomStatOutputData{stat_output->name(), convert(stat), data};
 }
 
 auto convert(
@@ -78,7 +88,8 @@ auto convert(const std::vector<std::pair<std::string, double>>& outputs)
     std::vector<CustomOutputData> data;
     data.reserve(outputs.size());
     for (const auto& output : outputs) {
-        data.push_back(CustomOutputData{output.first, output.second});
+        data.push_back(
+            CustomOutputData{output.first, static_cast<float>(output.second)});
     }
     return data;
 }
