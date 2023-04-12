@@ -15,6 +15,7 @@
 #include "reporter/console_reporter.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "reporter/data_file_helper.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "reporter/json_reporter.cpp"     // NOLINT(bugprone-suspicious-include)
+#include "reporter/msgpack_reporter.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "reporter/render_template.cpp"   // NOLINT(bugprone-suspicious-include)
 #include "reporter/simple_line_plot_reporter.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "reporter/violin_plot_reporter.cpp"  // NOLINT(bugprone-suspicious-include)
