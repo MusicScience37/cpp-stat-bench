@@ -23,8 +23,6 @@
 #include <string>
 #include <vector>
 
-#include <fmt/format.h>
-
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/clock/system_time_point.h"

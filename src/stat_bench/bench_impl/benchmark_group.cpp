@@ -20,6 +20,7 @@
 #include "stat_bench/bench_impl/benchmark_group.h"
 
 #include <algorithm>
+#include <type_traits>
 #include <utility>
 
 #include <fmt/format.h>

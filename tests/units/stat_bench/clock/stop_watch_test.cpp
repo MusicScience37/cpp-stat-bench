@@ -20,7 +20,6 @@
 #include "stat_bench/clock/stop_watch.h"
 
 #include <chrono>
-#include <string>
 #include <thread>
 
 #include <catch2/catch_message.hpp>

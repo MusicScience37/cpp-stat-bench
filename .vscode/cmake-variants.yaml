@@ -1,6 +1,6 @@
 buildType:
   default: debug
-  description: Debug
+  description: Build type
   choices:
     clang-asan-ubsan-unit:
       short: ClangAUSan-Unit
@@ -82,3 +82,19 @@ buildType:
         STAT_BENCH_TEST_BENCHMARKS: OFF
         STAT_BENCH_BUILD_EXAMPLES: ON
         STAT_BENCH_BUILD_DOC: OFF
+
+target:
+  default: none
+  description: Target type
+  choices:
+    none:
+      short: None
+      long: No specification
+    linux-llvm:
+      short: Linux-LLVM
+      long: Linux with LLVM compilers
+      settings:
+        VCPKG_TARGET_TRIPLET: "x64-linux-llvm"
+        VCPKG_HOST_TRIPLET: "x64-linux-llvm"
+        CMAKE_CXX_FLAGS: "-stdlib=libc++"
+        CMAKE_C_FLAGS: "-stdlib=libc++"

@@ -19,7 +19,6 @@
  */
 #include "stat_bench/reporter/msgpack_reporter.h"
 
-#include <algorithm>
 #include <fstream>
 #include <functional>
 #include <initializer_list>
@@ -31,9 +30,7 @@
 #include <catch2/catch_test_macros.hpp>
 #include <fmt/format.h>
 #include <nlohmann/json.hpp>
-#include <nlohmann/json_fwd.hpp>
 
-#include "read_file.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/clock/system_clock.h"
 #include "use_reporter_for_test.h"

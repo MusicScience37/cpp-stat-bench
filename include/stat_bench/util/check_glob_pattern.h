@@ -19,8 +19,6 @@
  */
 #pragma once
 
-#include <string>
-
 #include "stat_bench/util/string_view.h"
 
 namespace stat_bench {

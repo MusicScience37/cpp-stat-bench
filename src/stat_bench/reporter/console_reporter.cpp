@@ -20,6 +20,7 @@
 #include "stat_bench/reporter/console_reporter.h"
 
 #include <memory>
+#include <type_traits>
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -28,7 +29,6 @@
 #include <fmt/format.h>
 
 #include "stat_bench/clock/monotone_clock_impl.h"
-#include "stat_bench/stat/custom_stat_output.h"
 #include "stat_bench/stat/statistics.h"
 
 namespace stat_bench {
@@ -44,23 +44,23 @@ void ConsoleReporter::experiment_starts(
         static_cast<double>(clock::impl::monotone_clock_res()) /
             static_cast<double>(clock::impl::monotone_clock_freq()));
 
-    std::fflush(file_);
+    (void)std::fflush(file_);
 }
 
 void ConsoleReporter::experiment_finished(
     const clock::SystemTimePoint& time_stamp) {
     fmt::print(file_, FMT_STRING("Benchmark finished at {}\n"), time_stamp);
-    std::fflush(file_);
+    (void)std::fflush(file_);
 }
 
 void ConsoleReporter::measurer_starts(const std::string& name) {
     fmt::print(file_, FMT_STRING("## {}\n\n"), name);
-    std::fflush(file_);
+    (void)std::fflush(file_);
 }
 
 void ConsoleReporter::measurer_finished(const std::string& name) {
     fmt::print(file_, "\n");
-    std::fflush(file_);
+    (void)std::fflush(file_);
 }
 
 namespace {
@@ -84,7 +84,7 @@ void ConsoleReporter::group_starts(const std::string& name) {
     fmt::print(file_, FMT_STRING(CONSOLE_TABLE_FORMAT "{}\n"), "", "Iterations",
         "Samples", "Mean [ms]", "Max [ms]", "Custom Outputs (mean)");
     fmt::print(file_, FMT_STRING("{:-<120}\n"), "");
-    std::fflush(file_);
+    (void)std::fflush(file_);
 }
 
 void ConsoleReporter::group_finished(const std::string& /*name*/) {
@@ -116,7 +116,7 @@ void ConsoleReporter::measurement_succeeded(
         fmt::print(file_, FMT_STRING("{}={:.3e}, "), out.first, out.second);
     }
     fmt::print(file_, "\n");
-    std::fflush(file_);
+    (void)std::fflush(file_);
 }
 
 void ConsoleReporter::measurement_failed(const BenchmarkFullName& case_info,
@@ -131,7 +131,7 @@ void ConsoleReporter::measurement_failed(const BenchmarkFullName& case_info,
             e.what());
     }
     fmt::print(file_, "\n");
-    std::fflush(file_);
+    (void)std::fflush(file_);
 }
 
 }  // namespace reporter
