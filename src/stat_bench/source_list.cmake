@@ -18,7 +18,6 @@ set(SOURCE_FILES
     reporter/jinja_renderer.cpp
     reporter/json_reporter.cpp
     reporter/msgpack_reporter.cpp
-    reporter/render_template.cpp
     reporter/simple_line_plot_reporter.cpp
     reporter/violin_plot_reporter.cpp
     runner/command_line_parser.cpp

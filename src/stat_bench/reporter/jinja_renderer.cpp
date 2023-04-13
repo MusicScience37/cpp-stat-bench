@@ -20,12 +20,14 @@
 #include "stat_bench/reporter/jinja_renderer.h"
 
 #include <memory>
+#include <string>
 #include <unordered_map>
 
 #include <fmt/format.h>
 #include <inja/inja.hpp>
 
 #include "stat_bench/stat_bench_exception.h"
+#include "stat_bench/util/escape_for_html.h"
 
 namespace stat_bench {
 namespace reporter {
@@ -40,7 +42,16 @@ public:
     std::unordered_map<std::string, inja::Template> templates{};
 };
 
-JinjaRenderer::JinjaRenderer() : impl_(std::make_unique<Impl>()) {}
+JinjaRenderer::JinjaRenderer() : impl_(std::make_unique<Impl>()) {
+    impl_->env.add_callback(
+        "escape_for_html", 1, [](inja::Arguments& args) -> std::string {
+            const auto* arg = args.at(0);
+            if (arg->is_string()) {
+                return util::escape_for_html(arg->get<std::string>());
+            }
+            return util::escape_for_html(arg->dump());
+        });
+}
 
 JinjaRenderer::~JinjaRenderer() = default;
 

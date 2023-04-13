@@ -31,7 +31,6 @@
 #include <nlohmann/json.hpp>
 
 #include "stat_bench/clock/duration.h"
-#include "stat_bench/reporter/render_template.h"
 #include "stat_bench/stat/statistics.h"
 #include "stat_bench/util/escape_for_html.h"
 #include "stat_bench/util/prepare_directory.h"
@@ -41,7 +40,9 @@ namespace stat_bench {
 namespace reporter {
 
 ViolinPlotReporter::ViolinPlotReporter(std::string prefix)
-    : prefix_(std::move(prefix)) {}
+    : prefix_(std::move(prefix)) {
+    renderer_.load_from_text("plotly_plot", plotly_plot);
+}
 
 void ViolinPlotReporter::experiment_starts(
     const clock::SystemTimePoint& /*time_stamp*/) {
@@ -131,17 +132,15 @@ void ViolinPlotReporter::group_finished(const std::string& name) {
     dataset_json["config"]["scrollZoom"] = true;
     dataset_json["config"]["responsive"] = true;
 
-    const std::string contents = render_template(plotly_plot,
-        std::unordered_map<std::string, std::string>{
-            {"{{ escape_for_html(title) }}", util::escape_for_html(title)},
-            {"{{ escape_for_html(dataset) }}",
-                util::escape_for_html(dataset_json.dump())}});
+    nlohmann::json input;
+    input["title"] = title;
+    input["dataset"] = std::move(dataset_json);
 
     const std::string filepath = fmt::format(
         FMT_STRING("{}/{}/{}_violin.html"), prefix_, name, measurer_name_);
     util::prepare_directory_for(filepath);
     std::ofstream stream{filepath};
-    stream << contents;
+    renderer_.render_to(stream, "plotly_plot", input);
 }
 
 void ViolinPlotReporter::case_starts(const BenchmarkFullName& /*case_info*/) {

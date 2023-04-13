@@ -28,6 +28,7 @@
 #include "stat_bench/clock/system_time_point.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/reporter/i_reporter.h"
+#include "stat_bench/reporter/jinja_renderer.h"
 
 namespace stat_bench {
 namespace reporter {
@@ -86,6 +87,9 @@ private:
 
     //! Measurements.
     std::vector<measurer::Measurement> measurements_{};
+
+    //! Renderer of Jinja templates.
+    JinjaRenderer renderer_{};
 };
 
 }  // namespace reporter
