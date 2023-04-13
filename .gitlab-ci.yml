@@ -199,12 +199,10 @@ clang coverage:
       -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
       -DVCPKG_TARGET_TRIPLET=x64-linux-llvm
       -DVCPKG_HOST_TRIPLET=x64-linux-llvm
-      -DCMAKE_CXX_FLAGS=-stdlib=libc++
-      -DCMAKE_C_FLAGS=-stdlib=libc++
       -DCMAKE_BUILD_TYPE=Debug
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
-      "-DCMAKE_CXX_FLAGS=-fprofile-instr-generate -fcoverage-mapping"
+      "-DCMAKE_CXX_FLAGS=-stdlib=libc++ -fprofile-instr-generate -fcoverage-mapping"
       "-DCMAKE_MODULE_LINKER_FLAGS=-fprofile-instr-generate -fcoverage-mapping"
     - mkdir coverage
     - export LLVM_PROFILE_FILE=$(pwd)/coverage/coverage_%p.profraw
@@ -247,12 +245,10 @@ clang-14-asan-ubsan:
       -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
       -DVCPKG_TARGET_TRIPLET=x64-linux-llvm
       -DVCPKG_HOST_TRIPLET=x64-linux-llvm
-      -DCMAKE_CXX_FLAGS=-stdlib=libc++
-      -DCMAKE_C_FLAGS=-stdlib=libc++
       -DCMAKE_BUILD_TYPE=Debug
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
-      -DCMAKE_CXX_FLAGS=-fsanitize=address,undefined
+      "-DCMAKE_CXX_FLAGS=-stdlib=libc++ -fsanitize=address,undefined"
       -DCMAKE_MODULE_LINKER_FLAGS=-fsanitize=address,undefined
     - cmake --build .
     - ctest -V
@@ -267,12 +263,10 @@ clang-14-tsan:
       -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
       -DVCPKG_TARGET_TRIPLET=x64-linux-llvm
       -DVCPKG_HOST_TRIPLET=x64-linux-llvm
-      -DCMAKE_CXX_FLAGS=-stdlib=libc++
-      -DCMAKE_C_FLAGS=-stdlib=libc++
       -DCMAKE_BUILD_TYPE=Debug
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
-      -DCMAKE_CXX_FLAGS=-fsanitize=thread
+      "-DCMAKE_CXX_FLAGS=-stdlib=libc++ -fsanitize=thread"
       -DCMAKE_MODULE_LINKER_FLAGS=-fsanitize=thread
     - cmake --build .
     - ctest -V
