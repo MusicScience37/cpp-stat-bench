@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 MusicScience37 (Kenta Kabashima)
+ * Copyright 2023 MusicScience37 (Kenta Kabashima)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,25 +15,26 @@
  */
 /*!
  * \file
- * \brief Declaration of render_template function.
+ * \brief Test of JinjaRenderer class.
  */
-#pragma once
+#include "stat_bench/reporter/jinja_renderer.h"
 
+#include <sstream>
 #include <string>
-#include <unordered_map>
 
-namespace stat_bench {
-namespace reporter {
+#include <catch2/catch_test_macros.hpp>
 
-/*!
- * \brief Render a template.
- *
- * \param[in] template_str Template string.
- * \param[in] params Parameters.
- * \return Rendering result.
- */
-[[nodiscard]] auto render_template(std::string template_str,
-    const std::unordered_map<std::string, std::string>& params) -> std::string;
+TEST_CASE("stat_bench::reporter::JinjaRenderer") {
+    using stat_bench::reporter::JinjaRenderer;
 
-}  // namespace reporter
-}  // namespace stat_bench
+    SECTION("render") {
+        JinjaRenderer renderer{};
+        const auto name = std::string("test1");
+        renderer.load_from_text(name, "{{ var1 }}");
+        std::ostringstream out;
+
+        renderer.render_to(out, name, {{"var1", "test text"}});
+
+        CHECK(out.str() == "test text");
+    }
+}

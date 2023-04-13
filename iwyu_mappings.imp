@@ -41,4 +41,5 @@
   { symbol: [ "nlohmann::json", private, "<nlohmann/json.hpp>", public ] },
   { include: ["@<nlohmann/detail/.*>", private, "<nlohmann/json.hpp>", public ] },
   { include: ["<fmt/core.h>", private, "<fmt/format.h>", public ] },
+  { include: ["@<inja/.*>", private, "<inja/inja.hpp>", public ] },
 ]
