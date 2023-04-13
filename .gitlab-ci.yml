@@ -197,6 +197,10 @@ clang coverage:
     - cd $BUILD_DIR
     - cmake ..
       -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+      -DVCPKG_TARGET_TRIPLET=x64-linux-llvm
+      -DVCPKG_HOST_TRIPLET=x64-linux-llvm
+      -DCMAKE_CXX_FLAGS=-stdlib=libc++
+      -DCMAKE_C_FLAGS=-stdlib=libc++
       -DCMAKE_BUILD_TYPE=Debug
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
@@ -241,6 +245,10 @@ clang-14-asan-ubsan:
     - cd $BUILD_DIR
     - cmake ..
       -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+      -DVCPKG_TARGET_TRIPLET=x64-linux-llvm
+      -DVCPKG_HOST_TRIPLET=x64-linux-llvm
+      -DCMAKE_CXX_FLAGS=-stdlib=libc++
+      -DCMAKE_C_FLAGS=-stdlib=libc++
       -DCMAKE_BUILD_TYPE=Debug
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
@@ -257,6 +265,10 @@ clang-14-tsan:
     - cd $BUILD_DIR
     - cmake ..
       -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+      -DVCPKG_TARGET_TRIPLET=x64-linux-llvm
+      -DVCPKG_HOST_TRIPLET=x64-linux-llvm
+      -DCMAKE_CXX_FLAGS=-stdlib=libc++
+      -DCMAKE_C_FLAGS=-stdlib=libc++
       -DCMAKE_BUILD_TYPE=Debug
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
@@ -336,6 +348,10 @@ static analysis:
     - cd $BUILD_DIR
     - cmake ..
       -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+      -DVCPKG_TARGET_TRIPLET=x64-linux-llvm
+      -DVCPKG_HOST_TRIPLET=x64-linux-llvm
+      -DCMAKE_CXX_FLAGS=-stdlib=libc++
+      -DCMAKE_C_FLAGS=-stdlib=libc++
       -DSTAT_BENCH_ENABLE_CLANG_TIDY:BOOL=ON
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_ENABLE_BENCH=ON
