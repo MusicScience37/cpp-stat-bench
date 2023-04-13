@@ -29,7 +29,6 @@
 #include <nlohmann/json.hpp>
 
 #include "stat_bench/stat/statistics.h"
-#include "stat_bench/util/escape_for_html.h"
 #include "stat_bench/util/prepare_directory.h"
 #include "template/plotly_plot.h"
 
