@@ -31,6 +31,8 @@
   { symbol: [ "uint64_t", private, "<cstdint>", public ] },
   { symbol: [ "std::uint64_t", private, "<cstdint>", public ] },
   # Custom (STL - Others)
+  { symbol: [ "std::size_t", private, "<cstddef>", public ] },
+  { symbol: [ "size_t", private, "<cstddef>", public ] },
   { symbol: [ "char_traits", private, "<string>", public ] },
   { symbol: [ "condition_variable", private, "<condition_variable>", public ] },
   { symbol: [ "std::condition_variable", private, "<condition_variable>", public ] },

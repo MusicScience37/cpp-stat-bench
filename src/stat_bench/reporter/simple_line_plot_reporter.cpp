@@ -20,9 +20,7 @@
 #include "stat_bench/reporter/simple_line_plot_reporter.h"
 
 #include <cstddef>
-#include <cstdio>
 #include <fstream>
-#include <iterator>
 #include <unordered_map>
 #include <utility>
 #include <vector>

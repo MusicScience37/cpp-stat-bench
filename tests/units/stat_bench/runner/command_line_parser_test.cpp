@@ -19,8 +19,6 @@
  */
 #include "stat_bench/runner/command_line_parser.h"
 
-#include <string>
-
 #include <catch2/catch_test_macros.hpp>
 
 TEST_CASE("stat_bench::runner::CommandLineParser") {

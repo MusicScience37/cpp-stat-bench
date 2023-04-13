@@ -18,6 +18,7 @@
  * \brief Test of groups and cases.
  */
 #include <chrono>
+#include <exception>
 #include <thread>
 
 #include "stat_bench/benchmark_macros.h"

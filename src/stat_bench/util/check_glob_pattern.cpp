@@ -19,7 +19,7 @@
  */
 #include "stat_bench/util/check_glob_pattern.h"
 
-#include <vector>
+#include <cstddef>
 
 #include "stat_bench/util/string_view.h"
 

@@ -19,8 +19,6 @@
  */
 #include "stat_bench/do_not_optimize.h"
 
-#include <string>
-
 #include <catch2/catch_test_macros.hpp>
 
 TEST_CASE("stat_bench::do_not_optimize") {

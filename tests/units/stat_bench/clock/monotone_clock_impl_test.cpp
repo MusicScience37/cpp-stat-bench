@@ -20,7 +20,6 @@
 #include "stat_bench/clock/monotone_clock_impl.h"
 
 #include <chrono>
-#include <string>
 #include <thread>
 
 #include <catch2/catch_test_macros.hpp>

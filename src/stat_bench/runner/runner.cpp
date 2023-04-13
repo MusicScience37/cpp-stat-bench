@@ -23,6 +23,7 @@
 #include <exception>
 #include <memory>
 #include <string>
+#include <type_traits>
 
 #include "stat_bench/bench_impl/benchmark_case_registry.h"
 #include "stat_bench/bench_impl/benchmark_group.h"
@@ -34,7 +35,6 @@
 #include "stat_bench/measurer/processing_time_measurer.h"
 #include "stat_bench/param/parameter_config.h"
 #include "stat_bench/param/parameter_generator.h"
-#include "stat_bench/param/parameter_value_vector.h"
 #include "stat_bench/reporter/cdf_line_plot_reporter.h"
 #include "stat_bench/reporter/console_reporter.h"
 #include "stat_bench/reporter/json_reporter.h"
