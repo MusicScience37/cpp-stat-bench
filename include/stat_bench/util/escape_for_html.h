@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 MusicScience37 (Kenta Kabashima)
+ * Copyright 2023 MusicScience37 (Kenta Kabashima)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,25 +15,24 @@
  */
 /*!
  * \file
- * \brief Declaration of render_template function.
+ * \brief Declaration of escape_for_html function.
  */
 #pragma once
 
 #include <string>
-#include <unordered_map>
+
+#include "stat_bench/util/string_view.h"
 
 namespace stat_bench {
-namespace reporter {
+namespace util {
 
 /*!
- * \brief Render a template.
+ * \brief Escape a string for HTML.
  *
- * \param[in] template_str Template string.
- * \param[in] params Parameters.
- * \return Rendering result.
+ * \param[in] input Input string.
+ * \return Escaped string.
  */
-[[nodiscard]] auto render_template(std::string template_str,
-    const std::unordered_map<std::string, std::string>& params) -> std::string;
+[[nodiscard]] auto escape_for_html(const StringView& input) -> std::string;
 
-}  // namespace reporter
+}  // namespace util
 }  // namespace stat_bench

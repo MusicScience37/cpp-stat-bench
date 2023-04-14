@@ -21,6 +21,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <type_traits>
 
 #include "stat_bench/filters/glob_filter.h"
 #include "stat_bench/filters/regex_filter.h"

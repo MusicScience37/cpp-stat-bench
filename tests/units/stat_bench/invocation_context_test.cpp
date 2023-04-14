@@ -21,7 +21,6 @@
 
 #include <exception>
 #include <mutex>
-#include <ostream>
 #include <tuple>
 #include <utility>
 

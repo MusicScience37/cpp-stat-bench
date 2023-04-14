@@ -21,23 +21,24 @@
 
 #include <cstdio>
 #include <fstream>
-#include <iterator>
 #include <unordered_map>
 #include <utility>
 #include <vector>
 
 #include <fmt/format.h>
+#include <nlohmann/json.hpp>
 
-#include "stat_bench/reporter/render_template.h"
 #include "stat_bench/stat/statistics.h"
 #include "stat_bench/util/prepare_directory.h"
-#include "template/line2d.h"
+#include "template/plotly_plot.h"
 
 namespace stat_bench {
 namespace reporter {
 
 CdfLinePlotReporter::CdfLinePlotReporter(std::string prefix)
-    : prefix_(std::move(prefix)) {}
+    : prefix_(std::move(prefix)) {
+    renderer_.load_from_text("plotly_plot", plotly_plot);
+}
 
 void CdfLinePlotReporter::experiment_starts(
     const clock::SystemTimePoint& /*time_stamp*/) {
@@ -62,27 +63,59 @@ void CdfLinePlotReporter::measurer_finished(const std::string& /*name*/) {
 }
 
 void CdfLinePlotReporter::group_starts(const std::string& /*name*/) {
-    data_buf_.clear();
-    data_buf_.push_back('[');
+    measurements_.clear();
 }
 
 void CdfLinePlotReporter::group_finished(const std::string& name) {
-    data_buf_.push_back(']');
+    nlohmann::json dataset_json{};
+    auto& data_json = dataset_json["data"];
+    for (const auto& measurement : measurements_) {
+        nlohmann::json trace_json{};
 
-    const std::string contents = render_template(line2d,
-        std::unordered_map<std::string, std::string>{
-            {"{{PLOT_NAME}}",
-                fmt::format(
-                    "Cumulative Distribution Function of {}", measurer_name_)},
-            {"{{X_TITLE}}", "Time [sec]"}, {"{{X_TYPE}}", "log"},
-            {"{{Y_TITLE}}", "Cumulative Probability"}, {"{{Y_TYPE}}", "-"},
-            {"\"{{DATA}}\"", std::string(data_buf_.data(), data_buf_.size())}});
+        const std::vector<double>& x =
+            measurement.durations_stat().sorted_samples();
+        trace_json["x"] = x;
+
+        const std::size_t samples =
+            measurement.durations_stat().sorted_samples().size();
+        std::vector<double> y;
+        y.reserve(samples);
+        for (std::size_t i = 0; i < samples; ++i) {
+            y.push_back(
+                static_cast<double>(i + 1) / static_cast<double>(samples));
+        }
+        trace_json["y"] = y;
+
+        trace_json["mode"] = "lines";
+        trace_json["type"] = "scatter";
+        trace_json["name"] = fmt::format("{} ({})",
+            measurement.case_info().case_name(), measurement.cond().params());
+
+        data_json.push_back(trace_json);
+    }
+
+    const std::string title =
+        fmt::format("Cumulative Distribution Function of {}", measurer_name_);
+
+    dataset_json["layout"]["title"] = title;
+    dataset_json["layout"]["xaxis"]["title"] = "Time [sec]";
+    dataset_json["layout"]["xaxis"]["type"] = "log";
+    dataset_json["layout"]["yaxis"]["title"] = "Cumulative Probability";
+    dataset_json["layout"]["yaxis"]["type"] = "-";
+    dataset_json["layout"]["showlegend"] = true;
+
+    dataset_json["config"]["scrollZoom"] = true;
+    dataset_json["config"]["responsive"] = true;
+
+    nlohmann::json input;
+    input["title"] = title;
+    input["dataset"] = std::move(dataset_json);
 
     const std::string filepath = fmt::format(
         FMT_STRING("{}/{}/{}_cdf.html"), prefix_, name, measurer_name_);
     util::prepare_directory_for(filepath);
     std::ofstream stream{filepath};
-    stream << contents;
+    renderer_.render_to(stream, "plotly_plot", input);
 }
 
 void CdfLinePlotReporter::case_starts(const BenchmarkFullName& /*case_info*/) {
@@ -96,25 +129,7 @@ void CdfLinePlotReporter::case_finished(
 
 void CdfLinePlotReporter::measurement_succeeded(
     const measurer::Measurement& measurement) {
-    const std::vector<double>& x =
-        measurement.durations_stat().sorted_samples();
-    const std::size_t samples =
-        measurement.durations_stat().sorted_samples().size();
-    std::vector<double> y;
-    y.reserve(samples);
-    for (std::size_t i = 0; i < samples; ++i) {
-        y.push_back(static_cast<double>(i + 1) / static_cast<double>(samples));
-    }
-
-    fmt::format_to(std::back_inserter(data_buf_), FMT_STRING(R"***({{
-    x: [{:.6e}],
-    y: [{:.6f}],
-    mode: "lines",
-    type: "scatter",
-    name: "{} ({})",
-}},)***"),
-        fmt::join(x, ", "), fmt::join(y, ", "),
-        measurement.case_info().case_name(), measurement.cond().params());
+    measurements_.push_back(measurement);
 }
 
 void CdfLinePlotReporter::measurement_failed(

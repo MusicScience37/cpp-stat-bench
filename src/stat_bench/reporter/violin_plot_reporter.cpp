@@ -22,25 +22,26 @@
 #include <cmath>
 #include <cstdio>
 #include <fstream>
-#include <iterator>
 #include <limits>
 #include <unordered_map>
 #include <utility>
 #include <vector>
 
 #include <fmt/format.h>
+#include <nlohmann/json.hpp>
 
 #include "stat_bench/clock/duration.h"
-#include "stat_bench/reporter/render_template.h"
 #include "stat_bench/stat/statistics.h"
 #include "stat_bench/util/prepare_directory.h"
-#include "template/violin.h"
+#include "template/plotly_plot.h"
 
 namespace stat_bench {
 namespace reporter {
 
 ViolinPlotReporter::ViolinPlotReporter(std::string prefix)
-    : prefix_(std::move(prefix)) {}
+    : prefix_(std::move(prefix)) {
+    renderer_.load_from_text("plotly_plot", plotly_plot);
+}
 
 void ViolinPlotReporter::experiment_starts(
     const clock::SystemTimePoint& /*time_stamp*/) {
@@ -65,38 +66,80 @@ void ViolinPlotReporter::measurer_finished(const std::string& /*name*/) {
 }
 
 void ViolinPlotReporter::group_starts(const std::string& /*name*/) {
-    data_buf_.clear();
-    data_buf_.push_back('[');
-    min_duration_ = std::numeric_limits<double>::max();
-    max_duration_ = std::numeric_limits<double>::min();
+    measurements_.clear();
 }
 
 void ViolinPlotReporter::group_finished(const std::string& name) {
-    data_buf_.push_back(']');
+    nlohmann::json dataset_json{};
+    auto& data_json = dataset_json["data"];
+    double min_duration = std::numeric_limits<double>::max();
+    double max_duration = std::numeric_limits<double>::min();
+    for (const auto& measurement : measurements_) {
+        nlohmann::json trace_json{};
+
+        const std::size_t samples =
+            measurement.durations_stat().sorted_samples().size();
+
+        std::vector<double> y;
+        y.reserve(samples);
+        const double inv_iterations =
+            1.0 / static_cast<double>(measurement.iterations());
+        for (const auto& durations_per_thread : measurement.durations()) {
+            for (const auto& duration : durations_per_thread) {
+                y.push_back(duration.seconds() * inv_iterations);
+            }
+        }
+        trace_json["y"] = y;
+
+        trace_json["type"] = "violin";
+        trace_json["name"] = fmt::format("{} ({})",
+            measurement.case_info().case_name(), measurement.cond().params());
+        trace_json["box"]["visible"] = true;
+        trace_json["meanline"]["visible"] = true;
+        trace_json["points"] = "outliers";
+
+        data_json.push_back(trace_json);
+
+        const double cur_min_duration = measurement.durations_stat().min();
+        const double cur_max_duration = measurement.durations_stat().max();
+        if (cur_min_duration < min_duration) {
+            min_duration = cur_min_duration;
+        }
+        if (cur_max_duration > max_duration) {
+            max_duration = cur_max_duration;
+        }
+    }
+
+    const std::string title = fmt::format("Violin Plot of {}", measurer_name_);
 
     constexpr double min_duration_limit = 1e-9;
-    if (min_duration_ < min_duration_limit) {
-        min_duration_ = min_duration_limit;
+    if (min_duration < min_duration_limit) {
+        min_duration = min_duration_limit;
     }
     constexpr double margin_coeff = 1.5;
-    min_duration_ /= margin_coeff;
-    max_duration_ *= margin_coeff;
+    min_duration /= margin_coeff;
+    max_duration *= margin_coeff;
 
-    const std::string contents = render_template(violin,
-        std::unordered_map<std::string, std::string>{
-            {"{{PLOT_NAME}}", fmt::format("Violin Plot of {}", measurer_name_)},
-            {"{{Y_TITLE}}", "Time [sec]"}, {"{{Y_TYPE}}", "log"},
-            {"\"{{Y_MIN}}\"",
-                fmt::format(FMT_STRING("{:.6e}"), std::log10(min_duration_))},
-            {"\"{{Y_MAX}}\"",
-                fmt::format(FMT_STRING("{:.6e}"), std::log10(max_duration_))},
-            {"\"{{DATA}}\"", std::string(data_buf_.data(), data_buf_.size())}});
+    dataset_json["layout"]["title"] = title;
+    dataset_json["layout"]["yaxis"]["title"] = "Time [sec]";
+    dataset_json["layout"]["yaxis"]["type"] = "log";
+    dataset_json["layout"]["yaxis"]["constrain"] = "range";
+    dataset_json["layout"]["yaxis"]["range"] =
+        std::vector<double>{std::log10(min_duration), std::log10(max_duration)};
+    dataset_json["layout"]["showlegend"] = true;
+
+    dataset_json["config"]["scrollZoom"] = true;
+    dataset_json["config"]["responsive"] = true;
+
+    nlohmann::json input;
+    input["title"] = title;
+    input["dataset"] = std::move(dataset_json);
 
     const std::string filepath = fmt::format(
         FMT_STRING("{}/{}/{}_violin.html"), prefix_, name, measurer_name_);
     util::prepare_directory_for(filepath);
     std::ofstream stream{filepath};
-    stream << contents;
+    renderer_.render_to(stream, "plotly_plot", input);
 }
 
 void ViolinPlotReporter::case_starts(const BenchmarkFullName& /*case_info*/) {
@@ -109,44 +152,7 @@ void ViolinPlotReporter::case_finished(const BenchmarkFullName& /*case_info*/) {
 
 void ViolinPlotReporter::measurement_succeeded(
     const measurer::Measurement& measurement) {
-    const std::size_t samples =
-        measurement.durations_stat().sorted_samples().size();
-
-    const std::string name = fmt::format(FMT_STRING("{} ({})"),
-        measurement.case_info().case_name(), measurement.cond().params());
-
-    std::vector<double> y;
-    y.reserve(samples);
-    const double inv_iterations =
-        1.0 / static_cast<double>(measurement.iterations());
-    for (const auto& durations_per_thread : measurement.durations()) {
-        for (const auto& duration : durations_per_thread) {
-            y.push_back(duration.seconds() * inv_iterations);
-        }
-    }
-
-    fmt::format_to(std::back_inserter(data_buf_), FMT_STRING(R"***({{
-    y: [{:.6e}],
-    type: "violin",
-    name: "{}",
-    box: {{
-        visible: true,
-    }},
-    meanline: {{
-        visible: true,
-    }},
-    points: "outliers",
-}},)***"),
-        fmt::join(y, ", "), name);
-
-    const double min_duration = measurement.durations_stat().min();
-    const double max_duration = measurement.durations_stat().max();
-    if (min_duration < min_duration_) {
-        min_duration_ = min_duration;
-    }
-    if (max_duration > max_duration_) {
-        max_duration_ = max_duration;
-    }
+    measurements_.push_back(measurement);
 }
 
 void ViolinPlotReporter::measurement_failed(

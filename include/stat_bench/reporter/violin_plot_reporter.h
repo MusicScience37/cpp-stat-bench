@@ -21,14 +21,14 @@
 
 #include <exception>
 #include <string>
-
-#include <fmt/format.h>
+#include <vector>
 
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/clock/system_time_point.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/reporter/i_reporter.h"
+#include "stat_bench/reporter/jinja_renderer.h"
 
 namespace stat_bench {
 namespace reporter {
@@ -85,14 +85,11 @@ private:
     //! Measurer name.
     std::string measurer_name_{};
 
-    //! Buffer of formatted data.
-    fmt::memory_buffer data_buf_{};
+    //! Measurements.
+    std::vector<measurer::Measurement> measurements_{};
 
-    //! Minimum duration.
-    double min_duration_{};
-
-    //! Maximum duration.
-    double max_duration_{};
+    //! Renderer of Jinja templates.
+    JinjaRenderer renderer_{};
 };
 
 }  // namespace reporter

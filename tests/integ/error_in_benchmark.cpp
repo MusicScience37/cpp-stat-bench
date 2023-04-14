@@ -18,6 +18,7 @@
  * \brief Benchmark of a throwing function.
  */
 #include <cstdint>
+#include <exception>
 #include <stdexcept>
 
 #include "stat_bench/benchmark_macros.h"

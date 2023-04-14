@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 MusicScience37 (Kenta Kabashima)
+ * Copyright 2023 MusicScience37 (Kenta Kabashima)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,26 +15,18 @@
  */
 /*!
  * \file
- * \brief Benchmark of fibonacci.
+ * \brief Test of groups and cases.
  */
-#include <cstdint>
+#include <chrono>
+#include <exception>
+#include <thread>
 
 #include "stat_bench/benchmark_macros.h"
-#include "stat_bench/do_not_optimize.h"
 
-[[nodiscard]] auto fibonacci(std::uint64_t number) -> std::uint64_t {
-    if (number < 2) {
-        return 1;
-    }
-    return fibonacci(number - 1) + fibonacci(number - 2);
-}
+static constexpr auto duration = std::chrono::milliseconds(10);
 
-STAT_BENCH_CASE("Fibonacci", "Fibonacci") {
-    std::uint64_t number = 30;  // NOLINT
-    STAT_BENCH_MEASURE() {
-        stat_bench::do_not_optimize(number);
-        stat_bench::do_not_optimize(fibonacci(number));
-    };
+STAT_BENCH_CASE("Group1", "Case1") {
+    STAT_BENCH_MEASURE() { std::this_thread::sleep_for(duration); };
 }
 
 STAT_BENCH_MAIN

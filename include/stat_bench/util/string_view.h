@@ -19,7 +19,7 @@
  */
 #pragma once
 
-#include <cstddef>
+#include <cstddef>  // IWYU pragma: keep
 #include <cstring>
 #include <string>
 

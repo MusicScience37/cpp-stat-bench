@@ -61,6 +61,9 @@ void prepare_directory(const std::string& path) {
 
 void prepare_directory_for(const std::string& path) {
     const std::size_t pos = path.find_last_of("/\\");
+    if (pos == std::string::npos) {
+        return;
+    }
     prepare_directory(path.substr(0, pos));
 }
 
@@ -106,6 +109,9 @@ void prepare_directory(const std::string& path) {
 
 void prepare_directory_for(const std::string& path) {
     const std::size_t pos = path.find_last_of('/');
+    if (pos == std::string::npos) {
+        return;
+    }
     prepare_directory(path.substr(0, pos));
 }
 

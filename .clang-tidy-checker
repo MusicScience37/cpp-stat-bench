@@ -2,6 +2,5 @@ build_dir: build/Debug
 file_patterns:
   - src/unity_source.cpp
   - tests/units/unity_source.cpp
-# Enable below when libc++ is used.
-#extra_args:
-#  - "--extra-arg=-isystem/usr/lib/llvm-14/include/c++/v1"
+extra_args:
+  - "--extra-arg=-isystem/usr/lib/llvm-14/include/c++/v1"

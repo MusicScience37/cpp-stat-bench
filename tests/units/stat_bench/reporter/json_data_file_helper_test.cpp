@@ -48,27 +48,27 @@ TEST_CASE("NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE definitions") {
         measurement.iterations = 123;  // NOLINT
         measurement.samples = 12345;   // NOLINT
 
-        measurement.durations.stat.mean = 1.234;                 // NOLINT
-        measurement.durations.stat.max = 2.345;                  // NOLINT
-        measurement.durations.stat.min = 0.123;                  // NOLINT
-        measurement.durations.stat.variance = 3.456;             // NOLINT
-        measurement.durations.stat.standard_deviation = 0.0123;  // NOLINT
-        measurement.durations.values = std::vector<std::vector<double>>{
-            {1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}};  // NOLINT
+        measurement.durations.stat.mean = 1.234F;                 // NOLINT
+        measurement.durations.stat.max = 2.345F;                  // NOLINT
+        measurement.durations.stat.min = 0.123F;                  // NOLINT
+        measurement.durations.stat.variance = 3.456F;             // NOLINT
+        measurement.durations.stat.standard_deviation = 0.0123F;  // NOLINT
+        measurement.durations.values = std::vector<std::vector<float>>{
+            {1.0F, 2.0F, 3.0F}, {4.0F, 5.0F, 6.0F}};  // NOLINT
 
         CustomStatOutputData stat_output{};
         stat_output.name = "Stat";
-        stat_output.stat.mean = 1.234;                 // NOLINT
-        stat_output.stat.max = 2.345;                  // NOLINT
-        stat_output.stat.min = 0.123;                  // NOLINT
-        stat_output.stat.variance = 3.456;             // NOLINT
-        stat_output.stat.standard_deviation = 0.0123;  // NOLINT
-        stat_output.values = std::vector<std::vector<double>>{
-            {1.0, 2.0, 3.0}, {4.0, 5.0, 6.0}};  // NOLINT
+        stat_output.stat.mean = 1.234F;                 // NOLINT
+        stat_output.stat.max = 2.345F;                  // NOLINT
+        stat_output.stat.min = 0.123F;                  // NOLINT
+        stat_output.stat.variance = 3.456F;             // NOLINT
+        stat_output.stat.standard_deviation = 0.0123F;  // NOLINT
+        stat_output.values = std::vector<std::vector<float>>{
+            {1.0F, 2.0F, 3.0F}, {4.0F, 5.0F, 6.0F}};  // NOLINT
         measurement.custom_stat_outputs.push_back(stat_output);
 
         measurement.custom_outputs.push_back(
-            CustomOutputData{"Custom", 3.14});  // NOLINT
+            CustomOutputData{"Custom", 3.14F});  // NOLINT
 
         data.measurements.push_back(measurement);
 

@@ -15,8 +15,9 @@ set(SOURCE_FILES
     reporter/cdf_line_plot_reporter.cpp
     reporter/console_reporter.cpp
     reporter/data_file_helper.cpp
+    reporter/jinja_renderer.cpp
     reporter/json_reporter.cpp
-    reporter/render_template.cpp
+    reporter/msgpack_reporter.cpp
     reporter/simple_line_plot_reporter.cpp
     reporter/violin_plot_reporter.cpp
     runner/command_line_parser.cpp
@@ -25,6 +26,7 @@ set(SOURCE_FILES
     stat/statistics.cpp
     use_pointer.cpp
     util/check_glob_pattern.cpp
+    util/escape_for_html.cpp
     util/prepare_directory.cpp
     util/sync_barrier.cpp
 )

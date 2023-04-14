@@ -1,7 +1,12 @@
 {
   "build": { "dockerfile": "Dockerfile" },
+  "runArgs": [
+    // Configuration for GDB.
+    "--cap-add=SYS_PTRACE",
+    "--security-opt",
+    "seccomp=unconfined"
+  ],
   "containerEnv": {
-    "CONAN_USER_HOME": "${containerWorkspaceFolder}",
     "ASAN_OPTIONS": "alloc_dealloc_mismatch=0"
   },
   "customizations": {
@@ -27,7 +32,8 @@
         "hbenl.vscode-test-explorer",
         "ms-azuretools.vscode-docker",
         "tamasfe.even-better-toml",
-        "redhat.vscode-yaml"
+        "redhat.vscode-yaml",
+        "samuelcolvin.jinjahtml"
       ],
       "settings": {
         "cmakeFormat.exePath": "/workspaces/cpp-hash-tables/.venv/bin/cmake-format"

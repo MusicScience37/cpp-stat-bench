@@ -15,10 +15,10 @@
  */
 /*!
  * @file
- * @brief Definition of line2d variable.
+ * @brief Definition of plotly_plot variable.
  *
  * This header is automatically generated from
- * src/stat_bench/reporter/template/line2d.html.
+ * src/stat_bench/reporter/template/plotly_plot.jinja.
  * Change this file only via scripts/generate_template_header.py script.
  */
 #pragma once
@@ -28,51 +28,43 @@ namespace reporter {
 
 /*!
  * @brief Contents of file
- * src/stat_bench/reporter/template/line2d.html.
+ * src/stat_bench/reporter/template/plotly_plot.jinja.
  */
-static constexpr const char* line2d = R"(<!DOCTYPE html>
+static constexpr const char* plotly_plot = R"(<!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>{{PLOT_NAME}}</title>
-    <style>
-      html,
-      body,
-      .container {
-        height: 100%;
-        width: 100%;
-        margin: 0px;
-      }
-    </style>
-  </head>
 
-  <body>
+<head>
+    <meta charset="utf-8" />
+    <title>{{ escape_for_html(title) }}</title>
+    <style>
+        html,
+        body,
+        .container {
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+        }
+    </style>
+</head>
+
+<body>
     <div id="plot" class="container"></div>
 
     <!-- Import Plotly -->
     <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
 
-    <script type="text/javascript">
-      var data = "{{DATA}}";
-      var layout = {
-        title: "{{PLOT_NAME}}",
-        xaxis: {
-          title: "{{X_TITLE}}",
-          type: "{{X_TYPE}}",
-        },
-        yaxis: {
-          title: "{{Y_TITLE}}",
-          type: "{{Y_TYPE}}",
-        },
-        showlegend: true,
-      };
+    <div id="dataset" style="display:none">
+        {{ escape_for_html(dataset) }}
+    </div>
 
-      Plotly.newPlot("plot", data, layout, {
-        scrollZoom: true,
-        responsive: true,
-      });
+    <script type="text/javascript">
+        var dataset_str = document.querySelector('#dataset').textContent
+        var dataset = JSON.parse(dataset_str);
+
+        Plotly.newPlot("plot", dataset.data, dataset.layout, dataset.config);
     </script>
-  </body>
+</body>
+
 </html>
 )";
 

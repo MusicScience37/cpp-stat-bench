@@ -17,12 +17,14 @@
  * \file
  * \brief Benchmark of fibonacci.
  */
+#include <chrono>
 #include <cstddef>
 #include <cstdint>
+#include <exception>
 #include <memory>
+#include <thread>
 
 #include "stat_bench/benchmark_macros.h"
-#include "stat_bench/do_not_optimize.h"
 #include "stat_bench/fixture_base.h"
 #include "stat_bench/invocation_context.h"
 #include "stat_bench/param/parameter_value_vector.h"
@@ -53,18 +55,12 @@ protected:
     std::shared_ptr<stat_bench::stat::CustomStatOutput> throughput_stat_{};
 };
 
-[[nodiscard]] auto fibonacci(std::uint64_t number) -> std::uint64_t {
-    if (number < 2) {
-        return 1;
-    }
-    return fibonacci(number - 1) + fibonacci(number - 2);
-}
+static constexpr auto duration = std::chrono::milliseconds(10);
 
 STAT_BENCH_CASE_F(Fixture, "FibonacciParametrized", "Fibonacci") {
     STAT_BENCH_MEASURE_INDEXED(
         thread_index, sample_index, /*iteration_index*/) {
-        stat_bench::do_not_optimize(number_);
-        stat_bench::do_not_optimize(fibonacci(number_));
+        std::this_thread::sleep_for(duration);
         throughput_stat_->add(thread_index, sample_index, 1.0);
     };
 }

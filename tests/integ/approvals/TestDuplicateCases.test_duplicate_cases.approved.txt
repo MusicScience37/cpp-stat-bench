@@ -1,0 +1,7 @@
+exit_code:
+1
+stdout:
+
+stderr:
+Failed to append a benchmark: Duplicate benchmark name Group1/Case1.
+

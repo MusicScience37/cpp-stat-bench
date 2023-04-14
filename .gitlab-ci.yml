@@ -7,9 +7,7 @@ stages:
   - release
 
 variables:
-  CONAN_USER: "MusicScience37"
   SECURE_LOG_LEVEL: debug
-  CPP_STAT_BENCH_CONAN_REGISTRY: "https://gitlab.com/api/v4/projects/32226502/packages/conan"
 
 include:
   - template: Security/Dependency-Scanning.gitlab-ci.yml
@@ -17,10 +15,7 @@ include:
   - template: Security/License-Scanning.gitlab-ci.yml
 dependency_scanning:
   stage: test
-  needs:
-    - prepare lock files
-  dependencies:
-    - prepare lock files
+  needs: []
 sast:
   stage: test
   needs: []
@@ -30,10 +25,7 @@ gemnasium-dependency_scanning:
       when: on_success
 license_scanning:
   stage: test
-  needs:
-    - prepare lock files
-  dependencies:
-    - prepare lock files
+  needs: []
 
 sync poetry:
   stage: prepare
@@ -54,29 +46,6 @@ sync poetry:
     paths:
       - .venv
     expire_in: "1 week"
-
-prepare lock files:
-  stage: prepare
-  needs: []
-  image: musicscience37/clang-ci:clang14
-  script:
-    - poetry config virtualenvs.in-project true
-    - poetry env use 3.10
-    - poetry install
-    - poetry run conan profile new --detect default
-    - poetry run conan profile update settings.compiler.libcxx=libc++ default
-    - poetry run conan install --build missing -o cpp_stat_bench:requirements_for_tests=True -s build_type=Debug .
-  cache:
-    key:
-      prefix: poetry-linux-prepare
-      files:
-        - Pipfile.lock
-    paths:
-      - .venv
-  artifacts:
-    paths:
-      - conan.lock
-    expire_in: "1 mos"
 
 line count:
   stage: prepare
@@ -142,15 +111,12 @@ test release:
     matrix:
       - COMPILER_TYPE: ["gcc10", "gcc12"]
         IMAGE_PATH: "musicscience37/gcc-ci"
-        CONAN_LIBCXX: libstdc++11
         CXX_STANDARD: 14
       - COMPILER_TYPE: ["clang14", "clang15"]
         IMAGE_PATH: "musicscience37/clang-ci"
-        CONAN_LIBCXX: libc++
         CXX_STANDARD: 14
       - COMPILER_TYPE: ["clang14"]
         IMAGE_PATH: "musicscience37/clang-ci"
-        CONAN_LIBCXX: libc++
         CXX_STANDARD: 20
   image: ${IMAGE_PATH}:${COMPILER_TYPE}
   variables:
@@ -199,11 +165,9 @@ test debug:
     matrix:
       - COMPILER_TYPE: ["gcc10"]
         IMAGE_PATH: "musicscience37/gcc-ci"
-        CONAN_LIBCXX: libstdc++11
         CXX_STANDARD: 14
       - COMPILER_TYPE: ["clang14"]
         IMAGE_PATH: "musicscience37/clang-ci"
-        CONAN_LIBCXX: libc++
         CXX_STANDARD: 14
   variables:
     BUILD_TYPE: Debug
@@ -226,7 +190,6 @@ clang coverage:
     matrix:
       - COMPILER_TYPE: "clang14"
         IMAGE_PATH: "musicscience37/clang-ci"
-        CONAN_LIBCXX: libc++
         CXX_STANDARD: 14
   variables:
     BUILD_DIR: build_clang_coverage
@@ -234,10 +197,12 @@ clang coverage:
     - cd $BUILD_DIR
     - cmake ..
       -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+      -DVCPKG_TARGET_TRIPLET=x64-linux-llvm
+      -DVCPKG_HOST_TRIPLET=x64-linux-llvm
       -DCMAKE_BUILD_TYPE=Debug
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
-      "-DCMAKE_CXX_FLAGS=-fprofile-instr-generate -fcoverage-mapping"
+      "-DCMAKE_CXX_FLAGS=-stdlib=libc++ -fprofile-instr-generate -fcoverage-mapping"
       "-DCMAKE_MODULE_LINKER_FLAGS=-fprofile-instr-generate -fcoverage-mapping"
     - mkdir coverage
     - export LLVM_PROFILE_FILE=$(pwd)/coverage/coverage_%p.profraw
@@ -270,7 +235,6 @@ clang-14-asan-ubsan:
     matrix:
       - COMPILER_TYPE: "clang14"
         IMAGE_PATH: "musicscience37/clang-ci"
-        CONAN_LIBCXX: libc++
         CXX_STANDARD: 14
   variables:
     BUILD_DIR: build_clang_asan_ubsan
@@ -279,10 +243,12 @@ clang-14-asan-ubsan:
     - cd $BUILD_DIR
     - cmake ..
       -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+      -DVCPKG_TARGET_TRIPLET=x64-linux-llvm
+      -DVCPKG_HOST_TRIPLET=x64-linux-llvm
       -DCMAKE_BUILD_TYPE=Debug
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
-      -DCMAKE_CXX_FLAGS=-fsanitize=address,undefined
+      "-DCMAKE_CXX_FLAGS=-stdlib=libc++ -fsanitize=address,undefined"
       -DCMAKE_MODULE_LINKER_FLAGS=-fsanitize=address,undefined
     - cmake --build .
     - ctest -V
@@ -295,48 +261,15 @@ clang-14-tsan:
     - cd $BUILD_DIR
     - cmake ..
       -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+      -DVCPKG_TARGET_TRIPLET=x64-linux-llvm
+      -DVCPKG_HOST_TRIPLET=x64-linux-llvm
       -DCMAKE_BUILD_TYPE=Debug
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
-      -DCMAKE_CXX_FLAGS=-fsanitize=thread
+      "-DCMAKE_CXX_FLAGS=-stdlib=libc++ -fsanitize=thread"
       -DCMAKE_MODULE_LINKER_FLAGS=-fsanitize=thread
     - cmake --build .
     - ctest -V
-
-clang-14-conan:
-  stage: test
-  needs:
-    - sync poetry
-  dependencies:
-    - sync poetry
-  image: musicscience37/clang-ci:clang14
-  variables:
-    CONAN_CHANNEL: "testing"
-  script:
-    - poetry run conan profile new --detect default
-    - poetry run conan profile update settings.compiler.libcxx=libc++ default
-    - poetry run conan remote add cpp-stat-bench $CPP_STAT_BENCH_CONAN_REGISTRY
-    - poetry run conan create --build missing --test-folder tests/conan_package -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
-    - poetry run conan create --build missing --test-folder tests/conan_package -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
-
-clang-14-conan-release:
-  stage: deploy
-  needs:
-    - sync poetry
-  dependencies:
-    - sync poetry
-  image: musicscience37/clang-ci:clang14
-  variables:
-    CONAN_CHANNEL: "stable"
-  script:
-    - poetry run conan profile new --detect default
-    - poetry run conan profile update settings.compiler.libcxx=libc++ default
-    - poetry run conan remote add cpp-stat-bench $CPP_STAT_BENCH_CONAN_REGISTRY
-    - poetry run conan create --build missing --test-folder tests/conan_package -s build_type=Debug . ${CONAN_USER}/${CONAN_CHANNEL}
-    - poetry run conan create --build missing --test-folder tests/conan_package -s build_type=Release . ${CONAN_USER}/${CONAN_CHANNEL}
-    - CONAN_LOGIN_USERNAME=ci_user CONAN_PASSWORD=${CI_JOB_TOKEN} poetry run conan upload -r cpp-stat-bench cpp_stat_bench -c --all
-  only:
-    - tags
 
 msvc-release:
   parallel:
@@ -401,7 +334,6 @@ static analysis:
     matrix:
       - COMPILER_TYPE: "clang14"
         IMAGE_PATH: "musicscience37/clang-ci"
-        CONAN_LIBCXX: libc++
         CXX_STANDARD: 14
   variables:
     BUILD_TYPE: Debug
@@ -410,6 +342,10 @@ static analysis:
     - cd $BUILD_DIR
     - cmake ..
       -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+      -DVCPKG_TARGET_TRIPLET=x64-linux-llvm
+      -DVCPKG_HOST_TRIPLET=x64-linux-llvm
+      -DCMAKE_CXX_FLAGS=-stdlib=libc++
+      -DCMAKE_C_FLAGS=-stdlib=libc++
       -DSTAT_BENCH_ENABLE_CLANG_TIDY:BOOL=ON
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_ENABLE_BENCH=ON

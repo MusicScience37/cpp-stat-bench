@@ -20,6 +20,7 @@
 // IWYU pragma: no_include  <stddef.h>
 #include <cstddef>
 #include <cstdint>
+#include <exception>
 #include <memory>
 
 #include "stat_bench/benchmark_macros.h"

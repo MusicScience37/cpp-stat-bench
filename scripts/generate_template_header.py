@@ -11,7 +11,7 @@ THIS_DIR = pathlib.Path(__file__).absolute().parent
 ROOT_DIR = THIS_DIR.parent
 TEMPLATE_DIR = ROOT_DIR / "src" / "stat_bench" / "reporter" / "template"
 
-TEMPLATE_SUFFIX = ".html"
+TEMPLATE_SUFFIX = ".jinja"
 
 
 def collect_templates() -> typing.List[pathlib.Path]:

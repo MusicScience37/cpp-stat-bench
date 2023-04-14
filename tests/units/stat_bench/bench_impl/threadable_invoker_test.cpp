@@ -21,7 +21,6 @@
 
 #include <mutex>
 #include <stdexcept>
-#include <string>
 #include <tuple>
 
 #include <catch2/catch_message.hpp>

@@ -19,25 +19,26 @@
  */
 #include "stat_bench/reporter/simple_line_plot_reporter.h"
 
-#include <cstdio>
+#include <cstddef>
 #include <fstream>
-#include <iterator>
 #include <unordered_map>
 #include <utility>
 #include <vector>
 
 #include <fmt/format.h>
+#include <nlohmann/json.hpp>
 
 #include "stat_bench/clock/duration.h"
-#include "stat_bench/reporter/render_template.h"
 #include "stat_bench/util/prepare_directory.h"
-#include "template/line2d.h"
+#include "template/plotly_plot.h"
 
 namespace stat_bench {
 namespace reporter {
 
 SimpleLinePlotReporter::SimpleLinePlotReporter(std::string prefix)
-    : prefix_(std::move(prefix)) {}
+    : prefix_(std::move(prefix)) {
+    renderer_.load_from_text("plotly_plot", plotly_plot);
+}
 
 void SimpleLinePlotReporter::experiment_starts(
     const clock::SystemTimePoint& /*time_stamp*/) {
@@ -62,25 +63,62 @@ void SimpleLinePlotReporter::measurer_finished(const std::string& /*name*/) {
 }
 
 void SimpleLinePlotReporter::group_starts(const std::string& /*name*/) {
-    data_buf_.clear();
-    data_buf_.push_back('[');
+    measurements_.clear();
 }
 
 void SimpleLinePlotReporter::group_finished(const std::string& name) {
-    data_buf_.push_back(']');
+    nlohmann::json dataset_json{};
+    auto& data_json = dataset_json["data"];
+    for (const auto& measurement : measurements_) {
+        nlohmann::json trace_json{};
 
-    const std::string contents = render_template(line2d,
-        std::unordered_map<std::string, std::string>{
-            {"{{PLOT_NAME}}", measurer_name_}, {"{{X_TITLE}}", "Sample Index"},
-            {"{{X_TYPE}}", "-"}, {"{{Y_TITLE}}", "Time [sec]"},
-            {"{{Y_TYPE}}", "log"},
-            {"\"{{DATA}}\"", std::string(data_buf_.data(), data_buf_.size())}});
+        const std::size_t samples =
+            measurement.samples() * measurement.cond().threads();
+        std::vector<std::size_t> x{};
+        x.reserve(samples);
+        for (std::size_t i = 0; i < samples; ++i) {
+            x.push_back(i + 1);
+        }
+        trace_json["x"] = x;
+
+        std::vector<double> y;
+        y.reserve(samples);
+        const double inv_iterations =
+            1.0 / static_cast<double>(measurement.iterations());
+        for (const auto& durations_per_thread : measurement.durations()) {
+            for (const auto& duration : durations_per_thread) {
+                y.push_back(duration.seconds() * inv_iterations);
+            }
+        }
+        trace_json["y"] = y;
+
+        trace_json["mode"] = "lines";
+        trace_json["type"] = "scatter";
+        trace_json["name"] = fmt::format("{} ({})",
+            measurement.case_info().case_name(), measurement.cond().params());
+
+        data_json.push_back(trace_json);
+    }
+
+    dataset_json["layout"]["title"] = measurer_name_;
+    dataset_json["layout"]["xaxis"]["title"] = "Sample Index";
+    dataset_json["layout"]["xaxis"]["type"] = "-";
+    dataset_json["layout"]["yaxis"]["title"] = "Time [sec]";
+    dataset_json["layout"]["yaxis"]["type"] = "log";
+    dataset_json["layout"]["showlegend"] = true;
+
+    dataset_json["config"]["scrollZoom"] = true;
+    dataset_json["config"]["responsive"] = true;
+
+    nlohmann::json input;
+    input["title"] = measurer_name_;
+    input["dataset"] = std::move(dataset_json);
 
     const std::string filepath =
         fmt::format(FMT_STRING("{}/{}/{}.html"), prefix_, name, measurer_name_);
     util::prepare_directory_for(filepath);
     std::ofstream stream{filepath};
-    stream << contents;
+    renderer_.render_to(stream, "plotly_plot", input);
 }
 
 void SimpleLinePlotReporter::case_starts(
@@ -95,33 +133,7 @@ void SimpleLinePlotReporter::case_finished(
 
 void SimpleLinePlotReporter::measurement_succeeded(
     const measurer::Measurement& measurement) {
-    const std::size_t samples =
-        measurement.samples() * measurement.cond().threads();
-    std::vector<std::size_t> x;
-    x.reserve(samples);
-    for (std::size_t i = 0; i < samples; ++i) {
-        x.push_back(i + 1);
-    }
-
-    std::vector<double> y;
-    y.reserve(samples);
-    const double inv_iterations =
-        1.0 / static_cast<double>(measurement.iterations());
-    for (const auto& durations_per_thread : measurement.durations()) {
-        for (const auto& duration : durations_per_thread) {
-            y.push_back(duration.seconds() * inv_iterations);
-        }
-    }
-
-    fmt::format_to(std::back_inserter(data_buf_), FMT_STRING(R"***({{
-    x: [{}],
-    y: [{:.6e}],
-    mode: "lines",
-    type: "scatter",
-    name: "{} ({})",
-}},)***"),
-        fmt::join(x, ", "), fmt::join(y, ", "),
-        measurement.case_info().case_name(), measurement.cond().params());
+    measurements_.push_back(measurement);
 }
 
 void SimpleLinePlotReporter::measurement_failed(

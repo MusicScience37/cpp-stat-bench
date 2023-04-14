@@ -23,6 +23,7 @@
 #include <exception>
 #include <memory>
 #include <string>
+#include <type_traits>
 
 #include "stat_bench/bench_impl/benchmark_case_registry.h"
 #include "stat_bench/bench_impl/benchmark_group.h"
@@ -34,10 +35,10 @@
 #include "stat_bench/measurer/processing_time_measurer.h"
 #include "stat_bench/param/parameter_config.h"
 #include "stat_bench/param/parameter_generator.h"
-#include "stat_bench/param/parameter_value_vector.h"
 #include "stat_bench/reporter/cdf_line_plot_reporter.h"
 #include "stat_bench/reporter/console_reporter.h"
 #include "stat_bench/reporter/json_reporter.h"
+#include "stat_bench/reporter/msgpack_reporter.h"
 #include "stat_bench/reporter/simple_line_plot_reporter.h"
 #include "stat_bench/reporter/violin_plot_reporter.h"
 
@@ -68,6 +69,11 @@ Runner::Runner(
     if (!config.json_file_path.empty()) {
         reporters_.push_back(
             std::make_shared<reporter::JsonReporter>(config.json_file_path));
+    }
+
+    if (!config.msgpack_file_path.empty()) {
+        reporters_.push_back(std::make_shared<reporter::MsgPackReporter>(
+            config.msgpack_file_path));
     }
 
     filters::ComposedFilter filter;
