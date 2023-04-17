@@ -29,9 +29,9 @@ option(STAT_BENCH_BUILD_EXAMPLES "build examples of ${FULL_PROJECT_NAME}" OFF)
 option(STAT_BENCH_ENABLE_INSTALL
        "enable CMake target to install ${FULL_PROJECT_NAME}" ON)
 
-set(CMAKE_CXX_STANDARD
-    14
-    CACHE STRING "C++ standard")
+set(CMAKE_EXPORT_COMPILE_COMMANDS
+    ON
+    CACHE BOOL "export compile commands" FORCE)
 
 include(GNUInstallDirs)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY $<1:${CMAKE_BINARY_DIR}/lib>)

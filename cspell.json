@@ -10,6 +10,7 @@
     "approvaltests",
     "ARGN",
     "asan",
+    "ausan",
     "autobuild",
     "autouse",
     "bfgroup",
