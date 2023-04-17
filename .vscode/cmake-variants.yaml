@@ -1,88 +1,3 @@
-buildType:
-  default: debug
-  description: Build type
-  choices:
-    clang-asan-ubsan-unit:
-      short: ClangAUSan-Unit
-      long: ASan and USan in Clang + Unit tests
-      buildType: Debug
-      settings:
-        CMAKE_CXX_FLAGS: "-fsanitize=address,undefined"
-        CMAKE_MODULE_LINKER_FLAGS: "-fsanitize=address,undefined"
-        STAT_BENCH_TESTING: ON
-        STAT_BENCH_WRITE_JUNIT: OFF
-        STAT_BENCH_ENABLE_BENCH: ON
-        STAT_BENCH_TEST_BENCHMARKS: OFF
-        STAT_BENCH_BUILD_EXAMPLES: ON
-        STAT_BENCH_BUILD_DOC: OFF
-    clang-asan-ubsan-unit-dox:
-      short: ClangAUSan-Unit-Dox
-      long: ASan and USan in Clang + Unit tests + Doxygen
-      buildType: Debug
-      settings:
-        CMAKE_CXX_FLAGS: "-fsanitize=address,undefined"
-        CMAKE_MODULE_LINKER_FLAGS: "-fsanitize=address,undefined"
-        STAT_BENCH_TESTING: ON
-        STAT_BENCH_WRITE_JUNIT: OFF
-        STAT_BENCH_ENABLE_BENCH: ON
-        STAT_BENCH_TEST_BENCHMARKS: OFF
-        STAT_BENCH_BUILD_EXAMPLES: ON
-        STAT_BENCH_BUILD_DOC: ON
-        STAT_BENCH_BUILD_DOC_SPHINX: OFF
-    clang-asan-ubsan-unit-docs:
-      short: ClangAUSan-Unit-Docs
-      long: ASan and USan in Clang + Unit tests + Document
-      buildType: Debug
-      settings:
-        CMAKE_CXX_FLAGS: "-fsanitize=address,undefined"
-        CMAKE_MODULE_LINKER_FLAGS: "-fsanitize=address,undefined"
-        STAT_BENCH_TESTING: ON
-        STAT_BENCH_WRITE_JUNIT: OFF
-        STAT_BENCH_ENABLE_BENCH: ON
-        STAT_BENCH_TEST_BENCHMARKS: OFF
-        STAT_BENCH_BUILD_EXAMPLES: ON
-        STAT_BENCH_BUILD_DOC: ON
-        STAT_BENCH_BUILD_DOC_SPHINX: ON
-    debug-unit:
-      short: Debug-Unit
-      long: Debug build + Unit tests
-      buildType: Debug
-      settings:
-        CMAKE_CXX_FLAGS: ""
-        CMAKE_MODULE_LINKER_FLAGS: ""
-        STAT_BENCH_TESTING: ON
-        STAT_BENCH_WRITE_JUNIT: OFF
-        STAT_BENCH_ENABLE_BENCH: ON
-        STAT_BENCH_TEST_BENCHMARKS: OFF
-        STAT_BENCH_BUILD_EXAMPLES: ON
-        STAT_BENCH_BUILD_DOC: OFF
-    relwithdebinfo-unit:
-      short: RelWithDebInfo-Unit
-      long: RelWithDebInfo build + Unit tests
-      buildType: RelWithDebInfo
-      settings:
-        CMAKE_CXX_FLAGS: ""
-        CMAKE_MODULE_LINKER_FLAGS: ""
-        STAT_BENCH_TESTING: ON
-        STAT_BENCH_WRITE_JUNIT: OFF
-        STAT_BENCH_ENABLE_BENCH: ON
-        STAT_BENCH_TEST_BENCHMARKS: OFF
-        STAT_BENCH_BUILD_EXAMPLES: ON
-        STAT_BENCH_BUILD_DOC: OFF
-    release-unit:
-      short: Release-Unit
-      long: Release build + Unit tests
-      buildType: Release
-      settings:
-        CMAKE_CXX_FLAGS: ""
-        CMAKE_MODULE_LINKER_FLAGS: ""
-        STAT_BENCH_TESTING: ON
-        STAT_BENCH_WRITE_JUNIT: OFF
-        STAT_BENCH_ENABLE_BENCH: ON
-        STAT_BENCH_TEST_BENCHMARKS: OFF
-        STAT_BENCH_BUILD_EXAMPLES: ON
-        STAT_BENCH_BUILD_DOC: OFF
-
 target:
   default: none
   description: Target type
@@ -98,3 +13,82 @@ target:
         VCPKG_HOST_TRIPLET: "x64-linux-llvm"
         CMAKE_CXX_FLAGS: "-stdlib=libc++"
         CMAKE_C_FLAGS: "-stdlib=libc++"
+
+buildType:
+  default: debug
+  description: Build type
+  choices:
+    clang-asan-ubsan-unit:
+      short: ClangAUSan-Unit
+      long: ASan and USan in Clang + Unit tests
+      buildType: Debug
+      settings:
+        STAT_BENCH_ENABLE_AUSAN: ON
+        STAT_BENCH_TESTING: ON
+        STAT_BENCH_WRITE_JUNIT: OFF
+        STAT_BENCH_ENABLE_BENCH: ON
+        STAT_BENCH_TEST_BENCHMARKS: OFF
+        STAT_BENCH_BUILD_EXAMPLES: ON
+        STAT_BENCH_BUILD_DOC: OFF
+    clang-asan-ubsan-unit-dox:
+      short: ClangAUSan-Unit-Dox
+      long: ASan and USan in Clang + Unit tests + Doxygen
+      buildType: Debug
+      settings:
+        STAT_BENCH_ENABLE_AUSAN: ON
+        STAT_BENCH_TESTING: ON
+        STAT_BENCH_WRITE_JUNIT: OFF
+        STAT_BENCH_ENABLE_BENCH: ON
+        STAT_BENCH_TEST_BENCHMARKS: OFF
+        STAT_BENCH_BUILD_EXAMPLES: ON
+        STAT_BENCH_BUILD_DOC: ON
+        STAT_BENCH_BUILD_DOC_SPHINX: OFF
+    clang-asan-ubsan-unit-docs:
+      short: ClangAUSan-Unit-Docs
+      long: ASan and USan in Clang + Unit tests + Document
+      buildType: Debug
+      settings:
+        STAT_BENCH_ENABLE_AUSAN: ON
+        STAT_BENCH_TESTING: ON
+        STAT_BENCH_WRITE_JUNIT: OFF
+        STAT_BENCH_ENABLE_BENCH: ON
+        STAT_BENCH_TEST_BENCHMARKS: OFF
+        STAT_BENCH_BUILD_EXAMPLES: ON
+        STAT_BENCH_BUILD_DOC: ON
+        STAT_BENCH_BUILD_DOC_SPHINX: ON
+    debug-unit:
+      short: Debug-Unit
+      long: Debug build + Unit tests
+      buildType: Debug
+      settings:
+        STAT_BENCH_ENABLE_AUSAN: OFF
+        STAT_BENCH_TESTING: ON
+        STAT_BENCH_WRITE_JUNIT: OFF
+        STAT_BENCH_ENABLE_BENCH: ON
+        STAT_BENCH_TEST_BENCHMARKS: OFF
+        STAT_BENCH_BUILD_EXAMPLES: ON
+        STAT_BENCH_BUILD_DOC: OFF
+    relwithdebinfo-unit:
+      short: RelWithDebInfo-Unit
+      long: RelWithDebInfo build + Unit tests
+      buildType: RelWithDebInfo
+      settings:
+        STAT_BENCH_ENABLE_AUSAN: OFF
+        STAT_BENCH_TESTING: ON
+        STAT_BENCH_WRITE_JUNIT: OFF
+        STAT_BENCH_ENABLE_BENCH: ON
+        STAT_BENCH_TEST_BENCHMARKS: OFF
+        STAT_BENCH_BUILD_EXAMPLES: ON
+        STAT_BENCH_BUILD_DOC: OFF
+    release-unit:
+      short: Release-Unit
+      long: Release build + Unit tests
+      buildType: Release
+      settings:
+        STAT_BENCH_ENABLE_AUSAN: OFF
+        STAT_BENCH_TESTING: ON
+        STAT_BENCH_WRITE_JUNIT: OFF
+        STAT_BENCH_ENABLE_BENCH: ON
+        STAT_BENCH_TEST_BENCHMARKS: OFF
+        STAT_BENCH_BUILD_EXAMPLES: ON
+        STAT_BENCH_BUILD_DOC: OFF
