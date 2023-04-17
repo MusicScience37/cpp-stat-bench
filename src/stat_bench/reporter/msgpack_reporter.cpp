@@ -20,6 +20,7 @@
 #include "stat_bench/reporter/msgpack_reporter.h"
 
 #include <fstream>
+#include <ios>
 #include <utility>
 #include <vector>
 
@@ -47,7 +48,8 @@ void MsgPackReporter::experiment_finished(
     data_.finished_at = fmt::format(FMT_STRING("{}"), time_stamp);
 
     util::prepare_directory_for(file_path_);
-    std::ofstream stream{file_path_};
+    std::ofstream stream{
+        file_path_, std::ios_base::out | std::ios_base::binary};
     if (!stream) {
         throw StatBenchException(
             fmt::format(FMT_STRING("Failed to open {}."), file_path_));
