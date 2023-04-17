@@ -19,6 +19,7 @@
  */
 #include "stat_bench/reporter/console_reporter.h"
 
+#include <cstdio>
 #include <memory>
 #include <type_traits>
 #include <unordered_map>
@@ -30,14 +31,28 @@
 
 #include "stat_bench/clock/monotone_clock_impl.h"
 #include "stat_bench/stat/statistics.h"
+#include "stat_bench/version.h"
 
 namespace stat_bench {
 namespace reporter {
+
+namespace {
+
+void print_line(std::FILE* file, char c) {
+    constexpr std::size_t line_length = 120;
+    fmt::print(file, "{}\n", std::string(line_length, c));
+}
+
+}  // namespace
 
 ConsoleReporter::ConsoleReporter(std::FILE* file) : file_(file) {}
 
 void ConsoleReporter::experiment_starts(
     const clock::SystemTimePoint& time_stamp) {
+    fmt::print(file_, FMT_STRING("cpp-stat-bench {}.{}.{}\n\n"),
+        STAT_BENCH_VERSION_MAJOR, STAT_BENCH_VERSION_MINOR,
+        STAT_BENCH_VERSION_PATCH);
+
     fmt::print(file_, FMT_STRING("Benchmark start at {}\n\n"), time_stamp);
 
     fmt::print(file_, FMT_STRING("Time resolution: {:.3e} sec.\n\n"),
@@ -54,13 +69,15 @@ void ConsoleReporter::experiment_finished(
 }
 
 void ConsoleReporter::measurer_starts(const std::string& name) {
-    fmt::print(file_, FMT_STRING("## {}\n\n"), name);
+    print_line(file_, '=');
+    fmt::print(file_, FMT_STRING("{}\n"), name);
+    print_line(file_, '=');
+    fmt::print(file_, "\n");
     (void)std::fflush(file_);
 }
 
 void ConsoleReporter::measurer_finished(const std::string& name) {
-    fmt::print(file_, "\n");
-    (void)std::fflush(file_);
+    // no operation
 }
 
 namespace {
@@ -80,15 +97,16 @@ auto format_duration(double val) -> std::string {
 #define CONSOLE_TABLE_FORMAT_ERROR "{:<50} {}"
 
 void ConsoleReporter::group_starts(const std::string& name) {
-    fmt::print(file_, FMT_STRING("### {}\n\n"), name);
+    fmt::print(file_, FMT_STRING(">> {}\n"), name);
     fmt::print(file_, FMT_STRING(CONSOLE_TABLE_FORMAT "{}\n"), "", "Iterations",
         "Samples", "Mean [ms]", "Max [ms]", "Custom Outputs (mean)");
-    fmt::print(file_, FMT_STRING("{:-<120}\n"), "");
+    print_line(file_, '-');
     (void)std::fflush(file_);
 }
 
 void ConsoleReporter::group_finished(const std::string& /*name*/) {
-    // no operation
+    fmt::print(file_, "\n");
+    (void)std::fflush(file_);
 }
 
 void ConsoleReporter::case_starts(const BenchmarkFullName& /*case_info*/) {
