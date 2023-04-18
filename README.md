@@ -5,16 +5,18 @@
 [![pipeline status](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/badges/develop/pipeline.svg)](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/commits/develop)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
-Benchmark library with statistics for C++.
+Benchmark library with statistics and plotting in C++.
 
 ## ✨ Features
 
 - Report results in various types of output files.
   - To console.
   - To JSON files.
+  - To MessagePack files.
   - To HTML files of plots 📈.
     - Processing time for each execution.
     - Cumulative distribution function of processing time.
+    - Violin plots.
 - Measure processing time in two patterns.
   - Processing time of each execution.
   - Mean processing time of consecutive executions.

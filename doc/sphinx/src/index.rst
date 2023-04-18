@@ -1,7 +1,7 @@
 cpp-stat-bench
 ============================
 
-Benchmark library with statistics for C++.
+Benchmark library with statistics and plotting in C++.
 
 Developed at
 `https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench <https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench>`_.
@@ -22,7 +22,6 @@ Full API reference generated using Doxygen can be viewed `here <api/index.html>`
 
     how_to_use
     basic_api/index
-    directories
 
 .. toctree::
     :maxdepth: 2
