@@ -34,8 +34,3 @@ if(${UPPER_PROJECT_NAME}_ENABLE_CPP_WARNINGS)
                                                                       -Wextra)
     endif()
 endif()
-
-if(MSVC)
-    target_compile_definitions(${PROJECT_NAME}_cpp_warnings
-                               INTERFACE _CRT_SECURE_NO_WARNINGS=1)
-endif()
