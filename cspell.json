@@ -28,6 +28,7 @@
     "cond",
     "constexpr",
     "copydoc",
+    "COPYONLY",
     "ctest",
     "DCMAKE",
     "dealloc",

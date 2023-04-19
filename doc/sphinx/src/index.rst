@@ -22,7 +22,7 @@ Full API reference generated using Doxygen can be viewed `here <api/index.html>`
 
     how_to_use
     basic_api/index
-    schema/index
+    schemas/index
 
 .. toctree::
     :maxdepth: 2

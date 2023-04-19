@@ -12,6 +12,10 @@ set(STAT_BENCH_SPHINX_OPTIONS
     "release=${PROJECT_VERSION}" -D
     breathe_projects.stat_bench="${STAT_BENCH_XML_ROOT}")
 
+configure_file(
+    ${STAT_BENCH_SOURCE_DIR}/schemas/data_file_schema_v1.json
+    ${STAT_BENCH_HTML_ROOT}/schemas/data_file_schema_v1.json COPYONLY)
+
 add_custom_target(
     stat_bench_doc_sphinx_html ALL
     COMMAND
