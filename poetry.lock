@@ -835,6 +835,22 @@ MarkupSafe = ">=2.0"
 i18n = ["Babel (>=2.7)"]
 
 [[package]]
+name = "jsonschema2md"
+version = "0.4.0"
+description = "Convert JSON Schema to human-readable Markdown documentation"
+category = "dev"
+optional = false
+python-versions = ">=3.6,<4.0"
+files = [
+    {file = "jsonschema2md-0.4.0-py3-none-any.whl", hash = "sha256:506d7012f44b487f3b4e6447b322fe9f6a8a2161c548d4d90e7b1aeb27f01d9d"},
+    {file = "jsonschema2md-0.4.0.tar.gz", hash = "sha256:b0502b12085b286d79532657291d3ad2769193c4a81459f0644c79f166f6e411"},
+]
+
+[package.dependencies]
+click = ">=7"
+PyYAML = ">=5.1"
+
+[[package]]
 name = "lazy-object-proxy"
 version = "1.9.0"
 description = "A fast and thorough lazy object proxy."
@@ -2102,4 +2118,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.11"
-content-hash = "ec4cd0fdfa8f30b9eda9dae9714165cad73dcd870d68a33df753b5714596ac64"
+content-hash = "e1295fab3fd6b63d54987b02401ac54f06bdf06e74a69ef7255c46e299c2f3f5"
