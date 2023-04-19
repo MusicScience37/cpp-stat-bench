@@ -633,6 +633,21 @@ files = [
 test = ["pytest (>=6)"]
 
 [[package]]
+name = "fastjsonschema"
+version = "2.16.3"
+description = "Fastest Python implementation of JSON schema"
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "fastjsonschema-2.16.3-py3-none-any.whl", hash = "sha256:04fbecc94300436f628517b05741b7ea009506ce8f946d40996567c669318490"},
+    {file = "fastjsonschema-2.16.3.tar.gz", hash = "sha256:4a30d6315a68c253cfa8f963b9697246315aa3db89f98b97235e345dedfb0b8e"},
+]
+
+[package.extras]
+devel = ["colorama", "json-spec", "jsonschema", "pylint", "pytest", "pytest-benchmark", "pytest-cache", "validictory"]
+
+[[package]]
 name = "filelock"
 version = "3.11.0"
 description = "A platform independent file lock."
@@ -2087,4 +2102,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.11"
-content-hash = "48f87217c853ee57122cf99ca3e54c43fb1c4a31c039ab5cb041bb7ee5d7b2d1"
+content-hash = "ec4cd0fdfa8f30b9eda9dae9714165cad73dcd870d68a33df753b5714596ac64"

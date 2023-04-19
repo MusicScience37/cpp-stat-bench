@@ -47,6 +47,7 @@
     "endmacro",
     "endsalt",
     "enduml",
+    "fastjsonschema",
     "fcoverage",
     "fprofile",
     "fsanitize",

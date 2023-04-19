@@ -4,7 +4,24 @@
 import json
 import msgpack
 import pathlib
+import typing
+
+import fastjsonschema
+import pytest
+
 from .bench_executor import BenchExecutor
+
+
+THIS_DIR = pathlib.Path(__file__).absolute().parent
+SCHEMAS_DIR = THIS_DIR.parent.parent / "schemas"
+CURRENT_SCHEMA_FILE = SCHEMAS_DIR / "data_file_schema_v1.json"
+
+
+@pytest.fixture
+def data_file_schema_validate():
+    with open(str(CURRENT_SCHEMA_FILE), mode="r") as file:
+        data = json.load(file)
+    return fastjsonschema.compile(data)
 
 
 class TestPlot:
@@ -41,7 +58,10 @@ class TestJson:
     """Test of JSON output."""
 
     def test_json(
-        self, bench_executor: BenchExecutor, parametrized_benchmark: pathlib.Path
+        self,
+        bench_executor: BenchExecutor,
+        parametrized_benchmark: pathlib.Path,
+        data_file_schema_validate: typing.Callable,
     ) -> None:
         """Test of JSON output."""
         result = bench_executor.execute(
@@ -56,15 +76,17 @@ class TestJson:
         assert data_path.exists()
         with open(data_path, mode="r") as data_file:
             data = json.load(data_file)
-        # TODO: Test of data structure.
-        del data
+        data_file_schema_validate(data)
 
 
 class TestMsgPack:
     """Test of MsgPack output."""
 
     def test_msgpack(
-        self, bench_executor: BenchExecutor, parametrized_benchmark: pathlib.Path
+        self,
+        bench_executor: BenchExecutor,
+        parametrized_benchmark: pathlib.Path,
+        data_file_schema_validate: typing.Callable,
     ) -> None:
         """Test of MsgPack output."""
         result = bench_executor.execute(
@@ -78,5 +100,4 @@ class TestMsgPack:
         assert data_path.exists()
         with open(data_path, mode="rb") as data_file:
             data = msgpack.unpack(data_file, strict_map_key=False)
-        # TODO: Test of data structure.
-        del data
+        data_file_schema_validate(data)
