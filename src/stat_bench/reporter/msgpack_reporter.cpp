@@ -27,6 +27,7 @@
 #include <fmt/format.h>
 #include <nlohmann/json.hpp>
 
+#include "data_file_schema_url.h"
 #include "stat_bench/reporter/data_file_helper.h"
 #include "stat_bench/reporter/json_data_file_helper.h"  // IWYU pragma: keep
 #include "stat_bench/stat_bench_exception.h"
@@ -55,7 +56,10 @@ void MsgPackReporter::experiment_finished(
             fmt::format(FMT_STRING("Failed to open {}."), file_path_));
     }
 
-    nlohmann::json::to_msgpack(nlohmann::json(data_), stream);
+    auto json_data = nlohmann::json(data_);
+    json_data["$schema"] = data_file_schema_url;
+
+    nlohmann::json::to_msgpack(json_data, stream);
 }
 
 void MsgPackReporter::measurer_starts(const std::string& /*name*/) {
