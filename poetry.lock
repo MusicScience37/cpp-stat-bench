@@ -633,6 +633,21 @@ files = [
 test = ["pytest (>=6)"]
 
 [[package]]
+name = "fastjsonschema"
+version = "2.16.3"
+description = "Fastest Python implementation of JSON schema"
+category = "dev"
+optional = false
+python-versions = "*"
+files = [
+    {file = "fastjsonschema-2.16.3-py3-none-any.whl", hash = "sha256:04fbecc94300436f628517b05741b7ea009506ce8f946d40996567c669318490"},
+    {file = "fastjsonschema-2.16.3.tar.gz", hash = "sha256:4a30d6315a68c253cfa8f963b9697246315aa3db89f98b97235e345dedfb0b8e"},
+]
+
+[package.extras]
+devel = ["colorama", "json-spec", "jsonschema", "pylint", "pytest", "pytest-benchmark", "pytest-cache", "validictory"]
+
+[[package]]
 name = "filelock"
 version = "3.11.0"
 description = "A platform independent file lock."
@@ -818,6 +833,22 @@ MarkupSafe = ">=2.0"
 
 [package.extras]
 i18n = ["Babel (>=2.7)"]
+
+[[package]]
+name = "jsonschema2md"
+version = "0.4.0"
+description = "Convert JSON Schema to human-readable Markdown documentation"
+category = "dev"
+optional = false
+python-versions = ">=3.6,<4.0"
+files = [
+    {file = "jsonschema2md-0.4.0-py3-none-any.whl", hash = "sha256:506d7012f44b487f3b4e6447b322fe9f6a8a2161c548d4d90e7b1aeb27f01d9d"},
+    {file = "jsonschema2md-0.4.0.tar.gz", hash = "sha256:b0502b12085b286d79532657291d3ad2769193c4a81459f0644c79f166f6e411"},
+]
+
+[package.dependencies]
+click = ">=7"
+PyYAML = ">=5.1"
 
 [[package]]
 name = "lazy-object-proxy"
@@ -2087,4 +2118,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10,<3.11"
-content-hash = "48f87217c853ee57122cf99ca3e54c43fb1c4a31c039ab5cb041bb7ee5d7b2d1"
+content-hash = "e1295fab3fd6b63d54987b02401ac54f06bdf06e74a69ef7255c46e299c2f3f5"
