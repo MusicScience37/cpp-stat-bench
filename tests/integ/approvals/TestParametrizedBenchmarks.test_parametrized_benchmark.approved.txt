@@ -1,7 +1,7 @@
 exit_code:
 0
 stdout:
-cpp-stat-bench 1.00.2
+cpp-stat-bench 1.00.0
 
 Benchmark start at <time>
 
