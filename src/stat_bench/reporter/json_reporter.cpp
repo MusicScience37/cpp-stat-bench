@@ -26,6 +26,7 @@
 #include <fmt/format.h>
 #include <nlohmann/json.hpp>
 
+#include "data_file_schema_url.h"
 #include "stat_bench/reporter/data_file_helper.h"
 #include "stat_bench/reporter/json_data_file_helper.h"  // IWYU pragma: keep
 #include "stat_bench/stat_bench_exception.h"
@@ -52,10 +53,13 @@ void JsonReporter::experiment_finished(
             fmt::format(FMT_STRING("Failed to open {}."), file_path_));
     }
 
+    auto json_data = nlohmann::json(data_);
+    json_data["$schema"] = data_file_schema_url;
+
     constexpr int indent = 2;
     constexpr char indent_char = ' ';
     constexpr bool ensure_ascii = true;
-    stream << nlohmann::json(data_).dump(indent, indent_char, ensure_ascii);
+    stream << json_data.dump(indent, indent_char, ensure_ascii);
 }
 
 void JsonReporter::measurer_starts(const std::string& /*name*/) {

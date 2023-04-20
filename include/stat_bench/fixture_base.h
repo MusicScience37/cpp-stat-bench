@@ -51,6 +51,7 @@ public:
      */
     virtual void setup(InvocationContext& context) {
         // no operation in default implementation
+        (void)context;
     }
 
     /*!
@@ -64,6 +65,7 @@ public:
      */
     virtual void tear_down(InvocationContext& context) {
         // no operation in default implementation
+        (void)context;
     }
 
     ///@}

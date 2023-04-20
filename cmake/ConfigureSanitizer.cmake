@@ -22,15 +22,20 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ]]
 
-add_library(${PROJECT_NAME}_cpp_warnings INTERFACE)
-
 string(TOUPPER ${PROJECT_NAME} UPPER_PROJECT_NAME)
-option(${UPPER_PROJECT_NAME}_ENABLE_CPP_WARNINGS
-       "enable compiler warnings of C++" OFF)
+option(${UPPER_PROJECT_NAME}_ENABLE_AUSAN
+       "enable address sanitizer and undefined behavior sanitizer" OFF)
 
-if(${UPPER_PROJECT_NAME}_ENABLE_CPP_WARNINGS)
-    if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-        target_compile_options(${PROJECT_NAME}_cpp_warnings INTERFACE -Wall
-                                                                      -Wextra)
+# Function target_add_ausan
+#
+# Add configuration of address sanitizer and undefined behavior sanitizer.
+#
+function(target_add_ausan _TARGET)
+    if(${UPPER_PROJECT_NAME}_ENABLE_AUSAN)
+        if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+            target_compile_options(${_TARGET}
+                                   PUBLIC -fsanitize=address,undefined)
+            target_link_options(${_TARGET} PUBLIC -fsanitize=address,undefined)
+        endif()
     endif()
-endif()
+endfunction()

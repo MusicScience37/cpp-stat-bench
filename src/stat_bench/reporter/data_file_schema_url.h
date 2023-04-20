@@ -15,15 +15,17 @@
  */
 /*!
  * \file
- * \brief Definition of macros of versions.
+ * \brief Definition of data_file_schema_url constant.
  */
 #pragma once
 
-//! Major version of cpp-stat-bench project.
-#define STAT_BENCH_VERSION_MAJOR 0
+#include <string_view>
 
-//! Minor version of cpp-stat-bench project.
-#define STAT_BENCH_VERSION_MINOR 13
+namespace stat_bench {
+namespace reporter {
 
-//! Patch version of cpp-stat-bench project.
-#define STAT_BENCH_VERSION_PATCH 0
+inline constexpr std::string_view data_file_schema_url =
+    "https://cppstatbench.musicscience37.com/schemas/data_file_schema_v1.json";
+
+}  // namespace reporter
+}  // namespace stat_bench

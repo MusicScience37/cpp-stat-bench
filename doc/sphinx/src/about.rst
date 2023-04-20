@@ -1,7 +1,7 @@
 About
 ==========
 
-cpp-stat-bench is a benchmark library with statistics for C++.
+cpp-stat-bench is a benchmark library with statistics and plotting for C++.
 
 Features
 ---------------------
@@ -10,10 +10,12 @@ Features
 
   - To console.
   - To JSON files.
+  - To MessagePack files.
   - To HTML files of plots 📈.
 
     - Processing time for each execution.
     - Cumulative distribution function of processing time.
+    - Violin plots.
 
 - Measure processing time in two patterns.
 
