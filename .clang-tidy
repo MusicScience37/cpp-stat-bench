@@ -21,6 +21,7 @@ Checks: >
    -cert-err58-cpp,
   bugprone-*,
     -bugprone-easily-swappable-parameters,
+    -bugprone-exception-escape,
   concurrency-*,
   boost-*,
 
@@ -35,6 +36,7 @@ Checks: >
 # - bugprone-easily-swappable-parameters is difficult to fix without performance degrade.
 # - modernize-return-braced-init-list reduces readability.
 # - modernize-concat-nested-namespaces: This cannot be used in C++ 14.
+# - bugprone-exception-escape generates false positives.
 
 CheckOptions:
   # Naming Conventions
