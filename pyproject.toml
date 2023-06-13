@@ -7,29 +7,28 @@ readme = "README.md"
 packages = [{ include = "scripts" }]
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.11"
+python = ">=3.10,<3.12"
 
 [tool.poetry.group.dev.dependencies]
 aiohttp = "^3.8.4"
 black = "^23.3.0"
 breathe = "^4.35.0"
-cchardet = "^2.1.7"
 cmakelang = "^0.6.13"
 doc8 = "^0.11.2"
 myst-parser = "^1.0.0"
-pre-commit = "^3.2.1"
-pylint = "^2.17.1"
+pre-commit = "^3.3.2"
+pylint = "^2.17.4"
 sphinx = "^6.1.3"
 sphinx-autobuild = "^2021.3.14"
-sphinx-rtd-theme = "^1.2.0"
+sphinx-rtd-theme = "^1.2.2"
 sphinxcontrib-plantuml = "^0.25"
-clang-tidy-checker = "^0.2.0"
+clang-tidy-checker = "^0.3.0"
 lcov-cobertura = "^2.0.2"
-pytest = "^7.2.2"
+pytest = "^7.3.2"
 pytest-approvaltests = "^0.2.4"
 jinja2 = "^3.1.2"
 msgpack = "^1.0.5"
-fastjsonschema = "^2.16.3"
+fastjsonschema = "^2.17.1"
 jsonschema2md = "^0.4.0"
 
 [build-system]
