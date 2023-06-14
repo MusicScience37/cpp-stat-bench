@@ -19,6 +19,6 @@ IncludeCategories:
   - Regex: ".*"
     Priority: 3
 
-NamespaceMacros: []
+NamespaceMacros: ["MSGPACK_API_VERSION_NAMESPACE"]
 
 CommentPragmas: "\\copydoc|NOLINT"

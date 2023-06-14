@@ -7,7 +7,9 @@
     "catch2",
     "trompeloeil",
     "approval-tests-cpp",
-    "inja"
+    "inja",
+    "msgpack",
+    "zlib"
   ],
-  "builtin-baseline": "1ba9a2591f15af5900f2ce2b3e2bf31771e3ac48"
+  "builtin-baseline": "a487471068f4cb1cbb4eeb340763cdcc0a75fd68"
 }

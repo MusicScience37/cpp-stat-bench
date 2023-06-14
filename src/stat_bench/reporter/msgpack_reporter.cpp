@@ -19,17 +19,16 @@
  */
 #include "stat_bench/reporter/msgpack_reporter.h"
 
-#include <fstream>
-#include <ios>
+#include <cstdio>
 #include <utility>
 #include <vector>
 
 #include <fmt/format.h>
-#include <nlohmann/json.hpp>
+#include <msgpack.hpp>
+#include <msgpack/fbuffer.hpp>
 
-#include "data_file_schema_url.h"
 #include "stat_bench/reporter/data_file_helper.h"
-#include "stat_bench/reporter/json_data_file_helper.h"  // IWYU pragma: keep
+#include "stat_bench/reporter/msgpack_data_file_helper.h"  // IWYU pragma: keep
 #include "stat_bench/stat_bench_exception.h"
 #include "stat_bench/util/prepare_directory.h"
 
@@ -49,17 +48,17 @@ void MsgPackReporter::experiment_finished(
     data_.finished_at = fmt::format(FMT_STRING("{}"), time_stamp);
 
     util::prepare_directory_for(file_path_);
-    std::ofstream stream{
-        file_path_, std::ios_base::out | std::ios_base::binary};
-    if (!stream) {
+
+    std::FILE* file = std::fopen(file_path_.c_str(), "wb");
+    if (file == nullptr) {
         throw StatBenchException(
             fmt::format(FMT_STRING("Failed to open {}."), file_path_));
     }
 
-    auto json_data = nlohmann::json(data_);
-    json_data["$schema"] = data_file_schema_url;
+    msgpack::fbuffer buffer{file};
+    msgpack::pack(buffer, data_);
 
-    nlohmann::json::to_msgpack(json_data, stream);
+    (void)std::fclose(file);
 }
 
 void MsgPackReporter::measurer_starts(const std::string& /*name*/) {

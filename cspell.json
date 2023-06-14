@@ -49,6 +49,7 @@
     "endsalt",
     "enduml",
     "fastjsonschema",
+    "fbuffer",
     "fcoverage",
     "fprofile",
     "fsanitize",

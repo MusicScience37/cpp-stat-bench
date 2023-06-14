@@ -99,5 +99,5 @@ class TestMsgPack:
         data_path = bench_executor.temp_test_dir / f"{bench_executor.test_name}.data"
         assert data_path.exists()
         with open(data_path, mode="rb") as data_file:
-            data = msgpack.unpack(data_file, strict_map_key=False)
+            data = msgpack.unpack(data_file)
         data_file_schema_validate(data)
