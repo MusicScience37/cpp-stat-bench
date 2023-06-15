@@ -7,6 +7,8 @@ if(NOT TARGET cpp_stat_bench::stat_bench)
     find_dependency(lyra)
     find_dependency(nlohmann_json)
     find_dependency(inja)
+    find_dependency(msgpack-cxx)
+    find_dependency(ZLIB)
 
     include(${CMAKE_CURRENT_LIST_DIR}/cpp-stat-bench-targets.cmake)
 endif()

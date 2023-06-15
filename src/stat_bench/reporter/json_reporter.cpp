@@ -36,64 +36,24 @@ namespace stat_bench {
 namespace reporter {
 
 JsonReporter::JsonReporter(std::string file_path)
-    : file_path_(std::move(file_path)) {}
+    : DataFileReporterBase(std::move(file_path)) {}
 
-void JsonReporter::experiment_starts(const clock::SystemTimePoint& time_stamp) {
-    data_.started_at = fmt::format(FMT_STRING("{}"), time_stamp);
-}
-
-void JsonReporter::experiment_finished(
-    const clock::SystemTimePoint& time_stamp) {
-    data_.finished_at = fmt::format(FMT_STRING("{}"), time_stamp);
-
-    util::prepare_directory_for(file_path_);
-    std::ofstream stream{file_path_};
+void JsonReporter::write_data_file(
+    const std::string& file_path, const data_file_spec::RootData& data) {
+    util::prepare_directory_for(file_path);
+    std::ofstream stream{file_path};
     if (!stream) {
         throw StatBenchException(
-            fmt::format(FMT_STRING("Failed to open {}."), file_path_));
+            fmt::format(FMT_STRING("Failed to open {}."), file_path));
     }
 
-    auto json_data = nlohmann::json(data_);
+    auto json_data = nlohmann::json(data);
     json_data["$schema"] = data_file_schema_url;
 
     constexpr int indent = 2;
     constexpr char indent_char = ' ';
     constexpr bool ensure_ascii = true;
     stream << json_data.dump(indent, indent_char, ensure_ascii);
-}
-
-void JsonReporter::measurer_starts(const std::string& /*name*/) {
-    // no operation
-}
-
-void JsonReporter::measurer_finished(const std::string& /*name*/) {
-    // no operation
-}
-
-void JsonReporter::group_starts(const std::string& /*name*/) {
-    // no operation
-}
-
-void JsonReporter::group_finished(const std::string& /*name*/) {
-    // no operation
-}
-
-void JsonReporter::case_starts(const BenchmarkFullName& /*case_info*/) {
-    // no operation
-}
-
-void JsonReporter::case_finished(const BenchmarkFullName& /*case_info*/) {
-    // no operation
-}
-
-void JsonReporter::measurement_succeeded(
-    const measurer::Measurement& measurement) {
-    data_.measurements.push_back(data_file_spec::convert(measurement));
-}
-
-void JsonReporter::measurement_failed(const BenchmarkFullName& case_info,
-    const BenchmarkCondition& cond, const std::exception_ptr& error) {
-    // no operation
 }
 
 }  // namespace reporter

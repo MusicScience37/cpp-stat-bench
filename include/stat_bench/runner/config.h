@@ -98,6 +98,13 @@ struct Config {
      */
     std::string msgpack_file_path{};
 
+    /*!
+     * \brief File path of compressed MsgPack data file.
+     *
+     * Empty string specifies no output.
+     */
+    std::string compressed_msgpack_file_path{};
+
     //! Glob patterns of benchmark names to include.
     std::vector<std::string> include_glob{};
 

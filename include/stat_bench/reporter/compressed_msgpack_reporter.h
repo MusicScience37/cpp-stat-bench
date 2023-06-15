@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 MusicScience37 (Kenta Kabashima)
+ * Copyright 2023 MusicScience37 (Kenta Kabashima)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
  */
 /*!
  * \file
- * \brief Definition of JsonReporter class.
+ * \brief Definition of CompressedMsgPackReporter class.
  */
 #pragma once
 
@@ -34,16 +34,16 @@ namespace stat_bench {
 namespace reporter {
 
 /*!
- * \brief Class to write JSON files.
+ * \brief Class to write compressed MsgPack files.
  */
-class JsonReporter final : public DataFileReporterBase {
+class CompressedMsgPackReporter final : public DataFileReporterBase {
 public:
     /*!
      * \brief Constructor.
      *
      * \param[in] file_path File path.
      */
-    explicit JsonReporter(std::string file_path);
+    explicit CompressedMsgPackReporter(std::string file_path);
 
     //! \copydoc stat_bench::reporter::DataFileReporterBase::write_data_file
     void write_data_file(const std::string& file_path,
