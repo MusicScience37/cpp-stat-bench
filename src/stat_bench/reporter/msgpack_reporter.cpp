@@ -36,63 +36,22 @@ namespace stat_bench {
 namespace reporter {
 
 MsgPackReporter::MsgPackReporter(std::string file_path)
-    : file_path_(std::move(file_path)) {}
+    : DataFileReporterBase(std::move(file_path)) {}
 
-void MsgPackReporter::experiment_starts(
-    const clock::SystemTimePoint& time_stamp) {
-    data_.started_at = fmt::format(FMT_STRING("{}"), time_stamp);
-}
+void MsgPackReporter::write_data_file(
+    const std::string& file_path, const data_file_spec::RootData& data) {
+    util::prepare_directory_for(file_path);
 
-void MsgPackReporter::experiment_finished(
-    const clock::SystemTimePoint& time_stamp) {
-    data_.finished_at = fmt::format(FMT_STRING("{}"), time_stamp);
-
-    util::prepare_directory_for(file_path_);
-
-    std::FILE* file = std::fopen(file_path_.c_str(), "wb");
+    std::FILE* file = std::fopen(file_path.c_str(), "wb");
     if (file == nullptr) {
         throw StatBenchException(
-            fmt::format(FMT_STRING("Failed to open {}."), file_path_));
+            fmt::format(FMT_STRING("Failed to open {}."), file_path));
     }
 
     msgpack::fbuffer buffer{file};
-    msgpack::pack(buffer, data_);
+    msgpack::pack(buffer, data);
 
     (void)std::fclose(file);
-}
-
-void MsgPackReporter::measurer_starts(const std::string& /*name*/) {
-    // no operation
-}
-
-void MsgPackReporter::measurer_finished(const std::string& /*name*/) {
-    // no operation
-}
-
-void MsgPackReporter::group_starts(const std::string& /*name*/) {
-    // no operation
-}
-
-void MsgPackReporter::group_finished(const std::string& /*name*/) {
-    // no operation
-}
-
-void MsgPackReporter::case_starts(const BenchmarkFullName& /*case_info*/) {
-    // no operation
-}
-
-void MsgPackReporter::case_finished(const BenchmarkFullName& /*case_info*/) {
-    // no operation
-}
-
-void MsgPackReporter::measurement_succeeded(
-    const measurer::Measurement& measurement) {
-    data_.measurements.push_back(data_file_spec::convert(measurement));
-}
-
-void MsgPackReporter::measurement_failed(const BenchmarkFullName& case_info,
-    const BenchmarkCondition& cond, const std::exception_ptr& error) {
-    // no operation
 }
 
 }  // namespace reporter

@@ -26,6 +26,7 @@
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/clock/system_time_point.h"
 #include "stat_bench/measurer/measurement.h"
+#include "stat_bench/reporter/data_file_reporter_base.h"
 #include "stat_bench/reporter/data_file_spec.h"
 #include "stat_bench/reporter/i_reporter.h"
 
@@ -35,7 +36,7 @@ namespace reporter {
 /*!
  * \brief Class to write JSON files.
  */
-class JsonReporter final : public IReporter {
+class JsonReporter final : public DataFileReporterBase {
 public:
     /*!
      * \brief Constructor.
@@ -44,45 +45,9 @@ public:
      */
     explicit JsonReporter(std::string file_path);
 
-    //! \copydoc stat_bench::reporter::IReporter::experiment_starts
-    void experiment_starts(const clock::SystemTimePoint& time_stamp) override;
-
-    //! \copydoc stat_bench::reporter::IReporter::experiment_finished
-    void experiment_finished(const clock::SystemTimePoint& time_stamp) override;
-
-    //! \copydoc stat_bench::reporter::IReporter::measurer_starts
-    void measurer_starts(const std::string& name) override;
-
-    //! \copydoc stat_bench::reporter::IReporter::measurer_finished
-    void measurer_finished(const std::string& name) override;
-
-    //! \copydoc stat_bench::reporter::IReporter::group_starts
-    void group_starts(const std::string& name) override;
-
-    //! \copydoc stat_bench::reporter::IReporter::group_finished
-    void group_finished(const std::string& name) override;
-
-    //! \copydoc stat_bench::reporter::IReporter::case_starts
-    void case_starts(const BenchmarkFullName& case_info) override;
-
-    //! \copydoc stat_bench::reporter::IReporter::case_finished
-    void case_finished(const BenchmarkFullName& case_info) override;
-
-    //! \copydoc stat_bench::reporter::IReporter::measurement_succeeded
-    void measurement_succeeded(
-        const measurer::Measurement& measurement) override;
-
-    //! \copydoc stat_bench::reporter::IReporter::measurement_failed
-    void measurement_failed(const BenchmarkFullName& case_info,
-        const BenchmarkCondition& cond,
-        const std::exception_ptr& error) override;
-
-private:
-    //! File path.
-    std::string file_path_;
-
-    //! Data.
-    data_file_spec::RootData data_{};
+    //! \copydoc stat_bench::reporter::DataFileReporterBase::write_data_file
+    void write_data_file(const std::string& file_path,
+        const data_file_spec::RootData& data) override;
 };
 
 }  // namespace reporter

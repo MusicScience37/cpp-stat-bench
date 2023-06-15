@@ -14,6 +14,7 @@
 #include "reporter/cdf_line_plot_reporter.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "reporter/console_reporter.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "reporter/data_file_helper.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "reporter/data_file_reporter_base.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "reporter/jinja_renderer.cpp"    // NOLINT(bugprone-suspicious-include)
 #include "reporter/json_reporter.cpp"     // NOLINT(bugprone-suspicious-include)
 #include "reporter/msgpack_reporter.cpp"  // NOLINT(bugprone-suspicious-include)
