@@ -99,6 +99,7 @@
     "pytestconfig",
     "realpath",
     "SAST",
+    "sbuffer",
     "showlegend",
     "sphinxcontrib",
     "startsalt",

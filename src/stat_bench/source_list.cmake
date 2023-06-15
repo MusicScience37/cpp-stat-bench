@@ -13,6 +13,7 @@ set(SOURCE_FILES
     measurer/processing_time_measurer.cpp
     param/parameter_generator.cpp
     reporter/cdf_line_plot_reporter.cpp
+    reporter/compressed_msgpack_reporter.cpp
     reporter/console_reporter.cpp
     reporter/data_file_helper.cpp
     reporter/data_file_reporter_base.cpp
