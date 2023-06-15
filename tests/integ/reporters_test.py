@@ -1,6 +1,7 @@
 """Test of reporters."""
 
 
+import gzip
 import json
 import msgpack
 import pathlib
@@ -8,7 +9,6 @@ import typing
 
 import fastjsonschema
 import pytest
-
 from .bench_executor import BenchExecutor
 
 
@@ -99,5 +99,28 @@ class TestMsgPack:
         data_path = bench_executor.temp_test_dir / f"{bench_executor.test_name}.data"
         assert data_path.exists()
         with open(data_path, mode="rb") as data_file:
+            data = msgpack.unpack(data_file)
+        data_file_schema_validate(data)
+
+class TestCompressedMsgPack:
+    """Test of compressed MsgPack output."""
+
+    def test_compressed_msgpack(
+        self,
+        bench_executor: BenchExecutor,
+        parametrized_benchmark: pathlib.Path,
+        data_file_schema_validate: typing.Callable,
+    ) -> None:
+        """Test of compressed MsgPack output."""
+        result = bench_executor.execute(
+            parametrized_benchmark,
+            "--compressed-msgpack",
+            f"{bench_executor.test_name}.data.gz",
+            verify=False,
+        )
+        assert result.returncode == 0
+        data_path = bench_executor.temp_test_dir / f"{bench_executor.test_name}.data.gz"
+        assert data_path.exists()
+        with gzip.open(data_path, mode="rb") as data_file:
             data = msgpack.unpack(data_file)
         data_file_schema_validate(data)

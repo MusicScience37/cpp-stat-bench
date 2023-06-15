@@ -55,6 +55,12 @@ CommandLineParser::CommandLineParser() {
                           .help("Generate MsgPack data file of results."));
 
     cli_.add_argument(
+        lyra::opt(config_.compressed_msgpack_file_path, "filepath")
+            .name("--compressed-msgpack")
+            .optional()
+            .help("Generate compressed MsgPack data file of results."));
+
+    cli_.add_argument(
         lyra::opt(config_.processing_time_samples, "num")
             .name("--samples")
             .optional()

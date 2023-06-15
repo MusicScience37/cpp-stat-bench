@@ -44,7 +44,7 @@
                 "type": "string"
               }
             },
-            "required": ["number", "threads"]
+            "required": ["threads"]
           },
           "measurer_name": {
             "title": "Measurer name",
