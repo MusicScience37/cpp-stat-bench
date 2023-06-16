@@ -1,4 +1,4 @@
-cpp-stat-bench 0.13.0
+cpp-stat-bench 0.14.0
 
 Benchmark start at <time>
 

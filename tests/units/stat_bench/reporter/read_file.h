@@ -43,4 +43,19 @@ namespace stat_bench_test {
         std::istreambuf_iterator<char>());
 }
 
+/*!
+ * \brief Read a binary file.
+ *
+ * \param[in] filepath Filepath.
+ * \return Contents of the file.
+ */
+[[nodiscard]] inline auto read_binary_file(const std::string& filepath) {
+    std::ifstream stream(filepath, std::ios::binary);
+    if (!stream) {
+        throw std::runtime_error(fmt::format("Failed to open {}", filepath));
+    }
+    return std::string(std::istreambuf_iterator<char>(stream),
+        std::istreambuf_iterator<char>());
+}
+
 }  // namespace stat_bench_test

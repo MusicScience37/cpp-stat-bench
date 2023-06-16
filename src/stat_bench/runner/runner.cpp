@@ -36,6 +36,7 @@
 #include "stat_bench/param/parameter_config.h"
 #include "stat_bench/param/parameter_generator.h"
 #include "stat_bench/reporter/cdf_line_plot_reporter.h"
+#include "stat_bench/reporter/compressed_msgpack_reporter.h"
 #include "stat_bench/reporter/console_reporter.h"
 #include "stat_bench/reporter/json_reporter.h"
 #include "stat_bench/reporter/msgpack_reporter.h"
@@ -74,6 +75,12 @@ Runner::Runner(
     if (!config.msgpack_file_path.empty()) {
         reporters_.push_back(std::make_shared<reporter::MsgPackReporter>(
             config.msgpack_file_path));
+    }
+
+    if (!config.compressed_msgpack_file_path.empty()) {
+        reporters_.push_back(
+            std::make_shared<reporter::CompressedMsgPackReporter>(
+                config.compressed_msgpack_file_path));
     }
 
     filters::ComposedFilter filter;
