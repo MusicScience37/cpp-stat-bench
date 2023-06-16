@@ -33,7 +33,7 @@ sync poetry:
   script:
     - mkdir -p .venv
     - poetry config virtualenvs.in-project true
-    - poetry env use 3.10
+    - poetry env use 3.11
     - poetry install
   cache:
     key:
@@ -211,6 +211,7 @@ clang coverage:
     - cd ../
     - scripts/collect_llvm_coverage.sh build_clang_coverage
     - poetry run lcov_cobertura $BUILD_DIR/coverage/coverage --output $BUILD_DIR/coverage.xml
+    - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
   coverage: '/[^\s]+%\s+\d+\s+\d+\s+\s[^\s]+%/'
   artifacts:
     paths:
