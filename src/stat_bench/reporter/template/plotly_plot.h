@@ -51,7 +51,7 @@ static constexpr const char* plotly_plot = R"(<!DOCTYPE html>
     <div id="plot" class="container"></div>
 
     <!-- Import Plotly -->
-    <script src="https://cdn.plot.ly/plotly-2.14.0.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.26.1.min.js"></script>
 
     <div id="dataset" style="display:none">
         {{ escape_for_html(dataset) }}
