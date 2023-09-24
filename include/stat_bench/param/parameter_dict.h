@@ -70,6 +70,7 @@ public:
      * \return Output iterator after formatting.
      */
     template <typename OutputIter>
+    // NOLINTNEXTLINE(modernize-use-nodiscard) : API for the external library.
     auto format_to(OutputIter out) const -> OutputIter {
         // Sort keys.
         std::set<std::string> keys;

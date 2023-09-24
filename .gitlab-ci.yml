@@ -12,7 +12,6 @@ variables:
 include:
   - template: Security/Dependency-Scanning.gitlab-ci.yml
   - template: Jobs/SAST.gitlab-ci.yml
-  - template: Security/License-Scanning.gitlab-ci.yml
 dependency_scanning:
   stage: test
   needs: []
@@ -23,13 +22,10 @@ gemnasium-dependency_scanning:
   rules:
     - if: $CI_COMMIT_BRANCH
       when: on_success
-license_scanning:
-  stage: test
-  needs: []
 
 sync poetry:
   stage: prepare
-  image: musicscience37/clang-ci:clang15
+  image: musicscience37/clang-ci:clang16
   script:
     - mkdir -p .venv
     - poetry config virtualenvs.in-project true
@@ -72,7 +68,7 @@ pre-commit:
     - sync poetry
   dependencies:
     - sync poetry
-  image: musicscience37/clang-ci:clang15
+  image: musicscience37/clang-ci:clang16
   script:
     - poetry run pre-commit run --all-files
 
@@ -112,10 +108,10 @@ test release:
       - COMPILER_TYPE: ["gcc10", "gcc12"]
         IMAGE_PATH: "musicscience37/gcc-ci"
         CXX_STANDARD: 14
-      - COMPILER_TYPE: ["clang14", "clang15"]
+      - COMPILER_TYPE: ["clang15", "clang16"]
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
-      - COMPILER_TYPE: ["clang15"]
+      - COMPILER_TYPE: ["clang16"]
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 20
   image: ${IMAGE_PATH}:${COMPILER_TYPE}
@@ -123,9 +119,13 @@ test release:
     GIT_SUBMODULE_STRATEGY: recursive
     BUILD_TYPE: Release
     BUILD_DIR: build_${COMPILER_TYPE}_release
+    VCPKG_DEFAULT_BINARY_CACHE: ${CI_PROJECT_DIR}/.vcpkg-cache
+    CCACHE_DIR: ${CI_PROJECT_DIR}/.ccache
+    CCACHE_COMPILERCHECK: content
   before_script:
     - apt-get update
     - apt-get install -y --no-install-recommends curl zip unzip tar
+    - mkdir -p $VCPKG_DEFAULT_BINARY_CACHE
     - ./vcpkg/bootstrap-vcpkg.sh
     - mkdir $BUILD_DIR
   script:
@@ -139,9 +139,18 @@ test release:
       -DSTAT_BENCH_BUILD_EXAMPLES=ON
       -DSTAT_BENCH_TEST_EXAMPLES=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+      -DSTAT_BENCH_ENABLE_CCACHE:BOOL=ON
       -DCMAKE_CXX_STANDARD=$CXX_STANDARD
     - cmake --build .
     - ctest -V
+  cache:
+    key:
+      prefix: vcpkg-${CI_JOB_NAME}
+      files:
+        - vcpkg-configuration.json
+    paths:
+      - .vcpkg-cache
+      - .ccache
   artifacts:
     paths:
       - $BUILD_DIR/bench
@@ -163,10 +172,10 @@ test debug:
   extends: test release
   parallel:
     matrix:
-      - COMPILER_TYPE: ["gcc10"]
+      - COMPILER_TYPE: ["gcc12"]
         IMAGE_PATH: "musicscience37/gcc-ci"
         CXX_STANDARD: 14
-      - COMPILER_TYPE: ["clang14"]
+      - COMPILER_TYPE: ["clang16"]
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
   variables:
@@ -181,6 +190,7 @@ test debug:
       -DSTAT_BENCH_BUILD_EXAMPLES=ON
       -DSTAT_BENCH_TEST_EXAMPLES=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+      -DSTAT_BENCH_ENABLE_CCACHE:BOOL=ON
     - cmake --build .
     - ctest -V
 
@@ -188,7 +198,7 @@ clang coverage:
   extends: test debug
   parallel:
     matrix:
-      - COMPILER_TYPE: "clang15"
+      - COMPILER_TYPE: "clang16"
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
   variables:
@@ -202,6 +212,7 @@ clang coverage:
       -DCMAKE_BUILD_TYPE=Debug
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+      -DSTAT_BENCH_ENABLE_CCACHE:BOOL=ON
       "-DCMAKE_CXX_FLAGS=-stdlib=libc++ -fprofile-instr-generate -fcoverage-mapping"
       "-DCMAKE_MODULE_LINKER_FLAGS=-fprofile-instr-generate -fcoverage-mapping"
     - mkdir coverage
@@ -234,7 +245,7 @@ clang-asan-ubsan:
   extends: test debug
   parallel:
     matrix:
-      - COMPILER_TYPE: "clang15"
+      - COMPILER_TYPE: "clang16"
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
   variables:
@@ -249,6 +260,7 @@ clang-asan-ubsan:
       -DCMAKE_BUILD_TYPE=Debug
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+      -DSTAT_BENCH_ENABLE_CCACHE:BOOL=ON
       "-DCMAKE_CXX_FLAGS=-stdlib=libc++ -fsanitize=address,undefined"
       -DCMAKE_MODULE_LINKER_FLAGS=-fsanitize=address,undefined
     - cmake --build .
@@ -267,6 +279,7 @@ clang-tsan:
       -DCMAKE_BUILD_TYPE=Debug
       -DSTAT_BENCH_TESTING:BOOL=ON
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
+      -DSTAT_BENCH_ENABLE_CCACHE:BOOL=ON
       "-DCMAKE_CXX_FLAGS=-stdlib=libc++ -fsanitize=thread"
       -DCMAKE_MODULE_LINKER_FLAGS=-fsanitize=thread
     - cmake --build .
@@ -288,7 +301,9 @@ msvc-release:
     GIT_SUBMODULE_STRATEGY: recursive
     # workaround in https://github.com/python-poetry/poetry/issues/1917#issuecomment-1235998997
     PYTHON_KEYRING_BACKEND: keyring.backends.null.Keyring
+    VCPKG_DEFAULT_BINARY_CACHE: ${CI_PROJECT_DIR}/.vcpkg-cache
   before_script:
+    - New-Item -ItemType Directory -Force -Path $VCPKG_DEFAULT_BINARY_CACHE
     - Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
     - choco install cmake -y --installargs 'ADD_CMAKE_TO_PATH=System'
     - choco install python --version=3.11.4 -y
@@ -312,6 +327,13 @@ msvc-release:
       -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
     - cmake --build . --config Release --parallel
     - ctest -V --build-config Release
+  cache:
+    key:
+      prefix: vcpkg-${CI_JOB_NAME}
+      files:
+        - vcpkg-configuration.json
+    paths:
+      - .vcpkg-cache
   artifacts:
     paths:
       - $BUILD_DIR/bench
@@ -333,7 +355,7 @@ static analysis:
   extends: test release
   parallel:
     matrix:
-      - COMPILER_TYPE: "clang15"
+      - COMPILER_TYPE: "clang16"
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
   variables:
@@ -361,7 +383,7 @@ doc:
     - sync poetry
   dependencies:
     - sync poetry
-  image: musicscience37/sphinx-doxygen:clang15
+  image: musicscience37/sphinx-doxygen:clang16
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
   script:

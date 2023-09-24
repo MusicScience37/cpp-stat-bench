@@ -3,4 +3,4 @@ file_patterns:
   - src/unity_source.cpp
   - tests/units/unity_source.cpp
 extra_args:
-  - "--extra-arg=-isystem/usr/lib/llvm-15/include/c++/v1"
+  - "--extra-arg=-isystem/usr/lib/llvm-16/include/c++/v1"
