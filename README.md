@@ -95,7 +95,7 @@ you will require following dependencies:
 - C++ 14 Compiler
   - Following compilers are tested in CI:
     - GCC 10, 12
-    - Clang 14, 15
+    - Clang 15, 16
     - MSVC 19
 
 Additionally, you will require following dependencies

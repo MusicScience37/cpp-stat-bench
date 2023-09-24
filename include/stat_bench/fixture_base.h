@@ -139,7 +139,8 @@ private:
     }
 
     //! \copydoc stat_bench::bench_impl::IBenchmarkCase::params
-    auto params() const noexcept -> const param::ParameterConfig& final {
+    [[nodiscard]] auto params() const noexcept
+        -> const param::ParameterConfig& final {
         return params_;
     }
 

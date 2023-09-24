@@ -51,6 +51,7 @@ public:
      * \return Output iterator after formatting.
      */
     template <typename OutputIter>
+    // NOLINTNEXTLINE(modernize-use-nodiscard) : API for the external library.
     auto format_to(OutputIter iter) const -> OutputIter {
         const auto time_sec =
             std::chrono::time_point_cast<std::chrono::seconds>(time_point_);

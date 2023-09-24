@@ -13,6 +13,7 @@ target:
         VCPKG_HOST_TRIPLET: "x64-linux-llvm"
         CMAKE_CXX_FLAGS: "-stdlib=libc++"
         CMAKE_C_FLAGS: "-stdlib=libc++"
+        STAT_BENCH_ENABLE_CCACHE: ON
 
 buildType:
   default: debug
