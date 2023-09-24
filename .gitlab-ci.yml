@@ -12,7 +12,6 @@ variables:
 include:
   - template: Security/Dependency-Scanning.gitlab-ci.yml
   - template: Jobs/SAST.gitlab-ci.yml
-  - template: Security/License-Scanning.gitlab-ci.yml
 dependency_scanning:
   stage: test
   needs: []
@@ -23,9 +22,6 @@ gemnasium-dependency_scanning:
   rules:
     - if: $CI_COMMIT_BRANCH
       when: on_success
-license_scanning:
-  stage: test
-  needs: []
 
 sync poetry:
   stage: prepare
