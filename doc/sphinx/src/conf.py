@@ -16,40 +16,40 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'cpp-stat-bench'
-release = 'unknown'  # inserted in command line
+project = "cpp-stat-bench"
+release = "unknown"  # inserted in command line
 
-copyright = '2021, MusicScience37 (Kenta Kabashima). '
-author = 'MusicScience37'
+copyright = "2021, MusicScience37 (Kenta Kabashima). "
+author = "MusicScience37"
 
 # -- General configuration ---------------------------------------------------
 
 extensions = [
-    'sphinx.ext.todo',
-    'myst_parser',
+    "sphinx.ext.todo",
+    "myst_parser",
 ]
 
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 exclude_patterns = []
 
 # -- Options for PlantUML ----------------------------------------------------
 
-extensions += ['sphinxcontrib.plantuml']
+extensions += ["sphinxcontrib.plantuml"]
 
-plantuml_output_format = 'svg'
+plantuml_output_format = "svg"
 plantuml_syntax_error_image = True
 
 # -- Options for breathe -----------------------------------------------------
 
-extensions += ['breathe']
+extensions += ["breathe"]
 
 # this variable must be set from command line
-breathe_projects = {'stat_bench': ''}
+breathe_projects = {"stat_bench": ""}
 
-breathe_default_project = 'stat_bench'
+breathe_default_project = "stat_bench"
 
-breathe_default_members = ('members',)
+breathe_default_members = ("members",)
 
 breathe_domain_by_extension = {
     "h": "cpp",
@@ -57,5 +57,13 @@ breathe_domain_by_extension = {
 
 # -- Options for HTML output -------------------------------------------------
 
-html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
+html_theme = "sphinx_orange_book_theme"
+html_static_path = ["_static"]
+
+html_theme_options = {
+    # pygment configuration must be specified here.
+    "pygment_light_style": "gruvbox-light",
+    "pygment_dark_style": "native",
+    "repository_url": "https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench",
+    "use_repository_button": True,
+}
