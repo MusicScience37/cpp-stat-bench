@@ -480,17 +480,17 @@ files = [
 
 [[package]]
 name = "doc8"
-version = "0.11.2"
+version = "1.1.1"
 description = "Style checker for Sphinx (or other) RST documentation"
 optional = false
-python-versions = ">=3.6"
+python-versions = ">=3.8"
 files = [
-    {file = "doc8-0.11.2-py3-none-any.whl", hash = "sha256:9187da8c9f115254bbe34f74e2bbbdd3eaa1b9e92efd19ccac7461e347b5055c"},
-    {file = "doc8-0.11.2.tar.gz", hash = "sha256:c35a231f88f15c204659154ed3d499fa4d402d7e63d41cba7b54cf5e646123ab"},
+    {file = "doc8-1.1.1-py3-none-any.whl", hash = "sha256:e493aa3f36820197c49f407583521bb76a0fde4fffbcd0e092be946ff95931ac"},
+    {file = "doc8-1.1.1.tar.gz", hash = "sha256:d97a93e8f5a2efc4713a0804657dedad83745cca4cd1d88de9186f77f9776004"},
 ]
 
 [package.dependencies]
-docutils = "*"
+docutils = ">=0.19,<0.21"
 Pygments = "*"
 restructuredtext-lint = ">=0.7"
 stevedore = "*"
@@ -1556,12 +1556,12 @@ test = ["flake8", "mypy", "pytest"]
 
 [[package]]
 name = "sphinxcontrib-plantuml"
-version = "0.26"
+version = "0.27"
 description = "Sphinx \"plantuml\" extension"
 optional = false
 python-versions = "*"
 files = [
-    {file = "sphinxcontrib-plantuml-0.26.tar.gz", hash = "sha256:adb3397d5cb0613632cd3dad7894381422bac24464c393cb050404dd6712b1a7"},
+    {file = "sphinxcontrib-plantuml-0.27.tar.gz", hash = "sha256:8975778eed9c142a42ecdc4ecd83132dec0690c035cae788c123750ead526703"},
 ]
 
 [package.dependencies]
@@ -1813,4 +1813,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.11,<3.12"
-content-hash = "f2de6cd77d6d90f0aafd9a62bf587bfe268d00c92741780ea4a2c63f5f0faa21"
+content-hash = "3f632d0826ecef5297c91e33c21a43e9628245d5fb25c8590307d2786e8d8c66"
