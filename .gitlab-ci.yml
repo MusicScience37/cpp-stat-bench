@@ -405,7 +405,7 @@ doc:
 pages:
   stage: deploy
   only:
-    - develop
+    - main
   needs:
     - doc
   dependencies:
