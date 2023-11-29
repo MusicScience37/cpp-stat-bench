@@ -33,7 +33,6 @@
     "**/vcpkg/packages/**": true,
     "**/.venv/**": true
   },
-  "python.formatting.provider": "black",
   "cSpell.enableFiletypes": ["cmake", "plantuml", "shellscript", "toml"],
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
