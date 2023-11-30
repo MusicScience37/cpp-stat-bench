@@ -302,11 +302,14 @@ msvc-release:
     # workaround in https://github.com/python-poetry/poetry/issues/1917#issuecomment-1235998997
     PYTHON_KEYRING_BACKEND: keyring.backends.null.Keyring
     VCPKG_DEFAULT_BINARY_CACHE: ${CI_PROJECT_DIR}/.vcpkg-cache
+    CCACHE_DIR: ${CI_PROJECT_DIR}/.ccache
+    CCACHE_COMPILERCHECK: content
   before_script:
     - New-Item -ItemType Directory -Force -Path $VCPKG_DEFAULT_BINARY_CACHE
     - Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
     - choco install cmake -y --installargs 'ADD_CMAKE_TO_PATH=System'
     - choco install python --version=3.11.4 -y
+    - choco install ccache -y
     - RefreshEnv
     # https://github.com/python-poetry/poetry/issues/7611#issuecomment-1455750699
     - pip install poetry==1.3.2
@@ -316,17 +319,7 @@ msvc-release:
     - mkdir $BUILD_DIR
   script:
     - cd $BUILD_DIR
-    - cmake ..
-      "-DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake"
-      -DCMAKE_BUILD_TYPE=Release
-      -DSTAT_BENCH_TESTING:BOOL=ON
-      -DSTAT_BENCH_ENABLE_BENCH=ON
-      -DSTAT_BENCH_TEST_BENCHMARKS=ON
-      -DSTAT_BENCH_BUILD_EXAMPLES=ON
-      -DSTAT_BENCH_TEST_EXAMPLES=ON
-      -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
-    - cmake --build . --config Release --parallel
-    - ctest -V --build-config Release
+    - cmd.exe /C ../scripts/ci_win.cmd
   cache:
     key:
       prefix: vcpkg-${CI_JOB_NAME}
@@ -334,6 +327,7 @@ msvc-release:
         - vcpkg-configuration.json
     paths:
       - .vcpkg-cache
+      - .ccache
   artifacts:
     paths:
       - $BUILD_DIR/bench
