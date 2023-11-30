@@ -319,7 +319,7 @@ msvc-release:
     - mkdir $BUILD_DIR
   script:
     - cd $BUILD_DIR
-    - cmd.exe /C ../scripts/ci_win.cmd
+    - cmd.exe /C ..\scripts\ci_win.cmd
   cache:
     key:
       prefix: vcpkg-${CI_JOB_NAME}
