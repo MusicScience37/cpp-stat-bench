@@ -286,9 +286,6 @@ clang-tsan:
     - ctest -V
 
 msvc-release:
-  parallel:
-    matrix:
-      - COMPILER_TYPE: "msvc"
   tags:
     - shared-windows
     - windows
