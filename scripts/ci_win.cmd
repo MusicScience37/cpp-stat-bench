@@ -2,7 +2,7 @@ call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\VC\\Au
 
 cmake .. ^
     -G Ninja ^
-    -DCMAKE_BUILD_CXX_COMPILER_LAUNCHER=ccache ^
+    -DCMAKE_CXX_COMPILER_LAUNCHER=ccache ^
     -DCMAKE_TOOLCHAIN_FILE=..\vcpkg\scripts\buildsystems\vcpkg.cmake ^
     -DCMAKE_BUILD_TYPE=Release ^
     -DSTAT_BENCH_TESTING:BOOL=ON ^
