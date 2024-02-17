@@ -24,7 +24,8 @@
 #include <vector>
 
 #include <fmt/format.h>
-#include <msgpack.hpp>
+#include <msgpack_light/output_stream.h>
+#include <msgpack_light/serialize.h>
 #include <zlib.h>
 
 #include "stat_bench/reporter/data_file_helper.h"
@@ -38,14 +39,14 @@ namespace reporter {
 /*!
  * \brief Class of buffers to write compressed files in msgpack library.
  */
-class CompressedMsgPackFileBuffer {
+class CompressedMsgpackOutputFileStream : public msgpack_light::output_stream {
 public:
     /*!
      * \brief Constructor.
      *
      * \param[in] file_path File path.
      */
-    explicit CompressedMsgPackFileBuffer(const std::string& file_path)
+    explicit CompressedMsgpackOutputFileStream(const std::string& file_path)
         : file_(gzopen(file_path.c_str(), "wb9")) {
         if (file_ == nullptr) {
             throw StatBenchException(
@@ -53,26 +54,28 @@ public:
         }
     }
 
-    CompressedMsgPackFileBuffer(const CompressedMsgPackFileBuffer&) = delete;
-    CompressedMsgPackFileBuffer(CompressedMsgPackFileBuffer&&) = delete;
-    auto operator=(const CompressedMsgPackFileBuffer&)
-        -> CompressedMsgPackFileBuffer& = delete;
-    auto operator=(CompressedMsgPackFileBuffer&&)
-        -> CompressedMsgPackFileBuffer& = delete;
+    CompressedMsgpackOutputFileStream(
+        const CompressedMsgpackOutputFileStream&) = delete;
+    CompressedMsgpackOutputFileStream(
+        CompressedMsgpackOutputFileStream&&) = delete;
+    auto operator=(const CompressedMsgpackOutputFileStream&)
+        -> CompressedMsgpackOutputFileStream& = delete;
+    auto operator=(CompressedMsgpackOutputFileStream&&)
+        -> CompressedMsgpackOutputFileStream& = delete;
 
     /*!
      * \brief Destructor.
      */
-    ~CompressedMsgPackFileBuffer() { (void)gzclose(file_); }
+    ~CompressedMsgpackOutputFileStream() { (void)gzclose(file_); }
 
     /*!
      * \brief Write data.
      *
-     * \param[in] data Data.
-     * \param[in] len Length of the data.
+     * \param[in] data Pointer to the data.
+     * \param[in] size Size of the data.
      */
-    void write(const char* data, std::size_t len) {
-        if (gzwrite(file_, data, len) != len) {
+    void write(const unsigned char* data, std::size_t size) override {
+        if (gzwrite(file_, data, size) != size) {
             throw StatBenchException("Failed to write data.");
         }
     }
@@ -89,8 +92,8 @@ void CompressedMsgPackReporter::write_data_file(
     const std::string& file_path, const data_file_spec::RootData& data) {
     util::prepare_directory_for(file_path);
 
-    CompressedMsgPackFileBuffer buffer{file_path};
-    msgpack::pack(buffer, data);
+    CompressedMsgpackOutputFileStream stream{file_path};
+    msgpack_light::serialize_to(stream, data);
 }
 
 }  // namespace reporter
