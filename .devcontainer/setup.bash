@@ -1,7 +1,9 @@
 #!/bin/bash
 
-git config --global --add safe.directory $(pwd)
-git config --global --add safe.directory $(pwd)/vcpkg
+sudo chmod 0777 /cache_volume/
+mkdir -p $CCACHE_DIR
+mkdir -p $VCPKG_DEFAULT_BINARY_CACHE
+mkdir -p $POETRY_CACHE_DIR
 
 poetry config virtualenvs.in-project true
 poetry env use 3.11
