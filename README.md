@@ -12,7 +12,7 @@ Benchmark library with statistics and plotting in C++.
 - Report results in various types of output files.
   - To console.
   - To JSON files.
-  - To MessagePack files.
+  - To MessagePack files with or without gzip compression.
   - To HTML files of plots 📈.
     - Processing time for each execution.
     - Cumulative distribution function of processing time.
@@ -35,7 +35,7 @@ Benchmark library with statistics and plotting in C++.
 - [Documentation build on main branch](https://cppstatbench.musicscience37.com/)
 - Examples are in `examples` directory.
 
-## How to Use
+## Installation
 
 ### Via vcpkg
 
@@ -53,16 +53,17 @@ This library can be installed via vcpkg using following configurations:
     "default-registry": {
       "kind": "git",
       "repository": "https://github.com/Microsoft/vcpkg",
-      "baseline": "76b55aaf7c45d05fa516a1f6a69f46fb08b1e720"
+      "baseline": "13bde2ff13192e1b2fdd37bd9b475c7665ae6ae5"
     },
     "registries": [
       {
         "kind": "git",
         "repository": "https://gitlab.com/MusicScience37Projects/vcpkg-registry",
-        "baseline": "70dffd57a5edbf1a48714c8b0a5a07751d0db298",
-        "packages": ["cpp-stat-bench"]
+        "baseline": "70fb6d7d9d95ad17fc02dc4aef839b9a4824ac23",
+        "packages": ["cpp-msgpack-light", "cpp-stat-bench"]
       }
-    ]
+    ],
+    "overlay-triplets": ["./vcpkg_conf/triplets"]
   }
   ```
 
