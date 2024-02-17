@@ -8,7 +8,7 @@
     "trompeloeil",
     "approval-tests-cpp",
     "inja",
-    "msgpack",
+    "cpp-msgpack-light",
     "zlib"
   ]
 }

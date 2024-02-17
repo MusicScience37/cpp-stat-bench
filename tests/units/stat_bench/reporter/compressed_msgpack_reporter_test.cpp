@@ -30,7 +30,7 @@
 #include <ApprovalTests.hpp>
 #include <catch2/catch_test_macros.hpp>
 #include <fmt/format.h>
-#include <msgpack.hpp>
+#include <msgpack_light/memory_output_stream.h>
 #include <nlohmann/json.hpp>
 #include <zlib.h>
 
@@ -52,7 +52,7 @@ TEST_CASE("stat_bench::reporter::CompressedMsgPackReporter") {
                 filepath);
         REQUIRE_NOTHROW(stat_bench_test::use_reporter_for_test(reporter.get()));
 
-        msgpack::sbuffer uncompressed_data;
+        msgpack_light::memory_output_stream uncompressed_data;
         {
             constexpr std::size_t buf_size = 1024;
             std::array<char, buf_size> buf{};
@@ -64,7 +64,8 @@ TEST_CASE("stat_bench::reporter::CompressedMsgPackReporter") {
                     break;
                 }
                 uncompressed_data.write(
-                    buf.data(), static_cast<std::size_t>(res));
+                    reinterpret_cast<const unsigned char*>(buf.data()),
+                    static_cast<std::size_t>(res));
                 if (static_cast<std::size_t>(res) < buf.size()) {
                     break;
                 }
