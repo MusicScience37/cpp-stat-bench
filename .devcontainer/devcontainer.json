@@ -6,9 +6,19 @@
     "--security-opt",
     "seccomp=unconfined"
   ],
+  "mounts": [
+    {
+      "type": "volume",
+      "source": "${localWorkspaceFolderBasename}-cache",
+      "target": "/cache_volume/"
+    }
+  ],
   "containerEnv": {
     "ASAN_OPTIONS": "alloc_dealloc_mismatch=0",
-    "CCACHE_COMPILERCHECK": "content"
+    "CCACHE_COMPILERCHECK": "content",
+    "CCACHE_DIR": "/cache_volume/ccache/",
+    "VCPKG_DEFAULT_BINARY_CACHE": "/cache_volume/vcpkg/",
+    "POETRY_CACHE_DIR": "/cache_volume/poetry/"
   },
   "customizations": {
     // Configure properties specific to VS Code.
@@ -40,5 +50,6 @@
       }
     }
   },
-  "postCreateCommand": "bash ./.devcontainer/setup.bash"
+  "postCreateCommand": "bash ./.devcontainer/setup.bash",
+  "remoteUser": "ubuntu"
 }
