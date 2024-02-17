@@ -12,7 +12,7 @@ Benchmark library with statistics and plotting in C++.
 - Report results in various types of output files.
   - To console.
   - To JSON files.
-  - To MessagePack files.
+  - To MessagePack files with or without gzip compression.
   - To HTML files of plots 📈.
     - Processing time for each execution.
     - Cumulative distribution function of processing time.
@@ -35,7 +35,7 @@ Benchmark library with statistics and plotting in C++.
 - [Documentation build on main branch](https://cppstatbench.musicscience37.com/)
 - Examples are in `examples` directory.
 
-## How to Use
+## Installation
 
 ### Via vcpkg
 

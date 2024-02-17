@@ -1,4 +1,4 @@
-# How to Use
+# Installation
 
 ## Via vcpkg
 

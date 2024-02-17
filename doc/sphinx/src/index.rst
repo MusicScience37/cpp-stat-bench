@@ -9,7 +9,7 @@ Developed at
 Full API reference generated using Doxygen can be viewed `here <api/index.html>`_.
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
     :caption: About
 
     about
@@ -17,15 +17,15 @@ Full API reference generated using Doxygen can be viewed `here <api/index.html>`
     change_log/index
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
     :caption: Usage
 
-    how_to_use
+    installation
     basic_api/index
     schemas/index
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
     :caption: Development
 
     how_to_build_in_repository
