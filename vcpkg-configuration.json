@@ -3,13 +3,13 @@
   "default-registry": {
     "kind": "git",
     "repository": "https://github.com/Microsoft/vcpkg",
-    "baseline": "13bde2ff13192e1b2fdd37bd9b475c7665ae6ae5"
+    "baseline": "215a2535590f1f63788ac9bd2ed58ad15e6afdff"
   },
   "registries": [
     {
       "kind": "git",
       "repository": "https://gitlab.com/MusicScience37Projects/vcpkg-registry",
-      "baseline": "60b09d7b836e5a731d864a7227d68901ec8f3071",
+      "baseline": "8e420e671292cd88e3201afa56d37d47693f09b1",
       "packages": ["cpp-msgpack-light"]
     }
   ],
