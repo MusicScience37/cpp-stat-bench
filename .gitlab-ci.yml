@@ -1,7 +1,6 @@
 image: ubuntu
 
 stages:
-  - prepare
   - test
   - deploy
   - release
@@ -10,67 +9,51 @@ variables:
   SECURE_LOG_LEVEL: debug
 
 include:
-  - template: Security/Dependency-Scanning.gitlab-ci.yml
-  - template: Jobs/SAST.gitlab-ci.yml
-dependency_scanning:
-  stage: test
-  needs: []
-sast:
-  stage: test
-  needs: []
-gemnasium-dependency_scanning:
-  rules:
-    - if: $CI_COMMIT_BRANCH
-      when: on_success
-
-sync poetry:
-  stage: prepare
-  image: musicscience37/clang-ci:clang16
-  script:
-    - mkdir -p .venv
-    - poetry config virtualenvs.in-project true
-    - poetry env use 3.11
-    - poetry install
-  cache:
-    key:
-      prefix: poetry-linux
-      files:
-        - poetry.lock
-    paths:
-      - .venv
-  artifacts:
-    paths:
-      - .venv
-    expire_in: "1 week"
+  - template: Jobs/Dependency-Scanning.gitlab-ci.yml
+  - template: Jobs/Secret-Detection.gitlab-ci.yml
+  - template: Security/SAST.gitlab-ci.yml
 
 line count:
-  stage: prepare
-  dependencies: []
-  image: registry.gitlab.com/musicscience37projects/docker/cloc-docker
+  stage: test
+  needs: []
+  image: registry.gitlab.com/musicscience37projects/docker/scc-docker
   script:
     - mkdir -p line_count
-    - cloc ./
-      --exclude-dir=line_count
-      --force-lang=C++,h
-      --json --out=line_count/line_count.json
-    - cloc include src
-      --exclude-dir=line_count
-      --force-lang=C++,h
-      --json --out=line_count/src_line_count.json
+    - scc
+      --format-multi "tabular:stdout,html:line_count/line_count.html,openmetrics:line_count/line_count.txt"
+      .
+    - scc
+      --format-multi "tabular:stdout,html:line_count/src_line_count.html"
+      --by-file -s complexity
+      include src
   artifacts:
     paths:
       - line_count
+    reports:
+      metrics:
+        - "line_count/line_count.txt"
     expire_in: "1 mos"
+  interruptible: true
 
 pre-commit:
   stage: test
-  needs:
-    - sync poetry
-  dependencies:
-    - sync poetry
+  needs: []
   image: musicscience37/clang-ci:clang16
+  variables:
+    POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
   script:
+    - poetry config virtualenvs.in-project true
+    - poetry env use 3.11
+    - poetry install
     - poetry run pre-commit run --all-files
+  cache:
+    - key:
+        prefix: poetry-${CI_JOB_NAME}
+        files:
+          - poetry.lock
+      paths:
+        - .poetry-cache
+  interruptible: true
 
 spell check:
   stage: test
@@ -98,59 +81,46 @@ spell check:
       --exclude "vcpkg/*"
   interruptible: true
 
-test release:
-  needs:
-    - sync poetry
-  dependencies:
-    - sync poetry
+.test linux base:
+  needs: []
   parallel:
     matrix:
-      - COMPILER_TYPE: ["gcc10", "gcc12"]
-        IMAGE_PATH: "musicscience37/gcc-ci"
-        CXX_STANDARD: 14
-      - COMPILER_TYPE: ["clang15", "clang16"]
-        IMAGE_PATH: "musicscience37/clang-ci"
-        CXX_STANDARD: 14
       - COMPILER_TYPE: ["clang16"]
         IMAGE_PATH: "musicscience37/clang-ci"
-        CXX_STANDARD: 20
+        TEST_TYPE: "release"
   image: ${IMAGE_PATH}:${COMPILER_TYPE}
   variables:
     GIT_SUBMODULE_STRATEGY: recursive
-    BUILD_TYPE: Release
-    BUILD_DIR: build_${COMPILER_TYPE}_release
-    VCPKG_DEFAULT_BINARY_CACHE: ${CI_PROJECT_DIR}/.vcpkg-cache
+    BUILD_DIR: build_${COMPILER_TYPE}_${TEST_TYPE}
     CCACHE_DIR: ${CI_PROJECT_DIR}/.ccache
     CCACHE_COMPILERCHECK: content
+    CCACHE_MAXSIZE: 1G
+    VCPKG_DEFAULT_BINARY_CACHE: ${CI_PROJECT_DIR}/.vcpkg-cache
+    POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
   before_script:
-    - apt-get update
-    - apt-get install -y --no-install-recommends curl zip unzip tar
+    - poetry config virtualenvs.in-project true
+    - poetry env use 3.11
+    - poetry install
     - mkdir -p $VCPKG_DEFAULT_BINARY_CACHE
-    - ./vcpkg/bootstrap-vcpkg.sh
     - mkdir $BUILD_DIR
   script:
-    - cd $BUILD_DIR
-    - cmake ..
-      -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
-      -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-      -DSTAT_BENCH_TESTING:BOOL=ON
-      -DSTAT_BENCH_ENABLE_BENCH=ON
-      -DSTAT_BENCH_TEST_BENCHMARKS=ON
-      -DSTAT_BENCH_BUILD_EXAMPLES=ON
-      -DSTAT_BENCH_TEST_EXAMPLES=ON
-      -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
-      -DSTAT_BENCH_ENABLE_CCACHE:BOOL=ON
-      -DCMAKE_CXX_STANDARD=$CXX_STANDARD
-    - cmake --build .
-    - ctest -V
+    - Dummy command for base configuration
   cache:
-    key:
-      prefix: vcpkg-${CI_JOB_NAME}
-      files:
-        - vcpkg-configuration.json
-    paths:
-      - .vcpkg-cache
-      - .ccache
+    - key:
+        prefix: poetry-${CI_JOB_NAME}
+        files:
+          - poetry.lock
+      paths:
+        - .poetry-cache
+    - key:
+        prefix: vcpkg-${CI_JOB_NAME}
+        files:
+          - vcpkg-configuration.json
+      paths:
+        - .vcpkg-cache
+    - key: ccache-${CI_JOB_NAME}
+      paths:
+        - .ccache
   artifacts:
     paths:
       - $BUILD_DIR/bench
@@ -164,45 +134,46 @@ test release:
         - $BUILD_DIR/junit/*.xml
     when: always
     expire_in: "1 mos"
-  retry:
-    max: 1
-    when: always
+  interruptible: true
 
-test debug:
-  extends: test release
+test linux:
+  extends: .test linux base
   parallel:
     matrix:
+      - COMPILER_TYPE: ["gcc10", "gcc12"]
+        IMAGE_PATH: "musicscience37/gcc-ci"
+        CXX_STANDARD: 14
+        TEST_TYPE: "release"
+      - COMPILER_TYPE: ["clang15", "clang16"]
+        IMAGE_PATH: "musicscience37/clang-ci"
+        CXX_STANDARD: 14
+        TEST_TYPE: "release"
+      - COMPILER_TYPE: ["clang16"]
+        IMAGE_PATH: "musicscience37/clang-ci"
+        CXX_STANDARD: 20
+        TEST_TYPE: "debug"
       - COMPILER_TYPE: ["gcc12"]
         IMAGE_PATH: "musicscience37/gcc-ci"
         CXX_STANDARD: 14
+        TEST_TYPE: "debug"
       - COMPILER_TYPE: ["clang16"]
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
-  variables:
-    BUILD_TYPE: Debug
-    BUILD_DIR: build_${COMPILER_TYPE}_debug
+        TEST_TYPE: "debug"
   script:
-    - cd $BUILD_DIR
-    - cmake ..
-      -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
-      -DCMAKE_BUILD_TYPE=$BUILD_TYPE
-      -DSTAT_BENCH_TESTING:BOOL=ON
-      -DSTAT_BENCH_BUILD_EXAMPLES=ON
-      -DSTAT_BENCH_TEST_EXAMPLES=ON
-      -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
-      -DSTAT_BENCH_ENABLE_CCACHE:BOOL=ON
-    - cmake --build .
-    - ctest -V
+    - poetry run python ./scripts/ci_linux_test.py
+      --compiler_type $COMPILER_TYPE
+      --test_type $TEST_TYPE
+      --cpp_ver $CXX_STANDARD
+      --build_dir $BUILD_DIR
 
 clang coverage:
-  extends: test debug
+  extends: .test linux base
   parallel:
     matrix:
       - COMPILER_TYPE: "clang16"
         IMAGE_PATH: "musicscience37/clang-ci"
-        CXX_STANDARD: 14
-  variables:
-    BUILD_DIR: build_clang_coverage
+        TEST_TYPE: "coverage"
   script:
     - cd $BUILD_DIR
     - cmake ..
@@ -242,54 +213,40 @@ clang coverage:
     expire_in: "1 mos"
 
 clang-asan-ubsan:
-  extends: test debug
+  extends: .test linux base
   parallel:
     matrix:
       - COMPILER_TYPE: "clang16"
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
+        TEST_TYPE: "asan_ubsan"
   variables:
-    BUILD_DIR: build_clang_asan_ubsan
     ASAN_OPTIONS: alloc_dealloc_mismatch=0
   script:
-    - cd $BUILD_DIR
-    - cmake ..
-      -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
-      -DVCPKG_TARGET_TRIPLET=x64-linux-llvm
-      -DVCPKG_HOST_TRIPLET=x64-linux-llvm
-      -DCMAKE_BUILD_TYPE=Debug
-      -DSTAT_BENCH_TESTING:BOOL=ON
-      -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
-      -DSTAT_BENCH_ENABLE_CCACHE:BOOL=ON
-      "-DCMAKE_CXX_FLAGS=-stdlib=libc++ -fsanitize=address,undefined"
-      -DCMAKE_MODULE_LINKER_FLAGS=-fsanitize=address,undefined
-    - cmake --build .
-    - ctest -V
+    - poetry run python ./scripts/ci_linux_test.py
+      --compiler_type $COMPILER_TYPE
+      --test_type $TEST_TYPE
+      --cpp_ver $CXX_STANDARD
+      --build_dir $BUILD_DIR
 
 clang-tsan:
   extends: clang-asan-ubsan
-  variables:
-    BUILD_DIR: build_clang_tsan
+  parallel:
+    matrix:
+      - COMPILER_TYPE: "clang16"
+        IMAGE_PATH: "musicscience37/clang-ci"
+        CXX_STANDARD: 14
+        TEST_TYPE: "tsan"
   script:
-    - cd $BUILD_DIR
-    - cmake ..
-      -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
-      -DVCPKG_TARGET_TRIPLET=x64-linux-llvm
-      -DVCPKG_HOST_TRIPLET=x64-linux-llvm
-      -DCMAKE_BUILD_TYPE=Debug
-      -DSTAT_BENCH_TESTING:BOOL=ON
-      -DSTAT_BENCH_WRITE_JUNIT:BOOL=ON
-      -DSTAT_BENCH_ENABLE_CCACHE:BOOL=ON
-      "-DCMAKE_CXX_FLAGS=-stdlib=libc++ -fsanitize=thread"
-      -DCMAKE_MODULE_LINKER_FLAGS=-fsanitize=thread
-    - cmake --build .
-    - ctest -V
+    - poetry run python ./scripts/ci_linux_test.py
+      --compiler_type $COMPILER_TYPE
+      --test_type $TEST_TYPE
+      --cpp_ver $CXX_STANDARD
+      --build_dir $BUILD_DIR
 
 msvc-release:
   tags:
-    - shared-windows
-    - windows
-    - windows-1809
+    - saas-windows-medium-amd64
   stage: test
   needs: []
   dependencies: []
@@ -298,6 +255,7 @@ msvc-release:
     GIT_SUBMODULE_STRATEGY: recursive
     # workaround in https://github.com/python-poetry/poetry/issues/1917#issuecomment-1235998997
     PYTHON_KEYRING_BACKEND: keyring.backends.null.Keyring
+    POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
     VCPKG_DEFAULT_BINARY_CACHE: ${CI_PROJECT_DIR}/.vcpkg-cache
     CCACHE_DIR: ${CI_PROJECT_DIR}/.ccache
     CCACHE_COMPILERCHECK: content
@@ -306,7 +264,7 @@ msvc-release:
     - New-Item -ItemType Directory -Force -Path $VCPKG_DEFAULT_BINARY_CACHE
     - Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
     - choco install cmake -y --installargs 'ADD_CMAKE_TO_PATH=System'
-    - choco install python --version=3.11.4 -y
+    - choco install python311 -y
     - choco install ccache -y
     - RefreshEnv
     # https://github.com/python-poetry/poetry/issues/7611#issuecomment-1455750699
@@ -319,6 +277,12 @@ msvc-release:
     - cd $BUILD_DIR
     - cmd.exe /C ..\scripts\ci_win.cmd
   cache:
+    - key:
+        prefix: poetry-${CI_JOB_NAME}
+        files:
+          - poetry.lock
+      paths:
+        - .poetry-cache
     - key:
         prefix: vcpkg-${CI_JOB_NAME}
         files:
@@ -346,12 +310,13 @@ msvc-release:
     when: always
 
 static analysis:
-  extends: test release
+  extends: .test linux base
   parallel:
     matrix:
       - COMPILER_TYPE: "clang16"
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
+        TEST_TYPE: "static_analysis"
   variables:
     BUILD_TYPE: Debug
     BUILD_DIR: build_static_analysis
@@ -369,23 +334,35 @@ static analysis:
       -DSTAT_BENCH_BUILD_EXAMPLES=ON
       -DSTAT_BENCH_ENABLE_CPP_WARNINGS:BOOL=ON
     - cd ..
-    - poetry run clang-tidy-checker -b ${BUILD_DIR}
+    - poetry run clang-tidy-checker -b ${BUILD_DIR} --cache_dir ./.clang-tidy-cache
+  cache:
+    - key:
+        prefix: poetry-${CI_JOB_NAME}
+        files:
+          - poetry.lock
+      paths:
+        - .poetry-cache
+    - key:
+        prefix: vcpkg-${CI_JOB_NAME}
+        files:
+          - vcpkg-configuration.json
+      paths:
+        - .vcpkg-cache
+    - key: clang-tidy-checker-${CI_JOB_NAME}
+      paths:
+        - .clang-tidy-cache
 
 doc:
-  stage: test
-  needs:
-    - sync poetry
-  dependencies:
-    - sync poetry
-  image: musicscience37/sphinx-doxygen:clang16
+  extends: .test linux base
+  parallel:
+    matrix:
+      - COMPILER_TYPE: "clang16"
+        IMAGE_PATH: "musicscience37/sphinx-doxygen"
+        TEST_TYPE: "doc"
   variables:
-    GIT_SUBMODULE_STRATEGY: recursive
+    BUILD_DIR: build_doc
   script:
-    - apt-get update
-    - apt-get install -y --no-install-recommends curl zip unzip tar
-    - ./vcpkg/bootstrap-vcpkg.sh
-    - mkdir build_doc
-    - cd build_doc
+    - cd $BUILD_DIR
     - cmake ..
       -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
       -DSTAT_BENCH_BUILD_DOC:BOOL=ON

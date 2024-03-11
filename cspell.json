@@ -88,6 +88,7 @@
     "nodiscard",
     "NOLINT",
     "NOLINTNEXTLINE",
+    "openmetrics",
     "pantor",
     "Pipfile",
     "PlantUML",
