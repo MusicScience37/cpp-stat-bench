@@ -12,20 +12,20 @@ Processing Time
 ========================================================================================================================
 
 >> FibonacciParametrized
-                                                        Iterations Samples Mean [us]  Max [us] Custom Outputs (mean)
+                                                            Iterations Samples Mean [us]  Max [us] Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-Fibonacci (number=20, threads=1)                                 1       3    00,000    00,000 throughput_stat=1.0000000, processed_numbers=1.0000000, 
-Fibonacci (number=30, threads=1)                                 1       3    00,000    00,000 throughput_stat=1.0000000, processed_numbers=1.0000000, 
+Fibonacci (number=20, threads=1)                                     1       3    00,000    00,000 throughput_stat=1.0000000, processed_numbers=1.0000000, 
+Fibonacci (number=30, threads=1)                                     1       3    00,000    00,000 throughput_stat=1.0000000, processed_numbers=1.0000000, 
 
 ========================================================================================================================
 Mean Processing Time
 ========================================================================================================================
 
 >> FibonacciParametrized
-                                                        Iterations Samples Mean [us]  Max [us] Custom Outputs (mean)
+                                                            Iterations Samples Mean [us]  Max [us] Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-Fibonacci (number=20, threads=1)                                 1       2    00,000    00,000 throughput_stat=1.0000000, processed_numbers=1.0000000, 
-Fibonacci (number=30, threads=1)                                 1       2    00,000    00,000 throughput_stat=1.0000000, processed_numbers=1.0000000, 
+Fibonacci (number=20, threads=1)                                     1       2    00,000    00,000 throughput_stat=1.0000000, processed_numbers=1.0000000, 
+Fibonacci (number=30, threads=1)                                     1       2    00,000    00,000 throughput_stat=1.0000000, processed_numbers=1.0000000, 
 
 Benchmark finished at <time>
 

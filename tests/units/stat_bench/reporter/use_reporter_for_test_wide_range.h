@@ -49,7 +49,7 @@ inline void use_reporter_for_test_wide_range(
     const auto measurement1 = stat_bench_test::create_test_measurement(
         group1_name, "Case1", measurer_name,
         std::vector<std::vector<Duration>>{
-            std::vector<Duration>{create_duration(1e-3)}});
+            std::vector<Duration>{create_duration(1.2345e-3)}});
     reporter->case_starts(measurement1.case_info());
     reporter->measurement_succeeded(measurement1);
     reporter->case_finished(measurement1.case_info());

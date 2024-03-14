@@ -9,11 +9,11 @@ Measurement1
 ========================================================================================================================
 
 >> Group1
-                                                        Iterations Samples Mean [us]  Max [us] Custom Outputs (mean)
+                                                            Iterations Samples Mean [us]  Max [us] Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-Case1 (param=value, threads=1)                                1000       1     1.000     1.000 
-Case2 (param=value, threads=1)                                1000       1     1,234     1,234 
-Case3 (param=value, threads=1)                                1000       1 1,234,567 1,234,567 
+Case1 (param=value, threads=1)                                    1000       1    1.2345    1.2345 
+Case2 (param=value, threads=1)                                    1000       1     1,234     1,234 
+Case3 (param=value, threads=1)                                    1000       1 1,234,567 1,234,567 
 
 Benchmark finished at <time>
 
