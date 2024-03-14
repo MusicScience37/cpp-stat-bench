@@ -25,6 +25,18 @@ def scrub_float(input: str) -> str:
     )
 
 
+def _scrub_integer_with_comma_impl(input: str) -> str:
+    return "0" * (len(input) - 4) + ",000"
+
+
+def scrub_integer_with_comma(input: str) -> str:
+    return re.sub(
+        r"\d+,\d\d\d",
+        lambda match: _scrub_integer_with_comma_impl(match.group(0)),
+        input,
+    )
+
+
 scrub_console = approvaltests.scrubbers.combine_scrubbers(
-    scrub_current_time, scrub_float
+    scrub_current_time, scrub_float, scrub_integer_with_comma
 )
