@@ -43,7 +43,7 @@ pre-commit:
   script:
     - poetry config virtualenvs.in-project true
     - poetry env use 3.11
-    - poetry install
+    - poetry install --without doc --sync
     - poetry run pre-commit run --all-files
   cache:
     - key:
@@ -99,7 +99,7 @@ spell check:
   before_script:
     - poetry config virtualenvs.in-project true
     - poetry env use 3.11
-    - poetry install --only test --sync
+    - poetry install --without doc --sync
     - mkdir -p $VCPKG_DEFAULT_BINARY_CACHE
     - mkdir $BUILD_DIR
   script:
