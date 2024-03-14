@@ -93,7 +93,7 @@ auto format_duration(double val) -> std::string {
 
 }  // namespace
 
-#define CONSOLE_TABLE_FORMAT "{:<54}  {:>10}  {:>7}  {:>9}  {:>9} "
+#define CONSOLE_TABLE_FORMAT "{:<54}  {:>10} {:>7} {:>9} {:>9} "
 #define CONSOLE_TABLE_FORMAT_ERROR "{:<50} {}"
 
 void ConsoleReporter::group_starts(const std::string& name) {

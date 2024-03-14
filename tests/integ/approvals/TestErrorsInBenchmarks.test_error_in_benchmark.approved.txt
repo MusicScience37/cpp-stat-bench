@@ -12,7 +12,7 @@ Processing Time
 ========================================================================================================================
 
 >> Error
-                                                        Iterations  Samples  Mean [us]   Max [us] Custom Outputs (mean)
+                                                        Iterations Samples Mean [us]  Max [us] Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
 [38;2;255;000;000mthrowing function (threads=1)                      Test exception.[0m
 
@@ -21,7 +21,7 @@ Mean Processing Time
 ========================================================================================================================
 
 >> Error
-                                                        Iterations  Samples  Mean [us]   Max [us] Custom Outputs (mean)
+                                                        Iterations Samples Mean [us]  Max [us] Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
 [38;2;255;000;000mthrowing function (threads=1)                      Test exception.[0m
 
