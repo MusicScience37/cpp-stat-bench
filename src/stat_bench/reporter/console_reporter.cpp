@@ -86,14 +86,14 @@ auto format_duration(double val) -> std::string {
     constexpr double sec_to_us = 1e+6;
     constexpr double tol = 1e-4;
     if (val < tol) {
-        return fmt::format(FMT_STRING("{:.3f}"), val * sec_to_us);
+        return fmt::format(FMT_STRING("{:.4f}"), val * sec_to_us);
     }
     return fmt::format(FMT_STRING("{}"), fmt::group_digits(val * sec_to_us));
 }
 
 }  // namespace
 
-#define CONSOLE_TABLE_FORMAT "{:<54}  {:>10} {:>7} {:>9} {:>9} "
+#define CONSOLE_TABLE_FORMAT "{:<58}  {:>10} {:>7} {:>9} {:>9} "
 #define CONSOLE_TABLE_FORMAT_ERROR "{:<50} {}"
 
 void ConsoleReporter::group_starts(const std::string& name) {
