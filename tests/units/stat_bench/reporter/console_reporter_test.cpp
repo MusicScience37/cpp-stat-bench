@@ -30,6 +30,7 @@
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/clock/system_clock.h"
 #include "use_reporter_for_test.h"
+#include "use_reporter_for_test_wide_range.h"
 
 TEST_CASE("stat_bench::reporter::ConsoleReporter") {
     using stat_bench::clock::Duration;
@@ -55,6 +56,31 @@ TEST_CASE("stat_bench::reporter::ConsoleReporter") {
                         ApprovalTests::Scrubbers::createRegexScrubber(
                             R"(\d\.\d\d\d[eE][+-]\d+)", "<float3>")](
                     const std::string& contents) {
+                    return float3_scrubber(time_scrubber(contents));
+                }));
+    }
+
+    SECTION("write values in different ranges") {
+        const auto filepath =
+            std::string("./ConsoleReporterTestDifferentRange");
+        std::FILE* file = std::fopen(filepath.c_str(), "wb");
+
+        const auto reporter =
+            std::make_shared<stat_bench::reporter::ConsoleReporter>(file);
+        REQUIRE_NOTHROW(
+            stat_bench_test::use_reporter_for_test_wide_range(reporter.get()));
+
+        auto contents = stat_bench_test::read_file(filepath);
+        std::replace(contents.begin(), contents.end(), '\x1B', 'e');
+        ApprovalTests::Approvals::verify(contents,
+            ApprovalTests::Options().withScrubber(
+                [time_scrubber = ApprovalTests::Scrubbers::createRegexScrubber(
+                     R"(\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d\.\d\d\d\d\d\d[+-]\d\d\d\d)",
+                     "<time>"),
+                    float3_scrubber =
+                        ApprovalTests::Scrubbers::createRegexScrubber(
+                            R"(\d\.\d\d\d[eE][+-]\d+ sec\.)",
+                            "<resolution> sec.")](const std::string& contents) {
                     return float3_scrubber(time_scrubber(contents));
                 }));
     }

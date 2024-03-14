@@ -2,7 +2,7 @@ cpp-stat-bench 0.15.2
 
 Benchmark start at <time>
 
-Time resolution: <float3> sec.
+Time resolution: <resolution> sec.
 
 ========================================================================================================================
 Measurement1
@@ -11,9 +11,9 @@ Measurement1
 >> Group1
                                                         Iterations  Samples  Mean [us]   Max [us] Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-Case1 (param=value, threads=1)                                1000        2      1,500      2,000 
-Case2 (param=value, threads=1)                                1000        3      4,000      5,000 
-e[38;2;255;000;000mCase3 (param=value, threads=1)                     Test exception.e[0m
+Case1 (param=value, threads=1)                                1000        1      1.000      1.000 
+Case2 (param=value, threads=1)                                1000        1      1,234      1,234 
+Case3 (param=value, threads=1)                                1000        1  1,234,567  1,234,567 
 
 Benchmark finished at <time>
 
