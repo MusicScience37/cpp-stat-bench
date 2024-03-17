@@ -52,7 +52,7 @@ auto WinMonotoneTimePoint::operator-(
     const WinMonotoneTimePoint& right) const noexcept -> Duration {
     static const double resolution =
         1.0 / static_cast<double>(win_monotone_clock_frequency());
-    return Duration(resolution * static_cast<double>(data_ - right.data_))
+    return Duration(resolution * static_cast<double>(data_ - right.data_));
 }
 
 auto WinMonotoneTimePoint::now() noexcept -> WinMonotoneTimePoint {

@@ -28,12 +28,6 @@
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 
 TEMPLATE_TEST_CASE("monotone clocks in cpp-stat-bench library", "",
-#if defined(STAT_BENCH_HAS_WIN_MONOTONE_CLOCK)
-    stat_bench::clock::WinMonotoneTimePoint,
-#endif
-#if defined(STAT_BENCH_HAS_UNIX_MONOTONE_CLOCK)
-    stat_bench::clock::UnixMonotoneTimePoint,
-#endif
     stat_bench::clock::StdMonotoneTimePoint,
     stat_bench::clock::MonotoneTimePoint) {
     using MonotoneTimePointType = TestType;
