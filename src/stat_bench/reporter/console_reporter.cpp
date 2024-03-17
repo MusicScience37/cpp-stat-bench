@@ -29,7 +29,6 @@
 #include <fmt/color.h>
 #include <fmt/format.h>
 
-#include "stat_bench/clock/monotone_clock_impl.h"
 #include "stat_bench/clock/monotone_time_point.h"
 #include "stat_bench/stat/statistics.h"
 #include "stat_bench/version.h"

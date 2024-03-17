@@ -26,7 +26,6 @@
 
 #include "create_test_measurement.h"
 #include "stat_bench/clock/duration.h"
-#include "stat_bench/clock/monotone_clock_impl.h"
 #include "stat_bench/clock/system_clock.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/reporter/i_reporter.h"
