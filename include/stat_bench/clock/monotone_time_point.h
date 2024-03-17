@@ -45,7 +45,8 @@ public:
      */
     [[nodiscard]] auto operator-(const MonotoneTimePoint& right) const noexcept
         -> Duration {
-        return Duration(count_ - right.count_);
+        return Duration(static_cast<double>(count_ - right.count_) /
+            static_cast<double>(impl::monotone_clock_freq()));
     }
 
 private:

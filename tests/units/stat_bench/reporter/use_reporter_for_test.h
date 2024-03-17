@@ -35,8 +35,7 @@ namespace stat_bench_test {
 
 [[nodiscard]] inline auto create_duration(double sec) {
     using stat_bench::clock::Duration;
-    return Duration(static_cast<stat_bench::clock::TicksCount>(
-        sec * static_cast<double>(Duration::freq())));
+    return Duration(sec);
 }
 
 inline void use_reporter_for_test(stat_bench::reporter::IReporter* reporter) {

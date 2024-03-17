@@ -20,6 +20,9 @@
 #include "stat_bench/clock/monotone_time_point.h"
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_floating_point.hpp>
+
+#include "stat_bench/clock/monotone_clock_impl.h"
 
 TEST_CASE("stat_bench::clock::MonotoneTimePoint") {
     SECTION("calculate a duration") {
@@ -32,6 +35,9 @@ TEST_CASE("stat_bench::clock::MonotoneTimePoint") {
         const auto end = stat_bench::clock::MonotoneTimePoint(end_ticks);
         const stat_bench::clock::Duration duration = end - start;
 
-        REQUIRE(duration.count() == duration_ticks);
+        CHECK_THAT(duration.seconds(),
+            Catch::Matchers::WithinRel(static_cast<double>(duration_ticks) /
+                static_cast<double>(
+                    stat_bench::clock::impl::monotone_clock_freq())));
     }
 }

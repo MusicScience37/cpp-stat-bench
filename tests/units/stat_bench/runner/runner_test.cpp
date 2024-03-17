@@ -88,7 +88,7 @@ TEST_CASE("stat_bench::runner::Runner") {
         const auto durations =
             std::vector<std::vector<stat_bench::clock::Duration>>{
                 std::vector<stat_bench::clock::Duration>{
-                    stat_bench::clock::Duration(123)}};
+                    stat_bench::clock::Duration(123.0)}};
         REQUIRE_CALL(*measurer, measure(trompeloeil::_, trompeloeil::_))
             // NOLINTNEXTLINE
             .RETURN(stat_bench::measurer::Measurement(_1->info(), _2,
@@ -122,7 +122,7 @@ TEST_CASE("stat_bench::runner::Runner") {
         REQUIRE(measurement->samples() == samples);
         REQUIRE(measurement->durations().size() == 1);
         REQUIRE(measurement->durations().at(0).size() == 1);
-        REQUIRE(measurement->durations().at(0).at(0).count() == 123);
+        REQUIRE(measurement->durations().at(0).at(0).seconds() == 123.0);
     }
 
     SECTION("perform a benchmark to fail") {
@@ -162,7 +162,7 @@ TEST_CASE("stat_bench::runner::Runner") {
         const auto durations =
             std::vector<std::vector<stat_bench::clock::Duration>>{
                 std::vector<stat_bench::clock::Duration>{
-                    stat_bench::clock::Duration(123)}};
+                    stat_bench::clock::Duration(123.0)}};
         REQUIRE_CALL(*measurer, measure(trompeloeil::_, trompeloeil::_))
             // NOLINTNEXTLINE
             .THROW(std::runtime_error("Test exception."))
@@ -219,7 +219,7 @@ TEST_CASE("stat_bench::runner::Runner") {
         const auto durations =
             std::vector<std::vector<stat_bench::clock::Duration>>{
                 std::vector<stat_bench::clock::Duration>{
-                    stat_bench::clock::Duration(123)}};
+                    stat_bench::clock::Duration(123.0)}};
         std::vector<stat_bench::BenchmarkCondition> conditions;
         REQUIRE_CALL(*measurer, measure(trompeloeil::_, trompeloeil::_))
             // NOLINTNEXTLINE

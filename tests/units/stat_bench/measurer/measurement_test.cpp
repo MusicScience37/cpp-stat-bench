@@ -34,8 +34,8 @@ TEST_CASE("stat_bench::measurer::Measurement") {
         const std::size_t iterations = 7;
         const std::size_t samples = 2;
         const auto durations = std::vector<std::vector<Duration>>{
-            std::vector<Duration>{Duration(1), Duration(2)},
-            std::vector<Duration>{Duration(3), Duration(4)}};
+            std::vector<Duration>{Duration(1.0), Duration(2.0)},
+            std::vector<Duration>{Duration(3.0), Duration(4.0)}};
 
         std::vector<std::shared_ptr<stat_bench::stat::CustomStatOutput>>
             custom_stat_outputs;
@@ -67,11 +67,11 @@ TEST_CASE("stat_bench::measurer::Measurement") {
 
         REQUIRE(measurement.durations().size() == 2);
         REQUIRE(measurement.durations().at(0).size() == 2);
-        REQUIRE(measurement.durations().at(0).at(0).count() == 1);
-        REQUIRE(measurement.durations().at(0).at(1).count() == 2);
+        REQUIRE(measurement.durations().at(0).at(0).seconds() == 1.0);
+        REQUIRE(measurement.durations().at(0).at(1).seconds() == 2.0);
         REQUIRE(measurement.durations().at(1).size() == 2);
-        REQUIRE(measurement.durations().at(1).at(0).count() == 3);
-        REQUIRE(measurement.durations().at(1).at(1).count() == 4);
+        REQUIRE(measurement.durations().at(1).at(0).seconds() == 3.0);
+        REQUIRE(measurement.durations().at(1).at(1).seconds() == 4.0);
         REQUIRE(measurement.durations_stat().sorted_samples().size() == 4);
 
         REQUIRE(measurement.custom_stat_outputs().size() == 1);

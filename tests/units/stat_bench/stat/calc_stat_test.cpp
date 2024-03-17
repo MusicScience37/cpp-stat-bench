@@ -24,17 +24,14 @@
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
 
 #include "stat_bench/clock/duration.h"
-#include "stat_bench/clock/monotone_clock_impl.h"
 
 TEST_CASE("stat_bench::stat::calc_stat(Duration)") {
     using stat_bench::clock::Duration;
 
     SECTION("calculate") {
         constexpr std::size_t iterations = 2;
-        const stat_bench::clock::TicksCount freq = Duration::freq();
         const std::vector<std::vector<Duration>> data{
-            {Duration(4 * freq), Duration(12 * freq)},
-            {Duration(2 * freq), Duration(6 * freq)}};
+            {Duration(4.0), Duration(12.0)}, {Duration(2.0), Duration(6.0)}};
 
         const auto stat = stat_bench::stat::calc_stat(data, iterations);
 
