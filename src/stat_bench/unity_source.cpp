@@ -2,6 +2,7 @@
 #include "bench_impl/benchmark_group.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "bench_impl/invocation_context_registry.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "clock/monotone_clock_impl.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "clock/monotone_time_point.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "filters/composed_filter.cpp"    // NOLINT(bugprone-suspicious-include)
 #include "filters/glob_filter.cpp"        // NOLINT(bugprone-suspicious-include)
 #include "filters/regex_filter.cpp"       // NOLINT(bugprone-suspicious-include)

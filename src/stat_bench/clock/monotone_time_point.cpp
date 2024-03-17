@@ -15,30 +15,31 @@
  */
 /*!
  * \file
- * \brief Definition of MonotoneClock class.
+ * \brief Implementation of MonotoneTimePoint class.
  */
-#pragma once
+#include "stat_bench/clock/monotone_time_point.h"
 
 #include "stat_bench/clock/monotone_clock_impl.h"
-#include "stat_bench/clock/monotone_time_point.h"
 
 namespace stat_bench {
 namespace clock {
 
-/*!
- * \brief Class of a monotone clock.
- */
-class MonotoneClock {
-public:
-    /*!
-     * \brief Get the current time.
-     *
-     * \return Time point.
-     */
-    [[nodiscard]] static auto now() noexcept -> MonotoneTimePoint {
-        return MonotoneTimePoint(impl::monotone_clock_now());
-    }
-};
+MonotoneTimePoint::MonotoneTimePoint(DataType data) noexcept : data_(data) {}
+
+auto MonotoneTimePoint::operator-(const MonotoneTimePoint& right) const noexcept
+    -> Duration {
+    return Duration(static_cast<double>(data_ - right.data_) /
+        static_cast<double>(impl::monotone_clock_freq()));
+}
+
+auto MonotoneTimePoint::now() noexcept -> MonotoneTimePoint {
+    return MonotoneTimePoint(impl::monotone_clock_now());
+}
+
+auto MonotoneTimePoint::resolution() noexcept -> Duration {
+    return Duration(static_cast<double>(impl::monotone_clock_res()) /
+        static_cast<double>(impl::monotone_clock_freq()));
+}
 
 }  // namespace clock
 }  // namespace stat_bench

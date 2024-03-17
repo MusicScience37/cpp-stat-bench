@@ -24,7 +24,6 @@
 #include <vector>
 
 #include "stat_bench/clock/duration.h"
-#include "stat_bench/clock/monotone_clock.h"
 #include "stat_bench/clock/monotone_time_point.h"
 
 namespace stat_bench {
@@ -66,7 +65,7 @@ public:
     /*!
      * \brief Measure a time point for a lap.
      */
-    void lap() { time_points_.push_back(MonotoneClock::now()); }
+    void lap() { time_points_.push_back(MonotoneTimePoint::now()); }
 
     /*!
      * \brief Calculate measured durations.

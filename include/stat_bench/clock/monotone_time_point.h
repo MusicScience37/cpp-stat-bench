@@ -19,23 +19,20 @@
  */
 #pragma once
 
+#include <cstdint>
+
 #include "stat_bench/clock/duration.h"
-#include "stat_bench/clock/monotone_clock_impl.h"
 
 namespace stat_bench {
 namespace clock {
 
 /*!
- * \brief Class of time points of monotone clocks.
+ * \brief Class of time points of the monotone clock.
  */
 class MonotoneTimePoint {
 public:
-    /*!
-     * \brief Constructor.
-     *
-     * \param[in] count Number of ticks.
-     */
-    explicit MonotoneTimePoint(TicksCount count) noexcept : count_(count) {}
+    //! Data type.
+    using DataType = std::int64_t;
 
     /*!
      * \brief Calculate a duration between two time points.
@@ -44,14 +41,32 @@ public:
      * \return Duration.
      */
     [[nodiscard]] auto operator-(const MonotoneTimePoint& right) const noexcept
-        -> Duration {
-        return Duration(static_cast<double>(count_ - right.count_) /
-            static_cast<double>(impl::monotone_clock_freq()));
-    }
+        -> Duration;
+
+    /*!
+     * \brief Get the current time from the monotone clock.
+     *
+     * \return Time point.
+     */
+    [[nodiscard]] static auto now() noexcept -> MonotoneTimePoint;
+
+    /*!
+     * \brief Get the resolution of the monotone clock.
+     *
+     * \return Resolution.
+     */
+    [[nodiscard]] static auto resolution() noexcept -> Duration;
 
 private:
-    //! Number of ticks.
-    TicksCount count_;
+    /*!
+     * \brief Constructor.
+     *
+     * \param[in] data Data.
+     */
+    explicit MonotoneTimePoint(DataType data) noexcept;
+
+    //! Data.
+    DataType data_;
 };
 
 }  // namespace clock

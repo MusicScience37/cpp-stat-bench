@@ -30,6 +30,7 @@
 #include <fmt/format.h>
 
 #include "stat_bench/clock/monotone_clock_impl.h"
+#include "stat_bench/clock/monotone_time_point.h"
 #include "stat_bench/stat/statistics.h"
 #include "stat_bench/version.h"
 
@@ -56,8 +57,7 @@ void ConsoleReporter::experiment_starts(
     fmt::print(file_, FMT_STRING("Benchmark start at {}\n\n"), time_stamp);
 
     fmt::print(file_, FMT_STRING("Time resolution: {:.3e} sec.\n\n"),
-        static_cast<double>(clock::impl::monotone_clock_res()) /
-            static_cast<double>(clock::impl::monotone_clock_freq()));
+        clock::MonotoneTimePoint::resolution().seconds());
 
     (void)std::fflush(file_);
 }
