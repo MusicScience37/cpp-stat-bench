@@ -24,6 +24,66 @@
       }
     },
     {
+      "name": "llvm-debug",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "inherits": "base",
+      "binaryDir": "${sourceDir}/build/Debug",
+      "installDir": "${sourceDir}/install/Debug",
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "toolset": {
+        "value": "host=x64",
+        "strategy": "external"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_C_COMPILER": "clang",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_CXX_FLAGS": "-stdlib=libc++",
+        "VCPKG_TARGET_TRIPLET": "x64-linux-llvm",
+        "VCPKG_HOST_TRIPLET": "x64-linux-llvm",
+        "STAT_BENCH_ENABLE_CCACHE": "ON"
+      }
+    },
+    {
+      "name": "llvm-ausan",
+      "inherits": "llvm-debug",
+      "cacheVariables": {
+        "STAT_BENCH_ENABLE_AUSAN": "ON"
+      }
+    },
+    {
+      "name": "llvm-ausan-doxygen",
+      "inherits": "llvm-ausan",
+      "cacheVariables": {
+        "STAT_BENCH_BUILD_DOC": "ON",
+        "STAT_BENCH_BUILD_DOC_SPHINX": "OFF"
+      }
+    },
+    {
+      "name": "llvm-ausan-docs",
+      "inherits": "llvm-ausan",
+      "cacheVariables": {
+        "STAT_BENCH_BUILD_DOC": "ON",
+        "STAT_BENCH_BUILD_DOC_SPHINX": "ON"
+      }
+    },
+    {
+      "name": "llvm-release",
+      "inherits": "llvm-debug",
+      "binaryDir": "${sourceDir}/build/Release",
+      "installDir": "${sourceDir}/install/Release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
       "name": "msvc-debug",
       "condition": {
         "type": "equals",
@@ -59,6 +119,14 @@
   ],
   "buildPresets": [
     {
+      "name": "llvm-debug-default",
+      "configurePreset": "llvm-debug"
+    },
+    {
+      "name": "llvm-ausan-default",
+      "configurePreset": "llvm-ausan"
+    },
+    {
       "name": "msvc-debug-default",
       "configurePreset": "msvc-debug"
     },
@@ -69,14 +137,30 @@
   ],
   "testPresets": [
     {
-      "name": "msvc-debug-default",
+      "name": "base",
+      "hidden": true,
       "configurePreset": "msvc-debug",
       "output": { "outputOnFailure": true }
     },
     {
+      "name": "llvm-debug-default",
+      "inherits": "base",
+      "configurePreset": "llvm-debug"
+    },
+    {
+      "name": "llvm-ausan-default",
+      "inherits": "base",
+      "configurePreset": "llvm-ausan"
+    },
+    {
+      "name": "msvc-debug-default",
+      "inherits": "base",
+      "configurePreset": "msvc-debug"
+    },
+    {
       "name": "msvc-release-default",
-      "configurePreset": "msvc-release",
-      "output": { "outputOnFailure": true }
+      "inherits": "base",
+      "configurePreset": "msvc-release"
     }
   ]
 }
