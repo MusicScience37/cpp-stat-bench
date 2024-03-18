@@ -114,6 +114,7 @@
     "STREQUAL",
     "threadable",
     "toctree",
+    "toolset",
     "TOUPPER",
     "tqdm",
     "trompeloeil",
