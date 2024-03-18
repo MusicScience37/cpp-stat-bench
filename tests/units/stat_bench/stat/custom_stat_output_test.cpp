@@ -77,10 +77,8 @@ TEST_CASE("stat_bench::stat::CustomStatOutput") {
         output.add(1, 2, 7.0);  // NOLINT
 
         std::vector<std::vector<stat_bench::clock::Duration>> durations{
-            {stat_bench::clock::Duration(
-                 stat_bench::clock::Duration::freq() * 2),
-                stat_bench::clock::Duration(
-                    stat_bench::clock::Duration::freq() * 1)}};
+            {stat_bench::clock::Duration(2.0),
+                stat_bench::clock::Duration(1.0)}};
         output.preprocess(durations);
         const auto stat = output.stat();
         REQUIRE_THAT(stat.mean(), Catch::Matchers::WithinRel(4.5));  // NOLINT
@@ -104,10 +102,8 @@ TEST_CASE("stat_bench::stat::CustomStatOutput") {
         output.add(0, 2, 2.0);  // NOLINT
 
         std::vector<std::vector<stat_bench::clock::Duration>> durations{
-            {stat_bench::clock::Duration(
-                 stat_bench::clock::Duration::freq() * 2),
-                stat_bench::clock::Duration(
-                    stat_bench::clock::Duration::freq() * 1)}};
+            {stat_bench::clock::Duration(2.0),
+                stat_bench::clock::Duration(1.0)}};
         output.preprocess(durations);
         const auto stat = output.stat();
         REQUIRE_THAT(stat.sorted_samples(),

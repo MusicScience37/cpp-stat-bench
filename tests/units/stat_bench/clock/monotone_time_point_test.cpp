@@ -19,19 +19,31 @@
  */
 #include "stat_bench/clock/monotone_time_point.h"
 
+#include <chrono>
+#include <thread>
+
+#include <catch2/catch_template_test_macros.hpp>
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers.hpp>
+#include <catch2/matchers/catch_matchers_floating_point.hpp>
 
-TEST_CASE("stat_bench::clock::MonotoneTimePoint") {
-    SECTION("calculate a duration") {
-        constexpr stat_bench::clock::TicksCount start_ticks = 123;
-        constexpr stat_bench::clock::TicksCount duration_ticks = 37;
-        constexpr stat_bench::clock::TicksCount end_ticks =
-            start_ticks + duration_ticks;
+TEMPLATE_TEST_CASE("monotone clocks in cpp-stat-bench library", "",
+    stat_bench::clock::StdMonotoneTimePoint,
+    stat_bench::clock::MonotoneTimePoint) {
+    using MonotoneTimePointType = TestType;
 
-        const auto start = stat_bench::clock::MonotoneTimePoint(start_ticks);
-        const auto end = stat_bench::clock::MonotoneTimePoint(end_ticks);
-        const stat_bench::clock::Duration duration = end - start;
+    SECTION("measure a duration") {
+        constexpr unsigned int duration_ms = 100;
+        constexpr double duration_sec = 0.1;
 
-        REQUIRE(duration.count() == duration_ticks);
+        const auto start = MonotoneTimePointType::now();
+        std::this_thread::sleep_for(std::chrono::milliseconds(duration_ms));
+        const auto end = MonotoneTimePointType::now();
+
+        const auto actual_duration = end - start;
+        const double actual_duration_sec = actual_duration.seconds();
+        constexpr double tol = 0.5;
+        REQUIRE_THAT(actual_duration_sec,
+            Catch::Matchers::WithinRel(duration_sec, tol));  // NOLINT
     }
 }

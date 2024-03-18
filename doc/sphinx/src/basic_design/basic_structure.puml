@@ -11,20 +11,17 @@ package clock {
 
     class MonotoneTimePoint {
         + operator-(MonotoneTimePoint) : Duration
+        + now() : MonotoneTimePoint
     }
     MonotoneTimePoint ..> Duration
-
-    class MonotoneClock {
-        + now() : TimePoint
-    }
-    MonotoneClock ..> MonotoneTimePoint
 
     class StopWatch {
         + start() : void
         + lap() : void
         + durations() : vector<Duration>
     }
-    StopWatch ..> MonotoneClock
+    StopWatch ..> MonotoneTimePoint
+    StopWatch o-- Duration
 
     class SystemTimePoint {
         + to_string() : string
