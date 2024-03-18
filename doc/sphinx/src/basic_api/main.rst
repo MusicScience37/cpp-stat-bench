@@ -37,5 +37,3 @@ Reporter
     :members: format_to
 
 .. doxygenclass:: stat_bench::clock::Duration
-
-.. doxygentypedef:: stat_bench::clock::TicksCount
