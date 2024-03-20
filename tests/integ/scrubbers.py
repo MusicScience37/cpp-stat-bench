@@ -14,7 +14,9 @@ def scrub_current_time(input: str) -> str:
 
 
 def _scrub_float_impl(input: str) -> str:
-    return "1." + "0" * (len(input) - 2)
+    if len(input) < 3:
+        return input
+    return " " * (len(input) - 3) + "<n>"
 
 
 def scrub_float(input: str) -> str:
@@ -26,7 +28,9 @@ def scrub_float(input: str) -> str:
 
 
 def _scrub_integer_with_comma_impl(input: str) -> str:
-    return "0" * (len(input) - 4) + ",000"
+    if len(input) < 3:
+        return input
+    return " " * (len(input) - 3) + "<n>"
 
 
 def scrub_integer_with_comma(input: str) -> str:

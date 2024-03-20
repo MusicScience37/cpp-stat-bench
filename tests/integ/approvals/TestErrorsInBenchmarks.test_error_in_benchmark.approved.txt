@@ -1,29 +1,31 @@
 exit_code:
 0
 stdout:
-cpp-stat-bench 1.00.3
+cpp-stat-bench  <n>.3
 
 Benchmark start at <time>
 
-Time resolution: 1.0000000 sec.
+Time resolution:       <n> sec.
 
 ========================================================================================================================
 Processing Time
 ========================================================================================================================
 
 >> Error
-                                                            Iterations Samples Mean [us]  Max [us] Custom Outputs (mean)
+                                                                                Time [us]                     
+                                                            Iterations Samples       Mean Std. Err.       Max Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-[38;2;255;000;000mthrowing function (threads=1)                      Test exception.[0m
+[38;2;255;000;000mthrowing function (threads=1)                               Test exception.[0m
 
 ========================================================================================================================
 Mean Processing Time
 ========================================================================================================================
 
 >> Error
-                                                            Iterations Samples Mean [us]  Max [us] Custom Outputs (mean)
+                                                                                Time [us]                     
+                                                            Iterations Samples       Mean Std. Err.       Max Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-[38;2;255;000;000mthrowing function (threads=1)                      Test exception.[0m
+[38;2;255;000;000mthrowing function (threads=1)                               Test exception.[0m
 
 Benchmark finished at <time>
 
