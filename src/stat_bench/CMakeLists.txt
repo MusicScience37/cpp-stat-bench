@@ -5,8 +5,12 @@ target_include_directories(
                       $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 target_link_libraries(
     stat_bench
-    PUBLIC fmt::fmt bfg::lyra nlohmann_json::nlohmann_json
-           cpp_msgpack_light::msgpack_light ZLIB::ZLIB
+    PUBLIC fmt::fmt
+           bfg::lyra
+           nlohmann_json::nlohmann_json
+           cpp_msgpack_light::msgpack_light
+           ZLIB::ZLIB
+           Eigen3::Eigen
            $<BUILD_INTERFACE:stat_bench_cpp_warnings>)
 target_link_libraries(stat_bench PRIVATE pantor::inja)
 set_target_properties(stat_bench PROPERTIES VERSION ${PROJECT_VERSION})

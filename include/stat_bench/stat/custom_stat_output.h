@@ -26,6 +26,7 @@
 #include <vector>
 
 #include "stat_bench/clock/duration.h"
+#include "stat_bench/stat/calc_stat.h"
 #include "stat_bench/stat/statistics.h"
 #include "stat_bench/stat_bench_exception.h"
 
@@ -118,19 +119,7 @@ public:
      *
      * \return Statistics.
      */
-    [[nodiscard]] auto stat() const -> Statistics {
-        const std::size_t used_samples = samples_ - warming_up_samples_;
-        Statistics res;
-        res.reserve(threads_ * used_samples);
-        for (std::size_t i = 0; i < threads_; ++i) {
-            for (std::size_t j = 0; j < used_samples; ++j) {
-                const double val = data_.at(i).at(j);
-                res.add(val);
-            }
-        }
-        res.calc();
-        return res;
-    }
+    [[nodiscard]] auto stat() const -> Statistics { return calc_stat(data_); }
 
     /*!
      * \brief Get the name.

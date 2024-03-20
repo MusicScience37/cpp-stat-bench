@@ -22,6 +22,7 @@
 // IWYU pragma: no_include  <stddef.h>
 #include <cstddef>
 #include <limits>
+#include <utility>
 #include <vector>
 
 namespace stat_bench {
@@ -34,33 +35,27 @@ class Statistics {
 public:
     /*!
      * \brief Constructor.
-     */
-    Statistics();
-
-    /*!
-     * \brief Clear memory.
-     */
-    void clear();
-
-    /*!
-     * \brief Reserve memory for samples.
      *
-     * \param[in] samples Number of samples.
+     * \param[in] unsorted_samples Unsorted samples.
+     * \param[in] sorted_samples Sorted samples.
+     * \param[in] mean Mean.
+     * \param[in] max Max.
+     * \param[in] min Min.
+     * \param[in] median Median.
+     * \param[in] variance Variance.
+     * \param[in] standard_deviation Standard deviation.
      */
-    void reserve(std::size_t samples);
-
-    /*!
-     * \brief Add a sample.
-     *
-     * \param[in] val Sample value.
-     */
-    void add(double val);
-
-    /*!
-     * \brief Calculate statistics.
-     */
-    void calc();
-
+    Statistics(std::vector<double> unsorted_samples,
+        std::vector<double> sorted_samples, double mean, double max, double min,
+        double median, double variance, double standard_deviation)
+        : unsorted_samples_(std::move(unsorted_samples)),
+          sorted_samples_(std::move(sorted_samples)),
+          mean_(mean),
+          max_(max),
+          min_(min),
+          median_(median),
+          variance_(variance),
+          standard_deviation_(standard_deviation) {}
     /*!
      * \brief Get the unsorted samples.
      *

@@ -24,7 +24,6 @@
 #include "runner/command_line_parser.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "runner/runner.cpp"            // NOLINT(bugprone-suspicious-include)
 #include "stat/calc_stat.cpp"           // NOLINT(bugprone-suspicious-include)
-#include "stat/statistics.cpp"          // NOLINT(bugprone-suspicious-include)
 #include "use_pointer.cpp"              // NOLINT(bugprone-suspicious-include)
 #include "util/check_glob_pattern.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "util/escape_for_html.cpp"     // NOLINT(bugprone-suspicious-include)

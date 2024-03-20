@@ -45,6 +45,7 @@
     "DSTAT",
     "DVCPKG",
     "dylib",
+    "Eigen",
     "endforeach",
     "endfunction",
     "endmacro",
