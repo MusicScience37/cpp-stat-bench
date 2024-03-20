@@ -1,11 +1,11 @@
 exit_code:
 0
 stdout:
-cpp-stat-bench  <n>.3
+cpp-stat-bench 0.15.3
 
 Benchmark start at <time>
 
-Time resolution:       <n> sec.
+Time resolution:          n sec.
 
 ========================================================================================================================
 Processing Time
@@ -15,8 +15,8 @@ Processing Time
                                                                                 Time [us]                     
                                                             Iterations Samples       Mean Std. Err.       Max Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-Case1 (threads=1)                                                    1       3        <n>       <n>       <n> 
-Case2 (threads=1)                                                    1       3        <n>       <n>       <n> 
+Case1 (threads=1)                                                     n        n           n          n          n 
+Case2 (threads=1)                                                     n        n           n          n          n 
 
 ========================================================================================================================
 Mean Processing Time
@@ -26,8 +26,8 @@ Mean Processing Time
                                                                                 Time [us]                     
                                                             Iterations Samples       Mean Std. Err.       Max Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-Case1 (threads=1)                                                    1       2        <n>       <n>       <n> 
-Case2 (threads=1)                                                    1       2        <n>       <n>       <n> 
+Case1 (threads=1)                                                     n        n           n          n          n 
+Case2 (threads=1)                                                     n        n           n          n          n 
 
 Benchmark finished at <time>
 

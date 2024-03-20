@@ -1,11 +1,11 @@
 exit_code:
 0
 stdout:
-cpp-stat-bench  <n>.3
+cpp-stat-bench 0.15.3
 
 Benchmark start at <time>
 
-Time resolution:       <n> sec.
+Time resolution:          n sec.
 
 ========================================================================================================================
 Processing Time
