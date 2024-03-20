@@ -25,7 +25,6 @@ set(SOURCE_FILES
     runner/command_line_parser.cpp
     runner/runner.cpp
     stat/calc_stat.cpp
-    stat/statistics.cpp
     use_pointer.cpp
     util/check_glob_pattern.cpp
     util/escape_for_html.cpp

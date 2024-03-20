@@ -29,8 +29,8 @@ namespace data_file_spec {
 
 #ifndef STAT_BENCH_DOCUMENTATION
 
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
-    StatData, mean, max, min, variance, standard_deviation)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(StatData, mean, max, min, median, variance,
+    standard_deviation, standard_error)
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(DurationData, stat, values)
 

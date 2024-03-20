@@ -9,6 +9,7 @@
     "approval-tests-cpp",
     "inja",
     "cpp-msgpack-light",
-    "zlib"
+    "zlib",
+    "eigen3"
   ]
 }

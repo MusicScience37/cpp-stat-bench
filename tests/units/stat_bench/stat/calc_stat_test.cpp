@@ -19,6 +19,8 @@
  */
 #include "stat_bench/stat/calc_stat.h"
 
+#include <cmath>
+
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers.hpp>
 #include <catch2/matchers/catch_matchers_floating_point.hpp>
@@ -35,9 +37,38 @@ TEST_CASE("stat_bench::stat::calc_stat(Duration)") {
 
         const auto stat = stat_bench::stat::calc_stat(data, iterations);
 
-        REQUIRE(stat.sorted_samples() ==
-            std::vector<double>{1.0, 2.0, 3.0, 6.0});                // NOLINT
-        REQUIRE_THAT(stat.mean(), Catch::Matchers::WithinRel(3.0));  // NOLINT
+        CHECK(stat.sorted_samples() ==
+            std::vector<double>{1.0, 2.0, 3.0, 6.0});                 // NOLINT
+        CHECK_THAT(stat.mean(), Catch::Matchers::WithinRel(3.0));     // NOLINT
+        CHECK(stat.max() == 6.0);                                     // NOLINT
+        CHECK(stat.min() == 1.0);                                     // NOLINT
+        CHECK(stat.median() == 2.5);                                  // NOLINT
+        CHECK(stat.variance() == 14.0 / 3.0);                         // NOLINT
+        CHECK(stat.standard_deviation() == std::sqrt(14.0 / 3.0));    // NOLINT
+        CHECK(stat.standard_error() == std::sqrt(14.0 / 3.0 / 4.0));  // NOLINT
+    }
+
+    SECTION("calculate for only one sample") {
+        constexpr std::size_t iterations = 2;
+        const std::vector<std::vector<Duration>> data{{Duration(4.0)}};
+
+        const auto stat = stat_bench::stat::calc_stat(data, iterations);
+
+        CHECK(stat.sorted_samples() == std::vector<double>{2.0});  // NOLINT
+        CHECK_THAT(stat.mean(), Catch::Matchers::WithinRel(2.0));  // NOLINT
+        CHECK(stat.max() == 2.0);                                  // NOLINT
+        CHECK(stat.min() == 2.0);                                  // NOLINT
+        CHECK(stat.median() == 2.0);                               // NOLINT
+        CHECK(stat.variance() == 0.0);                             // NOLINT
+        CHECK(stat.standard_deviation() == 0.0);                   // NOLINT
+        CHECK(stat.standard_error() == 0.0);                       // NOLINT
+    }
+
+    SECTION("calculate without any samples") {
+        constexpr std::size_t iterations = 2;
+        const std::vector<std::vector<Duration>> data{{}};
+
+        CHECK_THROWS(stat_bench::stat::calc_stat(data, iterations));
     }
 }
 
@@ -47,8 +78,35 @@ TEST_CASE("stat_bench::stat::calc_stat(double)") {
 
         const auto stat = stat_bench::stat::calc_stat(data);
 
-        REQUIRE(stat.sorted_samples() ==
-            std::vector<double>{1.0, 2.0, 3.0, 6.0});                // NOLINT
-        REQUIRE_THAT(stat.mean(), Catch::Matchers::WithinRel(3.0));  // NOLINT
+        CHECK(stat.sorted_samples() ==
+            std::vector<double>{1.0, 2.0, 3.0, 6.0});                 // NOLINT
+        CHECK_THAT(stat.mean(), Catch::Matchers::WithinRel(3.0));     // NOLINT
+        CHECK(stat.max() == 6.0);                                     // NOLINT
+        CHECK(stat.min() == 1.0);                                     // NOLINT
+        CHECK(stat.median() == 2.5);                                  // NOLINT
+        CHECK(stat.variance() == 14.0 / 3.0);                         // NOLINT
+        CHECK(stat.standard_deviation() == std::sqrt(14.0 / 3.0));    // NOLINT
+        CHECK(stat.standard_error() == std::sqrt(14.0 / 3.0 / 4.0));  // NOLINT
+    }
+
+    SECTION("calculate for only one sample") {
+        const std::vector<std::vector<double>> data{{2.0}};
+
+        const auto stat = stat_bench::stat::calc_stat(data);
+
+        CHECK(stat.sorted_samples() == std::vector<double>{2.0});  // NOLINT
+        CHECK_THAT(stat.mean(), Catch::Matchers::WithinRel(2.0));  // NOLINT
+        CHECK(stat.max() == 2.0);                                  // NOLINT
+        CHECK(stat.min() == 2.0);                                  // NOLINT
+        CHECK(stat.median() == 2.0);                               // NOLINT
+        CHECK(stat.variance() == 0.0);                             // NOLINT
+        CHECK(stat.standard_deviation() == 0.0);                   // NOLINT
+        CHECK(stat.standard_error() == 0.0);                       // NOLINT
+    }
+
+    SECTION("calculate for only one sample") {
+        const std::vector<std::vector<double>> data{{}};
+
+        CHECK_THROWS(stat_bench::stat::calc_stat(data));
     }
 }

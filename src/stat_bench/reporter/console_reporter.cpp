@@ -19,6 +19,7 @@
  */
 #include "stat_bench/reporter/console_reporter.h"
 
+#include <cstdint>
 #include <cstdio>
 #include <memory>
 #include <type_traits>
@@ -87,18 +88,21 @@ auto format_duration(double val) -> std::string {
     if (val < tol) {
         return fmt::format(FMT_STRING("{:.4f}"), val * sec_to_us);
     }
-    return fmt::format(FMT_STRING("{}"), fmt::group_digits(val * sec_to_us));
+    return fmt::format(FMT_STRING("{}"),
+        fmt::group_digits(static_cast<std::uint64_t>(val * sec_to_us)));
 }
 
 }  // namespace
 
-#define CONSOLE_TABLE_FORMAT "{:<58}  {:>10} {:>7} {:>9} {:>9} "
-#define CONSOLE_TABLE_FORMAT_ERROR "{:<50} {}"
+#define CONSOLE_TABLE_FORMAT "{:<58}  {:>10} {:>7}  {:>9} {:>9} {:>9} "
+#define CONSOLE_TABLE_FORMAT_ERROR "{:<58}  {}"
 
 void ConsoleReporter::group_starts(const std::string& name) {
     fmt::print(file_, FMT_STRING(">> {}\n"), name);
+    fmt::print(file_, FMT_STRING(CONSOLE_TABLE_FORMAT "{}\n"), "", "", "",
+        "Time [us]", "", "", "");
     fmt::print(file_, FMT_STRING(CONSOLE_TABLE_FORMAT "{}\n"), "", "Iterations",
-        "Samples", "Mean [us]", "Max [us]", "Custom Outputs (mean)");
+        "Samples", "Mean", "Std. Err.", "Max", "Custom Outputs (mean)");
     print_line(file_, '-');
     (void)std::fflush(file_);
 }
@@ -123,6 +127,7 @@ void ConsoleReporter::measurement_succeeded(
             measurement.cond().params()),
         measurement.iterations(), measurement.samples(),
         format_duration(measurement.durations_stat().mean()),
+        format_duration(measurement.durations_stat().standard_error()),
         format_duration(measurement.durations_stat().max()));
     for (std::size_t i = 0; i < measurement.custom_stat_outputs().size(); ++i) {
         fmt::print(file_, FMT_STRING("{}={:.3e}, "),

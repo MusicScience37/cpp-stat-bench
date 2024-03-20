@@ -27,7 +27,7 @@
 #ifndef STAT_BENCH_DOCUMENTATION
 
 MSGPACK_LIGHT_STRUCT_MAP(stat_bench::reporter::data_file_spec::StatData, mean,
-    max, min, variance, standard_deviation);
+    max, min, median, variance, standard_deviation, standard_error);
 MSGPACK_LIGHT_STRUCT_MAP(
     stat_bench::reporter::data_file_spec::DurationData, stat, values);
 MSGPACK_LIGHT_STRUCT_MAP(

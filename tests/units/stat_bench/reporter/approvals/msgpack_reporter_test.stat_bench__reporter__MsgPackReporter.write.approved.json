@@ -9,8 +9,10 @@
         "stat": {
           "max": 2.000e-03,
           "mean": 1.500e-03,
+          "median": 1.500e-03,
           "min": 1.000e-03,
           "standard_deviation": 7.071e-04,
+          "standard_error": 5.000e-04,
           "variance": 5.000e-07
         },
         "values": [
@@ -37,8 +39,10 @@
         "stat": {
           "max": 5.000e-03,
           "mean": 4.000e-03,
+          "median": 4.000e-03,
           "min": 3.000e-03,
           "standard_deviation": 1.000e-03,
+          "standard_error": 5.774e-04,
           "variance": 1.000e-06
         },
         "values": [
