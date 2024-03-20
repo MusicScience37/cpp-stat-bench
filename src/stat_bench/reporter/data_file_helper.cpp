@@ -38,8 +38,9 @@ auto convert(const param::ParameterDict& params)
 auto convert(const stat::Statistics& stat) -> StatData {
     return StatData{static_cast<float>(stat.mean()),
         static_cast<float>(stat.max()), static_cast<float>(stat.min()),
-        static_cast<float>(stat.variance()),
-        static_cast<float>(stat.standard_deviation())};
+        static_cast<float>(stat.median()), static_cast<float>(stat.variance()),
+        static_cast<float>(stat.standard_deviation()),
+        static_cast<float>(stat.standard_error())};
 }
 
 auto convert(const std::vector<std::vector<clock::Duration>>& durations,

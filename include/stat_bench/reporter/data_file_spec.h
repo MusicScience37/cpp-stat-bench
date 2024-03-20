@@ -41,11 +41,17 @@ struct StatData {
     //! Min.
     float min{};
 
+    //! Median.
+    float median{};
+
     //! Variance.
     float variance{};
 
     //! Standard deviation.
     float standard_deviation{};
+
+    //! Standard error.
+    float standard_error{};
 };
 
 /*!

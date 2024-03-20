@@ -19,9 +19,6 @@
  */
 #pragma once
 
-// IWYU pragma: no_include  <stddef.h>
-#include <cstddef>
-#include <limits>
 #include <utility>
 #include <vector>
 
@@ -44,10 +41,12 @@ public:
      * \param[in] median Median.
      * \param[in] variance Variance.
      * \param[in] standard_deviation Standard deviation.
+     * \param[in] standard_error Standard error.
      */
     Statistics(std::vector<double> unsorted_samples,
         std::vector<double> sorted_samples, double mean, double max, double min,
-        double median, double variance, double standard_deviation)
+        double median, double variance, double standard_deviation,
+        double standard_error)
         : unsorted_samples_(std::move(unsorted_samples)),
           sorted_samples_(std::move(sorted_samples)),
           mean_(mean),
@@ -55,7 +54,8 @@ public:
           min_(min),
           median_(median),
           variance_(variance),
-          standard_deviation_(standard_deviation) {}
+          standard_deviation_(standard_deviation),
+          standard_error_(standard_error) {}
     /*!
      * \brief Get the unsorted samples.
      *
@@ -98,6 +98,13 @@ public:
     [[nodiscard]] auto min() const noexcept -> double { return min_; }
 
     /*!
+     * \brief Get the median.
+     *
+     * \return Median.
+     */
+    [[nodiscard]] auto median() const noexcept -> double { return median_; }
+
+    /*!
      * \brief Get the variance.
      *
      * \return Variance.
@@ -113,30 +120,42 @@ public:
         return standard_deviation_;
     }
 
+    /*!
+     * \brief Get the standard error.
+     *
+     * \return Standard error.
+     */
+    [[nodiscard]] auto standard_error() const noexcept -> double {
+        return standard_error_;
+    }
+
 private:
     //! Unsorted samples.
-    std::vector<double> unsorted_samples_{};
+    std::vector<double> unsorted_samples_;
 
     //! Sorted samples.
-    std::vector<double> sorted_samples_{};
+    std::vector<double> sorted_samples_;
 
     //! Mean.
-    double mean_{0.0};
+    double mean_;
 
     //! Max.
-    double max_{std::numeric_limits<double>::min()};
+    double max_;
 
     //! Min.
-    double min_{std::numeric_limits<double>::max()};
+    double min_;
 
     //! Median.
-    double median_{0.0};
+    double median_;
 
     //! Variance.
-    double variance_{0.0};
+    double variance_;
 
     //! Standard deviation.
-    double standard_deviation_{0.0};
+    double standard_deviation_;
+
+    //! Standard error.
+    double standard_error_;
 };
 
 }  // namespace stat

@@ -36,12 +36,14 @@ TEST_CASE("stat_bench::stat::calc_stat(Duration)") {
         const auto stat = stat_bench::stat::calc_stat(data, iterations);
 
         CHECK(stat.sorted_samples() ==
-            std::vector<double>{1.0, 2.0, 3.0, 6.0});               // NOLINT
-        CHECK_THAT(stat.mean(), Catch::Matchers::WithinRel(3.0));   // NOLINT
-        CHECK(stat.max() == 6.0);                                   // NOLINT
-        CHECK(stat.min() == 1.0);                                   // NOLINT
-        CHECK(stat.variance() == 14.0 / 3.0);                       // NOLINT
-        CHECK(stat.standard_deviation() == std::sqrt(14.0 / 3.0));  // NOLINT
+            std::vector<double>{1.0, 2.0, 3.0, 6.0});                 // NOLINT
+        CHECK_THAT(stat.mean(), Catch::Matchers::WithinRel(3.0));     // NOLINT
+        CHECK(stat.max() == 6.0);                                     // NOLINT
+        CHECK(stat.min() == 1.0);                                     // NOLINT
+        CHECK(stat.median() == 2.5);                                  // NOLINT
+        CHECK(stat.variance() == 14.0 / 3.0);                         // NOLINT
+        CHECK(stat.standard_deviation() == std::sqrt(14.0 / 3.0));    // NOLINT
+        CHECK(stat.standard_error() == std::sqrt(14.0 / 3.0 / 4.0));  // NOLINT
     }
 
     SECTION("calculate for only one sample") {
@@ -54,8 +56,10 @@ TEST_CASE("stat_bench::stat::calc_stat(Duration)") {
         CHECK_THAT(stat.mean(), Catch::Matchers::WithinRel(2.0));  // NOLINT
         CHECK(stat.max() == 2.0);                                  // NOLINT
         CHECK(stat.min() == 2.0);                                  // NOLINT
+        CHECK(stat.median() == 2.0);                               // NOLINT
         CHECK(stat.variance() == 0.0);                             // NOLINT
         CHECK(stat.standard_deviation() == 0.0);                   // NOLINT
+        CHECK(stat.standard_error() == 0.0);                       // NOLINT
     }
 
     SECTION("calculate without any samples") {
@@ -73,12 +77,14 @@ TEST_CASE("stat_bench::stat::calc_stat(double)") {
         const auto stat = stat_bench::stat::calc_stat(data);
 
         CHECK(stat.sorted_samples() ==
-            std::vector<double>{1.0, 2.0, 3.0, 6.0});               // NOLINT
-        CHECK_THAT(stat.mean(), Catch::Matchers::WithinRel(3.0));   // NOLINT
-        CHECK(stat.max() == 6.0);                                   // NOLINT
-        CHECK(stat.min() == 1.0);                                   // NOLINT
-        CHECK(stat.variance() == 14.0 / 3.0);                       // NOLINT
-        CHECK(stat.standard_deviation() == std::sqrt(14.0 / 3.0));  // NOLINT
+            std::vector<double>{1.0, 2.0, 3.0, 6.0});                 // NOLINT
+        CHECK_THAT(stat.mean(), Catch::Matchers::WithinRel(3.0));     // NOLINT
+        CHECK(stat.max() == 6.0);                                     // NOLINT
+        CHECK(stat.min() == 1.0);                                     // NOLINT
+        CHECK(stat.median() == 2.5);                                  // NOLINT
+        CHECK(stat.variance() == 14.0 / 3.0);                         // NOLINT
+        CHECK(stat.standard_deviation() == std::sqrt(14.0 / 3.0));    // NOLINT
+        CHECK(stat.standard_error() == std::sqrt(14.0 / 3.0 / 4.0));  // NOLINT
     }
 
     SECTION("calculate for only one sample") {
@@ -90,8 +96,10 @@ TEST_CASE("stat_bench::stat::calc_stat(double)") {
         CHECK_THAT(stat.mean(), Catch::Matchers::WithinRel(2.0));  // NOLINT
         CHECK(stat.max() == 2.0);                                  // NOLINT
         CHECK(stat.min() == 2.0);                                  // NOLINT
+        CHECK(stat.median() == 2.0);                               // NOLINT
         CHECK(stat.variance() == 0.0);                             // NOLINT
         CHECK(stat.standard_deviation() == 0.0);                   // NOLINT
+        CHECK(stat.standard_error() == 0.0);                       // NOLINT
     }
 
     SECTION("calculate for only one sample") {

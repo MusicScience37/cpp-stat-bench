@@ -55,7 +55,11 @@ auto calc_stat(const std::vector<std::vector<clock::Duration>>& durations,
     const double max = vector.maxCoeff();
     const double min = vector.minCoeff();
 
-    const double median = sorted_samples.at(sorted_samples.size() / 2);
+    double median = sorted_samples.at(sorted_samples.size() / 2);
+    if (sorted_samples.size() % 2 == 0) {
+        median += sorted_samples.at(sorted_samples.size() / 2 - 1);
+        median *= 0.5;  // NOLINT(readability-magic-numbers)
+    }
 
     double variance = 0.0;
     if (sorted_samples.size() >= 2) {
@@ -63,9 +67,11 @@ auto calc_stat(const std::vector<std::vector<clock::Duration>>& durations,
             static_cast<double>(sorted_samples.size() - 1);
     }
     const double standard_variance = std::sqrt(variance);
+    const double standard_error =
+        std::sqrt(variance / static_cast<double>(sorted_samples.size()));
 
     return Statistics(std::move(unsorted_samples), std::move(sorted_samples),
-        mean, max, min, median, variance, standard_variance);
+        mean, max, min, median, variance, standard_variance, standard_error);
 }
 
 auto calc_stat(const std::vector<std::vector<double>>& values)
@@ -94,7 +100,11 @@ auto calc_stat(const std::vector<std::vector<double>>& values)
     const double max = vector.maxCoeff();
     const double min = vector.minCoeff();
 
-    const double median = sorted_samples.at(sorted_samples.size() / 2);
+    double median = sorted_samples.at(sorted_samples.size() / 2);
+    if (sorted_samples.size() % 2 == 0) {
+        median += sorted_samples.at(sorted_samples.size() / 2 - 1);
+        median *= 0.5;  // NOLINT(readability-magic-numbers)
+    }
 
     double variance = 0.0;
     if (sorted_samples.size() >= 2) {
@@ -102,9 +112,11 @@ auto calc_stat(const std::vector<std::vector<double>>& values)
             static_cast<double>(sorted_samples.size() - 1);
     }
     const double standard_variance = std::sqrt(variance);
+    const double standard_error =
+        std::sqrt(variance / static_cast<double>(sorted_samples.size()));
 
     return Statistics(std::move(unsorted_samples), std::move(sorted_samples),
-        mean, max, min, median, variance, standard_variance);
+        mean, max, min, median, variance, standard_variance, standard_error);
 }
 
 }  // namespace stat
