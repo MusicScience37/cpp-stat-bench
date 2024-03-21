@@ -109,7 +109,8 @@ public:
             }
         } catch (const std::exception& e) {
             // If thread cannot be created, nothing can be done here.
-            std::cerr << e.what() << std::endl;
+            std::cerr << e.what()
+                      << std::endl;  // NOLINT(performance-avoid-endl)
             std::abort();
         }
         for (auto& thread : threads) {

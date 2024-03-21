@@ -44,14 +44,16 @@ inline auto default_main(int argc, const char** argv) noexcept -> int {
         stat_bench::runner::CommandLineParser parser;
         parser.parse_cli(argc, argv);
         if (parser.config().show_help) {
-            std::cout << parser.cli() << std::endl;
+            std::cout << parser.cli()
+                      << std::endl;  // NOLINT(performance-avoid-endl)
             return EXIT_SUCCESS;
         }
         stat_bench::runner::Runner runner{parser.config()};
         runner.run();
         return EXIT_SUCCESS;
     } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
+        std::cerr << "Error: " << e.what()
+                  << std::endl;  // NOLINT(performance-avoid-endl)
         return EXIT_FAILURE;
     }
 }
