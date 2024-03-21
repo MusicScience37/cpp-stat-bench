@@ -15,7 +15,7 @@ Processing Time
                                                                                 Time [us]                     
                                                             Iterations Samples       Mean Std. Err.       Max Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-[38;2;255;000;000mthrowing function ()                                        Test exception.[0m
+[38;2;255;000;000mthrowing function                                           Test exception.[0m
 
 ========================================================================================================================
 Mean Processing Time
@@ -25,7 +25,7 @@ Mean Processing Time
                                                                                 Time [us]                     
                                                             Iterations Samples       Mean Std. Err.       Max Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-[38;2;255;000;000mthrowing function ()                                        Test exception.[0m
+[38;2;255;000;000mthrowing function                                           Test exception.[0m
 
 Benchmark finished at <time>
 

@@ -19,6 +19,7 @@
  */
 #include "stat_bench/param/parameter_dict.h"
 
+#include <set>
 #include <utility>
 
 #include <fmt/format.h>
@@ -29,6 +30,8 @@ namespace param {
 ParameterDict::ParameterDict(
     std::unordered_map<std::string, ParameterValue> data)
     : data_(std::move(data)) {}
+
+auto ParameterDict::empty() const noexcept -> bool { return data_.empty(); }
 
 auto ParameterDict::has(const std::string& param_name) const -> bool {
     return data_.count(param_name) == 1;

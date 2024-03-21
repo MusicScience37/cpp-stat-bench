@@ -19,7 +19,6 @@
  */
 #pragma once
 
-#include <set>
 #include <string>
 #include <unordered_map>
 #include <utility>
@@ -44,6 +43,14 @@ public:
      */
     explicit ParameterDict(
         std::unordered_map<std::string, ParameterValue> data);
+
+    /*!
+     * \brief Check whether this is empty.
+     *
+     * \retval true This has no parameter.
+     * \retval false This has one or more parameters.
+     */
+    [[nodiscard]] auto empty() const noexcept -> bool;
 
     /*!
      * \brief Check whether this has a parameter with a name.

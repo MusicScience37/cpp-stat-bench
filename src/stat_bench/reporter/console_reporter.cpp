@@ -22,8 +22,6 @@
 #include <cstdint>
 #include <cstdio>
 #include <memory>
-#include <type_traits>
-#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -120,11 +118,24 @@ void ConsoleReporter::case_finished(const BenchmarkFullName& /*case_info*/) {
     // no operation
 }
 
+namespace {
+
+auto format_case_name_with_params(const BenchmarkFullName& case_info,
+    const BenchmarkCondition& cond) -> std::string {
+    if (cond.params().empty()) {
+        return case_info.case_name();
+    }
+    return fmt::format(
+        FMT_STRING("{} ({}) "), case_info.case_name(), cond.params());
+}
+
+}  // namespace
+
 void ConsoleReporter::measurement_succeeded(
     const measurer::Measurement& measurement) {
     fmt::print(file_, FMT_STRING(CONSOLE_TABLE_FORMAT),
-        fmt::format(FMT_STRING("{} ({}) "), measurement.case_info().case_name(),
-            measurement.cond().params()),
+        format_case_name_with_params(
+            measurement.case_info(), measurement.cond()),
         measurement.iterations(), measurement.samples(),
         format_duration(measurement.durations_stat().mean()),
         format_duration(measurement.durations_stat().standard_error()),
@@ -148,9 +159,7 @@ void ConsoleReporter::measurement_failed(const BenchmarkFullName& case_info,
     } catch (const std::exception& e) {
         fmt::print(file_, fmt::fg(fmt::color::red),
             FMT_STRING(CONSOLE_TABLE_FORMAT_ERROR),
-            fmt::format(
-                FMT_STRING("{} ({}) "), case_info.case_name(), cond.params()),
-            e.what());
+            format_case_name_with_params(case_info, cond), e.what());
     }
     fmt::print(file_, "\n");
     (void)std::fflush(file_);
