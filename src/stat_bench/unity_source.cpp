@@ -10,6 +10,7 @@
 #include "measurer/mean_processing_time_measurer.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "measurer/measure_once.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "measurer/processing_time_measurer.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "param/parameter_dict.cpp"       // NOLINT(bugprone-suspicious-include)
 #include "param/parameter_generator.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "reporter/cdf_line_plot_reporter.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "reporter/compressed_msgpack_reporter.cpp"  // NOLINT(bugprone-suspicious-include)

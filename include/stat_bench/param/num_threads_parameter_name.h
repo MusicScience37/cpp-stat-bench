@@ -1,5 +1,5 @@
 /*
- * Copyright 2023 MusicScience37 (Kenta Kabashima)
+ * Copyright 2024 MusicScience37 (Kenta Kabashima)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,17 +15,24 @@
  */
 /*!
  * \file
- * \brief Definition of data_file_schema_url constant.
+ * \brief Definition of num_threads_parameter_name function.
  */
 #pragma once
 
-#include <string_view>
+#include <string>
 
 namespace stat_bench {
-namespace reporter {
+namespace param {
 
-inline constexpr std::string_view data_file_schema_url =
-    "https://cppstatbench.musicscience37.com/schemas/data_file_schema_v3.json";
+/*!
+ * \brief Get the parameter name for the number of threads.
+ *
+ * \return Parameter name.
+ */
+inline auto num_threads_parameter_name() -> const std::string& {
+    static std::string name = "threads";
+    return name;
+}
 
-}  // namespace reporter
+}  // namespace param
 }  // namespace stat_bench

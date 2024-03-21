@@ -143,9 +143,6 @@ void Runner::run() const {
 void Runner::run_case(const std::shared_ptr<measurer::IMeasurer>& measurer,
     const std::shared_ptr<bench_impl::IBenchmarkCase>& bench_case) const {
     auto params = bench_case->params();
-    if (!params.has("threads")) {
-        params.add<std::size_t>("threads")->add(1);
-    }
     auto generator = params.create_generator();
 
     while (true) {

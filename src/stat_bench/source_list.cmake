@@ -11,6 +11,7 @@ set(SOURCE_FILES
     measurer/mean_processing_time_measurer.cpp
     measurer/measure_once.cpp
     measurer/processing_time_measurer.cpp
+    param/parameter_dict.cpp
     param/parameter_generator.cpp
     reporter/cdf_line_plot_reporter.cpp
     reporter/compressed_msgpack_reporter.cpp

@@ -38,9 +38,6 @@ ParameterGenerator::ParameterGenerator(const std::vector<
         params_.push_back(ParamData{param.first, param.second,
             param.second->begin(), param.second->begin(), param.second->end()});
     }
-    if (params_.empty()) {
-        throw StatBenchException("No parameters.");
-    }
 }
 
 auto ParameterGenerator::iterate() -> bool {

@@ -13,7 +13,7 @@ from .bench_executor import BenchExecutor
 
 THIS_DIR = pathlib.Path(__file__).absolute().parent
 SCHEMAS_DIR = THIS_DIR.parent.parent / "schemas"
-CURRENT_SCHEMA_FILE = SCHEMAS_DIR / "data_file_schema_v2.json"
+CURRENT_SCHEMA_FILE = SCHEMAS_DIR / "data_file_schema_v3.json"
 
 
 @pytest.fixture

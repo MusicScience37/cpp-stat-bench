@@ -28,6 +28,20 @@
 #include "stat_bench/param/parameter_value.h"
 
 TEST_CASE("stat_bench::param::ParameterDict") {
+    SECTION("check parameter existence") {
+        std::unordered_map<std::string, stat_bench::param::ParameterValue> data;
+        data.emplace("Param1",
+            stat_bench::param::ParameterValue().emplace<int>(5));  // NOLINT
+        data.emplace("Param2",
+            stat_bench::param::ParameterValue().emplace<std::string>("Value2"));
+
+        const auto dict = stat_bench::param::ParameterDict(std::move(data));
+
+        CHECK(dict.has("Param1"));
+        CHECK(dict.has("Param2"));
+        CHECK_FALSE(dict.has("Param3"));
+    }
+
     SECTION("get parameter") {
         std::unordered_map<std::string, stat_bench::param::ParameterValue> data;
         data.emplace("Param1",
