@@ -22,7 +22,6 @@
 #include <chrono>
 #include <memory>
 #include <thread>
-#include <type_traits>
 #include <vector>
 
 #include <catch2/catch_message.hpp>

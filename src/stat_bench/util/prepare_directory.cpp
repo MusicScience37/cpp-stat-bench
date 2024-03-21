@@ -19,7 +19,6 @@
  */
 #include "stat_bench/util/prepare_directory.h"
 
-// IWYU pragma: no_include  <stddef.h>
 #include <cstddef>
 
 #ifdef _WIN32
@@ -73,6 +72,7 @@ void prepare_directory_for(const std::string& path) {
 #else
 
 #include <sys/stat.h>  // mkdir, stat
+#include <sys/types.h>
 
 namespace stat_bench {
 namespace util {
@@ -99,6 +99,7 @@ void prepare_directory(const std::string& path) {
         if (parent.empty() || path_exists(parent)) {
             continue;
         }
+        // NOLINTNEXTLINE(google-readability-casting): This is constructor.
         const auto mode = ::mode_t(0755);
         ::mkdir(parent.c_str(), mode);
         if (pos >= path.size()) {

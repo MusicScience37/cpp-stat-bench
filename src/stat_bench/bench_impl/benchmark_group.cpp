@@ -20,10 +20,9 @@
 #include "stat_bench/bench_impl/benchmark_group.h"
 
 #include <algorithm>
-#include <type_traits>
 #include <utility>
 
-#include <fmt/format.h>
+#include <fmt/core.h>
 
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/stat_bench_exception.h"

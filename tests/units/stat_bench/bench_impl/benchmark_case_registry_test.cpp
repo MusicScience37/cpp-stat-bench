@@ -20,7 +20,6 @@
 #include "stat_bench/bench_impl/benchmark_case_registry.h"
 
 #include <string>
-#include <type_traits>
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers.hpp>

@@ -19,8 +19,6 @@
  */
 #include "stat_bench/bench_impl/benchmark_group.h"
 
-#include <type_traits>
-
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers.hpp>
 #include <catch2/matchers/catch_matchers_container_properties.hpp>

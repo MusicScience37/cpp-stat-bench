@@ -19,8 +19,6 @@
  */
 #pragma once
 
-// IWYU pragma: no_include <stddef.h>
-// IWYU pragma: no_include <type_traits>
 #include <cstddef>
 #include <memory>
 #include <string>

@@ -21,14 +21,13 @@
 
 #include <cstdio>
 #include <utility>
-#include <vector>
 
+#include <fmt/core.h>
 #include <fmt/format.h>
 #include <msgpack_light/output_stream.h>
 #include <msgpack_light/serialize.h>
 #include <zlib.h>
 
-#include "stat_bench/reporter/data_file_helper.h"
 #include "stat_bench/reporter/msgpack_data_file_helper.h"  // IWYU pragma: keep
 #include "stat_bench/stat_bench_exception.h"
 #include "stat_bench/util/prepare_directory.h"

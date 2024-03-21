@@ -21,14 +21,15 @@
 
 #include <cstddef>
 #include <fstream>
-#include <unordered_map>
 #include <utility>
 #include <vector>
 
+#include <fmt/core.h>
 #include <fmt/format.h>
 #include <nlohmann/json.hpp>
 
 #include "stat_bench/clock/duration.h"
+#include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/util/prepare_directory.h"
 #include "template/plotly_plot.h"
 

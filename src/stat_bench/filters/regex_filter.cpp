@@ -21,7 +21,7 @@
 
 #include <regex>
 
-#include <fmt/format.h>
+#include <fmt/core.h>
 
 namespace stat_bench {
 namespace filters {

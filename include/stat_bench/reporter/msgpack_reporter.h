@@ -19,16 +19,10 @@
  */
 #pragma once
 
-#include <exception>
 #include <string>
 
-#include "stat_bench/benchmark_condition.h"
-#include "stat_bench/benchmark_full_name.h"
-#include "stat_bench/clock/system_time_point.h"
-#include "stat_bench/measurer/measurement.h"
 #include "stat_bench/reporter/data_file_reporter_base.h"
 #include "stat_bench/reporter/data_file_spec.h"
-#include "stat_bench/reporter/i_reporter.h"
 
 namespace stat_bench {
 namespace reporter {

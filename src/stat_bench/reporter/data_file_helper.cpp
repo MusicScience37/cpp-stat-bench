@@ -19,9 +19,7 @@
  */
 #include "stat_bench/reporter/data_file_helper.h"
 
-// IWYU pragma: no_include  <stddef.h>
 #include <cstddef>
-#include <type_traits>
 
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"

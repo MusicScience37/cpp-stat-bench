@@ -17,9 +17,7 @@
  * \file
  * \brief Benchmark of push_back in STL containers.
  */
-// IWYU pragma: no_include  <stddef.h>
 #include <cstddef>
-#include <exception>
 #include <vector>
 
 #include "stat_bench/benchmark_macros.h"

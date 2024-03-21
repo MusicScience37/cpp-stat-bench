@@ -19,23 +19,21 @@
  */
 #include "stat_bench/reporter/compressed_msgpack_reporter.h"
 
-#include <fstream>
-#include <functional>
-#include <initializer_list>
+#include <array>
+#include <cstddef>
 #include <memory>
 #include <regex>
-#include <sstream>
-#include <vector>
 
 #include <ApprovalTests.hpp>
 #include <catch2/catch_test_macros.hpp>
-#include <fmt/format.h>
+#include <fmt/core.h>
 #include <msgpack_light/memory_output_stream.h>
 #include <nlohmann/json.hpp>
 #include <zlib.h>
 
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/clock/system_clock.h"
+#include "stat_bench/measurer/measurement.h"
 #include "use_reporter_for_test.h"
 
 TEST_CASE("stat_bench::reporter::CompressedMsgPackReporter") {

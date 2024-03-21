@@ -22,7 +22,6 @@
 #include <chrono>
 #include <memory>
 #include <thread>
-#include <type_traits>
 #include <vector>
 
 #include <catch2/catch_test_macros.hpp>
@@ -32,6 +31,7 @@
 #include "../param/create_ordinary_parameter_dict.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/clock/duration.h"
 #include "stat_bench/current_invocation_context.h"
 
 TEST_CASE("stat_bench::measurer::ProcessingTimeMeasurer") {

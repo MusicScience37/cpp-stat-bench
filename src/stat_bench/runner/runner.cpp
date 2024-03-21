@@ -23,7 +23,6 @@
 #include <exception>
 #include <memory>
 #include <string>
-#include <type_traits>
 
 #include "stat_bench/bench_impl/benchmark_case_registry.h"
 #include "stat_bench/bench_impl/benchmark_group.h"

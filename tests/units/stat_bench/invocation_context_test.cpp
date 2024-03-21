@@ -19,7 +19,6 @@
  */
 #include "stat_bench/invocation_context.h"
 
-#include <exception>
 #include <mutex>
 #include <tuple>
 #include <utility>

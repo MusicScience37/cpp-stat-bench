@@ -19,8 +19,6 @@
  */
 #pragma once
 
-// IWYU pragma: no_include <stdlib.h>
-// IWYU pragma: no_include <type_traits>
 #include <cstdlib>
 #include <exception>
 #include <future>
