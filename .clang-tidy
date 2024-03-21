@@ -15,6 +15,7 @@ Checks: >
   modernize-*,
     -modernize-return-braced-init-list,
     -modernize-concat-nested-namespaces,
+    -modernize-macro-to-enum,
   hicpp-*,
     -hicpp-no-array-decay,
   cert-*,
@@ -37,6 +38,7 @@ Checks: >
 # - bugprone-easily-swappable-parameters is difficult to fix without performance degrade.
 # - modernize-return-braced-init-list reduces readability.
 # - modernize-concat-nested-namespaces: This cannot be used in C++ 14.
+# - modernize-macro-to-enum prevents standard usage of macros.
 # - bugprone-exception-escape generates false positives.
 # - bugprone-unchecked-optional-access has a bug as in https://github.com/clangd/clangd/issues/1700.
 
