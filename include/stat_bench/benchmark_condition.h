@@ -22,6 +22,7 @@
 #include <cstddef>
 #include <utility>
 
+#include "stat_bench/param/num_threads_parameter_name.h"
 #include "stat_bench/param/parameter_dict.h"
 
 namespace stat_bench {
@@ -46,7 +47,9 @@ public:
      * \param[in] params Parameters.
      */
     explicit BenchmarkCondition(const param::ParameterDict& params)
-        : BenchmarkCondition(params.get<std::size_t>("threads"), params) {}
+        : BenchmarkCondition(
+              params.get<std::size_t>(param::num_threads_parameter_name()),
+              params) {}
 
     /*!
      * \brief Get the number of threads.

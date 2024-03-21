@@ -28,6 +28,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include "param/create_ordinary_parameter_dict.h"
+#include "stat_bench/param/num_threads_parameter_name.h"
 
 TEST_CASE("stat_bench::InvocationContext") {
     SECTION("construct") {
@@ -44,7 +45,8 @@ TEST_CASE("stat_bench::InvocationContext") {
         REQUIRE(context.threads() == threads);
         REQUIRE(context.iterations() == iterations);
         REQUIRE(context.samples() == samples);
-        REQUIRE(context.get_param<std::size_t>("threads") == 1);
+        REQUIRE(context.get_param<std::size_t>(
+                    stat_bench::param::num_threads_parameter_name()) == 1);
     }
 
     SECTION("measure durations") {

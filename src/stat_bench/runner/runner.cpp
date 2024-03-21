@@ -33,6 +33,7 @@
 #include "stat_bench/filters/composed_filter.h"
 #include "stat_bench/measurer/mean_processing_time_measurer.h"
 #include "stat_bench/measurer/processing_time_measurer.h"
+#include "stat_bench/param/num_threads_parameter_name.h"
 #include "stat_bench/param/parameter_config.h"
 #include "stat_bench/param/parameter_generator.h"
 #include "stat_bench/reporter/cdf_line_plot_reporter.h"
@@ -143,8 +144,8 @@ void Runner::run() const {
 void Runner::run_case(const std::shared_ptr<measurer::IMeasurer>& measurer,
     const std::shared_ptr<bench_impl::IBenchmarkCase>& bench_case) const {
     auto params = bench_case->params();
-    if (!params.has("threads")) {
-        params.add<std::size_t>("threads")->add(1);
+    if (!params.has(param::num_threads_parameter_name())) {
+        params.add<std::size_t>(param::num_threads_parameter_name())->add(1);
     }
     auto generator = params.create_generator();
 

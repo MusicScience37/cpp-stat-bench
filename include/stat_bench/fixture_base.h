@@ -26,6 +26,7 @@
 #include "stat_bench/bench_impl/i_benchmark_case.h"
 #include "stat_bench/current_invocation_context.h"
 #include "stat_bench/invocation_context.h"
+#include "stat_bench/param/num_threads_parameter_name.h"
 #include "stat_bench/param/parameter_config.h"
 #include "stat_bench/param/parameter_value_vector.h"
 
@@ -95,7 +96,7 @@ public:
      */
     auto add_threads_param()
         -> std::shared_ptr<param::ParameterValueVector<std::size_t>> {
-        return add_param<std::size_t>("threads");
+        return add_param<std::size_t>(param::num_threads_parameter_name());
     }
 
     ///@}
