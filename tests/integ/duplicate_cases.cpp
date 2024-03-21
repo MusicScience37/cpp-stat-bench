@@ -18,7 +18,6 @@
  * \brief Test of duplicate cases.
  */
 #include <chrono>
-#include <exception>
 #include <thread>
 
 #include "stat_bench/benchmark_macros.h"

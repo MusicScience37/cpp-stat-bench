@@ -20,7 +20,6 @@
 #include "stat_bench/reporter/console_reporter.h"
 
 #include <algorithm>
-#include <functional>
 #include <memory>
 
 #include <ApprovalTests.hpp>

@@ -20,7 +20,7 @@
 #pragma once
 
 #include <msgpack_light/type_support/struct.h>
-#include <msgpack_light/type_support/unordered_map.h>
+#include <msgpack_light/type_support/unordered_map.h>  // IWYU pragma: keep
 
 #include "stat_bench/reporter/data_file_spec.h"
 

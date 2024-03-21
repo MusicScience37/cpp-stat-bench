@@ -24,7 +24,7 @@
 #include <stdexcept>
 #include <string>
 
-#include <fmt/format.h>
+#include <fmt/core.h>
 
 namespace stat_bench_test {
 

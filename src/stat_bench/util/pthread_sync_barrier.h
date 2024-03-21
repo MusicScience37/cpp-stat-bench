@@ -21,7 +21,7 @@
 
 #include <cstddef>
 
-#include <fmt/format.h>
+#include <fmt/core.h>
 #include <pthread.h>
 
 #include "stat_bench/stat_bench_exception.h"

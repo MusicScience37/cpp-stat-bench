@@ -19,11 +19,8 @@
  */
 #include "stat_bench/fixture_base.h"
 
-// IWYU pragma: no_include  <stddef.h>
-
 #include <cstddef>
 #include <stdexcept>
-#include <type_traits>
 
 #include <catch2/catch_test_macros.hpp>
 #include <trompeloeil.hpp>

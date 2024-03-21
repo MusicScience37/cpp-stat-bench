@@ -19,10 +19,11 @@
  */
 #include "stat_bench/param/parameter_dict.h"
 
+#include <iterator>
 #include <set>
 #include <utility>
 
-#include <fmt/format.h>
+#include <fmt/format.h>  // IWYU pragma: keep
 
 namespace stat_bench {
 namespace param {

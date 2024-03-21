@@ -1,4 +1,5 @@
 #include <memory>
+#include <string>
 
 #define APPROVALS_CATCH
 #include <ApprovalTests.hpp>

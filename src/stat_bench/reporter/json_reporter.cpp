@@ -21,13 +21,12 @@
 
 #include <fstream>
 #include <utility>
-#include <vector>
 
+#include <fmt/core.h>
 #include <fmt/format.h>
 #include <nlohmann/json.hpp>
 
 #include "data_file_schema_url.h"
-#include "stat_bench/reporter/data_file_helper.h"
 #include "stat_bench/reporter/json_data_file_helper.h"  // IWYU pragma: keep
 #include "stat_bench/stat_bench_exception.h"
 #include "stat_bench/util/prepare_directory.h"

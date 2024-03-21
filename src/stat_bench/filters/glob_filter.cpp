@@ -21,7 +21,7 @@
 
 #include <utility>
 
-#include <fmt/format.h>
+#include <fmt/core.h>
 
 #include "stat_bench/util/check_glob_pattern.h"
 

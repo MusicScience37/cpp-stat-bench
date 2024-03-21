@@ -23,7 +23,6 @@
 #include <exception>
 #include <stdexcept>
 #include <string>
-#include <type_traits>
 
 #include <catch2/catch_test_macros.hpp>
 #include <trompeloeil.hpp>

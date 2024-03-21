@@ -21,7 +21,6 @@
 
 #include <algorithm>
 #include <string>
-#include <type_traits>
 #include <utility>
 
 #include "stat_bench/benchmark_full_name.h"

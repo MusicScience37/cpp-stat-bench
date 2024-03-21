@@ -20,8 +20,8 @@
 #include <chrono>
 #include <cstddef>
 #include <cstdint>
-#include <exception>
 #include <memory>
+#include <string>
 #include <thread>
 
 #include "stat_bench/benchmark_macros.h"

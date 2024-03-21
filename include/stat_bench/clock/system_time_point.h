@@ -21,9 +21,9 @@
 
 #include <chrono>
 #include <string>
-#include <type_traits>
 
 #include <fmt/chrono.h>
+#include <fmt/core.h>
 #include <fmt/format.h>
 
 namespace stat_bench {

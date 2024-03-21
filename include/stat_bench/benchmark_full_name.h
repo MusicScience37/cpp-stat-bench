@@ -22,6 +22,7 @@
 #include <string>
 #include <utility>
 
+#include <fmt/core.h>
 #include <fmt/format.h>
 
 namespace stat_bench {

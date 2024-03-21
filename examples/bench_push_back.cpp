@@ -17,10 +17,8 @@
  * \file
  * \brief Benchmark of push_back in STL containers.
  */
-// IWYU pragma: no_include  <stddef.h>
 #include <cstddef>
 #include <deque>
-#include <exception>
 #include <list>
 #include <vector>
 

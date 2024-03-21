@@ -19,7 +19,6 @@
  */
 #include "stat_bench/reporter/json_data_file_helper.h"
 
-#include <initializer_list>
 #include <string>
 #include <unordered_map>
 #include <vector>

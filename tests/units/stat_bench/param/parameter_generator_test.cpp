@@ -20,6 +20,7 @@
 #include "stat_bench/param/parameter_generator.h"
 
 #include <memory>
+#include <unordered_map>
 
 #include <catch2/catch_test_macros.hpp>
 

@@ -19,7 +19,6 @@
  */
 #pragma once
 
-// IWYU pragma: no_include  <stddef.h>
 #include <cstddef>
 #include <string>
 

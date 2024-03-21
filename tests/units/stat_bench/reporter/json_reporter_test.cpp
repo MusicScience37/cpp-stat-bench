@@ -20,20 +20,18 @@
 #include "stat_bench/reporter/json_reporter.h"
 
 #include <algorithm>
-#include <functional>
-#include <initializer_list>
 #include <memory>
 #include <regex>
-#include <vector>
 
 #include <ApprovalTests.hpp>
 #include <catch2/catch_test_macros.hpp>
-#include <fmt/format.h>
+#include <fmt/core.h>
 #include <nlohmann/json.hpp>
 
 #include "read_file.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/clock/system_clock.h"
+#include "stat_bench/measurer/measurement.h"
 #include "use_reporter_for_test.h"
 
 TEST_CASE("stat_bench::reporter::JsonReporter") {
