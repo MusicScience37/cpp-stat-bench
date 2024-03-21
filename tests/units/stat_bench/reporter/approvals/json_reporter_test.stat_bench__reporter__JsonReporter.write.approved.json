@@ -1,5 +1,5 @@
 {
-  "$schema": "https://cppstatbench.musicscience37.com/schemas/data_file_schema_v2.json",
+  "$schema": "https://cppstatbench.musicscience37.com/schemas/data_file_schema_v3.json",
   "finished_at": "<time>",
   "measurements": [
     {

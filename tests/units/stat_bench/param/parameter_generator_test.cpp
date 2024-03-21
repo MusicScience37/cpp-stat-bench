@@ -79,4 +79,19 @@ TEST_CASE("stat_bench::param::ParameterGenerator") {
 
         REQUIRE(!generator.iterate());
     }
+
+    SECTION("generate when no parameter is set") {
+        std::vector<std::pair<std::string,
+            std::shared_ptr<stat_bench::param::IParameterValueVector>>>
+            params;
+
+        stat_bench::param::ParameterGenerator generator{params};
+
+        auto dict = generator.generate();
+        // NOLINTNEXTLINE
+        CHECK(dict.as_string_dict() ==
+            std::unordered_map<std::string, std::string>());
+
+        REQUIRE(!generator.iterate());
+    }
 }

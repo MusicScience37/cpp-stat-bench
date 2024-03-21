@@ -1,6 +1,6 @@
-# Data files in cpp-stat-bench (version 2)
+# Data files in cpp-stat-bench (version 3)
 
-*JSON schema of data files written by cpp-stat-bench library  (version 2).*
+*JSON schema of data files written by cpp-stat-bench library  (version 3).*
 
 ## Properties
 

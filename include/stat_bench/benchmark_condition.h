@@ -47,9 +47,7 @@ public:
      * \param[in] params Parameters.
      */
     explicit BenchmarkCondition(const param::ParameterDict& params)
-        : BenchmarkCondition(
-              params.get<std::size_t>(param::num_threads_parameter_name()),
-              params) {}
+        : BenchmarkCondition(get_threads(params), params) {}
 
     /*!
      * \brief Get the number of threads.
@@ -70,6 +68,20 @@ public:
     }
 
 private:
+    /*!
+     * \brief Get the number of threads.
+     *
+     * \param[in] params Parameters.
+     * \return Number of threads.
+     */
+    [[nodiscard]] static auto get_threads(const param::ParameterDict& params)
+        -> std::size_t {
+        if (params.has(param::num_threads_parameter_name())) {
+            return params.get<std::size_t>(param::num_threads_parameter_name());
+        }
+        return static_cast<std::size_t>(1);
+    }
+
     //! Number of threads.
     std::size_t threads_;
 

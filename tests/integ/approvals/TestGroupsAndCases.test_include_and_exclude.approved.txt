@@ -15,7 +15,7 @@ Processing Time
                                                                                 Time [us]                     
                                                             Iterations Samples       Mean Std. Err.       Max Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-Case1 (threads=1)                                                     n        n           n          n          n 
+Case1 ()                                                              n        n           n          n          n 
 
 ========================================================================================================================
 Mean Processing Time
@@ -25,7 +25,7 @@ Mean Processing Time
                                                                                 Time [us]                     
                                                             Iterations Samples       Mean Std. Err.       Max Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-Case1 (threads=1)                                                     n        n           n          n          n 
+Case1 ()                                                              n        n           n          n          n 
 
 Benchmark finished at <time>
 

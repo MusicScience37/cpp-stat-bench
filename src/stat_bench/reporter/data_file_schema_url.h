@@ -25,7 +25,7 @@ namespace stat_bench {
 namespace reporter {
 
 inline constexpr std::string_view data_file_schema_url =
-    "https://cppstatbench.musicscience37.com/schemas/data_file_schema_v2.json";
+    "https://cppstatbench.musicscience37.com/schemas/data_file_schema_v3.json";
 
 }  // namespace reporter
 }  // namespace stat_bench
