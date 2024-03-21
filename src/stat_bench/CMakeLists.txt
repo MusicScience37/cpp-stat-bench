@@ -26,3 +26,22 @@ target_link_libraries(stat_bench PUBLIC Threads::Threads)
 if(MSVC)
     target_compile_options(stat_bench PUBLIC /EHsc /utf-8)
 endif()
+
+add_library(stat_bench_unity EXCLUDE_FROM_ALL unity_source.cpp)
+target_include_directories(
+    stat_bench_unity PUBLIC $<BUILD_INTERFACE:${STAT_BENCH_SOURCE_DIR}/include>
+                            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+target_link_libraries(
+    stat_bench_unity
+    PUBLIC fmt::fmt
+           bfg::lyra
+           nlohmann_json::nlohmann_json
+           cpp_msgpack_light::msgpack_light
+           ZLIB::ZLIB
+           Eigen3::Eigen
+           Threads::Threads
+           $<BUILD_INTERFACE:stat_bench_cpp_warnings>)
+target_link_libraries(stat_bench_unity PRIVATE pantor::inja)
+set_target_properties(stat_bench_unity PROPERTIES VERSION ${PROJECT_VERSION})
+target_compile_features(stat_bench_unity PUBLIC cxx_std_14)
+target_compile_features(stat_bench_unity PRIVATE cxx_std_17)

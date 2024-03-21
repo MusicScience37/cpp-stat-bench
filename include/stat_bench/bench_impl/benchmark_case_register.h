@@ -46,8 +46,8 @@ public:
                 std::make_shared<Benchmark>());
         } catch (const std::exception& e) {
             std::cerr << "Failed to append a benchmark: " << e.what()
-                      << std::endl;
-            std::exit(1);  // NOLINT(concurrency-mt-unsafe)
+                      << std::endl;  // NOLINT(performance-avoid-endl)
+            std::exit(1);            // NOLINT(concurrency-mt-unsafe)
         }
     }
 };

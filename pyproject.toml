@@ -17,14 +17,14 @@ msgpack = "^1.0.8"
 
 [tool.poetry.group.doc.dependencies]
 sphinx = "^7.2.6"
-sphinx-orange-book-theme = "^0.6.0"
+sphinx-orange-book-theme = "^0.7.0"
 sphinxcontrib-plantuml = "^0.29"
 breathe = "^4.35.0"
 myst-parser = "^2.0.0"
 
 [tool.poetry.group.dev.dependencies]
 aiohttp = "^3.9.3"
-black = "^24.2.0"
+black = "^24.3.0"
 cmakelang = "^0.6.13"
 doc8 = "^1.1.1"
 pre-commit = "^3.6.2"
