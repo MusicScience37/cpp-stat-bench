@@ -63,6 +63,6 @@ inline auto default_main(int argc, const char** argv) noexcept -> int {
  * \brief Macro of default main function.
  */
 #define STAT_BENCH_IMPL_DEFAULT_MAIN                         \
-    auto main(int argc, const char** argv)->int {            \
+    auto main(int argc, const char** argv) -> int {          \
         return ::stat_bench::impl::default_main(argc, argv); \
     }
