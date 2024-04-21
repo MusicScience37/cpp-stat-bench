@@ -247,9 +247,7 @@ clang-tsan:
 
 msvc-release:
   tags:
-    - shared-windows
-    - windows
-    - windows-1809
+    - saas-windows-medium-amd64
   stage: test
   needs: []
   dependencies: []
