@@ -23,7 +23,6 @@
   "C_Cpp.autocomplete": "disabled",
   "C_Cpp.errorSquiggles": "disabled",
   "cmakeFormat.exePath": "/workspaces/cpp-stat-bench/.venv/bin/cmake-format",
-  "esbonio.sphinx.confDir": "${workspaceFolder}/doc/sphinx/src",
   "restructuredtext.linter.disabledLinters": ["rstcheck", "rst-lint"],
   "esbonio.server.enabled": false,
   "files.watcherExclude": {
@@ -42,5 +41,6 @@
   },
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "cmake.useCMakePresets": "never"
 }
