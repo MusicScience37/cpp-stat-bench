@@ -19,7 +19,11 @@ line count:
   script:
     - mkdir -p line_count
     - scc
-      --format-multi "tabular:stdout,html:line_count/line_count.html,openmetrics:line_count/line_count.txt"
+      --format-multi "tabular:stdout,html:line_count/line_count.html"
+      .
+    - scc
+      --format-multi "openmetrics:line_count/cpp_line_count.txt"
+      -i h,cpp
       .
     - scc
       --format-multi "tabular:stdout,html:line_count/src_line_count.html"
@@ -30,7 +34,7 @@ line count:
       - line_count
     reports:
       metrics:
-        - "line_count/line_count.txt"
+        - "line_count/cpp_line_count.txt"
     expire_in: "1 mos"
   interruptible: true
 
