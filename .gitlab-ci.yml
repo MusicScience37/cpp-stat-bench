@@ -42,7 +42,7 @@ pre-commit:
     POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
   script:
     - poetry config virtualenvs.in-project true
-    - poetry env use 3.11
+    - poetry env use 3.12
     - poetry install --without doc --sync
     - poetry run pre-commit run --all-files
   cache:
@@ -98,7 +98,7 @@ spell check:
     POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
   before_script:
     - poetry config virtualenvs.in-project true
-    - poetry env use 3.11
+    - poetry env use 3.12
     - poetry install --without doc --sync
     - mkdir -p $VCPKG_DEFAULT_BINARY_CACHE
     - mkdir $BUILD_DIR
@@ -266,7 +266,7 @@ msvc-release:
     - New-Item -ItemType Directory -Force -Path $VCPKG_DEFAULT_BINARY_CACHE
     - Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
     - choco install cmake -y --installargs 'ADD_CMAKE_TO_PATH=System'
-    - choco install python311 -y
+    - choco install python312 -y
     - choco install ccache -y
     - RefreshEnv
     - pip install poetry
@@ -364,7 +364,7 @@ doc:
     BUILD_DIR: build_doc
   before_script:
     - poetry config virtualenvs.in-project true
-    - poetry env use 3.11
+    - poetry env use 3.12
     - poetry install --only doc --sync
     - mkdir -p $VCPKG_DEFAULT_BINARY_CACHE
     - mkdir $BUILD_DIR
