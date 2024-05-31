@@ -97,8 +97,8 @@ public:
      * \return Parameter value.
      */
     template <typename T>
-    [[nodiscard]] auto get_param(const std::string& param_name) const
-        -> const T& {
+    [[nodiscard]] auto get_param(
+        const std::string& param_name) const -> const T& {
         return cond_.params().get<T>(param_name);
     }
 

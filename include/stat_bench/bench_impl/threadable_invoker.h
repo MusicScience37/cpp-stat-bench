@@ -82,8 +82,8 @@ public:
      * \return Measured durations per thread.
      */
     template <typename Func>
-    [[nodiscard]] inline auto measure(const Func& func) const
-        -> std::vector<std::vector<clock::Duration>> {
+    [[nodiscard]] inline auto measure(
+        const Func& func) const -> std::vector<std::vector<clock::Duration>> {
         if (num_threads_ == 1) {
             return std::vector<std::vector<clock::Duration>>{
                 measure_here(func, 0)};

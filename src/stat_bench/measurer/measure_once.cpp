@@ -37,8 +37,8 @@ namespace measurer {
 
 auto measure_once(bench_impl::IBenchmarkCase* bench_case,
     const BenchmarkCondition& cond, const std::string& measurer_name,
-    std::size_t iterations, std::size_t samples, std::size_t warming_up_samples)
-    -> Measurement {
+    std::size_t iterations, std::size_t samples,
+    std::size_t warming_up_samples) -> Measurement {
     auto& context = bench_impl::InvocationContextRegistry::instance().create(
         cond, iterations, samples + warming_up_samples, warming_up_samples);
     bench_case->execute();

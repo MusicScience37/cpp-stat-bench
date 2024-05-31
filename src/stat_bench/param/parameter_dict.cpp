@@ -38,8 +38,8 @@ auto ParameterDict::has(const std::string& param_name) const -> bool {
     return data_.count(param_name) == 1;
 }
 
-auto ParameterDict::format_to(fmt::format_context::iterator out) const
-    -> fmt::format_context::iterator {
+auto ParameterDict::format_to(
+    fmt::format_context::iterator out) const -> fmt::format_context::iterator {
     // Sort keys.
     std::set<std::string> keys;
     for (const auto& pair : data_) {
