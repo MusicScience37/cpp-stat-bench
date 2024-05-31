@@ -318,7 +318,7 @@ static analysis:
   extends: .test linux base
   parallel:
     matrix:
-      - COMPILER_TYPE: "clang17"
+      - COMPILER_TYPE: "clang18"
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "static_analysis"
