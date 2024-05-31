@@ -234,21 +234,20 @@ clang-asan-ubsan:
       --cpp_ver $CXX_STANDARD
       --build_dir $BUILD_DIR
 
-# TODO wait for fix of https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/issues/116
-# clang-tsan:
-#   extends: clang-asan-ubsan
-#   parallel:
-#     matrix:
-#       - COMPILER_TYPE: "clang18"
-#         IMAGE_PATH: "musicscience37/clang-ci"
-#         CXX_STANDARD: 14
-#         TEST_TYPE: "tsan"
-#   script:
-#     - poetry run python ./scripts/ci_linux_test.py
-#       --compiler_type $COMPILER_TYPE
-#       --test_type $TEST_TYPE
-#       --cpp_ver $CXX_STANDARD
-#       --build_dir $BUILD_DIR
+clang-tsan:
+  extends: clang-asan-ubsan
+  parallel:
+    matrix:
+      - COMPILER_TYPE: "clang18"
+        IMAGE_PATH: "musicscience37/clang-ci"
+        CXX_STANDARD: 14
+        TEST_TYPE: "tsan"
+  script:
+    - poetry run python ./scripts/ci_linux_test.py
+      --compiler_type $COMPILER_TYPE
+      --test_type $TEST_TYPE
+      --cpp_ver $CXX_STANDARD
+      --build_dir $BUILD_DIR
 
 msvc-release:
   tags:
