@@ -42,5 +42,6 @@
   "[yaml]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
-  "cmake.useCMakePresets": "never"
+  "cmake.useCMakePresets": "never",
+  "restructuredtext.pythonRecommendation.disabled": true
 }
