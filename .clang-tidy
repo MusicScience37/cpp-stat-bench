@@ -12,6 +12,7 @@ Checks: >
     -readability-function-cognitive-complexity,
     -readability-convert-member-functions-to-static,
     -readability-identifier-length,
+    -readability-redundant-member-init,
   modernize-*,
     -modernize-return-braced-init-list,
     -modernize-concat-nested-namespaces,
@@ -41,6 +42,7 @@ Checks: >
 # - modernize-macro-to-enum prevents standard usage of macros.
 # - bugprone-exception-escape generates false positives.
 # - bugprone-unchecked-optional-access has a bug as in https://github.com/clangd/clangd/issues/1700.
+# - readability-redundant-member-init generates too many warnings in existing source codes.
 
 CheckOptions:
   # Naming Conventions

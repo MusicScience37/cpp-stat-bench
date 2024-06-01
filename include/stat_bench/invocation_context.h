@@ -137,7 +137,7 @@ public:
      * \param[in] func Function.
      */
     template <typename Func>
-    inline void measure(const Func& func) {
+    void measure(const Func& func) {
         durations_ = bench_impl::ThreadableInvoker(
             cond_.threads(), iterations_, samples_, warming_up_samples_)
                          .measure(func);
