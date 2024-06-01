@@ -62,10 +62,10 @@ public:
 
     ProcessingTimeMeasurer(const ProcessingTimeMeasurer&) = delete;
     ProcessingTimeMeasurer(ProcessingTimeMeasurer&&) = delete;
-    auto operator=(const ProcessingTimeMeasurer&)
-        -> ProcessingTimeMeasurer& = delete;
-    auto operator=(ProcessingTimeMeasurer&&)
-        -> ProcessingTimeMeasurer& = delete;
+    auto operator=(
+        const ProcessingTimeMeasurer&) -> ProcessingTimeMeasurer& = delete;
+    auto operator=(
+        ProcessingTimeMeasurer&&) -> ProcessingTimeMeasurer& = delete;
 
     /*!
      * \brief Destructor.

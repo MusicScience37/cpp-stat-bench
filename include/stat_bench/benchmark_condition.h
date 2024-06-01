@@ -74,8 +74,8 @@ private:
      * \param[in] params Parameters.
      * \return Number of threads.
      */
-    [[nodiscard]] static auto get_threads(const param::ParameterDict& params)
-        -> std::size_t {
+    [[nodiscard]] static auto get_threads(
+        const param::ParameterDict& params) -> std::size_t {
         if (params.has(param::num_threads_parameter_name())) {
             return params.get<std::size_t>(param::num_threads_parameter_name());
         }

@@ -74,8 +74,8 @@ auto calc_stat(const std::vector<std::vector<clock::Duration>>& durations,
         mean, max, min, median, variance, standard_variance, standard_error);
 }
 
-auto calc_stat(const std::vector<std::vector<double>>& values)
-    -> stat::Statistics {
+auto calc_stat(
+    const std::vector<std::vector<double>>& values) -> stat::Statistics {
     if (values.empty() || values.at(0).empty()) {
         throw std::invalid_argument("No sample value for statistics.");
     }

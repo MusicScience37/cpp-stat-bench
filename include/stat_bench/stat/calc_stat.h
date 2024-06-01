@@ -45,8 +45,8 @@ namespace stat {
  * \param[in] values Sample values.
  * \return Statistics.
  */
-[[nodiscard]] auto calc_stat(const std::vector<std::vector<double>>& values)
-    -> stat::Statistics;
+[[nodiscard]] auto calc_stat(
+    const std::vector<std::vector<double>>& values) -> stat::Statistics;
 
 }  // namespace stat
 }  // namespace stat_bench

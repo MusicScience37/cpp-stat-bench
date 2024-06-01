@@ -34,8 +34,8 @@ auto InvocationContextRegistry::instance() -> InvocationContextRegistry& {
 }
 
 auto InvocationContextRegistry::create(BenchmarkCondition cond,
-    std::size_t iterations, std::size_t samples, std::size_t warming_up_samples)
-    -> InvocationContext& {
+    std::size_t iterations, std::size_t samples,
+    std::size_t warming_up_samples) -> InvocationContext& {
     context_ = std::make_unique<InvocationContext>(
         std::move(cond), iterations, samples, warming_up_samples);
     return *context_;

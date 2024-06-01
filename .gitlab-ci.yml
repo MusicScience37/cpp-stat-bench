@@ -41,7 +41,7 @@ line count:
 pre-commit:
   stage: test
   needs: []
-  image: musicscience37/clang-ci:clang17
+  image: musicscience37/clang-ci:clang18
   variables:
     POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
   script:
@@ -88,7 +88,7 @@ spell check:
   needs: []
   parallel:
     matrix:
-      - COMPILER_TYPE: ["clang17"]
+      - COMPILER_TYPE: ["clang18"]
         IMAGE_PATH: "musicscience37/clang-ci"
         TEST_TYPE: "release"
   image: ${IMAGE_PATH}:${COMPILER_TYPE}
@@ -147,11 +147,11 @@ test linux:
         IMAGE_PATH: "musicscience37/gcc-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "release"
-      - COMPILER_TYPE: ["clang15", "clang16", "clang17"]
+      - COMPILER_TYPE: ["clang15", "clang16", "clang17", "clang18"]
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "release"
-      - COMPILER_TYPE: ["clang17"]
+      - COMPILER_TYPE: ["clang18"]
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 20
         TEST_TYPE: "debug"
@@ -159,7 +159,7 @@ test linux:
         IMAGE_PATH: "musicscience37/gcc-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "debug"
-      - COMPILER_TYPE: ["clang17"]
+      - COMPILER_TYPE: ["clang18"]
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "debug"
@@ -174,7 +174,7 @@ clang coverage:
   extends: .test linux base
   parallel:
     matrix:
-      - COMPILER_TYPE: "clang17"
+      - COMPILER_TYPE: "clang18"
         IMAGE_PATH: "musicscience37/clang-ci"
         TEST_TYPE: "coverage"
   variables:
@@ -221,7 +221,7 @@ clang-asan-ubsan:
   extends: .test linux base
   parallel:
     matrix:
-      - COMPILER_TYPE: "clang17"
+      - COMPILER_TYPE: "clang18"
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "asan_ubsan"
@@ -234,21 +234,20 @@ clang-asan-ubsan:
       --cpp_ver $CXX_STANDARD
       --build_dir $BUILD_DIR
 
-# TODO wait for fix of https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/issues/116
-# clang-tsan:
-#   extends: clang-asan-ubsan
-#   parallel:
-#     matrix:
-#       - COMPILER_TYPE: "clang17"
-#         IMAGE_PATH: "musicscience37/clang-ci"
-#         CXX_STANDARD: 14
-#         TEST_TYPE: "tsan"
-#   script:
-#     - poetry run python ./scripts/ci_linux_test.py
-#       --compiler_type $COMPILER_TYPE
-#       --test_type $TEST_TYPE
-#       --cpp_ver $CXX_STANDARD
-#       --build_dir $BUILD_DIR
+clang-tsan:
+  extends: clang-asan-ubsan
+  parallel:
+    matrix:
+      - COMPILER_TYPE: "clang18"
+        IMAGE_PATH: "musicscience37/clang-ci"
+        CXX_STANDARD: 14
+        TEST_TYPE: "tsan"
+  script:
+    - poetry run python ./scripts/ci_linux_test.py
+      --compiler_type $COMPILER_TYPE
+      --test_type $TEST_TYPE
+      --cpp_ver $CXX_STANDARD
+      --build_dir $BUILD_DIR
 
 msvc-release:
   tags:
@@ -318,7 +317,7 @@ static analysis:
   extends: .test linux base
   parallel:
     matrix:
-      - COMPILER_TYPE: "clang17"
+      - COMPILER_TYPE: "clang18"
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "static_analysis"
@@ -361,7 +360,7 @@ doc:
   extends: .test linux base
   parallel:
     matrix:
-      - COMPILER_TYPE: "clang17"
+      - COMPILER_TYPE: "clang18"
         IMAGE_PATH: "musicscience37/sphinx-doxygen"
         TEST_TYPE: "doc"
   variables:

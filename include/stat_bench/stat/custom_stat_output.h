@@ -20,6 +20,7 @@
 #pragma once
 
 #include <cstddef>
+#include <cstdint>
 #include <string>
 #include <utility>
 #include <vector>
@@ -35,7 +36,7 @@ namespace stat {
 /*!
  * \brief Enumeration of types of analysis applied to custom outputs.
  */
-enum CustomOutputAnalysisType {
+enum class CustomOutputAnalysisType : std::uint8_t {
     mean,         //!< Mean per sample.
     rate_per_sec  //!< Rate per sec.
 };

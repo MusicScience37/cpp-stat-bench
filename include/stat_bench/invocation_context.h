@@ -97,8 +97,8 @@ public:
      * \return Parameter value.
      */
     template <typename T>
-    [[nodiscard]] auto get_param(const std::string& param_name) const
-        -> const T& {
+    [[nodiscard]] auto get_param(
+        const std::string& param_name) const -> const T& {
         return cond_.params().get<T>(param_name);
     }
 
@@ -137,7 +137,7 @@ public:
      * \param[in] func Function.
      */
     template <typename Func>
-    inline void measure(const Func& func) {
+    void measure(const Func& func) {
         durations_ = bench_impl::ThreadableInvoker(
             cond_.threads(), iterations_, samples_, warming_up_samples_)
                          .measure(func);

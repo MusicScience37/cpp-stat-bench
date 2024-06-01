@@ -53,17 +53,16 @@ This library can be installed via vcpkg using following configurations:
     "default-registry": {
       "kind": "git",
       "repository": "https://github.com/Microsoft/vcpkg",
-      "baseline": "13bde2ff13192e1b2fdd37bd9b475c7665ae6ae5"
+      "baseline": "099fb9250d916511782bf5215f01f2e7141beb3a"
     },
     "registries": [
       {
         "kind": "git",
         "repository": "https://gitlab.com/MusicScience37Projects/vcpkg-registry",
-        "baseline": "70fb6d7d9d95ad17fc02dc4aef839b9a4824ac23",
+        "baseline": "fb3ea2e761fca69a7e9cf0a447538792d0cc6057",
         "packages": ["cpp-msgpack-light", "cpp-stat-bench"]
       }
-    ],
-    "overlay-triplets": ["./vcpkg_conf/triplets"]
+    ]
   }
   ```
 
@@ -96,7 +95,7 @@ you will require following dependencies:
 - C++ 14 Compiler
   - Following compilers are tested in CI:
     - GCC 10, 11, 12
-    - Clang 15, 16, 17
+    - Clang 15, 16, 17, 18
     - MSVC 19
 
 Additionally, you will require following dependencies

@@ -50,8 +50,8 @@ public:
      * \return Created context.
      */
     auto create(BenchmarkCondition cond, std::size_t iterations,
-        std::size_t samples, std::size_t warming_up_samples)
-        -> InvocationContext&;
+        std::size_t samples,
+        std::size_t warming_up_samples) -> InvocationContext&;
 
     /*!
      * \brief Remove the context.

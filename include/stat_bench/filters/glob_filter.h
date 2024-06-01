@@ -40,8 +40,8 @@ public:
     explicit GlobFilter(std::string pattern);
 
     //! \copydoc stat_bench::filters::INameFilter::check
-    [[nodiscard]] auto check(const BenchmarkFullName& name) const
-        -> bool override;
+    [[nodiscard]] auto check(
+        const BenchmarkFullName& name) const -> bool override;
 
     GlobFilter(const GlobFilter&) = delete;
     GlobFilter(GlobFilter&&) = delete;
