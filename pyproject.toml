@@ -8,17 +8,19 @@ packages = [{ include = "scripts" }]
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.13"
+# Some tools require setuptools.
+setuptools = "^70.3.0"
 
 [tool.poetry.group.test.dependencies]
-pytest = "^8.2.1"
+pytest = "^8.2.2"
 pytest-approvaltests = "^0.2.4"
-fastjsonschema = "^2.19.1"
+fastjsonschema = "^2.20.0"
 msgpack = "^1.0.8"
 
 [tool.poetry.group.doc.dependencies]
 sphinx = "^7.3.7"
-sphinx-orange-book-theme = "^0.9.0"
-sphinxcontrib-plantuml = "^0.29"
+sphinx-orange-book-theme = "^0.11.0"
+sphinxcontrib-plantuml = "^0.30"
 breathe = "^4.35.0"
 myst-parser = "^3.0.1"
 
