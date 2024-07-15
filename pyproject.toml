@@ -8,6 +8,8 @@ packages = [{ include = "scripts" }]
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.13"
+# Some tools require setuptools.
+setuptools = "^70.3.0"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.2.2"

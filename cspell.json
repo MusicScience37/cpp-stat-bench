@@ -107,6 +107,7 @@
     "realpath",
     "SAST",
     "sbuffer",
+    "setuptools",
     "showlegend",
     "sphinxcontrib",
     "startsalt",
