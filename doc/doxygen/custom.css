@@ -1,0 +1,40 @@
+html {
+  /* primary colors */
+  --primary-color: #d66d32;
+  --primary-dark-color: #713514;
+  --primary-light-color: #c77f59;
+
+  /* fragment colors */
+  --fragment-background: #fff3eb;
+  --fragment-keyword: #a68715;
+  --fragment-keywordtype: #a68715;
+  --fragment-keywordflow: #a68715;
+  --fragment-token: var(--primary-dark-color);
+  --fragment-comment: #707070;
+  --fragment-link: var(--primary-color);
+  --fragment-preprocessor: #a68715;
+
+  --code-background: var(--fragment-background);
+}
+
+@media (prefers-color-scheme: dark) {
+  html:not(.light-mode) {
+    /* primary colors */
+    --primary-color: #e68f60;
+    --primary-dark-color: #ffc399;
+    --primary-light-color: #b8724c;
+
+    /* fragment colors */
+    --fragment-background: #1b0d02;
+    --fragment-foreground: #ffece1;
+    --fragment-keyword: #ddc484;
+    --fragment-keywordtype: #ddc484;
+    --fragment-keywordflow: #ddc484;
+    --fragment-token: var(--primary-dark-color);
+    --fragment-comment: #909090;
+    --fragment-link: var(--primary-color);
+    --fragment-preprocessor: #ddc484;
+
+    --code-background: var(--fragment-background);
+  }
+}
