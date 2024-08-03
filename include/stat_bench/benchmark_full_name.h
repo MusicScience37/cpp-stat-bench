@@ -89,7 +89,7 @@ struct formatter<stat_bench::BenchmarkFullName>
      */
     template <typename FormatContext>
     auto format(const stat_bench::BenchmarkFullName& val,
-        FormatContext& context) -> decltype(context.out()) {
+        FormatContext& context) const -> decltype(context.out()) {
         return formatter<std::string>::format(
             fmt::format("{}/{}", val.group_name(), val.case_name()), context);
     }

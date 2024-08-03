@@ -78,8 +78,8 @@ auto ParameterDict::as_string_dict() const
 namespace fmt {
 
 auto formatter<stat_bench::param::ParameterDict>::format(
-    const stat_bench::param::ParameterDict& val, format_context& context) ->
-    typename format_context::iterator {
+    const stat_bench::param::ParameterDict& val,
+    format_context& context) const -> typename format_context::iterator {
     return val.format_to(context.out());
 }
 
