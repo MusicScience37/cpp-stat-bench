@@ -93,7 +93,7 @@ struct formatter<stat_bench::clock::SystemTimePoint>
      */
     template <typename FormatContext>
     auto format(const stat_bench::clock::SystemTimePoint& val,
-        FormatContext& context) -> decltype(context.out()) {
+        FormatContext& context) const -> decltype(context.out()) {
         return val.format_to(context.out());
     }
 };

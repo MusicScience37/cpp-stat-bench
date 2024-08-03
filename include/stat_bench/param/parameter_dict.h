@@ -120,7 +120,7 @@ struct formatter<stat_bench::param::ParameterDict>
      * \return Output iterator after formatting.
      */
     auto format(const stat_bench::param::ParameterDict& val,
-        format_context& context) -> typename format_context::iterator;
+        format_context& context) const -> typename format_context::iterator;
 };
 
 }  // namespace fmt
