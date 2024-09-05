@@ -15,8 +15,8 @@ you will require following dependencies:
 - [CMake](https://cmake.org/)
 - C++ 14 Compiler
   - Following compilers are tested in CI:
-    - GCC 10, 11, 12
-    - Clang 15, 16, 17, 18
+    - GCC 12
+    - Clang 18
     - MSVC 19
 
 Additionally, you will require following dependencies
