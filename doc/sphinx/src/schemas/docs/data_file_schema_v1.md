@@ -4,9 +4,9 @@
 
 ## Properties
 
-- **`started_at`** *(string)*: Time when this benchmark execution started.
-- **`finished_at`** *(string)*: Time when this benchmark execution finished.
-- **`measurements`** *(array)*: List of information of measurements of time.
+- **`started_at`** *(string, required)*: Time when this benchmark execution started.
+- **`finished_at`** *(string, required)*: Time when this benchmark execution finished.
+- **`measurements`** *(array, required)*: List of information of measurements of time.
   - **Items** *(object)*: Information of a measurement of time.
     - **`group_name`** *(string, required)*: Name of the group in the benchmark.
     - **`case_name`** *(string, required)*: Name of the case in the benchmark.
