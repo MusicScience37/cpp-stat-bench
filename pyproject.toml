@@ -9,28 +9,28 @@ packages = [{ include = "scripts" }]
 [tool.poetry.dependencies]
 python = ">=3.11,<3.13"
 # Some tools require setuptools.
-setuptools = "^74.1.2"
+setuptools = "^75.1.0"
 
 [tool.poetry.group.test.dependencies]
-pytest = "^8.3.2"
+pytest = "^8.3.3"
 pytest-approvaltests = "^0.2.4"
 fastjsonschema = "^2.20.0"
-msgpack = "^1.0.8"
+msgpack = "^1.1.0"
 
 [tool.poetry.group.doc.dependencies]
-sphinx = "^7.3.7"
-sphinx-orange-book-theme = "^0.11.0"
+sphinx = "^8.0.2"
+sphinx-orange-book-theme = "^0.12.0"
 sphinxcontrib-plantuml = "^0.30"
 breathe = "^4.35.0"
 myst-parser = "^4.0.0"
 
 [tool.poetry.group.dev.dependencies]
-aiohttp = "^3.10.5"
+aiohttp = "^3.10.8"
 black = "^24.8.0"
 cmakelang = "^0.6.13"
 doc8 = "^1.1.2"
 pre-commit = "^3.8.0"
-sphinx-autobuild = "^2024.9.3"
+sphinx-autobuild = "^2024.9.19"
 clang-tidy-checker = "^0.5.0"
 lcov-cobertura = "^2.0.2"
 jinja2 = "^3.1.4"
