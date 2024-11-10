@@ -1,4 +1,4 @@
-FROM registry.gitlab.com/musicscience37projects/docker/my-cpp-env-docker:clang18
+FROM registry.gitlab.com/musicscience37projects/docker/my-cpp-env-docker:clang19
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \

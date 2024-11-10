@@ -7,3 +7,7 @@ _Why a change is needed?_
 _What should be done?_
 
 ## Note
+
+/estimate estimate
+/label ~"status::open"
+/label ~improvement
