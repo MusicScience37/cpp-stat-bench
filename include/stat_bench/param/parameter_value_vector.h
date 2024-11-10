@@ -59,8 +59,8 @@ public:
 
     IParameterValueVector(const IParameterValueVector&) = delete;
     IParameterValueVector(IParameterValueVector&&) = delete;
-    auto operator=(
-        const IParameterValueVector&) -> IParameterValueVector& = delete;
+    auto operator=(const IParameterValueVector&)
+        -> IParameterValueVector& = delete;
     auto operator=(IParameterValueVector&&) -> IParameterValueVector& = delete;
 
     /*!
@@ -116,8 +116,8 @@ public:
 
     ParameterValueVector(const ParameterValueVector&) = delete;
     ParameterValueVector(ParameterValueVector&&) = delete;
-    auto operator=(
-        const ParameterValueVector&) -> ParameterValueVector& = delete;
+    auto operator=(const ParameterValueVector&)
+        -> ParameterValueVector& = delete;
     auto operator=(ParameterValueVector&&) -> ParameterValueVector& = delete;
 
     /*!

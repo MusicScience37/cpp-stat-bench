@@ -70,10 +70,10 @@ TEST_CASE("stat_bench::InvocationContext") {
         REQUIRE(invocations.size() == threads * iterations * samples);
         std::size_t invocation_index = 0;
         for (std::size_t sample_index = 0; sample_index < samples;
-             ++sample_index) {
+            ++sample_index) {
             INFO("sample_index = " << sample_index);
             for (std::size_t iteration_index = 0; iteration_index < iterations;
-                 ++iteration_index) {
+                ++iteration_index) {
                 INFO("iteration_index = " << iteration_index);
                 INFO("invocation_index = " << invocation_index);
 

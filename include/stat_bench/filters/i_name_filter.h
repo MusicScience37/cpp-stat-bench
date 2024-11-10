@@ -36,8 +36,8 @@ public:
      * \retval true Input matched to this filter.
      * \retval false Input didn't match to this filter.
      */
-    [[nodiscard]] virtual auto check(
-        const BenchmarkFullName& name) const -> bool = 0;
+    [[nodiscard]] virtual auto check(const BenchmarkFullName& name) const
+        -> bool = 0;
 
     INameFilter(const INameFilter&) = delete;
     INameFilter(INameFilter&&) = delete;

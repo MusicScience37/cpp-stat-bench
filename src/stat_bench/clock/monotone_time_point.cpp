@@ -135,7 +135,7 @@ auto StdMonotoneTimePoint::operator-(
     const StdMonotoneTimePoint& right) const noexcept -> Duration {
     return Duration(std::chrono::duration_cast<std::chrono::duration<double>>(
         data_ - right.data_)
-                        .count());
+            .count());
 }
 
 auto StdMonotoneTimePoint::now() noexcept -> StdMonotoneTimePoint {

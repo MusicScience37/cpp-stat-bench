@@ -56,8 +56,8 @@ protected:
  *
  * \warning This function exists for testing purpose only.
  */
-[[nodiscard]] auto create_mutex_sync_barrier(
-    std::size_t num_waiting_threads) -> std::shared_ptr<ISyncBarrier>;
+[[nodiscard]] auto create_mutex_sync_barrier(std::size_t num_waiting_threads)
+    -> std::shared_ptr<ISyncBarrier>;
 
 /*!
  * \brief Create a barrier to synchronize threads.
@@ -65,8 +65,8 @@ protected:
  * \param[in] num_waiting_threads Number of threads to wait.
  * \return Barrier.
  */
-[[nodiscard]] auto create_sync_barrier(
-    std::size_t num_waiting_threads) -> std::shared_ptr<ISyncBarrier>;
+[[nodiscard]] auto create_sync_barrier(std::size_t num_waiting_threads)
+    -> std::shared_ptr<ISyncBarrier>;
 
 }  // namespace util
 }  // namespace stat_bench

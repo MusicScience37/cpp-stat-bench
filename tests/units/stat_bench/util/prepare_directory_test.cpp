@@ -41,7 +41,7 @@ TEST_CASE("stat_bench::util::prepare_directory_for") {
             ::GetFileAttributesA(dir_path.c_str()) == INVALID_FILE_ATTRIBUTES);
 #else
         ::rmdir(dir_path.c_str());
-        struct stat buf {};
+        struct stat buf{};
         REQUIRE(::stat(dir_path.c_str(), &buf) != 0);
 #endif
 

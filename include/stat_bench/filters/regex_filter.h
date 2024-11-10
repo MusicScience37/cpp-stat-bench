@@ -41,8 +41,8 @@ public:
     explicit RegexFilter(const std::string& regex);
 
     //! \copydoc stat_bench::filters::INameFilter::check
-    [[nodiscard]] auto check(
-        const BenchmarkFullName& name) const -> bool override;
+    [[nodiscard]] auto check(const BenchmarkFullName& name) const
+        -> bool override;
 
     RegexFilter(const RegexFilter&) = delete;
     RegexFilter(RegexFilter&&) = delete;

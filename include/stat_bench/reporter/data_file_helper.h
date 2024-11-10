@@ -103,8 +103,8 @@ namespace data_file_spec {
  * \param[in] measurement Measurement.
  * \return Converted data.
  */
-[[nodiscard]] auto convert(
-    const measurer::Measurement& measurement) -> MeasurementData;
+[[nodiscard]] auto convert(const measurer::Measurement& measurement)
+    -> MeasurementData;
 
 }  // namespace data_file_spec
 }  // namespace reporter

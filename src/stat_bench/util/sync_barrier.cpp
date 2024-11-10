@@ -100,13 +100,13 @@ private:
     std::size_t num_remaining_threads_{0};
 };
 
-auto create_mutex_sync_barrier(
-    std::size_t num_waiting_threads) -> std::shared_ptr<ISyncBarrier> {
+auto create_mutex_sync_barrier(std::size_t num_waiting_threads)
+    -> std::shared_ptr<ISyncBarrier> {
     return std::make_shared<MutexSyncBarrier>(num_waiting_threads);
 }
 
-auto create_sync_barrier(
-    std::size_t num_waiting_threads) -> std::shared_ptr<ISyncBarrier> {
+auto create_sync_barrier(std::size_t num_waiting_threads)
+    -> std::shared_ptr<ISyncBarrier> {
 #if defined(STAT_BENCH_USE_WINDOWS_SYNC_BARRIER)
     using Barrier = WindowsSyncBarrier;
 #elif defined(STAT_BENCH_USE_PTHREAD_SYNC_BARRIER)
