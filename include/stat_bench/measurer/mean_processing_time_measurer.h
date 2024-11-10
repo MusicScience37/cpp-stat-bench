@@ -66,8 +66,8 @@ public:
     MeanProcessingTimeMeasurer(MeanProcessingTimeMeasurer&&) = delete;
     auto operator=(const MeanProcessingTimeMeasurer&)
         -> MeanProcessingTimeMeasurer& = delete;
-    auto operator=(
-        MeanProcessingTimeMeasurer&&) -> MeanProcessingTimeMeasurer& = delete;
+    auto operator=(MeanProcessingTimeMeasurer&&)
+        -> MeanProcessingTimeMeasurer& = delete;
 
     /*!
      * \brief Destructor.

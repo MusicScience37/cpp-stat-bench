@@ -134,8 +134,8 @@ private:
      * \return Formatted string.
      */
     template <typename T>
-    [[nodiscard]] static auto to_string_impl(
-        const std::shared_ptr<void>& data) -> std::string {
+    [[nodiscard]] static auto to_string_impl(const std::shared_ptr<void>& data)
+        -> std::string {
         return fmt::format("{}", *static_cast<const T*>(data.get()));
         ;
     }

@@ -33,25 +33,25 @@ namespace runner {
 
 CommandLineParser::CommandLineParser() {
     cli_.add_argument(lyra::opt(config_.show_help)
-                          .name("-h")
-                          .name("--help")
-                          .optional()
-                          .help("Show this help."));
+            .name("-h")
+            .name("--help")
+            .optional()
+            .help("Show this help."));
 
     cli_.add_argument(lyra::opt(config_.plot_prefix, "prefix")
-                          .name("--plot")
-                          .optional()
-                          .help("Generate plots of results."));
+            .name("--plot")
+            .optional()
+            .help("Generate plots of results."));
 
     cli_.add_argument(lyra::opt(config_.json_file_path, "filepath")
-                          .name("--json")
-                          .optional()
-                          .help("Generate JSON data file of results."));
+            .name("--json")
+            .optional()
+            .help("Generate JSON data file of results."));
 
     cli_.add_argument(lyra::opt(config_.msgpack_file_path, "filepath")
-                          .name("--msgpack")
-                          .optional()
-                          .help("Generate MsgPack data file of results."));
+            .name("--msgpack")
+            .optional()
+            .help("Generate MsgPack data file of results."));
 
     cli_.add_argument(
         lyra::opt(config_.compressed_msgpack_file_path, "filepath")
@@ -59,15 +59,13 @@ CommandLineParser::CommandLineParser() {
             .optional()
             .help("Generate compressed MsgPack data file of results."));
 
-    cli_.add_argument(
-        lyra::opt(config_.processing_time_samples, "num")
+    cli_.add_argument(lyra::opt(config_.processing_time_samples, "num")
             .name("--samples")
             .optional()
             .choices([](std::size_t val) { return val > 0; })
             .help("Number of samples for measurements of processing time."));
 
-    cli_.add_argument(
-        lyra::opt(config_.mean_processing_time_samples, "num")
+    cli_.add_argument(lyra::opt(config_.mean_processing_time_samples, "num")
             .name("--mean_samples")
             .optional()
             .choices([](std::size_t val) { return val > 0; })
@@ -75,47 +73,42 @@ CommandLineParser::CommandLineParser() {
                 "Number of samples for measurements of mean processing time."));
 
     cli_.add_argument(lyra::opt(config_.min_sample_duration_sec, "num")
-                          .name("--min_sample_duration")
-                          .optional()
-                          .choices([](double val) { return val > 0.0; })
-                          .help("Minimum duration of a sample for measurement "
-                                "of mean processing time. [sec]"));
+            .name("--min_sample_duration")
+            .optional()
+            .choices([](double val) { return val > 0.0; })
+            .help("Minimum duration of a sample for measurement "
+                  "of mean processing time. [sec]"));
 
-    cli_.add_argument(
-        lyra::opt(config_.min_warming_up_iterations, "num")
+    cli_.add_argument(lyra::opt(config_.min_warming_up_iterations, "num")
             .name("--min_warming_up_iterations")
             .optional()
             .help("Minimum number of iterations for warming up."));
 
     cli_.add_argument(lyra::opt(config_.min_warming_up_duration_sec, "num")
-                          .name("--min_warming_up_duration_sec")
-                          .optional()
-                          .choices([](double val) { return val >= 0.0; })
-                          .help("Minimum duration for warming up. [sec]"));
+            .name("--min_warming_up_duration_sec")
+            .optional()
+            .choices([](double val) { return val >= 0.0; })
+            .help("Minimum duration for warming up. [sec]"));
 
-    cli_.add_argument(
-        lyra::opt(config_.include_glob, "pattern")
+    cli_.add_argument(lyra::opt(config_.include_glob, "pattern")
             .name("--include")
             .cardinality(0, 0)
             .help("Specify glob patterns of benchmark names to include."
                   "When omitted, this option won't filter any benchmarks."));
 
-    cli_.add_argument(
-        lyra::opt(config_.exclude_glob, "pattern")
+    cli_.add_argument(lyra::opt(config_.exclude_glob, "pattern")
             .name("--exclude")
             .cardinality(0, 0)
             .help("Specify glob patterns of benchmark names to exclude."
                   "When omitted, this option won't filter any benchmarks."));
 
-    cli_.add_argument(
-        lyra::opt(config_.include_regex, "regex")
+    cli_.add_argument(lyra::opt(config_.include_regex, "regex")
             .name("--include_regex")
             .cardinality(0, 0)
             .help("Specify regular expressions of benchmark names to include."
                   "When omitted, this option won't filter any benchmarks."));
 
-    cli_.add_argument(
-        lyra::opt(config_.exclude_regex, "regex")
+    cli_.add_argument(lyra::opt(config_.exclude_regex, "regex")
             .name("--exclude_regex")
             .cardinality(0, 0)
             .help("Specify regular expressions of benchmark names to exclude."

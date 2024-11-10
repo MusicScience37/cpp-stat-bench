@@ -15,3 +15,6 @@ _What actual happened?_
 _Optionally with logs._
 
 ## Note
+
+/label ~bug
+/label ~"status::open"

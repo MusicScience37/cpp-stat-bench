@@ -32,8 +32,8 @@ namespace util {
  * \retval true The input string matches with the glob pattern.
  * \retval false The input string doesn't match with the glob pattern.
  */
-[[nodiscard]] auto check_glob_pattern(
-    StringView pattern, StringView str) -> bool;
+[[nodiscard]] auto check_glob_pattern(StringView pattern, StringView str)
+    -> bool;
 
 }  // namespace util
 }  // namespace stat_bench

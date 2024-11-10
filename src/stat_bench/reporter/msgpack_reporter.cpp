@@ -49,10 +49,10 @@ public:
 
     MsgpackOutputFileStream(const MsgpackOutputFileStream&) = delete;
     MsgpackOutputFileStream(MsgpackOutputFileStream&&) = delete;
-    auto operator=(
-        const MsgpackOutputFileStream&) -> MsgpackOutputFileStream& = delete;
-    auto operator=(
-        MsgpackOutputFileStream&&) -> MsgpackOutputFileStream& = delete;
+    auto operator=(const MsgpackOutputFileStream&)
+        -> MsgpackOutputFileStream& = delete;
+    auto operator=(MsgpackOutputFileStream&&)
+        -> MsgpackOutputFileStream& = delete;
 
     /*!
      * \brief Destructor.

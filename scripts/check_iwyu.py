@@ -13,7 +13,7 @@ import tqdm
 
 CLANG_INCLUDE_OPTION = [
     "-isystem",
-    "/usr/lib/llvm-14/include/c++/v1/",
+    "/usr/lib/llvm-19/include/c++/v1/",
 ]
 
 ROOT_DIR = pathlib.Path(__file__).absolute().parent.parent

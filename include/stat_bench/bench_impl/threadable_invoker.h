@@ -82,8 +82,8 @@ public:
      * \return Measured durations per thread.
      */
     template <typename Func>
-    [[nodiscard]] auto measure(
-        const Func& func) const -> std::vector<std::vector<clock::Duration>> {
+    [[nodiscard]] auto measure(const Func& func) const
+        -> std::vector<std::vector<clock::Duration>> {
         if (num_threads_ == 1) {
             return std::vector<std::vector<clock::Duration>>{
                 measure_here(func, 0)};
@@ -144,7 +144,7 @@ private:
         for (; sample_index < warm_up_samples_; ++sample_index) {
             memory_barrier();
             for (std::size_t iteration_index = 0; iteration_index < iterations_;
-                 ++iteration_index) {
+                ++iteration_index) {
                 func(thread_index, sample_index, iteration_index);
             }
             memory_barrier();
@@ -155,7 +155,7 @@ private:
         for (; sample_index < samples_; ++sample_index) {
             memory_barrier();
             for (std::size_t iteration_index = 0; iteration_index < iterations_;
-                 ++iteration_index) {
+                ++iteration_index) {
                 func(thread_index, sample_index, iteration_index);
             }
             memory_barrier();

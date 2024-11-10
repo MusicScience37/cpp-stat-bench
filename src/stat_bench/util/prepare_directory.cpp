@@ -78,7 +78,7 @@ namespace stat_bench {
 namespace util {
 
 [[nodiscard]] static auto path_exists(const std::string& path) -> bool {
-    struct stat buf {};
+    struct stat buf{};
     return ::stat(path.c_str(), &buf) == 0;
 }
 
