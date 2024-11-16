@@ -15,25 +15,18 @@
  */
 /*!
  * \file
- * \brief Definition of num_threads_parameter_name function.
+ * \brief Implementation of ParameterName class.
  */
-#pragma once
-
-#include <string>
-
 #include "stat_bench/param/parameter_name.h"
 
 namespace stat_bench {
 namespace param {
 
-/*!
- * \brief Get the parameter name for the number of threads.
- *
- * \return Parameter name.
- */
-inline auto num_threads_parameter_name() -> const ParameterName& {
-    static auto name = ParameterName("threads");
-    return name;
+ParameterName::ParameterName(util::Utf8String str) noexcept
+    : str_(std::move(str)) {}
+
+auto ParameterName::str() const noexcept -> const util::Utf8String& {
+    return str_;
 }
 
 }  // namespace param

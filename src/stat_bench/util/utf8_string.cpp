@@ -39,6 +39,26 @@ auto operator==(const Utf8String& lhs, const Utf8String& rhs) noexcept -> bool {
     return lhs.str() == rhs.str();
 }
 
+auto operator!=(const Utf8String& lhs, const Utf8String& rhs) noexcept -> bool {
+    return !(lhs == rhs);
+}
+
+auto operator<(const Utf8String& lhs, const Utf8String& rhs) noexcept -> bool {
+    return lhs.str() < rhs.str();
+}
+
+auto operator>(const Utf8String& lhs, const Utf8String& rhs) noexcept -> bool {
+    return rhs < lhs;
+}
+
+auto operator<=(const Utf8String& lhs, const Utf8String& rhs) noexcept -> bool {
+    return !(rhs < lhs);
+}
+
+auto operator>=(const Utf8String& lhs, const Utf8String& rhs) noexcept -> bool {
+    return !(lhs < rhs);
+}
+
 }  // namespace util
 }  // namespace stat_bench
 

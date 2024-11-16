@@ -29,19 +29,19 @@ namespace stat_bench {
 namespace param {
 
 ParameterDict::ParameterDict(
-    std::unordered_map<std::string, ParameterValue> data)
+    std::unordered_map<ParameterName, ParameterValue> data)
     : data_(std::move(data)) {}
 
 auto ParameterDict::empty() const noexcept -> bool { return data_.empty(); }
 
-auto ParameterDict::has(const std::string& param_name) const -> bool {
+auto ParameterDict::has(const ParameterName& param_name) const -> bool {
     return data_.count(param_name) == 1;
 }
 
 auto ParameterDict::format_to(fmt::format_context::iterator out) const
     -> fmt::format_context::iterator {
     // Sort keys.
-    std::set<std::string> keys;
+    std::set<ParameterName> keys;
     for (const auto& pair : data_) {
         keys.insert(pair.first);
     }
@@ -67,7 +67,7 @@ auto ParameterDict::as_string_dict() const
     std::unordered_map<std::string, std::string> data;
     data.reserve(data_.size());
     for (const auto& pair : data_) {
-        data.emplace(pair.first, pair.second.to_string());
+        data.emplace(pair.first.str().str(), pair.second.to_string());
     }
     return data;
 }

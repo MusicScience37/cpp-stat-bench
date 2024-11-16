@@ -21,11 +21,11 @@
 
 #include <algorithm>
 #include <memory>
-#include <string>
 #include <utility>
 #include <vector>
 
 #include "stat_bench/param/parameter_generator.h"
+#include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value_vector.h"
 
 namespace stat_bench {
@@ -49,7 +49,7 @@ public:
      * \return Vector of parameter values.
      */
     template <typename T>
-    [[nodiscard]] auto add(const std::string& param_name)
+    [[nodiscard]] auto add(const ParameterName& param_name)
         -> std::shared_ptr<ParameterValueVector<T>> {
         auto vec = std::make_shared<ParameterValueVector<T>>();
         params_.emplace_back(param_name, vec);
@@ -62,9 +62,9 @@ public:
      * \param[in] param_name Parameter name.
      * \return Whether the parameter with the given name exists.
      */
-    [[nodiscard]] auto has(const std::string& param_name) const -> bool {
+    [[nodiscard]] auto has(const ParameterName& param_name) const -> bool {
         return std::find_if(params_.begin(), params_.end(),
-                   [&param_name](const std::pair<std::string,
+                   [&param_name](const std::pair<ParameterName,
                        std::shared_ptr<IParameterValueVector>>& pair) {
                        return pair.first == param_name;
                    }) != params_.end();
@@ -81,7 +81,8 @@ public:
 
 private:
     //! Parameters.
-    std::vector<std::pair<std::string, std::shared_ptr<IParameterValueVector>>>
+    std::vector<
+        std::pair<ParameterName, std::shared_ptr<IParameterValueVector>>>
         params_{};
 };
 

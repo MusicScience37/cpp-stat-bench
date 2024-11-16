@@ -28,6 +28,7 @@
 #include "stat_bench/bench_impl/threadable_invoker.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/clock/duration.h"
+#include "stat_bench/param/parameter_name.h"
 #include "stat_bench/stat/custom_stat_output.h"
 
 namespace stat_bench {
@@ -97,9 +98,21 @@ public:
      * \return Parameter value.
      */
     template <typename T>
-    [[nodiscard]] auto get_param(const std::string& param_name) const
+    [[nodiscard]] auto get_param(const param::ParameterName& param_name) const
         -> const T& {
         return cond_.params().get<T>(param_name);
+    }
+
+    /*!
+     * \brief Get a parameter.
+     *
+     * \tparam T Type of the parameter value.
+     * \param[in] param_name Parameter name.
+     * \return Parameter value.
+     */
+    template <typename T>
+    [[nodiscard]] auto get_param(std::string param_name) const -> const T& {
+        return get_param<T>(param::ParameterName(std::move(param_name)));
     }
 
     /*!

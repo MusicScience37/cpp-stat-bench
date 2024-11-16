@@ -25,6 +25,7 @@
 
 #include <fmt/core.h>
 
+#include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value.h"
 #include "stat_bench/stat_bench_exception.h"
 
@@ -42,7 +43,7 @@ public:
      * \param[in] data Data.
      */
     explicit ParameterDict(
-        std::unordered_map<std::string, ParameterValue> data);
+        std::unordered_map<ParameterName, ParameterValue> data);
 
     /*!
      * \brief Check whether this is empty.
@@ -59,7 +60,7 @@ public:
      * \retval true This has a parameter with the given name.
      * \retval false This doesn't have a parameter with the given name.
      */
-    [[nodiscard]] auto has(const std::string& param_name) const -> bool;
+    [[nodiscard]] auto has(const ParameterName& param_name) const -> bool;
 
     /*!
      * \brief Get a parameter value.
@@ -69,7 +70,7 @@ public:
      * \return Value.
      */
     template <typename T>
-    [[nodiscard]] auto get(const std::string& param_name) const -> const T& {
+    [[nodiscard]] auto get(const ParameterName& param_name) const -> const T& {
         const auto iter = data_.find(param_name);
         if (iter == data_.end()) {
             throw StatBenchException(
@@ -97,7 +98,7 @@ public:
 
 private:
     //! Data.
-    std::unordered_map<std::string, ParameterValue> data_;
+    std::unordered_map<ParameterName, ParameterValue> data_;
 };
 
 }  // namespace param

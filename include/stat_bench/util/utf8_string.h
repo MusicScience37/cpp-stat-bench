@@ -19,6 +19,7 @@
  */
 #pragma once
 
+#include <functional>
 #include <ostream>
 #include <string>
 
@@ -70,10 +71,60 @@ private:
  * \retval true The two objects are not equal.
  * \retval false The two objects are equal.
  */
-[[nodiscard]] inline auto operator!=(
-    const Utf8String& lhs, const Utf8String& rhs) noexcept -> bool {
-    return !(lhs == rhs);
-}
+[[nodiscard]] auto operator!=(
+    const Utf8String& lhs, const Utf8String& rhs) noexcept -> bool;
+
+/*!
+ * \brief Compare two Utf8String objects.
+ *
+ * \param[in] lhs Left-hand side object.
+ * \param[in] rhs Right-hand side object.
+ * \retval true The left-hand side object is less than the right-hand side
+ * object.
+ * \retval false The left-hand side object is not less than the right-hand side
+ * object.
+ */
+[[nodiscard]] auto operator<(
+    const Utf8String& lhs, const Utf8String& rhs) noexcept -> bool;
+
+/*!
+ * \brief Compare two Utf8String objects.
+ *
+ * \param[in] lhs Left-hand side object.
+ * \param[in] rhs Right-hand side object.
+ * \retval true The left-hand side object is less than or equal to the
+ * right-hand side object.
+ * \retval false The left-hand side object is greater than the right-hand side
+ * object.
+ */
+[[nodiscard]] auto operator>(
+    const Utf8String& lhs, const Utf8String& rhs) noexcept -> bool;
+
+/*!
+ * \brief Compare two Utf8String objects.
+ *
+ * \param[in] lhs Left-hand side object.
+ * \param[in] rhs Right-hand side object.
+ * \retval true The left-hand side object is less than or equal to the
+ * right-hand side object.
+ * \retval false The left-hand side object is greater than the right-hand side
+ * object.
+ */
+[[nodiscard]] auto operator<=(
+    const Utf8String& lhs, const Utf8String& rhs) noexcept -> bool;
+
+/*!
+ * \brief Compare two Utf8String objects.
+ *
+ * \param[in] lhs Left-hand side object.
+ * \param[in] rhs Right-hand side object.
+ * \retval true The left-hand side object is greater than or equal to the
+ * right-hand side object.
+ * \retval false The left-hand side object is less than the right-hand side
+ * object.
+ */
+[[nodiscard]] auto operator>=(
+    const Utf8String& lhs, const Utf8String& rhs) noexcept -> bool;
 
 }  // namespace util
 }  // namespace stat_bench
@@ -113,3 +164,29 @@ auto operator<<(std::ostream& stream, const Utf8String& val) -> std::ostream&;
 
 }  // namespace util
 }  // namespace stat_bench
+
+namespace std {
+
+/*!
+ * \brief Implementation of std::hash for stat_bench::util::Utf8String.
+ */
+template <>
+class hash<stat_bench::util::Utf8String> {
+public:
+    /*!
+     * \brief Hash function.
+     *
+     * \param[in] val Value.
+     * \return Hash value.
+     */
+    auto operator()(const stat_bench::util::Utf8String& val) const
+        -> std::size_t {
+        return hash_(val.str());
+    }
+
+private:
+    //! Hash function for std::string.
+    std::hash<std::string> hash_;
+};
+
+}  // namespace std

@@ -25,6 +25,7 @@
 #include <vector>
 
 #include "stat_bench/param/parameter_dict.h"
+#include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value_vector.h"
 
 namespace stat_bench {
@@ -40,7 +41,7 @@ public:
      *
      * \param[in] params Parameters. (Pairs of names and vectors of values.)
      */
-    explicit ParameterGenerator(const std::vector<std::pair<std::string,
+    explicit ParameterGenerator(const std::vector<std::pair<ParameterName,
             std::shared_ptr<IParameterValueVector>>>& params);
 
     /*!
@@ -63,7 +64,7 @@ private:
      */
     struct ParamData {
         //! Name.
-        std::string name{};
+        ParameterName name{""};
 
         //! Values.
         std::shared_ptr<IParameterValueVector> values{};

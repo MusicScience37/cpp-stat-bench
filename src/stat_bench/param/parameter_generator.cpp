@@ -21,13 +21,14 @@
 
 #include <unordered_map>
 
+#include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value.h"
 
 namespace stat_bench {
 namespace param {
 
 ParameterGenerator::ParameterGenerator(const std::vector<
-    std::pair<std::string, std::shared_ptr<IParameterValueVector>>>& params) {
+    std::pair<ParameterName, std::shared_ptr<IParameterValueVector>>>& params) {
     params_.reserve(params.size());
     for (const auto& param : params) {
         if (param.second->size() == 0) {
@@ -50,7 +51,7 @@ auto ParameterGenerator::iterate() -> bool {
 }
 
 auto ParameterGenerator::generate() const -> ParameterDict {
-    std::unordered_map<std::string, ParameterValue> data;
+    std::unordered_map<ParameterName, ParameterValue> data;
     data.reserve(params_.size());
     for (const auto& param : params_) {
         data.emplace(param.name, *param.next);

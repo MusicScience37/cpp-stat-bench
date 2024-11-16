@@ -19,6 +19,8 @@
  */
 #pragma once
 
+#include <utility>
+
 #include <fmt/base.h>
 
 #include "stat_bench/util/utf8_string.h"
@@ -42,8 +44,8 @@ public:
      *
      * \param[in] str String of the name.
      */
-    explicit BenchmarkGroupName(const std::string& str)
-        : BenchmarkGroupName(util::Utf8String(str)) {}
+    explicit BenchmarkGroupName(std::string str)
+        : BenchmarkGroupName(util::Utf8String(std::move(str))) {}
 
     /*!
      * \brief Get the string of the name.

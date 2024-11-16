@@ -36,12 +36,14 @@
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/param/parameter_config.h"
+#include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value_vector.h"
 
 TEST_CASE("stat_bench::runner::Runner") {
     using stat_bench::BenchmarkCaseName;
     using stat_bench::BenchmarkFullName;
     using stat_bench::BenchmarkGroupName;
+    using stat_bench::param::ParameterName;
 
     const auto measurer =
         std::make_shared<stat_bench_test::measurer::MockMeasurer>();
@@ -199,8 +201,13 @@ TEST_CASE("stat_bench::runner::Runner") {
         const auto case1 =
             std::make_shared<stat_bench_test::bench_impl::MockBenchmarkCase>();
         auto param_config = empty_param_config;
-        param_config.add<int>("param1")->add(1)->add(2);          // NOLINT
-        param_config.add<int>("param2")->add(3)->add(4)->add(5);  // NOLINT
+        param_config.add<int>(ParameterName("param1"))
+            ->add(1)
+            ->add(2);  // NOLINT
+        param_config.add<int>(ParameterName("param2"))
+            ->add(3)
+            ->add(4)
+            ->add(5);  // NOLINT
 
         ALLOW_CALL(*case1, info())
             // NOLINTNEXTLINE

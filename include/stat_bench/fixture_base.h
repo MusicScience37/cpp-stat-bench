@@ -22,12 +22,14 @@
 #include <cstddef>
 #include <memory>
 #include <string>
+#include <utility>
 
 #include "stat_bench/bench_impl/i_benchmark_case.h"
 #include "stat_bench/current_invocation_context.h"
 #include "stat_bench/invocation_context.h"
 #include "stat_bench/param/num_threads_parameter_name.h"
 #include "stat_bench/param/parameter_config.h"
+#include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value_vector.h"
 
 namespace stat_bench {
@@ -84,9 +86,22 @@ public:
      * \return Vector of parameter values.
      */
     template <typename T>
-    [[nodiscard]] auto add_param(const std::string& param_name)
+    [[nodiscard]] auto add_param(const param::ParameterName& param_name)
         -> std::shared_ptr<param::ParameterValueVector<T>> {
         return params_.add<T>(param_name);
+    }
+
+    /*!
+     * \brief Add a parameter.
+     *
+     * \tparam T Type of parameter values.
+     * \param[in] param_name Parameter name.
+     * \return Vector of parameter values.
+     */
+    template <typename T>
+    [[nodiscard]] auto add_param(std::string param_name)
+        -> std::shared_ptr<param::ParameterValueVector<T>> {
+        return add_param<T>(param::ParameterName(std::move(param_name)));
     }
 
     /*!
