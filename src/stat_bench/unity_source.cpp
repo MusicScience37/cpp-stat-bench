@@ -14,6 +14,7 @@
 #include "measurer/measure_once.cpp"   // NOLINT(bugprone-suspicious-include)
 #include "measurer/measurer_name.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "measurer/processing_time_measurer.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "output_name.cpp"                // NOLINT(bugprone-suspicious-include)
 #include "param/parameter_dict.cpp"       // NOLINT(bugprone-suspicious-include)
 #include "param/parameter_generator.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "param/parameter_name.cpp"       // NOLINT(bugprone-suspicious-include)

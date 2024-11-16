@@ -68,7 +68,8 @@ auto convert(const std::shared_ptr<stat::CustomStatOutput>& stat_output,
         }
         data.push_back(std::move(vec_copy));
     }
-    return CustomStatOutputData{stat_output->name(), convert(stat), data};
+    return CustomStatOutputData{
+        stat_output->name().str().str(), convert(stat), data};
 }
 
 auto convert(
@@ -83,13 +84,13 @@ auto convert(
     return data;
 }
 
-auto convert(const std::vector<std::pair<std::string, double>>& outputs)
+auto convert(const std::vector<std::pair<OutputName, double>>& outputs)
     -> std::vector<CustomOutputData> {
     std::vector<CustomOutputData> data;
     data.reserve(outputs.size());
     for (const auto& output : outputs) {
-        data.push_back(
-            CustomOutputData{output.first, static_cast<float>(output.second)});
+        data.push_back(CustomOutputData{
+            output.first.str().str(), static_cast<float>(output.second)});
     }
     return data;
 }

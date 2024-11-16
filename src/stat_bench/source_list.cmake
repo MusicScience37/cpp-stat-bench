@@ -15,6 +15,7 @@ set(SOURCE_FILES
     measurer/measure_once.cpp
     measurer/measurer_name.cpp
     measurer/processing_time_measurer.cpp
+    output_name.cpp
     param/parameter_dict.cpp
     param/parameter_generator.cpp
     param/parameter_name.cpp

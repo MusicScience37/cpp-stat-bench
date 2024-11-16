@@ -29,6 +29,7 @@
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/output_name.h"
 #include "stat_bench/stat/calc_stat.h"
 #include "stat_bench/stat/custom_stat_output.h"
 #include "stat_bench/stat/statistics.h"
@@ -58,7 +59,7 @@ public:
         std::vector<std::vector<clock::Duration>> durations,
         std::vector<std::shared_ptr<stat::CustomStatOutput>>
             custom_stat_outputs,
-        std::vector<std::pair<std::string, double>> custom_outputs)
+        std::vector<std::pair<OutputName, double>> custom_outputs)
         : case_info_(std::move(case_info)),
           cond_(std::move(cond)),
           measurer_name_(std::move(measurer_name)),
@@ -168,7 +169,7 @@ public:
      * \return Custom outputs without statistics.
      */
     [[nodiscard]] auto custom_outputs() const noexcept
-        -> const std::vector<std::pair<std::string, double>>& {
+        -> const std::vector<std::pair<OutputName, double>>& {
         return custom_outputs_;
     }
 
@@ -201,7 +202,7 @@ private:
     std::vector<stat::Statistics> custom_stat_;
 
     //! Custom outputs without statistics.
-    std::vector<std::pair<std::string, double>> custom_outputs_;
+    std::vector<std::pair<OutputName, double>> custom_outputs_;
 };
 
 }  // namespace measurer
