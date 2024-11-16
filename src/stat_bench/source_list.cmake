@@ -3,6 +3,7 @@ set(SOURCE_FILES
     bench_impl/benchmark_group.cpp
     bench_impl/invocation_context_registry.cpp
     benchmark_case_name.cpp
+    benchmark_full_name.cpp
     benchmark_group_name.cpp
     clock/monotone_time_point.cpp
     filters/composed_filter.cpp

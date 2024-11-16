@@ -22,8 +22,7 @@
 #include <ostream>
 #include <string>
 
-#include <fmt/core.h>
-#include <fmt/format.h>
+#include <fmt/base.h>
 
 namespace stat_bench {
 namespace util {
@@ -60,10 +59,8 @@ private:
  * \retval true The two objects are equal.
  * \retval false The two objects are not equal.
  */
-[[nodiscard]] inline auto operator==(
-    const Utf8String& lhs, const Utf8String& rhs) noexcept -> bool {
-    return lhs.str() == rhs.str();
-}
+[[nodiscard]] auto operator==(
+    const Utf8String& lhs, const Utf8String& rhs) noexcept -> bool;
 
 /*!
  * \brief Compare two Utf8String objects.
@@ -88,20 +85,16 @@ namespace fmt {
  * stat_bench::util::Utf8String.
  */
 template <>
-struct formatter<stat_bench::util::Utf8String> : public formatter<std::string> {
+struct formatter<stat_bench::util::Utf8String> : public formatter<string_view> {
     /*!
      * \brief Format.
      *
-     * \tparam FormatContext Type of the context.
      * \param[in] val Value.
      * \param[in] context Context.
      * \return Output iterator after formatting.
      */
-    template <typename FormatContext>
-    auto format(
-        const stat_bench::util::Utf8String& val, FormatContext& context) {
-        return formatter<std::string>::format(val.str(), context);
-    }
+    auto format(const stat_bench::util::Utf8String& val,
+        format_context& context) const -> format_context::iterator;
 };
 
 }  // namespace fmt

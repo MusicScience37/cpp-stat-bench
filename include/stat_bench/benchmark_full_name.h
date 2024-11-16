@@ -19,11 +19,9 @@
  */
 #pragma once
 
-#include <string>
 #include <utility>
 
-#include <fmt/core.h>
-#include <fmt/format.h>
+#include <fmt/base.h>
 
 #include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_group_name.h"
@@ -83,7 +81,7 @@ namespace fmt {
  */
 template <>
 struct formatter<stat_bench::BenchmarkFullName>
-    : public formatter<std::string> {
+    : public formatter<string_view> {
     /*!
      * \brief Format.
      *
@@ -92,12 +90,8 @@ struct formatter<stat_bench::BenchmarkFullName>
      * \param[in] context Context.
      * \return Output iterator after formatting.
      */
-    template <typename FormatContext>
     auto format(const stat_bench::BenchmarkFullName& val,
-        FormatContext& context) const -> decltype(context.out()) {
-        return formatter<std::string>::format(
-            fmt::format("{}/{}", val.group_name(), val.case_name()), context);
-    }
+        format_context& context) const -> format_context::iterator;
 };
 
 }  // namespace fmt

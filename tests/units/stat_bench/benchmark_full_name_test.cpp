@@ -20,6 +20,7 @@
 #include "stat_bench/benchmark_full_name.h"
 
 #include <catch2/catch_test_macros.hpp>
+#include <fmt/format.h>
 
 #include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_group_name.h"

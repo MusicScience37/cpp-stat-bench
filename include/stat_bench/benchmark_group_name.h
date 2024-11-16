@@ -19,8 +19,7 @@
  */
 #pragma once
 
-#include <fmt/core.h>
-#include <fmt/format.h>
+#include <fmt/base.h>
 
 #include "stat_bench/util/utf8_string.h"
 
@@ -93,18 +92,18 @@ namespace fmt {
  */
 template <>
 struct formatter<stat_bench::BenchmarkGroupName>
-    : public formatter<std::string> {
+    : public formatter<stat_bench::util::Utf8String> {
     /*!
      * \brief Format.
      *
-     * \tparam FormatContext Type of the context.
      * \param[in] val Value.
      * \param[in] context Context.
      * \return Output iterator after formatting.
      */
     auto format(const stat_bench::BenchmarkGroupName& val,
         fmt::format_context& context) const -> fmt::format_context::iterator {
-        return formatter<std::string>::format(val.str().str(), context);
+        return formatter<stat_bench::util::Utf8String>::format(
+            val.str(), context);
     }
 };
 

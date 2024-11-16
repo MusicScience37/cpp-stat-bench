@@ -19,6 +19,7 @@
  */
 #include "stat_bench/util/utf8_string.h"
 
+#include <fmt/format.h>
 #include <simdutf.h>
 
 #include "stat_bench/stat_bench_exception.h"
@@ -33,6 +34,26 @@ Utf8String::Utf8String(std::string str) : str_(std::move(str)) {
 }
 
 auto Utf8String::str() const noexcept -> const std::string& { return str_; }
+
+auto operator==(const Utf8String& lhs, const Utf8String& rhs) noexcept -> bool {
+    return lhs.str() == rhs.str();
+}
+
+}  // namespace util
+}  // namespace stat_bench
+
+namespace fmt {
+
+auto formatter<stat_bench::util::Utf8String>::format(
+    const stat_bench::util::Utf8String& val, format_context& context) const
+    -> format_context::iterator {
+    return formatter<string_view>::format(val.str(), context);
+}
+
+}  // namespace fmt
+
+namespace stat_bench {
+namespace util {
 
 auto operator<<(std::ostream& stream, const Utf8String& val) -> std::ostream& {
     return stream << val.str();
