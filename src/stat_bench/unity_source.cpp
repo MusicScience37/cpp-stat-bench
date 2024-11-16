@@ -5,6 +5,7 @@
 #include "benchmark_full_name.cpp"        // NOLINT(bugprone-suspicious-include)
 #include "benchmark_group_name.cpp"       // NOLINT(bugprone-suspicious-include)
 #include "clock/monotone_time_point.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "clock/system_time_point.cpp"    // NOLINT(bugprone-suspicious-include)
 #include "custom_output_name.cpp"         // NOLINT(bugprone-suspicious-include)
 #include "filters/composed_filter.cpp"    // NOLINT(bugprone-suspicious-include)
 #include "filters/glob_filter.cpp"        // NOLINT(bugprone-suspicious-include)

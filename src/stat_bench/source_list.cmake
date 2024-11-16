@@ -6,6 +6,7 @@ set(SOURCE_FILES
     benchmark_full_name.cpp
     benchmark_group_name.cpp
     clock/monotone_time_point.cpp
+    clock/system_time_point.cpp
     custom_output_name.cpp
     filters/composed_filter.cpp
     filters/glob_filter.cpp

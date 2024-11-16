@@ -20,11 +20,8 @@
 #pragma once
 
 #include <chrono>
-#include <string>
 
-#include <fmt/chrono.h>
-#include <fmt/core.h>
-#include <fmt/format.h>
+#include <fmt/base.h>
 
 namespace stat_bench {
 namespace clock {
@@ -44,26 +41,13 @@ public:
         : time_point_(time_point) {}
 
     /*!
-     * \brief Format to string.
+     * \brief Get the actual time point.
      *
-     * \tparam OutputIter Type of the output iterator.
-     * \param[in] iter Output iterator.
-     * \return Output iterator after formatting.
+     * \return Actual time point.
      */
-    template <typename OutputIter>
-    // NOLINTNEXTLINE(modernize-use-nodiscard) : API for the external library.
-    auto format_to(OutputIter iter) const -> OutputIter {
-        const auto time_sec =
-            std::chrono::time_point_cast<std::chrono::seconds>(time_point_);
-        const auto time_tm =
-            fmt::localtime(std::chrono::system_clock::to_time_t(time_sec));
-        const auto time_usec =
-            std::chrono::duration_cast<std::chrono::microseconds>(
-                time_point_ - time_sec)
-                .count();
-
-        return fmt::format_to(
-            iter, "{0:%FT%T}.{1:06d}{0:%z}", time_tm, time_usec);
+    [[nodiscard]] auto time_point() const noexcept
+        -> std::chrono::system_clock::time_point {
+        return time_point_;
     }
 
 private:
@@ -82,20 +66,16 @@ namespace fmt {
  */
 template <>
 struct formatter<stat_bench::clock::SystemTimePoint>
-    : public formatter<std::string> {
+    : public formatter<string_view> {
     /*!
      * \brief Format.
      *
-     * \tparam FormatContext Type of the context.
      * \param[in] val Value.
      * \param[in] context Context.
      * \return Output iterator after formatting.
      */
-    template <typename FormatContext>
     auto format(const stat_bench::clock::SystemTimePoint& val,
-        FormatContext& context) const -> decltype(context.out()) {
-        return val.format_to(context.out());
-    }
+        format_context& context) const -> format_context::iterator;
 };
 
 }  // namespace fmt
