@@ -28,7 +28,7 @@
 #include "stat_bench/bench_impl/threadable_invoker.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/clock/duration.h"
-#include "stat_bench/output_name.h"
+#include "stat_bench/custom_output_name.h"
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/stat/custom_stat_output.h"
 
@@ -123,7 +123,7 @@ public:
      * \param[in] analysis_type Type of analysis.
      * \return Object to add output values.
      */
-    [[nodiscard]] auto add_custom_stat(const OutputName& name,
+    [[nodiscard]] auto add_custom_stat(const CustomOutputName& name,
         stat::CustomOutputAnalysisType analysis_type =
             stat::CustomOutputAnalysisType::mean)
         -> std::shared_ptr<stat::CustomStatOutput> {
@@ -145,7 +145,8 @@ public:
         stat::CustomOutputAnalysisType analysis_type =
             stat::CustomOutputAnalysisType::mean)
         -> std::shared_ptr<stat::CustomStatOutput> {
-        return add_custom_stat(OutputName(std::move(name)), analysis_type);
+        return add_custom_stat(
+            CustomOutputName(std::move(name)), analysis_type);
     }
 
     /*!
@@ -154,7 +155,7 @@ public:
      * \param[in] name Name.
      * \param[in] value Output value.
      */
-    void add_custom_output(const OutputName& name, double value) {
+    void add_custom_output(const CustomOutputName& name, double value) {
         custom_outputs_.emplace_back(name, value);
     }
 
@@ -165,7 +166,7 @@ public:
      * \param[in] value Output value.
      */
     void add_custom_output(std::string name, double value) {
-        add_custom_output(OutputName(std::move(name)), value);
+        add_custom_output(CustomOutputName(std::move(name)), value);
     }
 
     /*!
@@ -209,7 +210,7 @@ public:
      * \return Custom outputs without statistics.
      */
     [[nodiscard]] auto custom_outputs() const noexcept
-        -> const std::vector<std::pair<OutputName, double>>& {
+        -> const std::vector<std::pair<CustomOutputName, double>>& {
         return custom_outputs_;
     }
 
@@ -233,7 +234,7 @@ private:
     std::vector<std::shared_ptr<stat::CustomStatOutput>> custom_stat_outputs_{};
 
     //! Custom outputs without statistics.
-    std::vector<std::pair<OutputName, double>> custom_outputs_{};
+    std::vector<std::pair<CustomOutputName, double>> custom_outputs_{};
 };
 
 }  // namespace stat_bench

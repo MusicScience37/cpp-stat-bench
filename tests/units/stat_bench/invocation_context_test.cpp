@@ -27,7 +27,7 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include "param/create_ordinary_parameter_dict.h"
-#include "stat_bench/output_name.h"
+#include "stat_bench/custom_output_name.h"
 #include "stat_bench/param/num_threads_parameter_name.h"
 
 TEST_CASE("stat_bench::InvocationContext") {
@@ -155,7 +155,8 @@ TEST_CASE("stat_bench::InvocationContext") {
 
         const auto out_list = context.custom_outputs();
         REQUIRE(out_list.size() == 1);
-        REQUIRE(out_list.at(0).first == stat_bench::OutputName(output_name));
+        REQUIRE(
+            out_list.at(0).first == stat_bench::CustomOutputName(output_name));
         REQUIRE(out_list.at(0).second == val);
     }
 }

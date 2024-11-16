@@ -15,7 +15,7 @@
  */
 /*!
  * \file
- * \brief Definition of OutputName class.
+ * \brief Definition of CustomOutputName class.
  */
 #pragma once
 
@@ -28,24 +28,24 @@
 namespace stat_bench {
 
 /*!
- * \brief Class of names of outputs.
+ * \brief Class of names of custom outputs.
  */
-class OutputName {
+class CustomOutputName {
 public:
     /*!
      * \brief Constructor.
      *
      * \param[in] str String of the name.
      */
-    explicit OutputName(util::Utf8String str) noexcept;
+    explicit CustomOutputName(util::Utf8String str) noexcept;
 
     /*!
      * \brief Constructor.
      *
      * \param[in] str String of the name.
      */
-    explicit OutputName(std::string str)
-        : OutputName(util::Utf8String(std::move(str))) {}
+    explicit CustomOutputName(std::string str)
+        : CustomOutputName(util::Utf8String(std::move(str))) {}
 
     /*!
      * \brief Get the string of the name.
@@ -60,7 +60,7 @@ private:
 };
 
 /*!
- * \brief Compare two OutputName objects.
+ * \brief Compare two CustomOutputName objects.
  *
  * \param[in] lhs Left-hand side object.
  * \param[in] rhs Right-hand side object.
@@ -68,12 +68,12 @@ private:
  * \retval false The two objects are not equal.
  */
 [[nodiscard]] inline auto operator==(
-    const OutputName& lhs, const OutputName& rhs) noexcept -> bool {
+    const CustomOutputName& lhs, const CustomOutputName& rhs) noexcept -> bool {
     return lhs.str() == rhs.str();
 }
 
 /*!
- * \brief Compare two OutputName objects.
+ * \brief Compare two CustomOutputName objects.
  *
  * \param[in] lhs Left-hand side object.
  * \param[in] rhs Right-hand side object.
@@ -81,7 +81,7 @@ private:
  * \retval false The two objects are equal.
  */
 [[nodiscard]] inline auto operator!=(
-    const OutputName& lhs, const OutputName& rhs) noexcept -> bool {
+    const CustomOutputName& lhs, const CustomOutputName& rhs) noexcept -> bool {
     return !(lhs == rhs);
 }
 
@@ -90,10 +90,11 @@ private:
 namespace fmt {
 
 /*!
- * \brief Implementation of fmt::formatter for stat_bench::OutputName.
+ * \brief Implementation of fmt::formatter for
+ * stat_bench::CustomOutputName.
  */
 template <>
-struct formatter<stat_bench::OutputName>
+struct formatter<stat_bench::CustomOutputName>
     : public formatter<stat_bench::util::Utf8String> {
     /*!
      * \brief Format.
@@ -102,7 +103,7 @@ struct formatter<stat_bench::OutputName>
      * \param[in] context Context.
      * \return Output iterator after formatting.
      */
-    auto format(const stat_bench::OutputName& val,
+    auto format(const stat_bench::CustomOutputName& val,
         fmt::format_context& context) const -> fmt::format_context::iterator {
         return formatter<stat_bench::util::Utf8String>::format(
             val.str(), context);
@@ -120,7 +121,7 @@ namespace stat_bench {
  * \param[in] val Value.
  * \return Stream.
  */
-inline auto operator<<(std::ostream& stream, const OutputName& val)
+inline auto operator<<(std::ostream& stream, const CustomOutputName& val)
     -> std::ostream& {
     return stream << val.str();
 }

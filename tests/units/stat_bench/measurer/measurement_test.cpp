@@ -24,13 +24,13 @@
 #include "../param/create_ordinary_parameter_dict.h"
 #include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_group_name.h"
+#include "stat_bench/custom_output_name.h"
 #include "stat_bench/measurer/measurer_name.h"
-#include "stat_bench/output_name.h"
 
 TEST_CASE("stat_bench::measurer::Measurement") {
     using stat_bench::BenchmarkCaseName;
     using stat_bench::BenchmarkGroupName;
-    using stat_bench::OutputName;
+    using stat_bench::CustomOutputName;
     using stat_bench::clock::Duration;
     using stat_bench::measurer::MeasurerName;
 
@@ -50,7 +50,7 @@ TEST_CASE("stat_bench::measurer::Measurement") {
             custom_stat_outputs;
         const auto custom_stat_output1 =
             std::make_shared<stat_bench::stat::CustomStatOutput>(
-                OutputName("CustomStatOutput1"), 2, 3, 2, 1,
+                CustomOutputName("CustomStatOutput1"), 2, 3, 2, 1,
                 stat_bench::stat::CustomOutputAnalysisType::mean);
         custom_stat_output1->add(0, 0, 1.0);
         custom_stat_output1->add(0, 1, 1.0);
@@ -60,8 +60,8 @@ TEST_CASE("stat_bench::measurer::Measurement") {
         custom_stat_output1->add(1, 2, 1.0);
         custom_stat_outputs.push_back(custom_stat_output1);
 
-        const std::vector<std::pair<OutputName, double>> custom_outputs{
-            {OutputName("CustomOutput2"), 2.0}};
+        const std::vector<std::pair<CustomOutputName, double>> custom_outputs{
+            {CustomOutputName("CustomOutput2"), 2.0}};
 
         const auto measurement = stat_bench::measurer::Measurement(info, cond,
             measurer_name, iterations, samples, durations, custom_stat_outputs,
@@ -85,12 +85,12 @@ TEST_CASE("stat_bench::measurer::Measurement") {
 
         REQUIRE(measurement.custom_stat_outputs().size() == 1);
         REQUIRE(measurement.custom_stat_outputs().at(0)->name() ==
-            OutputName("CustomStatOutput1"));
+            CustomOutputName("CustomStatOutput1"));
         REQUIRE(measurement.custom_stat().size() == 1);
         REQUIRE(measurement.custom_stat().at(0).mean() == 1.0);  // NOLINT
         REQUIRE(measurement.custom_outputs().size() == 1);
         REQUIRE(measurement.custom_outputs().at(0).first ==
-            OutputName("CustomOutput2"));
+            CustomOutputName("CustomOutput2"));
         REQUIRE(measurement.custom_outputs().at(0).second == 2.0);  // NOLINT
     }
 }

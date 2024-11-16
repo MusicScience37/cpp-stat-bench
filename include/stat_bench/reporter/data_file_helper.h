@@ -26,8 +26,8 @@
 #include <vector>
 
 #include "stat_bench/clock/duration.h"
+#include "stat_bench/custom_output_name.h"
 #include "stat_bench/measurer/measurement.h"
-#include "stat_bench/output_name.h"
 #include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/reporter/data_file_spec.h"
 #include "stat_bench/stat/custom_stat_output.h"
@@ -95,7 +95,7 @@ namespace data_file_spec {
  * \return Converted data.
  */
 [[nodiscard]] auto convert(
-    const std::vector<std::pair<OutputName, double>>& outputs)
+    const std::vector<std::pair<CustomOutputName, double>>& outputs)
     -> std::vector<CustomOutputData>;
 
 /*!

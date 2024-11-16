@@ -25,13 +25,13 @@
 #include <catch2/matchers/catch_matchers_vector.hpp>
 
 #include "stat_bench/clock/duration.h"
-#include "stat_bench/output_name.h"
+#include "stat_bench/custom_output_name.h"
 
 TEST_CASE("stat_bench::stat::CustomStatOutput") {
-    using stat_bench::OutputName;
+    using stat_bench::CustomOutputName;
 
     SECTION("construct") {
-        const auto name = OutputName("CustomStat");
+        const auto name = CustomOutputName("CustomStat");
         constexpr std::size_t threads = 2;
         constexpr std::size_t samples = 3;
         constexpr std::size_t warming_up_samples = 2;
@@ -45,7 +45,7 @@ TEST_CASE("stat_bench::stat::CustomStatOutput") {
     }
 
     SECTION("calculate statistics") {
-        const auto name = OutputName("CustomStat");
+        const auto name = CustomOutputName("CustomStat");
         constexpr std::size_t threads = 2;
         constexpr std::size_t samples = 3;
         constexpr std::size_t warming_up_samples = 1;
@@ -91,7 +91,7 @@ TEST_CASE("stat_bench::stat::CustomStatOutput") {
     }
 
     SECTION("calculate statistics using rate per seconds") {
-        const auto name = OutputName("CustomStat");
+        const auto name = CustomOutputName("CustomStat");
         constexpr std::size_t threads = 1;
         constexpr std::size_t samples = 3;
         constexpr std::size_t warming_up_samples = 1;

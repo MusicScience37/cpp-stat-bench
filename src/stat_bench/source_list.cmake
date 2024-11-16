@@ -6,6 +6,7 @@ set(SOURCE_FILES
     benchmark_full_name.cpp
     benchmark_group_name.cpp
     clock/monotone_time_point.cpp
+    custom_output_name.cpp
     filters/composed_filter.cpp
     filters/glob_filter.cpp
     filters/regex_filter.cpp
@@ -15,7 +16,6 @@ set(SOURCE_FILES
     measurer/measure_once.cpp
     measurer/measurer_name.cpp
     measurer/processing_time_measurer.cpp
-    output_name.cpp
     param/parameter_dict.cpp
     param/parameter_generator.cpp
     param/parameter_name.cpp

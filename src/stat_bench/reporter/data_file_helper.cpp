@@ -84,7 +84,7 @@ auto convert(
     return data;
 }
 
-auto convert(const std::vector<std::pair<OutputName, double>>& outputs)
+auto convert(const std::vector<std::pair<CustomOutputName, double>>& outputs)
     -> std::vector<CustomOutputData> {
     std::vector<CustomOutputData> data;
     data.reserve(outputs.size());

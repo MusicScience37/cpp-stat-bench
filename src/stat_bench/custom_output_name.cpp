@@ -15,15 +15,16 @@
  */
 /*!
  * \file
- * \brief Implementation of OutputName class.
+ * \brief Implementation of CustomOutputName class.
  */
-#include "stat_bench/output_name.h"
+#include "stat_bench/custom_output_name.h"
 
 namespace stat_bench {
 
-OutputName::OutputName(util::Utf8String str) noexcept : str_(std::move(str)) {}
+CustomOutputName::CustomOutputName(util::Utf8String str) noexcept
+    : str_(std::move(str)) {}
 
-auto OutputName::str() const noexcept -> const util::Utf8String& {
+auto CustomOutputName::str() const noexcept -> const util::Utf8String& {
     return str_;
 }
 
