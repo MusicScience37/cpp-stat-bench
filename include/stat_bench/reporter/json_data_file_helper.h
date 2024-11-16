@@ -19,9 +19,82 @@
  */
 #pragma once
 
+#include <unordered_map>
+
+#include <nlohmann/adl_serializer.hpp>
 #include <nlohmann/json.hpp>
 
 #include "stat_bench/reporter/data_file_spec.h"
+#include "stat_bench/util/utf8_string.h"
+
+namespace nlohmann {
+
+/*!
+ * \brief Implementation of nlohmann::adl_serializer for
+ * stat_bench::util::Utf8String.
+ */
+template <>
+struct adl_serializer<stat_bench::util::Utf8String> {
+    /*!
+     * \brief Convert a value to JSON.
+     *
+     * \param[out] j JSON.
+     * \param[in] val Value.
+     */
+    static void to_json(json& j, const stat_bench::util::Utf8String& val) {
+        j = val.str();
+    }
+
+    /*!
+     * \brief Convert JSON to a value.
+     *
+     * \param[in] j JSON.
+     * \param[out] val Value.
+     */
+    static void from_json(const json& j, stat_bench::util::Utf8String& val) {
+        val = stat_bench::util::Utf8String(j.get<std::string>());
+    }
+};
+
+/*!
+ * \brief Implementation of nlohmann::adl_serializer for
+ * std::unordered_map<stat_bench::util::Utf8String,
+ * stat_bench::util::Utf8String>.
+ */
+template <>
+struct adl_serializer<std::unordered_map<stat_bench::util::Utf8String,
+    stat_bench::util::Utf8String>> {
+    /*!
+     * \brief Convert a value to JSON.
+     *
+     * \param[out] j JSON.
+     * \param[in] val Value.
+     */
+    static void to_json(json& j,
+        const std::unordered_map<stat_bench::util::Utf8String,
+            stat_bench::util::Utf8String>& val) {
+        for (const auto& [key, value] : val) {
+            j[key.str()] = value.str();
+        }
+    }
+
+    /*!
+     * \brief Convert JSON to a value.
+     *
+     * \param[in] j JSON.
+     * \param[out] val Value.
+     */
+    static void from_json(const json& j,
+        std::unordered_map<stat_bench::util::Utf8String,
+            stat_bench::util::Utf8String>& val) {
+        for (auto it = j.begin(); it != j.end(); ++it) {
+            val[stat_bench::util::Utf8String(it.key())] =
+                stat_bench::util::Utf8String(it.value().get<std::string>());
+        }
+    }
+};
+
+}  // namespace nlohmann
 
 namespace stat_bench {
 namespace reporter {

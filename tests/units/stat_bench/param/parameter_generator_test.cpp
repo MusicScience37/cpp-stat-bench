@@ -26,11 +26,13 @@
 
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value_vector.h"
+#include "stat_bench/util/utf8_string.h"
 
 TEST_CASE("stat_bench::param::ParameterGenerator") {
     using stat_bench::param::IParameterValueVector;
     using stat_bench::param::ParameterName;
     using stat_bench::param::ParameterValueVector;
+    using stat_bench::util::Utf8String;
 
     SECTION("generate") {
         std::vector<
@@ -95,7 +97,7 @@ TEST_CASE("stat_bench::param::ParameterGenerator") {
         auto dict = generator.generate();
         // NOLINTNEXTLINE
         CHECK(dict.as_string_dict() ==
-            std::unordered_map<std::string, std::string>());
+            std::unordered_map<Utf8String, Utf8String>());
 
         REQUIRE(!generator.iterate());
     }

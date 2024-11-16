@@ -41,6 +41,11 @@ public:
     explicit Utf8String(std::string str);
 
     /*!
+     * \brief Constructor. (Empty string.)
+     */
+    Utf8String() = default;
+
+    /*!
      * \brief Get the string.
      *
      * \return String.

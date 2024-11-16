@@ -27,6 +27,7 @@
 
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/reporter/data_file_helper.h"
+#include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
 namespace reporter {
@@ -36,12 +37,14 @@ DataFileReporterBase::DataFileReporterBase(std::string file_path)
 
 void DataFileReporterBase::experiment_starts(
     const clock::SystemTimePoint& time_stamp) {
-    data_.started_at = fmt::format(FMT_STRING("{}"), time_stamp);
+    data_.started_at =
+        util::Utf8String(fmt::format(FMT_STRING("{}"), time_stamp));
 }
 
 void DataFileReporterBase::experiment_finished(
     const clock::SystemTimePoint& time_stamp) {
-    data_.finished_at = fmt::format(FMT_STRING("{}"), time_stamp);
+    data_.finished_at =
+        util::Utf8String(fmt::format(FMT_STRING("{}"), time_stamp));
 
     write_data_file(file_path_, data_);
 }

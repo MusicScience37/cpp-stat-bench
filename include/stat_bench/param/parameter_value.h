@@ -27,6 +27,7 @@
 #include <fmt/core.h>
 
 #include "stat_bench/stat_bench_exception.h"
+#include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
 namespace param {
@@ -101,9 +102,9 @@ public:
      *
      * \return Formatted string.
      */
-    [[nodiscard]] auto to_string() const -> std::string {
+    [[nodiscard]] auto to_string() const -> util::Utf8String {
         if (!data_) {
-            return "null";
+            return util::Utf8String("null");
         }
         return to_string_impl_(data_);
     }
@@ -113,7 +114,8 @@ private:
     using GetTypeSignature = const std::type_info&();
 
     //! Signature of to_string_impl function.
-    using ToStringImplSignature = std::string(const std::shared_ptr<void>&);
+    using ToStringImplSignature = util::Utf8String(
+        const std::shared_ptr<void>&);
 
     /*!
      * \brief Get the type.
@@ -135,9 +137,9 @@ private:
      */
     template <typename T>
     [[nodiscard]] static auto to_string_impl(const std::shared_ptr<void>& data)
-        -> std::string {
-        return fmt::format("{}", *static_cast<const T*>(data.get()));
-        ;
+        -> util::Utf8String {
+        return util::Utf8String(
+            fmt::format("{}", *static_cast<const T*>(data.get())));
     }
 
     //! Data.

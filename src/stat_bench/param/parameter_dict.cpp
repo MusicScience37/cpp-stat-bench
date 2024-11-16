@@ -63,11 +63,11 @@ auto ParameterDict::format_to(fmt::format_context::iterator out) const
 }
 
 auto ParameterDict::as_string_dict() const
-    -> std::unordered_map<std::string, std::string> {
-    std::unordered_map<std::string, std::string> data;
+    -> std::unordered_map<util::Utf8String, util::Utf8String> {
+    std::unordered_map<util::Utf8String, util::Utf8String> data;
     data.reserve(data_.size());
     for (const auto& pair : data_) {
-        data.emplace(pair.first.str().str(), pair.second.to_string());
+        data.emplace(pair.first.str(), pair.second.to_string());
     }
     return data;
 }

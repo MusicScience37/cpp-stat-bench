@@ -44,7 +44,7 @@ namespace data_file_spec {
  * \return Converted data.
  */
 [[nodiscard]] auto convert(const param::ParameterDict& params)
-    -> std::unordered_map<std::string, std::string>;
+    -> std::unordered_map<util::Utf8String, util::Utf8String>;
 
 /*!
  * \brief Convert to data for data files.

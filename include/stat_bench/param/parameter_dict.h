@@ -28,6 +28,7 @@
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value.h"
 #include "stat_bench/stat_bench_exception.h"
+#include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
 namespace param {
@@ -94,7 +95,7 @@ public:
      * \return Dictionary.
      */
     [[nodiscard]] auto as_string_dict() const
-        -> std::unordered_map<std::string, std::string>;
+        -> std::unordered_map<util::Utf8String, util::Utf8String>;
 
 private:
     //! Data.
