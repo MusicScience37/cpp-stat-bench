@@ -52,15 +52,17 @@ void SimpleLinePlotReporter::experiment_finished(
     // no operation
 }
 
-void SimpleLinePlotReporter::measurer_starts(const std::string& name) {
-    measurer_name_ = name;
+void SimpleLinePlotReporter::measurer_starts(
+    const measurer::MeasurerName& name) {
+    measurer_name_ = name.str().str();
     std::size_t pos = 0;
     while ((pos = measurer_name_.find(' ', pos)) != std::string::npos) {
         measurer_name_.erase(pos, 1);
     }
 }
 
-void SimpleLinePlotReporter::measurer_finished(const std::string& /*name*/) {
+void SimpleLinePlotReporter::measurer_finished(
+    const measurer::MeasurerName& /*name*/) {
     // no operation
 }
 

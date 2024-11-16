@@ -97,8 +97,9 @@ auto convert(const std::vector<std::pair<std::string, double>>& outputs)
 auto convert(const measurer::Measurement& measurement) -> MeasurementData {
     return MeasurementData{measurement.case_info().group_name().str().str(),
         measurement.case_info().case_name().str().str(),
-        convert(measurement.cond().params()), measurement.measurer_name(),
-        measurement.iterations(), measurement.samples(),
+        convert(measurement.cond().params()),
+        measurement.measurer_name().str().str(), measurement.iterations(),
+        measurement.samples(),
         convert(measurement.durations(), measurement.durations_stat()),
         convert(measurement.custom_stat_outputs(), measurement.custom_stat()),
         convert(measurement.custom_outputs())};

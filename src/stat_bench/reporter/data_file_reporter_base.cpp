@@ -46,11 +46,13 @@ void DataFileReporterBase::experiment_finished(
     write_data_file(file_path_, data_);
 }
 
-void DataFileReporterBase::measurer_starts(const std::string& /*name*/) {
+void DataFileReporterBase::measurer_starts(
+    const measurer::MeasurerName& /*name*/) {
     // no operation
 }
 
-void DataFileReporterBase::measurer_finished(const std::string& /*name*/) {
+void DataFileReporterBase::measurer_finished(
+    const measurer::MeasurerName& /*name*/) {
     // no operation
 }
 

@@ -30,6 +30,7 @@
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/system_time_point.h"
 #include "stat_bench/measurer/measurement.h"
+#include "stat_bench/measurer/measurer_name.h"
 #include "stat_bench/reporter/i_reporter.h"
 
 namespace stat_bench {
@@ -54,10 +55,10 @@ public:
     void experiment_finished(const clock::SystemTimePoint& time_stamp) override;
 
     //! \copydoc stat_bench::reporter::IReporter::measurer_starts
-    void measurer_starts(const std::string& name) override;
+    void measurer_starts(const measurer::MeasurerName& name) override;
 
     //! \copydoc stat_bench::reporter::IReporter::measurer_finished
-    void measurer_finished(const std::string& name) override;
+    void measurer_finished(const measurer::MeasurerName& name) override;
 
     //! \copydoc stat_bench::reporter::IReporter::group_starts
     void group_starts(const BenchmarkGroupName& name) override;

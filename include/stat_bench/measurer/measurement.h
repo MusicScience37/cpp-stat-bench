@@ -28,6 +28,7 @@
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/clock/duration.h"
+#include "stat_bench/measurer/measurer_name.h"
 #include "stat_bench/stat/calc_stat.h"
 #include "stat_bench/stat/custom_stat_output.h"
 #include "stat_bench/stat/statistics.h"
@@ -53,7 +54,7 @@ public:
      * \param[in] custom_outputs Custom outputs without statistics.
      */
     Measurement(BenchmarkFullName case_info, BenchmarkCondition cond,
-        std::string measurer_name, std::size_t iterations, std::size_t samples,
+        MeasurerName measurer_name, std::size_t iterations, std::size_t samples,
         std::vector<std::vector<clock::Duration>> durations,
         std::vector<std::shared_ptr<stat::CustomStatOutput>>
             custom_stat_outputs,
@@ -97,7 +98,7 @@ public:
      *
      * \return Name of the measurer.
      */
-    [[nodiscard]] auto measurer_name() const noexcept -> const std::string& {
+    [[nodiscard]] auto measurer_name() const noexcept -> const MeasurerName& {
         return measurer_name_;
     }
 
@@ -179,7 +180,7 @@ private:
     BenchmarkCondition cond_;
 
     //! Name of the measurer.
-    std::string measurer_name_;
+    MeasurerName measurer_name_;
 
     //! Number of iterations.
     std::size_t iterations_;

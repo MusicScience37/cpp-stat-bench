@@ -35,6 +35,7 @@
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/measurer/measurement.h"
+#include "stat_bench/measurer/measurer_name.h"
 #include "stat_bench/param/parameter_config.h"
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value_vector.h"
@@ -43,12 +44,13 @@ TEST_CASE("stat_bench::runner::Runner") {
     using stat_bench::BenchmarkCaseName;
     using stat_bench::BenchmarkFullName;
     using stat_bench::BenchmarkGroupName;
+    using stat_bench::measurer::MeasurerName;
     using stat_bench::param::ParameterName;
 
     const auto measurer =
         std::make_shared<stat_bench_test::measurer::MockMeasurer>();
 
-    const auto measurer_name = std::string("measurer");
+    const auto measurer_name = MeasurerName("measurer");
     ALLOW_CALL(*measurer, name())
         // NOLINTNEXTLINE
         .RETURN(measurer_name);

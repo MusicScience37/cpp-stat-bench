@@ -32,6 +32,7 @@
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/measurer/measurement.h"
+#include "stat_bench/measurer/measurer_name.h"
 #include "stat_bench/param/num_threads_parameter_name.h"
 #include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/param/parameter_name.h"
@@ -49,6 +50,7 @@ namespace stat_bench_test {
     using stat_bench::BenchmarkGroupName;
     using stat_bench::clock::Duration;
     using stat_bench::measurer::Measurement;
+    using stat_bench::measurer::MeasurerName;
     using stat_bench::param::ParameterDict;
     using stat_bench::param::ParameterName;
     using stat_bench::param::ParameterValue;
@@ -65,7 +67,7 @@ namespace stat_bench_test {
                     ParameterValue().emplace<std::size_t>(threads)},
                 {ParameterName("param"),
                     ParameterValue().emplace<std::string>("value")}})),
-        measurer_name, iterations, samples, durations,
+        MeasurerName(measurer_name), iterations, samples, durations,
         std::vector<std::shared_ptr<CustomStatOutput>>(),
         std::vector<std::pair<std::string, double>>());
 }

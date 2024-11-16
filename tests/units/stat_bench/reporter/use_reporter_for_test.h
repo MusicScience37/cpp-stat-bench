@@ -29,6 +29,7 @@
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/clock/system_clock.h"
 #include "stat_bench/measurer/measurement.h"
+#include "stat_bench/measurer/measurer_name.h"
 #include "stat_bench/reporter/i_reporter.h"
 
 namespace stat_bench_test {
@@ -43,10 +44,11 @@ inline void use_reporter_for_test(stat_bench::reporter::IReporter* reporter) {
     using stat_bench::clock::Duration;
     using stat_bench::clock::SystemClock;
     using stat_bench::measurer::Measurement;
+    using stat_bench::measurer::MeasurerName;
 
     reporter->experiment_starts(SystemClock::now());
     const std::string measurer_name = "Measurement1";
-    reporter->measurer_starts(measurer_name);
+    reporter->measurer_starts(MeasurerName(measurer_name));
     const std::string group1_name = "Group1";
     reporter->group_starts(BenchmarkGroupName(group1_name));
 
@@ -75,7 +77,7 @@ inline void use_reporter_for_test(stat_bench::reporter::IReporter* reporter) {
     reporter->case_finished(measurement3.case_info());
 
     reporter->group_finished(BenchmarkGroupName(group1_name));
-    reporter->measurer_finished(measurer_name);
+    reporter->measurer_finished(MeasurerName(measurer_name));
     reporter->experiment_finished(SystemClock::now());
 }
 

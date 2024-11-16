@@ -24,18 +24,20 @@
 #include "../param/create_ordinary_parameter_dict.h"
 #include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_group_name.h"
+#include "stat_bench/measurer/measurer_name.h"
 
 TEST_CASE("stat_bench::measurer::Measurement") {
     using stat_bench::BenchmarkCaseName;
     using stat_bench::BenchmarkGroupName;
     using stat_bench::clock::Duration;
+    using stat_bench::measurer::MeasurerName;
 
     SECTION("construct") {
         const auto info = stat_bench::BenchmarkFullName(
             BenchmarkGroupName("group"), BenchmarkCaseName("case"));
         const auto cond = stat_bench::BenchmarkCondition(
             2, stat_bench_test::param::create_ordinary_parameter_dict());
-        const auto measurer_name = std::string("measurer");
+        const auto measurer_name = MeasurerName("measurer");
         const std::size_t iterations = 7;
         const std::size_t samples = 2;
         const auto durations = std::vector<std::vector<Duration>>{
