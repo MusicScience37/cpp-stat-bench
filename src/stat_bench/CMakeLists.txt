@@ -11,6 +11,8 @@ target_link_libraries(
            cpp_msgpack_light::msgpack_light
            ZLIB::ZLIB
            Eigen3::Eigen
+           simdutf::simdutf
+           Threads::Threads
            $<BUILD_INTERFACE:stat_bench_cpp_warnings>)
 target_link_libraries(stat_bench PRIVATE pantor::inja)
 set_target_properties(stat_bench PROPERTIES VERSION ${PROJECT_VERSION})
@@ -39,6 +41,7 @@ target_link_libraries(
            cpp_msgpack_light::msgpack_light
            ZLIB::ZLIB
            Eigen3::Eigen
+           simdutf::simdutf
            Threads::Threads
            $<BUILD_INTERFACE:stat_bench_cpp_warnings>)
 target_link_libraries(stat_bench_unity PRIVATE pantor::inja)

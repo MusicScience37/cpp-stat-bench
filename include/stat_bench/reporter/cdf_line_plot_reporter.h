@@ -25,6 +25,7 @@
 
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/system_time_point.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/reporter/i_reporter.h"
@@ -59,10 +60,10 @@ public:
     void measurer_finished(const std::string& name) override;
 
     //! \copydoc stat_bench::reporter::IReporter::group_starts
-    void group_starts(const std::string& name) override;
+    void group_starts(const BenchmarkGroupName& name) override;
 
     //! \copydoc stat_bench::reporter::IReporter::group_finished
-    void group_finished(const std::string& name) override;
+    void group_finished(const BenchmarkGroupName& name) override;
 
     //! \copydoc stat_bench::reporter::IReporter::case_starts
     void case_starts(const BenchmarkFullName& case_info) override;

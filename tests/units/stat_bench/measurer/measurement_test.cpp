@@ -22,12 +22,17 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include "../param/create_ordinary_parameter_dict.h"
+#include "stat_bench/benchmark_case_name.h"
+#include "stat_bench/benchmark_group_name.h"
 
 TEST_CASE("stat_bench::measurer::Measurement") {
+    using stat_bench::BenchmarkCaseName;
+    using stat_bench::BenchmarkGroupName;
     using stat_bench::clock::Duration;
 
     SECTION("construct") {
-        const auto info = stat_bench::BenchmarkFullName("group", "case");
+        const auto info = stat_bench::BenchmarkFullName(
+            BenchmarkGroupName("group"), BenchmarkCaseName("case"));
         const auto cond = stat_bench::BenchmarkCondition(
             2, stat_bench_test::param::create_ordinary_parameter_dict());
         const auto measurer_name = std::string("measurer");

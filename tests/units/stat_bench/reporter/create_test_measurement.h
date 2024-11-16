@@ -26,8 +26,10 @@
 #include <utility>
 #include <vector>
 
+#include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/param/num_threads_parameter_name.h"
@@ -40,8 +42,10 @@ namespace stat_bench_test {
 [[nodiscard]] inline auto create_test_measurement(const std::string& group_name,
     const std::string& case_name, const std::string& measurer_name,
     const std::vector<std::vector<stat_bench::clock::Duration>>& durations) {
+    using stat_bench::BenchmarkCaseName;
     using stat_bench::BenchmarkCondition;
     using stat_bench::BenchmarkFullName;
+    using stat_bench::BenchmarkGroupName;
     using stat_bench::clock::Duration;
     using stat_bench::measurer::Measurement;
     using stat_bench::param::ParameterDict;
@@ -51,7 +55,8 @@ namespace stat_bench_test {
     constexpr std::size_t iterations = 1000;
     const std::size_t samples = durations.front().size();
     const std::size_t threads = durations.size();
-    return Measurement(BenchmarkFullName(group_name, case_name),
+    return Measurement(BenchmarkFullName(BenchmarkGroupName(group_name),
+                           BenchmarkCaseName(case_name)),
         BenchmarkCondition(
             ParameterDict(std::unordered_map<std::string, ParameterValue>{
                 {stat_bench::param::num_threads_parameter_name(),

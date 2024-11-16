@@ -20,7 +20,6 @@
 #include "stat_bench/bench_impl/benchmark_case_registry.h"
 
 #include <algorithm>
-#include <string>
 #include <utility>
 
 #include "stat_bench/benchmark_full_name.h"
@@ -30,21 +29,17 @@ namespace bench_impl {
 
 void BenchmarkCaseRegistry::add(std::shared_ptr<IBenchmarkCase> bench_case) {
     const auto& group_name = bench_case->info().group_name();
-    auto iter = std::lower_bound(groups_.begin(), groups_.end(), group_name,
-        [](const BenchmarkGroup& group, const std::string& group_name_in) {
-            return group.name() < group_name_in;
+    auto iter = std::find_if(groups_.begin(), groups_.end(),
+        [&group_name](const BenchmarkGroup& group) {
+            return group.name() == group_name;
         });
     if (iter != groups_.end() && iter->name() == group_name) {
         iter->add(std::move(bench_case));
         return;
     }
 
-    iter = std::upper_bound(groups_.begin(), groups_.end(), group_name,
-        [](const std::string& group_name_in, const BenchmarkGroup& group) {
-            return group_name_in < group.name();
-        });
-    iter = groups_.emplace(iter, group_name);
-    iter->add(std::move(bench_case));
+    auto& group = groups_.emplace_back(group_name);
+    group.add(std::move(bench_case));
 }
 
 void BenchmarkCaseRegistry::filter_by(const filters::ComposedFilter& filter) {

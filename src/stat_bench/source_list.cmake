@@ -2,6 +2,8 @@ set(SOURCE_FILES
     bench_impl/benchmark_case_registry.cpp
     bench_impl/benchmark_group.cpp
     bench_impl/invocation_context_registry.cpp
+    benchmark_case_name.cpp
+    benchmark_group_name.cpp
     clock/monotone_time_point.cpp
     filters/composed_filter.cpp
     filters/glob_filter.cpp
@@ -31,4 +33,5 @@ set(SOURCE_FILES
     util/escape_for_html.cpp
     util/prepare_directory.cpp
     util/sync_barrier.cpp
+    util/utf8_string.cpp
 )

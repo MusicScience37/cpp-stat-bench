@@ -25,6 +25,7 @@
 #include <fmt/core.h>
 #include <fmt/format.h>
 
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/reporter/data_file_helper.h"
 
 namespace stat_bench {
@@ -53,11 +54,11 @@ void DataFileReporterBase::measurer_finished(const std::string& /*name*/) {
     // no operation
 }
 
-void DataFileReporterBase::group_starts(const std::string& /*name*/) {
+void DataFileReporterBase::group_starts(const BenchmarkGroupName& /*name*/) {
     // no operation
 }
 
-void DataFileReporterBase::group_finished(const std::string& /*name*/) {
+void DataFileReporterBase::group_finished(const BenchmarkGroupName& /*name*/) {
     // no operation
 }
 

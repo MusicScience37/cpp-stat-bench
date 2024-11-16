@@ -66,11 +66,11 @@ void ViolinPlotReporter::measurer_finished(const std::string& /*name*/) {
     // no operation
 }
 
-void ViolinPlotReporter::group_starts(const std::string& /*name*/) {
+void ViolinPlotReporter::group_starts(const BenchmarkGroupName& /*name*/) {
     measurements_.clear();
 }
 
-void ViolinPlotReporter::group_finished(const std::string& name) {
+void ViolinPlotReporter::group_finished(const BenchmarkGroupName& name) {
     nlohmann::json dataset_json{};
     auto& data_json = dataset_json["data"];
     double min_duration = std::numeric_limits<double>::max();

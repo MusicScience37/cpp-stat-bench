@@ -24,6 +24,7 @@
 
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/system_time_point.h"
 #include "stat_bench/measurer/measurement.h"
 
@@ -70,14 +71,14 @@ public:
      *
      * \param[in] name Group name.
      */
-    virtual void group_starts(const std::string& name) = 0;
+    virtual void group_starts(const BenchmarkGroupName& name) = 0;
 
     /*!
      * \brief Finished a group of benchmarks.
      *
      * \param[in] name Group name.
      */
-    virtual void group_finished(const std::string& name) = 0;
+    virtual void group_finished(const BenchmarkGroupName& name) = 0;
 
     /*!
      * \brief Start a case of a benchmark.

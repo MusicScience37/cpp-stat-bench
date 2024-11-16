@@ -29,12 +29,17 @@
 
 #include "../mock_benchmark_case.h"
 #include "../param/create_ordinary_parameter_dict.h"
+#include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/current_invocation_context.h"
 
 TEST_CASE("stat_bench::measurer::ProcessingTimeMeasurer") {
+    using stat_bench::BenchmarkCaseName;
+    using stat_bench::BenchmarkGroupName;
+
     constexpr std::size_t samples = 3;
     constexpr std::size_t min_warming_up_iterations = 5;
     constexpr double min_warming_up_duration_sec = 0.01;
@@ -46,7 +51,8 @@ TEST_CASE("stat_bench::measurer::ProcessingTimeMeasurer") {
 
     SECTION("measure") {
         stat_bench_test::bench_impl::MockBenchmarkCase bench_case;
-        const auto info = stat_bench::BenchmarkFullName("group", "case");
+        const auto info = stat_bench::BenchmarkFullName(
+            BenchmarkGroupName("group"), BenchmarkCaseName("case"));
         const auto cond = stat_bench::BenchmarkCondition(
             1, stat_bench_test::param::create_ordinary_parameter_dict());
 

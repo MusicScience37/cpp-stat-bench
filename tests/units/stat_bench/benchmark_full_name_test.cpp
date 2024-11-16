@@ -21,10 +21,13 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include "stat_bench/benchmark_case_name.h"
+#include "stat_bench/benchmark_group_name.h"
+
 TEST_CASE("stat_bench::BenchmarkFullName") {
     SECTION("construct") {
-        const std::string group_name = "group";
-        const std::string case_name = "case";
+        const auto group_name = stat_bench::BenchmarkGroupName("group");
+        const auto case_name = stat_bench::BenchmarkCaseName("case");
 
         const auto info = stat_bench::BenchmarkFullName(group_name, case_name);
 
@@ -33,8 +36,8 @@ TEST_CASE("stat_bench::BenchmarkFullName") {
     }
 
     SECTION("format") {
-        const std::string group_name = "group";
-        const std::string case_name = "case";
+        const auto group_name = stat_bench::BenchmarkGroupName("group");
+        const auto case_name = stat_bench::BenchmarkCaseName("case");
 
         const auto info = stat_bench::BenchmarkFullName(group_name, case_name);
 
