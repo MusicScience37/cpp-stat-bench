@@ -31,12 +31,27 @@
 #include "stat_bench/custom_output_name.h"
 #include "stat_bench/measurer/measurer_name.h"
 #include "stat_bench/param/parameter_name.h"
+#include "stat_bench/stat_bench_exception.h"
 
 TEST_CASE("create Utf8String") {
     using TestType = stat_bench::util::Utf8String;
 
     SECTION("create from a string") {
         const std::string data = "abc";
+
+        const TestType str(data);
+
+        CHECK(str.str() == data);
+    }
+
+    SECTION("create from an invalid string") {
+        const std::string data = "abc\x80";
+
+        CHECK_THROWS_AS(TestType(data), stat_bench::StatBenchException);
+    }
+
+    SECTION("create from a string with non-ascii characters") {
+        const std::string data = "あいうえお";
 
         const TestType str(data);
 
@@ -56,6 +71,20 @@ TEMPLATE_TEST_CASE("create UTF8 strings", "",
     stat_bench::CustomOutputName) {
     SECTION("create from a string") {
         const std::string data = "abc";
+
+        const TestType str(data);
+
+        CHECK(str.str().str() == data);
+    }
+
+    SECTION("create from an invalid string") {
+        const std::string data = "abc\x80";
+
+        CHECK_THROWS_AS(TestType(data), stat_bench::StatBenchException);
+    }
+
+    SECTION("create from a string with non-ascii characters") {
+        const std::string data = "あいうえお";
 
         const TestType str(data);
 
