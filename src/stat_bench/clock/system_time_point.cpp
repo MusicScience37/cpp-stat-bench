@@ -23,10 +23,6 @@
 #include <fmt/core.h>
 #include <fmt/format.h>
 
-namespace stat_bench {
-namespace clock {}
-}  // namespace stat_bench
-
 namespace fmt {
 
 auto formatter<stat_bench::clock::SystemTimePoint>::format(
