@@ -39,4 +39,5 @@
 #include "stat_bench/util/escape_for_html_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/util/prepare_directory_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/util/sync_barrier_test.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "stat_bench/util/utf8_string_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "test_main.cpp"  // NOLINT(bugprone-suspicious-include)

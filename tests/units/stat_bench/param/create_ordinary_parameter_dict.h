@@ -25,6 +25,7 @@
 
 #include "stat_bench/param/num_threads_parameter_name.h"
 #include "stat_bench/param/parameter_dict.h"
+#include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value.h"
 
 namespace stat_bench_test {
@@ -37,7 +38,9 @@ namespace param {
  */
 [[nodiscard]] inline auto create_ordinary_parameter_dict()
     -> stat_bench::param::ParameterDict {
-    std::unordered_map<std::string, stat_bench::param::ParameterValue> data;
+    std::unordered_map<stat_bench::param::ParameterName,
+        stat_bench::param::ParameterValue>
+        data;
     data.emplace(stat_bench::param::num_threads_parameter_name(),
         stat_bench::param::ParameterValue().emplace<std::size_t>(1));
     return stat_bench::param::ParameterDict(data);

@@ -28,6 +28,8 @@
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/clock/duration.h"
+#include "stat_bench/custom_output_name.h"
+#include "stat_bench/measurer/measurer_name.h"
 #include "stat_bench/stat/calc_stat.h"
 #include "stat_bench/stat/custom_stat_output.h"
 #include "stat_bench/stat/statistics.h"
@@ -53,11 +55,11 @@ public:
      * \param[in] custom_outputs Custom outputs without statistics.
      */
     Measurement(BenchmarkFullName case_info, BenchmarkCondition cond,
-        std::string measurer_name, std::size_t iterations, std::size_t samples,
+        MeasurerName measurer_name, std::size_t iterations, std::size_t samples,
         std::vector<std::vector<clock::Duration>> durations,
         std::vector<std::shared_ptr<stat::CustomStatOutput>>
             custom_stat_outputs,
-        std::vector<std::pair<std::string, double>> custom_outputs)
+        std::vector<std::pair<CustomOutputName, double>> custom_outputs)
         : case_info_(std::move(case_info)),
           cond_(std::move(cond)),
           measurer_name_(std::move(measurer_name)),
@@ -97,7 +99,7 @@ public:
      *
      * \return Name of the measurer.
      */
-    [[nodiscard]] auto measurer_name() const noexcept -> const std::string& {
+    [[nodiscard]] auto measurer_name() const noexcept -> const MeasurerName& {
         return measurer_name_;
     }
 
@@ -167,7 +169,7 @@ public:
      * \return Custom outputs without statistics.
      */
     [[nodiscard]] auto custom_outputs() const noexcept
-        -> const std::vector<std::pair<std::string, double>>& {
+        -> const std::vector<std::pair<CustomOutputName, double>>& {
         return custom_outputs_;
     }
 
@@ -179,7 +181,7 @@ private:
     BenchmarkCondition cond_;
 
     //! Name of the measurer.
-    std::string measurer_name_;
+    MeasurerName measurer_name_;
 
     //! Number of iterations.
     std::size_t iterations_;
@@ -200,7 +202,7 @@ private:
     std::vector<stat::Statistics> custom_stat_;
 
     //! Custom outputs without statistics.
-    std::vector<std::pair<std::string, double>> custom_outputs_;
+    std::vector<std::pair<CustomOutputName, double>> custom_outputs_;
 };
 
 }  // namespace measurer

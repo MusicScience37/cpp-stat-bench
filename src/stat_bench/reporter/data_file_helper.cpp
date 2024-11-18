@@ -29,7 +29,7 @@ namespace reporter {
 namespace data_file_spec {
 
 auto convert(const param::ParameterDict& params)
-    -> std::unordered_map<std::string, std::string> {
+    -> std::unordered_map<util::Utf8String, util::Utf8String> {
     return params.as_string_dict();
 }
 
@@ -68,7 +68,7 @@ auto convert(const std::shared_ptr<stat::CustomStatOutput>& stat_output,
         }
         data.push_back(std::move(vec_copy));
     }
-    return CustomStatOutputData{stat_output->name(), convert(stat), data};
+    return CustomStatOutputData{stat_output->name().str(), convert(stat), data};
 }
 
 auto convert(
@@ -83,21 +83,21 @@ auto convert(
     return data;
 }
 
-auto convert(const std::vector<std::pair<std::string, double>>& outputs)
+auto convert(const std::vector<std::pair<CustomOutputName, double>>& outputs)
     -> std::vector<CustomOutputData> {
     std::vector<CustomOutputData> data;
     data.reserve(outputs.size());
     for (const auto& output : outputs) {
-        data.push_back(
-            CustomOutputData{output.first, static_cast<float>(output.second)});
+        data.push_back(CustomOutputData{
+            output.first.str(), static_cast<float>(output.second)});
     }
     return data;
 }
 
 auto convert(const measurer::Measurement& measurement) -> MeasurementData {
-    return MeasurementData{measurement.case_info().group_name(),
-        measurement.case_info().case_name(),
-        convert(measurement.cond().params()), measurement.measurer_name(),
+    return MeasurementData{measurement.case_info().group_name().str(),
+        measurement.case_info().case_name().str(),
+        convert(measurement.cond().params()), measurement.measurer_name().str(),
         measurement.iterations(), measurement.samples(),
         convert(measurement.durations(), measurement.durations_stat()),
         convert(measurement.custom_stat_outputs(), measurement.custom_stat()),

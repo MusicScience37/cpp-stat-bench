@@ -19,11 +19,10 @@
  */
 #pragma once
 
-#include <string>
-
 #include "stat_bench/bench_impl/i_benchmark_case.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/measurer/measurement.h"
+#include "stat_bench/measurer/measurer_name.h"
 
 namespace stat_bench {
 namespace measurer {
@@ -38,7 +37,7 @@ public:
      *
      * \return Name.
      */
-    [[nodiscard]] virtual auto name() const noexcept -> const std::string& = 0;
+    [[nodiscard]] virtual auto name() const noexcept -> const MeasurerName& = 0;
 
     /*!
      * \brief Measure durations.

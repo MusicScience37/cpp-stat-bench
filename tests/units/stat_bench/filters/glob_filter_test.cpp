@@ -23,11 +23,15 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/filters/i_name_filter.h"
 
 TEST_CASE("stat_bench::filters::GlobFilter") {
+    using stat_bench::BenchmarkCaseName;
     using stat_bench::BenchmarkFullName;
+    using stat_bench::BenchmarkGroupName;
     using stat_bench::filters::GlobFilter;
     using stat_bench::filters::INameFilter;
 
@@ -35,7 +39,9 @@ TEST_CASE("stat_bench::filters::GlobFilter") {
         const std::shared_ptr<INameFilter> filter =
             std::make_shared<GlobFilter>("*/test");
 
-        CHECK(filter->check(BenchmarkFullName("any", "test")));
-        CHECK_FALSE(filter->check(BenchmarkFullName("any", "1test")));
+        CHECK(filter->check(BenchmarkFullName(
+            BenchmarkGroupName("any"), BenchmarkCaseName("test"))));
+        CHECK_FALSE(filter->check(BenchmarkFullName(
+            BenchmarkGroupName("any"), BenchmarkCaseName("1test"))));
     }
 }

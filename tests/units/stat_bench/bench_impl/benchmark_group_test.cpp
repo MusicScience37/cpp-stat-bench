@@ -25,11 +25,16 @@
 #include <trompeloeil.hpp>
 
 #include "../mock_benchmark_case.h"
+#include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_group_name.h"
 
 TEST_CASE("stat_bench::bench_impl::BenchmarkGroup") {
+    using stat_bench::BenchmarkCaseName;
+    using stat_bench::BenchmarkGroupName;
+
     SECTION("construct") {
-        const std::string group_name = "Group";
+        const auto group_name = BenchmarkGroupName("Group");
 
         const stat_bench::bench_impl::BenchmarkGroup group{group_name};
 
@@ -38,10 +43,10 @@ TEST_CASE("stat_bench::bench_impl::BenchmarkGroup") {
     }
 
     SECTION("add cases") {
-        const std::string group_name = "Group";
+        const auto group_name = BenchmarkGroupName("Group");
 
-        const std::string case_name1 = "case1";
-        const std::string case_name2 = "case2";
+        const auto case_name1 = BenchmarkCaseName("case1");
+        const auto case_name2 = BenchmarkCaseName("case2");
 
         const auto info1 =
             stat_bench::BenchmarkFullName(group_name, case_name1);
@@ -71,10 +76,10 @@ TEST_CASE("stat_bench::bench_impl::BenchmarkGroup") {
     }
 
     SECTION("duplicate case names") {
-        const std::string group_name = "Group";
+        const auto group_name = BenchmarkGroupName("Group");
 
-        const std::string case_name1 = "case1";
-        const std::string case_name2 = "case1";
+        const auto case_name1 = BenchmarkCaseName("case1");
+        const auto case_name2 = BenchmarkCaseName("case1");
 
         const auto info1 =
             stat_bench::BenchmarkFullName(group_name, case_name1);
@@ -100,10 +105,10 @@ TEST_CASE("stat_bench::bench_impl::BenchmarkGroup") {
     }
 
     SECTION("wrong group name") {
-        const std::string group_name1 = "Group1";
-        const std::string group_name2 = "Group2";
+        const auto group_name1 = BenchmarkGroupName("Group1");
+        const auto group_name2 = BenchmarkGroupName("Group2");
 
-        const std::string case_name1 = "case1";
+        const auto case_name1 = BenchmarkCaseName("case1");
 
         const auto info1 =
             stat_bench::BenchmarkFullName(group_name1, case_name1);

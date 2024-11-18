@@ -21,11 +21,11 @@
 
 #include <cstddef>
 #include <cstdint>
-#include <string>
 #include <utility>
 #include <vector>
 
 #include "stat_bench/clock/duration.h"
+#include "stat_bench/custom_output_name.h"
 #include "stat_bench/stat/calc_stat.h"
 #include "stat_bench/stat/statistics.h"
 #include "stat_bench/stat_bench_exception.h"
@@ -57,9 +57,9 @@ public:
      * \param[in] iterations Number of iterations. \param[in]
      * analysis_type Type of analysis.
      */
-    CustomStatOutput(std::string name, std::size_t threads, std::size_t samples,
-        std::size_t warming_up_samples, std::size_t iterations,
-        CustomOutputAnalysisType analysis_type)
+    CustomStatOutput(CustomOutputName name, std::size_t threads,
+        std::size_t samples, std::size_t warming_up_samples,
+        std::size_t iterations, CustomOutputAnalysisType analysis_type)
         : name_(std::move(name)),
           threads_(threads),
           samples_(samples),
@@ -126,7 +126,7 @@ public:
      *
      * \return Name.
      */
-    [[nodiscard]] auto name() const noexcept -> const std::string& {
+    [[nodiscard]] auto name() const noexcept -> const CustomOutputName& {
         return name_;
     }
 
@@ -142,7 +142,7 @@ public:
 
 private:
     //! Name.
-    std::string name_;
+    CustomOutputName name_;
 
     //! Data.
     std::vector<std::vector<double>> data_{};

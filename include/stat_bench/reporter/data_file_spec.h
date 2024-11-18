@@ -20,9 +20,10 @@
 #pragma once
 
 #include <cstddef>
-#include <string>
 #include <unordered_map>
 #include <vector>
+
+#include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
 namespace reporter {
@@ -70,7 +71,7 @@ struct DurationData {
  */
 struct CustomStatOutputData {
     //! Name of data.
-    std::string name{};
+    util::Utf8String name{};
 
     //! Statistics.
     StatData stat{};
@@ -84,7 +85,7 @@ struct CustomStatOutputData {
  */
 struct CustomOutputData {
     //! Name of data.
-    std::string name{};
+    util::Utf8String name{};
 
     //! Value.
     float value{};
@@ -95,16 +96,16 @@ struct CustomOutputData {
  */
 struct MeasurementData {
     //! Name of group.
-    std::string group_name{};
+    util::Utf8String group_name{};
 
     //! Name of case.
-    std::string case_name{};
+    util::Utf8String case_name{};
 
     //! Parameters.
-    std::unordered_map<std::string, std::string> params{};
+    std::unordered_map<util::Utf8String, util::Utf8String> params{};
 
     //! Name of measurer.
-    std::string measurer_name{};
+    util::Utf8String measurer_name{};
 
     //! Number of iterations.
     std::size_t iterations{};
@@ -127,10 +128,10 @@ struct MeasurementData {
  */
 struct RootData {
     //! Timestamp on beginning.
-    std::string started_at{};
+    util::Utf8String started_at{};
 
     //! Timestamp on end.
-    std::string finished_at{};
+    util::Utf8String finished_at{};
 
     //! Measurements.
     std::vector<MeasurementData> measurements{};

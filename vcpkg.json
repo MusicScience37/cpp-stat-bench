@@ -10,6 +10,7 @@
     "inja",
     "cpp-msgpack-light",
     "zlib",
-    "eigen3"
+    "eigen3",
+    "simdutf"
   ]
 }

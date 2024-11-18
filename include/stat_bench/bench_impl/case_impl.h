@@ -19,9 +19,9 @@
  */
 #pragma once
 
-#include "stat_bench/bench_impl/benchmark_case_helper.h"  // IWYU pragma: keep
-#include "stat_bench/bench_impl/benchmark_case_register.h"
-#include "stat_bench/bench_impl/null_fixture.h"  // IWYU pragma: keep
+#include "stat_bench/bench_impl/benchmark_case_helper.h"    // IWYU pragma: keep
+#include "stat_bench/bench_impl/benchmark_case_register.h"  // IWYU pragma: keep
+#include "stat_bench/bench_impl/null_fixture.h"             // IWYU pragma: keep
 
 /*!
  * \brief Macro to define a case using a fixture.
@@ -32,24 +32,26 @@
  * \param[in] GROUP_NAME Group name.
  * \param[in] CASE_NAME Case name.
  */
-#define STAT_BENCH_IMPL_CASE_WITH_FIXTURE_IMPL(                            \
-    CLASS_NAME, REGISTER_NAME, FIXTURE_NAME, GROUP_NAME, CASE_NAME)        \
-                                                                           \
-    namespace {                                                            \
-                                                                           \
-    class CLASS_NAME final                                                 \
-        : public ::stat_bench::bench_impl::BenchCaseHelper<FIXTURE_NAME> { \
-    public:                                                                \
-        CLASS_NAME() : BenchCaseHelper(GROUP_NAME, CASE_NAME) {}           \
-                                                                           \
-        void run() override;                                               \
-    };                                                                     \
-                                                                           \
-    static ::stat_bench::bench_impl::BenchmarkCaseRegister<CLASS_NAME>     \
-        REGISTER_NAME;                                                     \
-                                                                           \
-    } /* namespace */                                                      \
-                                                                           \
+#define STAT_BENCH_IMPL_CASE_WITH_FIXTURE_IMPL(                              \
+    CLASS_NAME, REGISTER_NAME, FIXTURE_NAME, GROUP_NAME, CASE_NAME)          \
+                                                                             \
+    namespace {                                                              \
+                                                                             \
+    class CLASS_NAME final                                                   \
+        : public ::stat_bench::bench_impl::BenchCaseHelper<FIXTURE_NAME> {   \
+    public:                                                                  \
+        CLASS_NAME()                                                         \
+            : BenchCaseHelper(::stat_bench::BenchmarkGroupName(GROUP_NAME),  \
+                  ::stat_bench::BenchmarkCaseName(CASE_NAME)) {}             \
+                                                                             \
+        void run() override;                                                 \
+    };                                                                       \
+                                                                             \
+    static const ::stat_bench::bench_impl::BenchmarkCaseRegister<CLASS_NAME> \
+        REGISTER_NAME;                                                       \
+                                                                             \
+    } /* namespace */                                                        \
+                                                                             \
     void CLASS_NAME::run()
 
 /*!

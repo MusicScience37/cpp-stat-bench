@@ -22,52 +22,58 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include "stat_bench/param/parameter_dict.h"
+#include "stat_bench/param/parameter_name.h"
 
 TEST_CASE("stat_bench::param::ParameterConfig") {
+    using stat_bench::param::ParameterName;
+
     SECTION("add parameters") {
         stat_bench::param::ParameterConfig config;
 
         constexpr int val11 = 3;
         constexpr int val12 = 5;
-        config.add<int>("param1")->add(val11)->add(val12);
+        config.add<int>(ParameterName("param1"))->add(val11)->add(val12);
 
         const auto param2 = std::make_shared<
             stat_bench::param::ParameterValueVector<std::string>>();
         const auto val21 = std::string("1");
         const auto val22 = std::string("2");
         const auto val23 = std::string("3");
-        config.add<std::string>("param2")->add(val21)->add(val22)->add(val23);
+        config.add<std::string>(ParameterName("param2"))
+            ->add(val21)
+            ->add(val22)
+            ->add(val23);
 
         auto generator = config.create_generator();
 
         auto dict = generator.generate();
-        REQUIRE(dict.get<int>("param1") == val11);
-        REQUIRE(dict.get<std::string>("param2") == val21);
+        REQUIRE(dict.get<int>(ParameterName("param1")) == val11);
+        REQUIRE(dict.get<std::string>(ParameterName("param2")) == val21);
 
         REQUIRE(generator.iterate());
         dict = generator.generate();
-        REQUIRE(dict.get<int>("param1") == val11);
-        REQUIRE(dict.get<std::string>("param2") == val22);
+        REQUIRE(dict.get<int>(ParameterName("param1")) == val11);
+        REQUIRE(dict.get<std::string>(ParameterName("param2")) == val22);
 
         REQUIRE(generator.iterate());
         dict = generator.generate();
-        REQUIRE(dict.get<int>("param1") == val11);
-        REQUIRE(dict.get<std::string>("param2") == val23);
+        REQUIRE(dict.get<int>(ParameterName("param1")) == val11);
+        REQUIRE(dict.get<std::string>(ParameterName("param2")) == val23);
 
         REQUIRE(generator.iterate());
         dict = generator.generate();
-        REQUIRE(dict.get<int>("param1") == val12);
-        REQUIRE(dict.get<std::string>("param2") == val21);
+        REQUIRE(dict.get<int>(ParameterName("param1")) == val12);
+        REQUIRE(dict.get<std::string>(ParameterName("param2")) == val21);
 
         REQUIRE(generator.iterate());
         dict = generator.generate();
-        REQUIRE(dict.get<int>("param1") == val12);
-        REQUIRE(dict.get<std::string>("param2") == val22);
+        REQUIRE(dict.get<int>(ParameterName("param1")) == val12);
+        REQUIRE(dict.get<std::string>(ParameterName("param2")) == val22);
 
         REQUIRE(generator.iterate());
         dict = generator.generate();
-        REQUIRE(dict.get<int>("param1") == val12);
-        REQUIRE(dict.get<std::string>("param2") == val23);
+        REQUIRE(dict.get<int>(ParameterName("param1")) == val12);
+        REQUIRE(dict.get<std::string>(ParameterName("param2")) == val23);
 
         REQUIRE(!generator.iterate());
     }
@@ -75,9 +81,9 @@ TEST_CASE("stat_bench::param::ParameterConfig") {
     SECTION("check parameter existence") {
         stat_bench::param::ParameterConfig config;
 
-        (void)config.add<int>("param1");
+        (void)config.add<int>(ParameterName("param1"));
 
-        REQUIRE(config.has("param1"));
-        REQUIRE(!config.has("invalid"));
+        REQUIRE(config.has(ParameterName("param1")));
+        REQUIRE(!config.has(ParameterName("invalid")));
     }
 }

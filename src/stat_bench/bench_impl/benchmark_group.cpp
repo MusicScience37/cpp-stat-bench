@@ -30,9 +30,10 @@
 namespace stat_bench {
 namespace bench_impl {
 
-BenchmarkGroup::BenchmarkGroup(std::string name) : name_(std::move(name)) {}
+BenchmarkGroup::BenchmarkGroup(BenchmarkGroupName name)
+    : name_(std::move(name)) {}
 
-auto BenchmarkGroup::name() const noexcept -> const std::string& {
+auto BenchmarkGroup::name() const noexcept -> const BenchmarkGroupName& {
     return name_;
 }
 

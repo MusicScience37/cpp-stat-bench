@@ -25,6 +25,7 @@
 #include "stat_bench/bench_impl/i_benchmark_case.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/measurer/measurement.h"
+#include "stat_bench/measurer/measurer_name.h"
 
 namespace stat_bench {
 namespace measurer {
@@ -41,7 +42,7 @@ namespace measurer {
  * \return Result.
  */
 [[nodiscard]] auto measure_once(bench_impl::IBenchmarkCase* bench_case,
-    const BenchmarkCondition& cond, const std::string& measurer_name,
+    const BenchmarkCondition& cond, const MeasurerName& measurer_name,
     std::size_t iterations, std::size_t samples, std::size_t warming_up_samples)
     -> Measurement;
 

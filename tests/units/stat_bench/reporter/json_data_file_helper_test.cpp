@@ -26,6 +26,8 @@
 #include <catch2/catch_test_macros.hpp>
 #include <nlohmann/json.hpp>
 
+#include "stat_bench/util/utf8_string.h"
+
 TEST_CASE("NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE definitions") {
     using stat_bench::reporter::data_file_spec::CustomOutputData;
     using stat_bench::reporter::data_file_spec::CustomStatOutputData;
@@ -33,17 +35,18 @@ TEST_CASE("NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE definitions") {
     using stat_bench::reporter::data_file_spec::MeasurementData;
     using stat_bench::reporter::data_file_spec::RootData;
     using stat_bench::reporter::data_file_spec::StatData;
+    using stat_bench::util::Utf8String;
 
     SECTION("serialize and deserialize") {
         RootData data;
-        data.started_at = "2021-12-28T21:27:01";
-        data.finished_at = "2021-12-28T21:27:07";
+        data.started_at = Utf8String("2021-12-28T21:27:01");
+        data.finished_at = Utf8String("2021-12-28T21:27:07");
 
         MeasurementData measurement{};
-        measurement.group_name = "Group";
-        measurement.case_name = "Case";
-        measurement.params["Param"] = "Value";
-        measurement.measurer_name = "Measurer";
+        measurement.group_name = Utf8String("Group");
+        measurement.case_name = Utf8String("Case");
+        measurement.params[Utf8String("Param")] = Utf8String("Value");
+        measurement.measurer_name = Utf8String("Measurer");
         measurement.iterations = 123;  // NOLINT
         measurement.samples = 12345;   // NOLINT
 
@@ -56,7 +59,7 @@ TEST_CASE("NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE definitions") {
             {1.0F, 2.0F, 3.0F}, {4.0F, 5.0F, 6.0F}};  // NOLINT
 
         CustomStatOutputData stat_output{};
-        stat_output.name = "Stat";
+        stat_output.name = Utf8String("Stat");
         stat_output.stat.mean = 1.234F;                 // NOLINT
         stat_output.stat.max = 2.345F;                  // NOLINT
         stat_output.stat.min = 0.123F;                  // NOLINT
@@ -67,7 +70,7 @@ TEST_CASE("NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE definitions") {
         measurement.custom_stat_outputs.push_back(stat_output);
 
         measurement.custom_outputs.push_back(
-            CustomOutputData{"Custom", 3.14F});  // NOLINT
+            CustomOutputData{Utf8String("Custom"), 3.14F});  // NOLINT
 
         data.measurements.push_back(measurement);
 

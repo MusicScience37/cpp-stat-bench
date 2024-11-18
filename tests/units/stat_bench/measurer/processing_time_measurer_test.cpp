@@ -29,12 +29,19 @@
 
 #include "../mock_benchmark_case.h"
 #include "../param/create_ordinary_parameter_dict.h"
+#include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/current_invocation_context.h"
+#include "stat_bench/measurer/measurer_name.h"
 
 TEST_CASE("stat_bench::measurer::ProcessingTimeMeasurer") {
+    using stat_bench::BenchmarkCaseName;
+    using stat_bench::BenchmarkGroupName;
+    using stat_bench::measurer::MeasurerName;
+
     constexpr std::size_t samples = 3;
     constexpr std::size_t min_warming_up_iterations = 5;
     constexpr double min_warming_up_duration_sec = 0.01;
@@ -42,11 +49,14 @@ TEST_CASE("stat_bench::measurer::ProcessingTimeMeasurer") {
         std::make_shared<stat_bench::measurer::ProcessingTimeMeasurer>(
             samples, min_warming_up_iterations, min_warming_up_duration_sec);
 
-    SECTION("get name") { REQUIRE(measurer->name() == "Processing Time"); }
+    SECTION("get name") {
+        REQUIRE(measurer->name() == MeasurerName("Processing Time"));
+    }
 
     SECTION("measure") {
         stat_bench_test::bench_impl::MockBenchmarkCase bench_case;
-        const auto info = stat_bench::BenchmarkFullName("group", "case");
+        const auto info = stat_bench::BenchmarkFullName(
+            BenchmarkGroupName("group"), BenchmarkCaseName("case"));
         const auto cond = stat_bench::BenchmarkCondition(
             1, stat_bench_test::param::create_ordinary_parameter_dict());
 
@@ -66,7 +76,7 @@ TEST_CASE("stat_bench::measurer::ProcessingTimeMeasurer") {
         REQUIRE(result.case_info().group_name() == info.group_name());
         REQUIRE(result.case_info().case_name() == info.case_name());
         REQUIRE(result.cond().threads() == cond.threads());
-        REQUIRE(result.measurer_name() == "Processing Time");
+        REQUIRE(result.measurer_name() == MeasurerName("Processing Time"));
         REQUIRE(result.iterations() > 0);
         REQUIRE(result.samples() == samples);
         REQUIRE(result.durations().size() == 1);

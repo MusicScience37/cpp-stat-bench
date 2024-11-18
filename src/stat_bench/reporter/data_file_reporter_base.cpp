@@ -25,7 +25,9 @@
 #include <fmt/core.h>
 #include <fmt/format.h>
 
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/reporter/data_file_helper.h"
+#include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
 namespace reporter {
@@ -35,29 +37,33 @@ DataFileReporterBase::DataFileReporterBase(std::string file_path)
 
 void DataFileReporterBase::experiment_starts(
     const clock::SystemTimePoint& time_stamp) {
-    data_.started_at = fmt::format(FMT_STRING("{}"), time_stamp);
+    data_.started_at =
+        util::Utf8String(fmt::format(FMT_STRING("{}"), time_stamp));
 }
 
 void DataFileReporterBase::experiment_finished(
     const clock::SystemTimePoint& time_stamp) {
-    data_.finished_at = fmt::format(FMT_STRING("{}"), time_stamp);
+    data_.finished_at =
+        util::Utf8String(fmt::format(FMT_STRING("{}"), time_stamp));
 
     write_data_file(file_path_, data_);
 }
 
-void DataFileReporterBase::measurer_starts(const std::string& /*name*/) {
+void DataFileReporterBase::measurer_starts(
+    const measurer::MeasurerName& /*name*/) {
     // no operation
 }
 
-void DataFileReporterBase::measurer_finished(const std::string& /*name*/) {
+void DataFileReporterBase::measurer_finished(
+    const measurer::MeasurerName& /*name*/) {
     // no operation
 }
 
-void DataFileReporterBase::group_starts(const std::string& /*name*/) {
+void DataFileReporterBase::group_starts(const BenchmarkGroupName& /*name*/) {
     // no operation
 }
 
-void DataFileReporterBase::group_finished(const std::string& /*name*/) {
+void DataFileReporterBase::group_finished(const BenchmarkGroupName& /*name*/) {
     // no operation
 }
 

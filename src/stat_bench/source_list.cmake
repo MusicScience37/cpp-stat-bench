@@ -2,7 +2,12 @@ set(SOURCE_FILES
     bench_impl/benchmark_case_registry.cpp
     bench_impl/benchmark_group.cpp
     bench_impl/invocation_context_registry.cpp
+    benchmark_case_name.cpp
+    benchmark_full_name.cpp
+    benchmark_group_name.cpp
     clock/monotone_time_point.cpp
+    clock/system_time_point.cpp
+    custom_output_name.cpp
     filters/composed_filter.cpp
     filters/glob_filter.cpp
     filters/regex_filter.cpp
@@ -10,9 +15,11 @@ set(SOURCE_FILES
     measurer/determine_warming_up_samples.cpp
     measurer/mean_processing_time_measurer.cpp
     measurer/measure_once.cpp
+    measurer/measurer_name.cpp
     measurer/processing_time_measurer.cpp
     param/parameter_dict.cpp
     param/parameter_generator.cpp
+    param/parameter_name.cpp
     reporter/cdf_line_plot_reporter.cpp
     reporter/compressed_msgpack_reporter.cpp
     reporter/console_reporter.cpp
@@ -31,4 +38,5 @@ set(SOURCE_FILES
     util/escape_for_html.cpp
     util/prepare_directory.cpp
     util/sync_barrier.cpp
+    util/utf8_string.cpp
 )

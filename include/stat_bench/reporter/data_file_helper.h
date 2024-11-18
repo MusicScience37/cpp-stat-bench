@@ -26,6 +26,7 @@
 #include <vector>
 
 #include "stat_bench/clock/duration.h"
+#include "stat_bench/custom_output_name.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/reporter/data_file_spec.h"
@@ -43,7 +44,7 @@ namespace data_file_spec {
  * \return Converted data.
  */
 [[nodiscard]] auto convert(const param::ParameterDict& params)
-    -> std::unordered_map<std::string, std::string>;
+    -> std::unordered_map<util::Utf8String, util::Utf8String>;
 
 /*!
  * \brief Convert to data for data files.
@@ -94,7 +95,7 @@ namespace data_file_spec {
  * \return Converted data.
  */
 [[nodiscard]] auto convert(
-    const std::vector<std::pair<std::string, double>>& outputs)
+    const std::vector<std::pair<CustomOutputName, double>>& outputs)
     -> std::vector<CustomOutputData>;
 
 /*!

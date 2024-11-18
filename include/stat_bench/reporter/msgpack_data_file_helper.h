@@ -19,10 +19,34 @@
  */
 #pragma once
 
+#include <msgpack_light/type_support/fwd.h>
 #include <msgpack_light/type_support/struct.h>
 #include <msgpack_light/type_support/unordered_map.h>  // IWYU pragma: keep
 
 #include "stat_bench/reporter/data_file_spec.h"
+#include "stat_bench/util/utf8_string.h"
+
+namespace msgpack_light::type_support {
+
+/*!
+ * \brief Implementation of msgpack_light::type_support::serialization_traits
+ * for stat_bench::util::Utf8String.
+ */
+template <>
+struct serialization_traits<stat_bench::util::Utf8String> {
+    /*!
+     * \brief Serialize a value.
+     *
+     * \param[out] buffer Buffer.
+     * \param[in] value Value.
+     */
+    static void serialize(serialization_buffer& buffer,
+        const stat_bench::util::Utf8String& value) {
+        buffer.serialize(value.str());
+    }
+};
+
+}  // namespace msgpack_light::type_support
 
 #ifndef STAT_BENCH_DOCUMENTATION
 

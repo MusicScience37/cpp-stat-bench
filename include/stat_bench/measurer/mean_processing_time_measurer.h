@@ -26,6 +26,7 @@
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/measurer/i_measurer.h"
 #include "stat_bench/measurer/measurement.h"
+#include "stat_bench/measurer/measurer_name.h"
 
 namespace stat_bench {
 namespace measurer {
@@ -54,7 +55,7 @@ public:
           min_warming_up_duration_sec_(min_warming_up_duration_sec) {}
 
     //! \copydoc stat_bench::measurer::IMeasurer::name
-    [[nodiscard]] auto name() const noexcept -> const std::string& override {
+    [[nodiscard]] auto name() const noexcept -> const MeasurerName& override {
         return name_;
     }
 
@@ -76,7 +77,7 @@ public:
 
 private:
     //! Name.
-    const std::string name_{"Mean Processing Time"};
+    const MeasurerName name_{"Mean Processing Time"};
 
     //! Minimum duration for a sample. [sec]
     double min_sample_duration_sec_;

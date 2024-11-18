@@ -28,6 +28,7 @@
 #include <fmt/format.h>
 #include <nlohmann/json.hpp>
 
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/util/prepare_directory.h"
@@ -51,23 +52,25 @@ void SimpleLinePlotReporter::experiment_finished(
     // no operation
 }
 
-void SimpleLinePlotReporter::measurer_starts(const std::string& name) {
-    measurer_name_ = name;
+void SimpleLinePlotReporter::measurer_starts(
+    const measurer::MeasurerName& name) {
+    measurer_name_ = name.str().str();
     std::size_t pos = 0;
     while ((pos = measurer_name_.find(' ', pos)) != std::string::npos) {
         measurer_name_.erase(pos, 1);
     }
 }
 
-void SimpleLinePlotReporter::measurer_finished(const std::string& /*name*/) {
+void SimpleLinePlotReporter::measurer_finished(
+    const measurer::MeasurerName& /*name*/) {
     // no operation
 }
 
-void SimpleLinePlotReporter::group_starts(const std::string& /*name*/) {
+void SimpleLinePlotReporter::group_starts(const BenchmarkGroupName& /*name*/) {
     measurements_.clear();
 }
 
-void SimpleLinePlotReporter::group_finished(const std::string& name) {
+void SimpleLinePlotReporter::group_finished(const BenchmarkGroupName& name) {
     nlohmann::json dataset_json{};
     auto& data_json = dataset_json["data"];
     for (const auto& measurement : measurements_) {

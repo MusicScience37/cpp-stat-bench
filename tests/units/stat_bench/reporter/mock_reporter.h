@@ -25,8 +25,10 @@
 #include "../../trompeloeil.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/system_time_point.h"
 #include "stat_bench/measurer/measurement.h"
+#include "stat_bench/measurer/measurer_name.h"
 #include "stat_bench/reporter/i_reporter.h"
 
 namespace stat_bench_test {
@@ -43,16 +45,20 @@ public:
         void(const stat_bench::clock::SystemTimePoint&), override);
 
     // NOLINTNEXTLINE
-    MAKE_MOCK1(measurer_starts, void(const std::string&), override);
+    MAKE_MOCK1(measurer_starts, void(const stat_bench::measurer::MeasurerName&),
+        override);
 
     // NOLINTNEXTLINE
-    MAKE_MOCK1(measurer_finished, void(const std::string&), override);
+    MAKE_MOCK1(measurer_finished,
+        void(const stat_bench::measurer::MeasurerName&), override);
 
     // NOLINTNEXTLINE
-    MAKE_MOCK1(group_starts, void(const std::string&), override);
+    MAKE_MOCK1(
+        group_starts, void(const stat_bench::BenchmarkGroupName&), override);
 
     // NOLINTNEXTLINE
-    MAKE_MOCK1(group_finished, void(const std::string&), override);
+    MAKE_MOCK1(
+        group_finished, void(const stat_bench::BenchmarkGroupName&), override);
 
     // NOLINTNEXTLINE
     MAKE_MOCK1(

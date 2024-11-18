@@ -29,6 +29,7 @@
 #include <fmt/core.h>
 #include <fmt/format.h>
 
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/clock/monotone_time_point.h"
 #include "stat_bench/param/parameter_dict.h"
@@ -69,7 +70,7 @@ void ConsoleReporter::experiment_finished(
     (void)std::fflush(file_);
 }
 
-void ConsoleReporter::measurer_starts(const std::string& name) {
+void ConsoleReporter::measurer_starts(const measurer::MeasurerName& name) {
     print_line(file_, '=');
     fmt::print(file_, FMT_STRING("{}\n"), name);
     print_line(file_, '=');
@@ -77,7 +78,7 @@ void ConsoleReporter::measurer_starts(const std::string& name) {
     (void)std::fflush(file_);
 }
 
-void ConsoleReporter::measurer_finished(const std::string& name) {
+void ConsoleReporter::measurer_finished(const measurer::MeasurerName& name) {
     // no operation
 }
 
@@ -98,7 +99,7 @@ auto format_duration(double val) -> std::string {
 #define CONSOLE_TABLE_FORMAT "{:<58}  {:>10} {:>7}  {:>9} {:>9} {:>9} "
 #define CONSOLE_TABLE_FORMAT_ERROR "{:<58}  {}"
 
-void ConsoleReporter::group_starts(const std::string& name) {
+void ConsoleReporter::group_starts(const BenchmarkGroupName& name) {
     fmt::print(file_, FMT_STRING(">> {}\n"), name);
     fmt::print(file_, FMT_STRING(CONSOLE_TABLE_FORMAT "{}\n"), "", "", "",
         "Time [us]", "", "", "");
@@ -108,7 +109,7 @@ void ConsoleReporter::group_starts(const std::string& name) {
     (void)std::fflush(file_);
 }
 
-void ConsoleReporter::group_finished(const std::string& /*name*/) {
+void ConsoleReporter::group_finished(const BenchmarkGroupName& /*name*/) {
     fmt::print(file_, "\n");
     (void)std::fflush(file_);
 }
@@ -126,7 +127,7 @@ namespace {
 auto format_case_name_with_params(const BenchmarkFullName& case_info,
     const BenchmarkCondition& cond) -> std::string {
     if (cond.params().empty()) {
-        return case_info.case_name();
+        return case_info.case_name().str().str();
     }
     return fmt::format(
         FMT_STRING("{} ({}) "), case_info.case_name(), cond.params());

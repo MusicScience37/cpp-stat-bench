@@ -30,7 +30,7 @@ namespace stat_bench {
 namespace measurer {
 
 auto determine_iterations(bench_impl::IBenchmarkCase* bench_case,
-    const BenchmarkCondition& cond, const std::string& measurer_name,
+    const BenchmarkCondition& cond, const MeasurerName& measurer_name,
     double min_sample_duration_sec) -> std::size_t {
     std::size_t iterations = 1;
     constexpr std::size_t trials = 10;

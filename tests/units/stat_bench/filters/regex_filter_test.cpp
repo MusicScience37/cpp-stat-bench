@@ -23,11 +23,15 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/filters/i_name_filter.h"
 
 TEST_CASE("stat_bench::filters::RegexFilter") {
+    using stat_bench::BenchmarkCaseName;
     using stat_bench::BenchmarkFullName;
+    using stat_bench::BenchmarkGroupName;
     using stat_bench::filters::INameFilter;
     using stat_bench::filters::RegexFilter;
 
@@ -35,7 +39,9 @@ TEST_CASE("stat_bench::filters::RegexFilter") {
         const std::shared_ptr<INameFilter> filter =
             std::make_shared<RegexFilter>("a[bc]+/.*");
 
-        CHECK(filter->check(BenchmarkFullName("abc", "def")));
-        CHECK_FALSE(filter->check(BenchmarkFullName("a", "abc")));
+        CHECK(filter->check(BenchmarkFullName(
+            BenchmarkGroupName("abc"), BenchmarkCaseName("def"))));
+        CHECK_FALSE(filter->check(BenchmarkFullName(
+            BenchmarkGroupName("a"), BenchmarkCaseName("abc"))));
     }
 }

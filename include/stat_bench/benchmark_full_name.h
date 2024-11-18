@@ -19,11 +19,12 @@
  */
 #pragma once
 
-#include <string>
 #include <utility>
 
-#include <fmt/core.h>
-#include <fmt/format.h>
+#include <fmt/base.h>
+
+#include "stat_bench/benchmark_case_name.h"
+#include "stat_bench/benchmark_group_name.h"
 
 namespace stat_bench {
 
@@ -38,7 +39,8 @@ public:
      * \param[in] group_name Name of the group of cases.
      * \param[in] case_name Name of the case in the benchmark.
      */
-    BenchmarkFullName(std::string group_name, std::string case_name) noexcept
+    BenchmarkFullName(
+        BenchmarkGroupName group_name, BenchmarkCaseName case_name) noexcept
         : group_name_(std::move(group_name)),
           case_name_(std::move(case_name)) {}
 
@@ -47,7 +49,8 @@ public:
      *
      * \return Name of the group of cases.
      */
-    [[nodiscard]] auto group_name() const noexcept -> const std::string& {
+    [[nodiscard]] auto group_name() const noexcept
+        -> const BenchmarkGroupName& {
         return group_name_;
     }
 
@@ -56,16 +59,16 @@ public:
      *
      * \return Name of the case in the benchmark.
      */
-    [[nodiscard]] auto case_name() const noexcept -> const std::string& {
+    [[nodiscard]] auto case_name() const noexcept -> const BenchmarkCaseName& {
         return case_name_;
     }
 
 private:
     //! Name of the group of cases.
-    std::string group_name_;
+    BenchmarkGroupName group_name_;
 
     //! Name of the case in the benchmark.
-    std::string case_name_;
+    BenchmarkCaseName case_name_;
 };
 
 }  // namespace stat_bench
@@ -78,7 +81,7 @@ namespace fmt {
  */
 template <>
 struct formatter<stat_bench::BenchmarkFullName>
-    : public formatter<std::string> {
+    : public formatter<string_view> {
     /*!
      * \brief Format.
      *
@@ -87,12 +90,8 @@ struct formatter<stat_bench::BenchmarkFullName>
      * \param[in] context Context.
      * \return Output iterator after formatting.
      */
-    template <typename FormatContext>
     auto format(const stat_bench::BenchmarkFullName& val,
-        FormatContext& context) const -> decltype(context.out()) {
-        return formatter<std::string>::format(
-            fmt::format("{}/{}", val.group_name(), val.case_name()), context);
-    }
+        format_context& context) const -> format_context::iterator;
 };
 
 }  // namespace fmt

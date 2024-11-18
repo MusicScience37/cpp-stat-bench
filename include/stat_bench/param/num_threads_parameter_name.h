@@ -21,6 +21,8 @@
 
 #include <string>
 
+#include "stat_bench/param/parameter_name.h"
+
 namespace stat_bench {
 namespace param {
 
@@ -29,8 +31,8 @@ namespace param {
  *
  * \return Parameter name.
  */
-inline auto num_threads_parameter_name() -> const std::string& {
-    static std::string name = "threads";
+inline auto num_threads_parameter_name() -> const ParameterName& {
+    static auto name = ParameterName("threads");
     return name;
 }
 

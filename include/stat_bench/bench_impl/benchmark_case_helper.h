@@ -19,9 +19,9 @@
  */
 #pragma once
 
-#include <string>
-
+#include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_group_name.h"
 
 namespace stat_bench {
 namespace bench_impl {
@@ -40,7 +40,8 @@ protected:
      * \param[in] group_name Group name.
      * \param[in] case_name Case name.
      */
-    BenchCaseHelper(const std::string& group_name, const std::string& case_name)
+    BenchCaseHelper(const BenchmarkGroupName& group_name,
+        const BenchmarkCaseName& case_name)
         : info_(group_name, case_name) {}
 
 private:

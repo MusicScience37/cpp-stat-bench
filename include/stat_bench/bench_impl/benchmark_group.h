@@ -20,10 +20,10 @@
 #pragma once
 
 #include <memory>
-#include <string>
 #include <vector>
 
 #include "stat_bench/bench_impl/i_benchmark_case.h"
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/filters/composed_filter.h"
 
 namespace stat_bench {
@@ -39,14 +39,14 @@ public:
      *
      * \param[in] name Name.
      */
-    explicit BenchmarkGroup(std::string name);
+    explicit BenchmarkGroup(BenchmarkGroupName name);
 
     /*!
      * \brief Get the group name.
      *
      * \return Group name.
      */
-    [[nodiscard]] auto name() const noexcept -> const std::string&;
+    [[nodiscard]] auto name() const noexcept -> const BenchmarkGroupName&;
 
     /*!
      * \brief Add a case.
@@ -72,7 +72,7 @@ public:
 
 private:
     //! Name.
-    std::string name_;
+    BenchmarkGroupName name_;
 
     //! Cases.
     std::vector<std::shared_ptr<IBenchmarkCase>> cases_{};

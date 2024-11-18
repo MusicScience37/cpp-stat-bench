@@ -21,6 +21,8 @@
 
 #include <catch2/catch_test_macros.hpp>
 
+#include "stat_bench/util/utf8_string.h"
+
 TEST_CASE("stat_bench::param::ParameterValue") {
     SECTION("check type") {
         stat_bench::param::ParameterValue value;
@@ -64,18 +66,18 @@ TEST_CASE("stat_bench::param::ParameterValue") {
 
     SECTION("format to string") {
         stat_bench::param::ParameterValue value;
-        REQUIRE(value.to_string() == "null");
+        REQUIRE(value.to_string().str() == "null");
 
         const int val1 = 5;
         value.emplace<int>(val1);
-        REQUIRE(value.to_string() == "5");
+        REQUIRE(value.to_string().str() == "5");
 
         const char* val2 = "Test";
         value.emplace<std::string>(val2);
-        REQUIRE(value.to_string() == "Test");
+        REQUIRE(value.to_string().str() == "Test");
 
         value.clear();
-        REQUIRE(value.to_string() == "null");
+        REQUIRE(value.to_string().str() == "null");
     }
 
     SECTION("copy") {

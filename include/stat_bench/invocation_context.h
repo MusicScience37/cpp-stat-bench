@@ -28,6 +28,8 @@
 #include "stat_bench/bench_impl/threadable_invoker.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/clock/duration.h"
+#include "stat_bench/custom_output_name.h"
+#include "stat_bench/param/parameter_name.h"
 #include "stat_bench/stat/custom_stat_output.h"
 
 namespace stat_bench {
@@ -97,9 +99,21 @@ public:
      * \return Parameter value.
      */
     template <typename T>
-    [[nodiscard]] auto get_param(const std::string& param_name) const
+    [[nodiscard]] auto get_param(const param::ParameterName& param_name) const
         -> const T& {
         return cond_.params().get<T>(param_name);
+    }
+
+    /*!
+     * \brief Get a parameter.
+     *
+     * \tparam T Type of the parameter value.
+     * \param[in] param_name Parameter name.
+     * \return Parameter value.
+     */
+    template <typename T>
+    [[nodiscard]] auto get_param(std::string param_name) const -> const T& {
+        return get_param<T>(param::ParameterName(std::move(param_name)));
     }
 
     /*!
@@ -109,7 +123,7 @@ public:
      * \param[in] analysis_type Type of analysis.
      * \return Object to add output values.
      */
-    [[nodiscard]] auto add_custom_stat(const std::string& name,
+    [[nodiscard]] auto add_custom_stat(const CustomOutputName& name,
         stat::CustomOutputAnalysisType analysis_type =
             stat::CustomOutputAnalysisType::mean)
         -> std::shared_ptr<stat::CustomStatOutput> {
@@ -121,13 +135,38 @@ public:
     }
 
     /*!
+     * \brief Add a custom output with statistics.
+     *
+     * \param[in] name Name.
+     * \param[in] analysis_type Type of analysis.
+     * \return Object to add output values.
+     */
+    [[nodiscard]] auto add_custom_stat(std::string name,
+        stat::CustomOutputAnalysisType analysis_type =
+            stat::CustomOutputAnalysisType::mean)
+        -> std::shared_ptr<stat::CustomStatOutput> {
+        return add_custom_stat(
+            CustomOutputName(std::move(name)), analysis_type);
+    }
+
+    /*!
      * \brief Add a custom output without statistics.
      *
      * \param[in] name Name.
      * \param[in] value Output value.
      */
-    void add_custom_output(const std::string& name, double value) {
+    void add_custom_output(const CustomOutputName& name, double value) {
         custom_outputs_.emplace_back(name, value);
+    }
+
+    /*!
+     * \brief Add a custom output without statistics.
+     *
+     * \param[in] name Name.
+     * \param[in] value Output value.
+     */
+    void add_custom_output(std::string name, double value) {
+        add_custom_output(CustomOutputName(std::move(name)), value);
     }
 
     /*!
@@ -171,7 +210,7 @@ public:
      * \return Custom outputs without statistics.
      */
     [[nodiscard]] auto custom_outputs() const noexcept
-        -> const std::vector<std::pair<std::string, double>>& {
+        -> const std::vector<std::pair<CustomOutputName, double>>& {
         return custom_outputs_;
     }
 
@@ -195,7 +234,7 @@ private:
     std::vector<std::shared_ptr<stat::CustomStatOutput>> custom_stat_outputs_{};
 
     //! Custom outputs without statistics.
-    std::vector<std::pair<std::string, double>> custom_outputs_{};
+    std::vector<std::pair<CustomOutputName, double>> custom_outputs_{};
 };
 
 }  // namespace stat_bench

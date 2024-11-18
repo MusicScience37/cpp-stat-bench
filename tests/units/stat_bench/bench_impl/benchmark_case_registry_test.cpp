@@ -27,10 +27,16 @@
 #include <trompeloeil.hpp>
 
 #include "../mock_benchmark_case.h"
+#include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/filters/composed_filter.h"
 
 TEST_CASE("stat_bench::bench_impl::BenchmarkCaseRegistry") {
+    using stat_bench::BenchmarkCaseName;
+    using stat_bench::BenchmarkFullName;
+    using stat_bench::BenchmarkGroupName;
+
     SECTION("construct") {
         stat_bench::bench_impl::BenchmarkCaseRegistry registry;
 
@@ -38,13 +44,13 @@ TEST_CASE("stat_bench::bench_impl::BenchmarkCaseRegistry") {
     }
 
     SECTION("add cases") {
-        const std::string group_name1 = "Group1";
-        const std::string group_name2 = "Group2";
-        const std::string group_name3 = "Group2";
+        const auto group_name1 = BenchmarkGroupName("Group1");
+        const auto group_name2 = BenchmarkGroupName("Group2");
+        const auto group_name3 = BenchmarkGroupName("Group2");
 
-        const std::string case_name1 = "case1";
-        const std::string case_name2 = "case2";
-        const std::string case_name3 = "case3";
+        const auto case_name1 = BenchmarkCaseName("case1");
+        const auto case_name2 = BenchmarkCaseName("case2");
+        const auto case_name3 = BenchmarkCaseName("case3");
 
         const auto info1 =
             stat_bench::BenchmarkFullName(group_name1, case_name1);
@@ -71,8 +77,8 @@ TEST_CASE("stat_bench::bench_impl::BenchmarkCaseRegistry") {
                 .RETURN(info3);
 
             stat_bench::bench_impl::BenchmarkCaseRegistry registry;
-            registry.add(case2);
             registry.add(case1);
+            registry.add(case2);
             registry.add(case3);
 
             REQUIRE(registry.benchmarks().size() == 2);
@@ -94,13 +100,13 @@ TEST_CASE("stat_bench::bench_impl::BenchmarkCaseRegistry") {
     }
 
     SECTION("filter cases") {
-        const std::string group_name1 = "Group1";
-        const std::string group_name2 = "Group2";
-        const std::string group_name3 = "Group2";
+        const auto group_name1 = BenchmarkGroupName("Group1");
+        const auto group_name2 = BenchmarkGroupName("Group2");
+        const auto group_name3 = BenchmarkGroupName("Group2");
 
-        const std::string case_name1 = "case1";
-        const std::string case_name2 = "case2";
-        const std::string case_name3 = "case3";
+        const auto case_name1 = BenchmarkCaseName("case1");
+        const auto case_name2 = BenchmarkCaseName("case2");
+        const auto case_name3 = BenchmarkCaseName("case3");
 
         const auto info1 =
             stat_bench::BenchmarkFullName(group_name1, case_name1);
@@ -117,7 +123,7 @@ TEST_CASE("stat_bench::bench_impl::BenchmarkCaseRegistry") {
             std::make_shared<stat_bench_test::bench_impl::MockBenchmarkCase>();
 
         stat_bench::filters::ComposedFilter filter;
-        filter.include_with_regex(group_name1 + "/.*");
+        filter.include_with_regex(group_name1.str().str() + "/.*");
 
         {
             ALLOW_CALL(*case1, info())
@@ -131,8 +137,8 @@ TEST_CASE("stat_bench::bench_impl::BenchmarkCaseRegistry") {
                 .RETURN(info3);
 
             stat_bench::bench_impl::BenchmarkCaseRegistry registry;
-            registry.add(case2);
             registry.add(case1);
+            registry.add(case2);
             registry.add(case3);
 
             REQUIRE(registry.benchmarks().size() == 2);

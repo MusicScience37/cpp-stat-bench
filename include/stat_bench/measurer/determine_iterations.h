@@ -24,6 +24,7 @@
 
 #include "stat_bench/bench_impl/i_benchmark_case.h"
 #include "stat_bench/benchmark_condition.h"
+#include "stat_bench/measurer/measurer_name.h"
 
 namespace stat_bench {
 namespace measurer {
@@ -38,7 +39,7 @@ namespace measurer {
  * \return Number of iterations.
  */
 [[nodiscard]] auto determine_iterations(bench_impl::IBenchmarkCase* bench_case,
-    const BenchmarkCondition& cond, const std::string& measurer_name,
+    const BenchmarkCondition& cond, const MeasurerName& measurer_name,
     double min_sample_duration_sec) -> std::size_t;
 
 }  // namespace measurer

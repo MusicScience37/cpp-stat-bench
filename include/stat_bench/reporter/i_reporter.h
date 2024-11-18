@@ -24,8 +24,10 @@
 
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/system_time_point.h"
 #include "stat_bench/measurer/measurement.h"
+#include "stat_bench/measurer/measurer_name.h"
 
 namespace stat_bench {
 namespace reporter {
@@ -56,28 +58,28 @@ public:
      *
      * \param[in] name Measurer name.
      */
-    virtual void measurer_starts(const std::string& name) = 0;
+    virtual void measurer_starts(const measurer::MeasurerName& name) = 0;
 
     /*!
      * \brief Finished benchmarks using a measurer.
      *
      * \param[in] name Measurer name.
      */
-    virtual void measurer_finished(const std::string& name) = 0;
+    virtual void measurer_finished(const measurer::MeasurerName& name) = 0;
 
     /*!
      * \brief Start a group of benchmarks.
      *
      * \param[in] name Group name.
      */
-    virtual void group_starts(const std::string& name) = 0;
+    virtual void group_starts(const BenchmarkGroupName& name) = 0;
 
     /*!
      * \brief Finished a group of benchmarks.
      *
      * \param[in] name Group name.
      */
-    virtual void group_finished(const std::string& name) = 0;
+    virtual void group_finished(const BenchmarkGroupName& name) = 0;
 
     /*!
      * \brief Start a case of a benchmark.
