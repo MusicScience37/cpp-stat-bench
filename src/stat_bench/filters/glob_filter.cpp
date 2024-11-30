@@ -21,8 +21,9 @@
 
 #include <utility>
 
-#include <fmt/core.h>
+#include <fmt/format.h>
 
+#include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/util/check_glob_pattern.h"
 
 namespace stat_bench {

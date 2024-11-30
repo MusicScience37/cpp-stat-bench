@@ -21,6 +21,7 @@
 
 #include <algorithm>
 #include <memory>
+#include <string>
 
 #include <ApprovalTests.hpp>
 #include <catch2/catch_test_macros.hpp>
@@ -28,6 +29,7 @@
 #include "read_file.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/clock/system_clock.h"
+#include "stat_bench/measurer/measurement.h"
 #include "use_reporter_for_test.h"
 #include "use_reporter_for_test_wide_range.h"
 

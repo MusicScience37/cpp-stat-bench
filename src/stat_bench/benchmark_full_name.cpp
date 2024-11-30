@@ -19,6 +19,8 @@
  */
 #include "stat_bench/benchmark_full_name.h"
 
+#include <string>
+
 #include <fmt/format.h>
 
 namespace fmt {

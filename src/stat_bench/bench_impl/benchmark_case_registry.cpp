@@ -23,6 +23,7 @@
 #include <utility>
 
 #include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_group_name.h"
 
 namespace stat_bench {
 namespace bench_impl {

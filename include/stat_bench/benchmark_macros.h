@@ -19,11 +19,12 @@
  */
 #pragma once
 
+#include "stat_bench/bench_impl/benchmark_case_register.h"  // IWYU pragma: export
 #include "stat_bench/bench_impl/case_impl.h"
 #include "stat_bench/bench_impl/default_main.h"
 #include "stat_bench/bench_impl/measure_impl.h"
 #include "stat_bench/bench_impl/unique_name.h"
-#include "stat_bench/fixture_base.h"
+#include "stat_bench/fixture_base.h"  // IWYU pragma: keep
 
 /*!
  * \brief Macro to define a case.

@@ -22,8 +22,9 @@
 #include <algorithm>
 #include <utility>
 
-#include <fmt/core.h>
+#include <fmt/format.h>
 
+#include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/stat_bench_exception.h"
 

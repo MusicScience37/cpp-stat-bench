@@ -19,11 +19,13 @@
  */
 #pragma once
 
-#include <string>
-#include <unordered_map>
-#include <utility>
+// IWYU pragma: no_include <string>
+// IWYU pragma: no_include <functional>
 
-#include <fmt/core.h>
+#include <unordered_map>
+
+#include <fmt/base.h>
+#include <fmt/format.h>
 
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value.h"

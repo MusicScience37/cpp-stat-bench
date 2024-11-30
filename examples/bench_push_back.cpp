@@ -20,6 +20,7 @@
 #include <cstddef>
 #include <deque>
 #include <list>
+#include <string>
 #include <vector>
 
 #include "stat_bench/benchmark_macros.h"

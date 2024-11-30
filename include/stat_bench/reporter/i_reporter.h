@@ -20,7 +20,6 @@
 #pragma once
 
 #include <exception>
-#include <string>
 
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"

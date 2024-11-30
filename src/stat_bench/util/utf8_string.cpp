@@ -19,6 +19,9 @@
  */
 #include "stat_bench/util/utf8_string.h"
 
+#include <ostream>
+#include <utility>
+
 #include <fmt/format.h>
 #include <simdutf.h>
 

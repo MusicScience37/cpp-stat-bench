@@ -19,6 +19,8 @@
  */
 #pragma once
 
+#include <ostream>
+#include <string>
 #include <utility>
 
 #include <fmt/base.h>

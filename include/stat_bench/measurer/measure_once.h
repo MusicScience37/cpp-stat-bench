@@ -20,7 +20,6 @@
 #pragma once
 
 #include <cstddef>
-#include <string>
 
 #include "stat_bench/bench_impl/i_benchmark_case.h"
 #include "stat_bench/benchmark_condition.h"

@@ -44,7 +44,8 @@
   { symbol: [ "condition_variable", private, "<condition_variable>", public ] },
   { symbol: [ "std::condition_variable", private, "<condition_variable>", public ] },
   { symbol: [ "FILE", private, "<cstdio>", public ] },
-  { symbol: [ "<cwchar>", private, "<cstdio>", public ] },
+  { symbol: [ "std::hash", private, "<functional>", public ] },
+  { include: [ "<__ostream/basic_ostream.h>", public, "<ostream>", public ] },
   # Custom (external)
   { symbol: [ "nlohmann::json", private, "<nlohmann/json.hpp>", public ] },
   { include: ["@<nlohmann/detail/.*>", private, "<nlohmann/json.hpp>", public ] },
@@ -54,4 +55,6 @@
   { include: ["\"src/Core/DenseBase.h\"", private, "<Eigen/Core>", public ] },
   { include: ["\"src/Core/MatrixBase.h\"", private, "<Eigen/Core>", public ] },
   { include: ["\"src/Core/ArrayBase.h\"", private, "<Eigen/Core>", public ] },
+  { include: ["@<simdutf/.*>", private, "<simdutf.h>", public ] },
+  { include: ["@<trompeloeil/.*>", private, "<trompeloeil.hpp>", public ] },
 ]

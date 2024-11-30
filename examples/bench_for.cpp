@@ -18,6 +18,7 @@
  * \brief Benchmark of push_back in STL containers.
  */
 #include <cstddef>
+#include <string>
 #include <vector>
 
 #include "stat_bench/benchmark_macros.h"

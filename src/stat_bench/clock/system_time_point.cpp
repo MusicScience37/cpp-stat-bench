@@ -20,8 +20,8 @@
 #include "stat_bench/clock/system_time_point.h"
 
 #include <fmt/chrono.h>
-#include <fmt/core.h>
 #include <fmt/format.h>
+#include <time.h>
 
 namespace fmt {
 

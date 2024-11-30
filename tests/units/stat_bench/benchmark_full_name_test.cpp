@@ -19,6 +19,8 @@
  */
 #include "stat_bench/benchmark_full_name.h"
 
+#include <string>
+
 #include <catch2/catch_test_macros.hpp>
 #include <fmt/format.h>
 
