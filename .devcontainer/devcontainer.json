@@ -51,5 +51,10 @@
     }
   },
   "postCreateCommand": "bash ./.devcontainer/setup.bash",
-  "remoteUser": "ubuntu"
+  "remoteUser": "ubuntu",
+  "portsAttributes": {
+    "6792": {
+      "label": "sphinx-autobuild"
+    }
+  }
 }
