@@ -21,19 +21,27 @@
 
 #include <cstdint>
 #include <cstdio>
+#include <exception>
 #include <memory>
+#include <string>
 #include <utility>
 #include <vector>
 
+#include <fmt/base.h>
 #include <fmt/color.h>
-#include <fmt/core.h>
 #include <fmt/format.h>
 
-#include "stat_bench/benchmark_group_name.h"
+#include "stat_bench/benchmark_case_name.h"
+#include "stat_bench/benchmark_condition.h"
+#include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/clock/monotone_time_point.h"
+#include "stat_bench/custom_output_name.h"
+#include "stat_bench/measurer/measurement.h"
 #include "stat_bench/param/parameter_dict.h"
+#include "stat_bench/stat/custom_stat_output.h"
 #include "stat_bench/stat/statistics.h"
+#include "stat_bench/util/utf8_string.h"
 #include "stat_bench/version.h"
 
 namespace stat_bench {

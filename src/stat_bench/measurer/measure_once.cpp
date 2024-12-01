@@ -21,14 +21,15 @@
 
 #include <memory>
 #include <stdexcept>
-#include <string>
 #include <utility>
 #include <vector>
 
 #include "stat_bench/bench_impl/i_benchmark_case.h"
 #include "stat_bench/bench_impl/invocation_context_registry.h"
 #include "stat_bench/benchmark_condition.h"
+#include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/clock/duration.h"
+#include "stat_bench/custom_output_name.h"
 #include "stat_bench/invocation_context.h"
 #include "stat_bench/measurer/measurement.h"
 

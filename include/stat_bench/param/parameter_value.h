@@ -24,7 +24,7 @@
 #include <typeinfo>
 #include <utility>
 
-#include <fmt/core.h>
+#include <fmt/format.h>
 
 #include "stat_bench/stat_bench_exception.h"
 #include "stat_bench/util/utf8_string.h"

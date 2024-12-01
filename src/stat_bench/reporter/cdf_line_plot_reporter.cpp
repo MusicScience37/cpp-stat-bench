@@ -24,14 +24,17 @@
 #include <utility>
 #include <vector>
 
-#include <fmt/core.h>
 #include <fmt/format.h>
 #include <nlohmann/json.hpp>
 
-#include "stat_bench/benchmark_group_name.h"
+#include "stat_bench/benchmark_case_name.h"
+#include "stat_bench/benchmark_condition.h"
+#include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/measurer/measurer_name.h"
 #include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/stat/statistics.h"
 #include "stat_bench/util/prepare_directory.h"
+#include "stat_bench/util/utf8_string.h"
 #include "template/plotly_plot.h"
 
 namespace stat_bench {

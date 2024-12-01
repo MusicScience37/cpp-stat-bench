@@ -22,10 +22,8 @@
 #include <utility>
 #include <vector>
 
-#include <fmt/core.h>
 #include <fmt/format.h>
 
-#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/reporter/data_file_helper.h"
 #include "stat_bench/util/utf8_string.h"
 

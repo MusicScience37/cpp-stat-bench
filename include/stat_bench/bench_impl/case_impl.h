@@ -22,6 +22,8 @@
 #include "stat_bench/bench_impl/benchmark_case_helper.h"    // IWYU pragma: keep
 #include "stat_bench/bench_impl/benchmark_case_register.h"  // IWYU pragma: keep
 #include "stat_bench/bench_impl/null_fixture.h"             // IWYU pragma: keep
+#include "stat_bench/benchmark_case_name.h"                 // IWYU pragma: keep
+#include "stat_bench/benchmark_group_name.h"                // IWYU pragma: keep
 
 /*!
  * \brief Macro to define a case using a fixture.

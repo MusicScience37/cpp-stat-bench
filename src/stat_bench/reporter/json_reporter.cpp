@@ -20,9 +20,9 @@
 #include "stat_bench/reporter/json_reporter.h"
 
 #include <fstream>
+#include <string_view>
 #include <utility>
 
-#include <fmt/core.h>
 #include <fmt/format.h>
 #include <nlohmann/json.hpp>
 

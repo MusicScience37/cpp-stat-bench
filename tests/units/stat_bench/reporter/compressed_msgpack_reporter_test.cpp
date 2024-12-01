@@ -26,7 +26,7 @@
 
 #include <ApprovalTests.hpp>
 #include <catch2/catch_test_macros.hpp>
-#include <fmt/core.h>
+#include <fmt/format.h>
 #include <msgpack_light/memory_output_stream.h>
 #include <nlohmann/json.hpp>
 #include <zlib.h>

@@ -19,6 +19,9 @@
  */
 #include "stat_bench/param/parameter_dict.h"
 
+#include <string>
+#include <utility>
+
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers.hpp>
 #include <catch2/matchers/catch_matchers_string.hpp>

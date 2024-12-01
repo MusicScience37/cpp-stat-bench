@@ -19,6 +19,7 @@
  */
 #include <cstdint>
 #include <stdexcept>
+#include <string>
 
 #include "stat_bench/benchmark_macros.h"
 #include "stat_bench/do_not_optimize.h"

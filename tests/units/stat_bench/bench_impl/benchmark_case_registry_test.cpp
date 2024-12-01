@@ -31,6 +31,7 @@
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/filters/composed_filter.h"
+#include "stat_bench/util/utf8_string.h"
 
 TEST_CASE("stat_bench::bench_impl::BenchmarkCaseRegistry") {
     using stat_bench::BenchmarkCaseName;

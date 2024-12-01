@@ -19,6 +19,8 @@
  */
 #include "stat_bench/measurer/measurement.h"
 
+#include <string>
+
 #include <catch2/catch_test_macros.hpp>
 
 #include "../param/create_ordinary_parameter_dict.h"

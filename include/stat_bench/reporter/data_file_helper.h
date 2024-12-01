@@ -20,7 +20,6 @@
 #pragma once
 
 #include <memory>
-#include <string>
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -32,6 +31,7 @@
 #include "stat_bench/reporter/data_file_spec.h"
 #include "stat_bench/stat/custom_stat_output.h"
 #include "stat_bench/stat/statistics.h"
+#include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
 namespace reporter {

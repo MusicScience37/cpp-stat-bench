@@ -19,7 +19,10 @@
  */
 #pragma once
 
+#include <cstddef>
 #include <functional>
+#include <ostream>
+#include <string>
 #include <utility>
 
 #include <fmt/base.h>

@@ -19,7 +19,6 @@
  */
 #include "stat_bench/param/parameter_dict.h"
 
-#include <iterator>
 #include <set>
 #include <utility>
 

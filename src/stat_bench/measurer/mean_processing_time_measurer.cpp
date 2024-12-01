@@ -24,6 +24,7 @@
 #include "stat_bench/measurer/determine_iterations.h"
 #include "stat_bench/measurer/determine_warming_up_samples.h"
 #include "stat_bench/measurer/measure_once.h"
+#include "stat_bench/measurer/measurement.h"
 
 namespace stat_bench {
 namespace measurer {

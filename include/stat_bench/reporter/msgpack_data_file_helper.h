@@ -19,6 +19,7 @@
  */
 #pragma once
 
+#include <msgpack_light/serialization_buffer.h>
 #include <msgpack_light/type_support/fwd.h>
 #include <msgpack_light/type_support/struct.h>
 #include <msgpack_light/type_support/unordered_map.h>  // IWYU pragma: keep

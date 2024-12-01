@@ -22,7 +22,6 @@
 #include <string>
 
 #include "stat_bench/reporter/data_file_reporter_base.h"
-#include "stat_bench/reporter/data_file_spec.h"
 
 namespace stat_bench {
 namespace reporter {

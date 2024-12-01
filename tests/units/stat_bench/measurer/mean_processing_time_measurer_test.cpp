@@ -36,6 +36,7 @@
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/current_invocation_context.h"
+#include "stat_bench/measurer/measurement.h"
 #include "stat_bench/measurer/measurer_name.h"
 
 TEST_CASE("stat_bench::measurer::MeanProcessingTimeMeasurer") {

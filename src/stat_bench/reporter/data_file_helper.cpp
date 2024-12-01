@@ -20,9 +20,13 @@
 #include "stat_bench/reporter/data_file_helper.h"
 
 #include <cstddef>
+#include <functional>
 
+#include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_group_name.h"
+#include "stat_bench/measurer/measurer_name.h"
 
 namespace stat_bench {
 namespace reporter {

@@ -19,13 +19,14 @@
  */
 #include "stat_bench/reporter/jinja_renderer.h"
 
+#include <functional>
 #include <memory>
 #include <string>
 #include <string_view>
 #include <unordered_map>
 #include <utility>
 
-#include <fmt/core.h>
+#include <fmt/format.h>
 #include <inja/inja.hpp>
 
 #include "stat_bench/stat_bench_exception.h"
