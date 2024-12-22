@@ -9,7 +9,7 @@
   "mounts": [
     {
       "type": "volume",
-      "source": "${localWorkspaceFolderBasename}-cache",
+      "source": "music-science-37-cache",
       "target": "/cache_volume/"
     }
   ],
