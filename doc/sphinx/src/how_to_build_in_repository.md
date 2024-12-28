@@ -13,10 +13,10 @@ you will require following dependencies:
     Execute `poetry run pre-commit install` on this directory
     if you develop this library.
 - [CMake](https://cmake.org/)
-- C++ 14 Compiler
+- C++ 17 Compiler
   - Following compilers are tested in CI:
-    - GCC 12
-    - Clang 18
+    - GCC 13
+    - Clang 19
     - MSVC 19
 
 Additionally, you will require following dependencies

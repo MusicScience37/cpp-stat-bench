@@ -16,13 +16,13 @@ This library can be installed via vcpkg using following configurations:
     "default-registry": {
       "kind": "git",
       "repository": "https://github.com/Microsoft/vcpkg",
-      "baseline": "099fb9250d916511782bf5215f01f2e7141beb3a"
+      "baseline": "80d54ff62d528339c626a6fbc3489a7f25956ade"
     },
     "registries": [
       {
         "kind": "git",
         "repository": "https://gitlab.com/MusicScience37Projects/vcpkg-registry",
-        "baseline": "fb3ea2e761fca69a7e9cf0a447538792d0cc6057",
+        "baseline": "46060da35ec1438c424d2c7a5a49ffa0b4447d1d",
         "packages": ["cpp-msgpack-light", "cpp-stat-bench"]
       }
     ]
