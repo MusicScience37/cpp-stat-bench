@@ -14,7 +14,6 @@
     }
   ],
   "containerEnv": {
-    "ASAN_OPTIONS": "alloc_dealloc_mismatch=0",
     "CCACHE_COMPILERCHECK": "content",
     "CCACHE_DIR": "/cache_volume/ccache/",
     "VCPKG_DEFAULT_BINARY_CACHE": "/cache_volume/vcpkg/",
