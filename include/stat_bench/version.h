@@ -23,7 +23,7 @@
 #define STAT_BENCH_VERSION_MAJOR 0
 
 //! Minor version of cpp-stat-bench project.
-#define STAT_BENCH_VERSION_MINOR 17
+#define STAT_BENCH_VERSION_MINOR 18
 
 //! Patch version of cpp-stat-bench project.
-#define STAT_BENCH_VERSION_PATCH 1
+#define STAT_BENCH_VERSION_PATCH 0
