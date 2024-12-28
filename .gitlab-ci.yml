@@ -225,8 +225,6 @@ clang-asan-ubsan:
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "asan_ubsan"
-  variables:
-    ASAN_OPTIONS: alloc_dealloc_mismatch=0
   script:
     - poetry run python ./scripts/ci_linux_test.py
       --compiler_type $COMPILER_TYPE
