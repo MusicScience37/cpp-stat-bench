@@ -17,15 +17,15 @@
  * \file
  * \brief Test of JinjaRenderer class.
  */
-#include "stat_bench/reporter/jinja_renderer.h"
+#include "stat_bench/plots/jinja_renderer.h"
 
 #include <sstream>
 #include <string>
 
 #include <catch2/catch_test_macros.hpp>
 
-TEST_CASE("stat_bench::reporter::JinjaRenderer") {
-    using stat_bench::reporter::JinjaRenderer;
+TEST_CASE("stat_bench::plots::JinjaRenderer") {
+    using stat_bench::plots::JinjaRenderer;
 
     SECTION("render") {
         JinjaRenderer renderer{};

@@ -17,7 +17,7 @@
  * \file
  * \brief Implementation of JinjaRenderer class.
  */
-#include "stat_bench/reporter/jinja_renderer.h"
+#include "stat_bench/plots/jinja_renderer.h"
 
 #include <functional>
 #include <memory>
@@ -33,7 +33,7 @@
 #include "stat_bench/util/escape_for_html.h"
 
 namespace stat_bench {
-namespace reporter {
+namespace plots {
 
 //! Internal data.
 struct JinjaRenderer::Impl {
@@ -80,5 +80,5 @@ void JinjaRenderer::render_to(
     impl_->env.render_to(out, template_iter->second, data);
 }
 
-}  // namespace reporter
+}  // namespace plots
 }  // namespace stat_bench

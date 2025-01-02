@@ -23,8 +23,8 @@
 #include <vector>
 
 #include "stat_bench/measurer/measurement.h"
+#include "stat_bench/plots/jinja_renderer.h"
 #include "stat_bench/reporter/i_reporter.h"
-#include "stat_bench/reporter/jinja_renderer.h"
 
 namespace stat_bench {
 namespace reporter {
@@ -85,7 +85,7 @@ private:
     std::vector<measurer::Measurement> measurements_{};
 
     //! Renderer of Jinja templates.
-    JinjaRenderer renderer_{};
+    plots::JinjaRenderer renderer_{};
 };
 
 }  // namespace reporter

@@ -27,7 +27,7 @@
 #include "stat_bench/util/string_view.h"
 
 namespace stat_bench {
-namespace reporter {
+namespace plots {
 
 /*!
  * \brief Class to render Jinja templates.
@@ -75,5 +75,5 @@ private:
     std::unique_ptr<Impl> impl_;
 };
 
-}  // namespace reporter
+}  // namespace plots
 }  // namespace stat_bench

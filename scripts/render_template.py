@@ -13,7 +13,7 @@ import jinja2
 
 THIS_DIR = Path(__file__).absolute().parent
 
-TEMPLATES_DIR = (THIS_DIR.parent) / "src" / "stat_bench" / "reporter" / "template"
+TEMPLATES_DIR = (THIS_DIR.parent) / "src" / "stat_bench" / "plots" / "template"
 
 routes = web.RouteTableDef()
 

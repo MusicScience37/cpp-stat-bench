@@ -18,7 +18,7 @@
  * @brief Definition of plotly_plot variable.
  *
  * This header is automatically generated from
- * src/stat_bench/reporter/template/plotly_plot.jinja.
+ * src/stat_bench/plots/template/plotly_plot.jinja.
  * Change this file only via scripts/generate_template_header.py script.
  */
 #pragma once
@@ -28,7 +28,7 @@ namespace reporter {
 
 /*!
  * @brief Contents of file
- * src/stat_bench/reporter/template/plotly_plot.jinja.
+ * src/stat_bench/plots/template/plotly_plot.jinja.
  */
 static constexpr const char* plotly_plot = R"(<!DOCTYPE html>
 <html>
