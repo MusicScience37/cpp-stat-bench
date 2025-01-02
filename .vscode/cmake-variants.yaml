@@ -25,6 +25,7 @@ buildType:
       buildType: Debug
       settings:
         STAT_BENCH_ENABLE_AUSAN: ON
+        STAT_BENCH_ENABLE_TSAN: OFF
         STAT_BENCH_TESTING: ON
         STAT_BENCH_WRITE_JUNIT: OFF
         STAT_BENCH_ENABLE_BENCH: ON
@@ -37,6 +38,7 @@ buildType:
       buildType: Debug
       settings:
         STAT_BENCH_ENABLE_AUSAN: ON
+        STAT_BENCH_ENABLE_TSAN: OFF
         STAT_BENCH_TESTING: ON
         STAT_BENCH_WRITE_JUNIT: OFF
         STAT_BENCH_ENABLE_BENCH: ON
@@ -50,6 +52,7 @@ buildType:
       buildType: Debug
       settings:
         STAT_BENCH_ENABLE_AUSAN: ON
+        STAT_BENCH_ENABLE_TSAN: OFF
         STAT_BENCH_TESTING: ON
         STAT_BENCH_WRITE_JUNIT: OFF
         STAT_BENCH_ENABLE_BENCH: ON
@@ -57,12 +60,26 @@ buildType:
         STAT_BENCH_BUILD_EXAMPLES: ON
         STAT_BENCH_BUILD_DOC: ON
         STAT_BENCH_BUILD_DOC_SPHINX: ON
+    clang-tsan-unit:
+      short: ClangTSan-Unit
+      long: TSan in Clang + Unit tests
+      buildType: Debug
+      settings:
+        STAT_BENCH_ENABLE_AUSAN: OFF
+        STAT_BENCH_ENABLE_TSAN: ON
+        STAT_BENCH_TESTING: ON
+        STAT_BENCH_WRITE_JUNIT: OFF
+        STAT_BENCH_ENABLE_BENCH: ON
+        STAT_BENCH_TEST_BENCHMARKS: OFF
+        STAT_BENCH_BUILD_EXAMPLES: ON
+        STAT_BENCH_BUILD_DOC: OFF
     debug-unit:
       short: Debug-Unit
       long: Debug build + Unit tests
       buildType: Debug
       settings:
         STAT_BENCH_ENABLE_AUSAN: OFF
+        STAT_BENCH_ENABLE_TSAN: OFF
         STAT_BENCH_TESTING: ON
         STAT_BENCH_WRITE_JUNIT: OFF
         STAT_BENCH_ENABLE_BENCH: ON
@@ -75,6 +92,7 @@ buildType:
       buildType: RelWithDebInfo
       settings:
         STAT_BENCH_ENABLE_AUSAN: OFF
+        STAT_BENCH_ENABLE_TSAN: OFF
         STAT_BENCH_TESTING: ON
         STAT_BENCH_WRITE_JUNIT: OFF
         STAT_BENCH_ENABLE_BENCH: ON
@@ -87,6 +105,7 @@ buildType:
       buildType: Release
       settings:
         STAT_BENCH_ENABLE_AUSAN: OFF
+        STAT_BENCH_ENABLE_TSAN: OFF
         STAT_BENCH_TESTING: ON
         STAT_BENCH_WRITE_JUNIT: OFF
         STAT_BENCH_ENABLE_BENCH: ON

@@ -21,7 +21,7 @@ target_compile_features(stat_bench PRIVATE cxx_std_17)
 if(MSVC)
     target_compile_definitions(stat_bench PUBLIC _CRT_SECURE_NO_WARNINGS=1)
 endif()
-target_add_ausan(stat_bench)
+target_add_sanitizer(stat_bench)
 
 target_link_libraries(stat_bench PUBLIC Threads::Threads)
 
