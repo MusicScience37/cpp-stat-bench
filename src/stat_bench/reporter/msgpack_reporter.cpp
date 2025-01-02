@@ -75,51 +75,6 @@ private:
     std::FILE* file_;
 };
 
-/*!
- * \brief Class of buffers to write files in msgpack library.
- */
-class MsgPackFileBuffer {
-public:
-    /*!
-     * \brief Constructor.
-     *
-     * \param[in] file_path File path.
-     */
-    explicit MsgPackFileBuffer(const std::string& file_path)
-        : file_(std::fopen(file_path.c_str(), "wb")) {
-        if (file_ == nullptr) {
-            throw StatBenchException(
-                fmt::format(FMT_STRING("Failed to open {}."), file_path));
-        }
-    }
-
-    MsgPackFileBuffer(const MsgPackFileBuffer&) = delete;
-    MsgPackFileBuffer(MsgPackFileBuffer&&) = delete;
-    auto operator=(const MsgPackFileBuffer&) -> MsgPackFileBuffer& = delete;
-    auto operator=(MsgPackFileBuffer&&) -> MsgPackFileBuffer& = delete;
-
-    /*!
-     * \brief Destructor.
-     */
-    ~MsgPackFileBuffer() { (void)std::fclose(file_); }
-
-    /*!
-     * \brief Write data.
-     *
-     * \param[in] data Data.
-     * \param[in] len Length of the data.
-     */
-    void write(const char* data, std::size_t len) {
-        if (std::fwrite(data, 1, len, file_) != len) {
-            throw StatBenchException("Failed to write data.");
-        }
-    }
-
-private:
-    //! File.
-    std::FILE* file_;
-};
-
 MsgPackReporter::MsgPackReporter(std::string file_path)
     : DataFileReporterBase(std::move(file_path)) {}
 
