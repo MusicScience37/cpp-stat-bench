@@ -24,6 +24,7 @@ set(SOURCE_FILES
     stat_bench/param/parameter_value_test.cpp
     stat_bench/param/parameter_value_vector_test.cpp
     stat_bench/plots/jinja_renderer_test.cpp
+    stat_bench/plots/plotly_plotter_test.cpp
     stat_bench/reporter/cdf_line_plot_reporter_test.cpp
     stat_bench/reporter/compressed_msgpack_reporter_test.cpp
     stat_bench/reporter/console_reporter_test.cpp

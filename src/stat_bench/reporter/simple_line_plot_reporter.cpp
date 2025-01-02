@@ -42,7 +42,7 @@ namespace reporter {
 
 SimpleLinePlotReporter::SimpleLinePlotReporter(std::string prefix)
     : prefix_(std::move(prefix)) {
-    renderer_.load_from_text("plotly_plot", plotly_plot);
+    renderer_.load_from_text("plotly_plot", plots::plotly_plot);
 }
 
 void SimpleLinePlotReporter::experiment_starts(

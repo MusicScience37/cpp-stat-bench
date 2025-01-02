@@ -45,7 +45,7 @@ namespace reporter {
 
 ViolinPlotReporter::ViolinPlotReporter(std::string prefix)
     : prefix_(std::move(prefix)) {
-    renderer_.load_from_text("plotly_plot", plotly_plot);
+    renderer_.load_from_text("plotly_plot", plots::plotly_plot);
 }
 
 void ViolinPlotReporter::experiment_starts(

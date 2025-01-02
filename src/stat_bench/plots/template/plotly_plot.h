@@ -24,7 +24,7 @@
 #pragma once
 
 namespace stat_bench {
-namespace reporter {
+namespace plots {
 
 /*!
  * @brief Contents of file
@@ -68,5 +68,5 @@ static constexpr const char* plotly_plot = R"(<!DOCTYPE html>
 </html>
 )";
 
-}  // namespace reporter
+}  // namespace plots
 }  // namespace stat_bench

@@ -42,7 +42,7 @@ namespace reporter {
 
 CdfLinePlotReporter::CdfLinePlotReporter(std::string prefix)
     : prefix_(std::move(prefix)) {
-    renderer_.load_from_text("plotly_plot", plotly_plot);
+    renderer_.load_from_text("plotly_plot", plots::plotly_plot);
 }
 
 void CdfLinePlotReporter::experiment_starts(

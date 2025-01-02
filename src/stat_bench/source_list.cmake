@@ -21,6 +21,7 @@ set(SOURCE_FILES
     param/parameter_generator.cpp
     param/parameter_name.cpp
     plots/jinja_renderer.cpp
+    plots/plotly_plotter.cpp
     reporter/cdf_line_plot_reporter.cpp
     reporter/compressed_msgpack_reporter.cpp
     reporter/console_reporter.cpp

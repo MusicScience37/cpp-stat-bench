@@ -52,7 +52,7 @@ def generate_header_contents(template_path: pathlib.Path) -> None:
 #pragma once
 
 namespace stat_bench {{
-namespace reporter {{
+namespace plots {{
 
 /*!
  * @brief Contents of file
@@ -60,7 +60,7 @@ namespace reporter {{
  */
 static constexpr const char* {var_name} = R"({html_contents})";
 
-}}  // namespace reporter
+}}  // namespace plots
 }}  // namespace stat_bench
 """
 
