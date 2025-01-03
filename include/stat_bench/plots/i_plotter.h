@@ -44,6 +44,18 @@ public:
         const std::vector<double>& y, const util::Utf8String& name) = 0;
 
     /*!
+     * \brief Add a line with errors to the figure.
+     *
+     * \param[in] x X values.
+     * \param[in] y Y values.
+     * \param[in] y_error Errors of y values.
+     * \param[in] name Name of the line.
+     */
+    virtual void add_line_with_error(const std::vector<double>& x,
+        const std::vector<double>& y, const std::vector<double>& y_error,
+        const util::Utf8String& name) = 0;
+
+    /*!
      * \brief Add a line to the figure with sequential numbers as x values.
      *
      * \param[in] y Y values.

@@ -77,6 +77,31 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
             ApprovalTests::Options().fileOptions().withFileExtension(".html"));
     }
 
+    SECTION("create a line plot with error") {
+        auto figure =
+            plotter->create_figure(Utf8String("Line Plot with Error"));
+
+        // NOLINTNEXTLINE(*-magic-numbers)
+        figure->add_line_with_error({1.0, 2.0, 3.0}, {1.1, 2.2, 3.3},
+            // NOLINTNEXTLINE(*-magic-numbers)
+            {0.1, 0.2, 0.3}, Utf8String("Line1"));
+        // NOLINTNEXTLINE(*-magic-numbers)
+        figure->add_line_with_error({2.0, 3.0, 4.0}, {3.3, 4.4, 5.5},
+            // NOLINTNEXTLINE(*-magic-numbers)
+            {0.3, 0.4, 0.5}, Utf8String("Line2"));
+
+        figure->set_x_title(Utf8String("X"));
+        figure->set_y_title(Utf8String("Y"));
+        figure->set_log_y();
+
+        const auto file_path =
+            std::string("./PlotlyPlotter/LinePlotWithError.html");
+        figure->write_to_file(file_path);
+
+        ApprovalTests::Approvals::verify(stat_bench_test::read_file(file_path),
+            ApprovalTests::Options().fileOptions().withFileExtension(".html"));
+    }
+
     SECTION("create a line plot with sequential number") {
         auto figure = plotter->create_figure(
             Utf8String("Line Plot with Sequential Number"));
