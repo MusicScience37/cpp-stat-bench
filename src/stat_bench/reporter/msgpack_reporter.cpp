@@ -22,7 +22,6 @@
 #include <cstdio>
 #include <utility>
 
-#include <fmt/format.h>
 #include <msgpack_light/output_stream.h>
 #include <msgpack_light/serialize.h>
 

@@ -19,7 +19,9 @@
  */
 #include "stat_bench/reporter/plot_reporter.h"
 
+#include <cstddef>
 #include <memory>
+#include <utility>
 
 #include <fmt/format.h>
 
@@ -28,6 +30,7 @@
 #include "stat_bench/plots/plotly_plotter.h"
 #include "stat_bench/plots/samples_line_plot.h"
 #include "stat_bench/plots/violin_plot.h"
+#include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
 namespace reporter {
