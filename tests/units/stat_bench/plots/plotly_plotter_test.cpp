@@ -118,10 +118,10 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
         auto figure = plotter->create_figure(Utf8String("Log Violin Plot"));
 
         // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_violin({1.1, 2.2, 2.2, 3.3, 11.0}, Utf8String("Violin1"));
+        figure->add_violin({1.0, 2.2, 2.2, 3.3, 11.0}, Utf8String("Violin1"));
         figure->add_violin(
             // NOLINTNEXTLINE(*-magic-numbers)
-            {3.3e+2, 4.4e+2, 4.4e+2, 5.5e+2}, Utf8String("Violin2"));
+            {3.3e+2, 4.4e+2, 4.4e+2, 5.5e+2, 1e+3}, Utf8String("Violin2"));
 
         figure->set_x_title(Utf8String("X"));
         figure->set_y_title(Utf8String("Y"));
