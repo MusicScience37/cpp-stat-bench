@@ -83,6 +83,22 @@ auto ParameterDict::as_string_dict() const
     return data;
 }
 
+auto ParameterDict::clone_without(const ParameterName& param_name) const
+    -> ParameterDict {
+    if (!has(param_name)) {
+        throw StatBenchException(
+            fmt::format("Parameter {} not found.", param_name));
+    }
+    std::unordered_map<ParameterName, ParameterValue> new_data;
+    new_data.reserve(data_.size());
+    for (const auto& pair : data_) {
+        if (pair.first != param_name) {
+            new_data.emplace(pair.first, pair.second);
+        }
+    }
+    return ParameterDict{std::move(new_data)};
+}
+
 auto ParameterDict::calculate_hash() const -> std::size_t {
     std::size_t hash = 0;
     std::hash<ParameterName> name_hash{};

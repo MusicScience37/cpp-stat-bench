@@ -109,6 +109,15 @@ public:
         -> std::unordered_map<util::Utf8String, util::Utf8String>;
 
     /*!
+     * \brief Create a new dictionary without a parameter.
+     *
+     * \param[in] param_name Parameter name to remove.
+     * \return New dictionary.
+     */
+    [[nodiscard]] auto clone_without(const ParameterName& param_name) const
+        -> ParameterDict;
+
+    /*!
      * \brief Calculate hash value.
      *
      * \return Hash value.
