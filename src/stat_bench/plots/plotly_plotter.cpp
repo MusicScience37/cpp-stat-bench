@@ -88,6 +88,31 @@ public:
         }
     }
 
+    //! \copydoc stat_bench::plots::IFigure::add_line_with_sequential_number
+    void add_line_with_sequential_number(
+        const std::vector<double>& y, const util::Utf8String& name) override {
+        std::vector<std::size_t> x;
+        x.reserve(y.size());
+        for (std::size_t i = 0; i < y.size(); ++i) {
+            x.push_back(i + 1);
+        }
+
+        nlohmann::json trace;
+        trace["x"] = x;
+        trace["y"] = y;
+        trace["mode"] = "lines";
+        trace["type"] = "scatter";
+        trace["name"] = name.str();
+        data_.push_back(trace);
+
+        max_x_ = std::max(max_x_, static_cast<double>(y.size()));
+        min_x_ = std::min(min_x_, 1.0);
+        for (const auto& value : y) {
+            max_y_ = std::max(max_y_, value);
+            min_y_ = std::min(min_y_, value);
+        }
+    }
+
     //! \copydoc stat_bench::plots::IFigure::add_violin
     void add_violin(
         const std::vector<double>& y, const util::Utf8String& name) override {
@@ -125,6 +150,7 @@ public:
         const double upper_bound = max_y_ * margin_coeff;
         layout_["yaxis"]["range"] = std::vector<double>{
             std::log10(lower_bound), std::log10(upper_bound)};
+        layout_["yaxis"]["constrain"] = "range";
     }
 
     //! \copydoc stat_bench::plots::IFigure::set_log_x

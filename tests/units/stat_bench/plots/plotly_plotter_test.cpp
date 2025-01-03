@@ -74,6 +74,25 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
             ApprovalTests::Options().fileOptions().withFileExtension(".html"));
     }
 
+    SECTION("create a line plot with sequential number") {
+        auto figure = plotter->create_figure(
+            Utf8String("Line Plot with Sequential Number"));
+
+        figure->add_line_with_sequential_number(
+            // NOLINTNEXTLINE(*-magic-numbers)
+            {1.1, 2.2, 3.3}, Utf8String("Line1"));
+
+        figure->set_x_title(Utf8String("X"));
+        figure->set_y_title(Utf8String("Y"));
+
+        const auto file_path =
+            std::string("./PlotlyPlotter/LinePlotWithSequentialNumber.html");
+        figure->write_to_file(file_path);
+
+        ApprovalTests::Approvals::verify(stat_bench_test::read_file(file_path),
+            ApprovalTests::Options().fileOptions().withFileExtension(".html"));
+    }
+
     SECTION("create a violin plot") {
         auto figure = plotter->create_figure(Utf8String("Violin Plot"));
 

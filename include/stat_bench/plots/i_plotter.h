@@ -43,6 +43,15 @@ public:
         const std::vector<double>& y, const util::Utf8String& name) = 0;
 
     /*!
+     * \brief Add a line to the figure with sequential numbers as x values.
+     *
+     * \param[in] y Y values.
+     * \param[in] name Name of the line.
+     */
+    virtual void add_line_with_sequential_number(
+        const std::vector<double>& y, const util::Utf8String& name) = 0;
+
+    /*!
      * \brief Add a violin plot to the figure.
      *
      * \param[in] y Y values.
