@@ -24,6 +24,8 @@
 
 #include <fmt/format.h>  // IWYU pragma: keep
 
+#include "stat_bench/param/parameter_name.h"
+
 namespace stat_bench {
 namespace param {
 
@@ -35,6 +37,16 @@ auto ParameterDict::empty() const noexcept -> bool { return data_.empty(); }
 
 auto ParameterDict::has(const ParameterName& param_name) const -> bool {
     return data_.count(param_name) == 1;
+}
+
+auto ParameterDict::get_as_double(const ParameterName& param_name) const
+    -> double {
+    const auto iter = data_.find(param_name);
+    if (iter == data_.end()) {
+        throw StatBenchException(
+            fmt::format("Parameter {} not found.", param_name));
+    }
+    return iter->second.to_double();
 }
 
 auto ParameterDict::format_to(fmt::format_context::iterator out) const
@@ -69,6 +81,24 @@ auto ParameterDict::as_string_dict() const
         data.emplace(pair.first.str(), pair.second.to_string());
     }
     return data;
+}
+
+auto ParameterDict::calculate_hash() const -> std::size_t {
+    std::size_t hash = 0;
+    std::hash<ParameterName> name_hash{};
+    for (const auto& pair : data_) {
+        hash ^= name_hash(pair.first);
+        hash ^= pair.second.calculate_hash();
+    }
+    return hash;
+}
+
+auto ParameterDict::operator==(const ParameterDict& rhs) const -> bool {
+    return data_ == rhs.data_;
+}
+
+auto ParameterDict::operator!=(const ParameterDict& rhs) const -> bool {
+    return !(*this == rhs);
 }
 
 }  // namespace param
