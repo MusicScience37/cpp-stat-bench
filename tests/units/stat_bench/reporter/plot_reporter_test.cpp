@@ -22,6 +22,7 @@
 #include <filesystem>
 
 #include <catch2/catch_test_macros.hpp>
+#include <fmt/format.h>
 
 #include "remove_directory.h"
 #include "use_reporter_for_test.h"
