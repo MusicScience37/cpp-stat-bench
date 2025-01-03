@@ -25,7 +25,6 @@ set(SOURCE_FILES
     plots/plotly_plotter.cpp
     plots/samples_line_plot.cpp
     plots/violin_plot.cpp
-    reporter/cdf_line_plot_reporter.cpp
     reporter/compressed_msgpack_reporter.cpp
     reporter/console_reporter.cpp
     reporter/data_file_helper.cpp
@@ -33,8 +32,6 @@ set(SOURCE_FILES
     reporter/json_reporter.cpp
     reporter/msgpack_reporter.cpp
     reporter/plot_reporter.cpp
-    reporter/simple_line_plot_reporter.cpp
-    reporter/violin_plot_reporter.cpp
     runner/command_line_parser.cpp
     runner/runner.cpp
     stat/calc_stat.cpp
