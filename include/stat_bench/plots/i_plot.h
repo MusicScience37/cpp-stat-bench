@@ -47,7 +47,7 @@ public:
     /*!
      * \brief Write a plot.
      *
-     * \param[in] plotter Plotter.]
+     * \param[in] plotter Plotter.
      * \param[in] measurer_name Measurer name.
      * \param[in] group_name Group name.
      * \param[in] measurements Measurements.
