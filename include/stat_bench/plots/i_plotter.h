@@ -86,11 +86,6 @@ public:
     virtual void set_log_y() = 0;
 
     /*!
-     * \brief Set the range of the y-axis for log scale.
-     */
-    virtual void set_y_range_for_log() = 0;
-
-    /*!
      * \brief Write a figure to a file.
      *
      * \param[in] file_path File path.

@@ -137,6 +137,8 @@ public:
             max_y_ = std::max(max_y_, value);
             min_y_ = std::min(min_y_, value);
         }
+
+        is_violin_ = true;
     }
 
     //! \copydoc stat_bench::plots::IFigure::set_x_title
@@ -149,24 +151,30 @@ public:
         layout_["yaxis"]["title"] = title.str();
     }
 
-    //! \copydoc stat_bench::plots::IFigure::set_y_range_for_log
-    void set_y_range_for_log() override {
-        constexpr double margin_in_log = 0.17;
-        const double lower_bound_in_log = std::log10(min_y_) - margin_in_log;
-        const double upper_bound_in_log = std::log10(max_y_) + margin_in_log;
-        layout_["yaxis"]["range"] =
-            std::vector<double>{lower_bound_in_log, upper_bound_in_log};
-        layout_["yaxis"]["constrain"] = "range";
-    }
-
     //! \copydoc stat_bench::plots::IFigure::set_log_x
     void set_log_x() override { layout_["xaxis"]["type"] = "log"; }
 
     //! \copydoc stat_bench::plots::IFigure::set_log_y
-    void set_log_y() override { layout_["yaxis"]["type"] = "log"; }
+    void set_log_y() override {
+        layout_["yaxis"]["type"] = "log";
+        is_log_y_ = true;
+    }
 
     //! \copydoc stat_bench::plots::IFigure::write_to_file
     void write_to_file(const std::string& file_path) override {
+        if (is_violin_ && is_log_y_) {
+            // For this case, spacial treatment is needed to prevent wrong
+            // automatic range in plotly library.
+            constexpr double margin_in_log = 0.17;
+            const double lower_bound_in_log =
+                std::log10(min_y_) - margin_in_log;
+            const double upper_bound_in_log =
+                std::log10(max_y_) + margin_in_log;
+            layout_["yaxis"]["range"] =
+                std::vector<double>{lower_bound_in_log, upper_bound_in_log};
+            layout_["yaxis"]["constrain"] = "range";
+        }
+
         nlohmann::json input;
         input["title"] = title_;
         input["dataset"]["data"] = data_;
@@ -205,6 +213,12 @@ private:
 
     //! Minimum value of y-axis.
     double min_y_{std::numeric_limits<double>::infinity()};
+
+    //! Whether this plot is a violin plot.
+    bool is_violin_{false};
+
+    //! Whether y-axis is in log scale.
+    bool is_log_y_{false};
 };
 
 /*!

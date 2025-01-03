@@ -126,7 +126,6 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
         figure->set_x_title(Utf8String("X"));
         figure->set_y_title(Utf8String("Y"));
         figure->set_log_y();
-        figure->set_y_range_for_log();
 
         const auto file_path =
             std::string("./PlotlyPlotter/LogViolinPlot.html");

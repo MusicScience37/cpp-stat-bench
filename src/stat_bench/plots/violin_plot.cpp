@@ -57,7 +57,6 @@ void ViolinPlot::write(IPlotter* plotter,
 
     figure->set_y_title(util::Utf8String("Time [sec]"));
     figure->set_log_y();
-    figure->set_y_range_for_log();
 
     figure->write_to_file(file_path);
 }
