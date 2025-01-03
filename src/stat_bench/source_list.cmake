@@ -20,16 +20,19 @@ set(SOURCE_FILES
     param/parameter_dict.cpp
     param/parameter_generator.cpp
     param/parameter_name.cpp
-    reporter/cdf_line_plot_reporter.cpp
+    plots/cdf_line_plot.cpp
+    plots/jinja_renderer.cpp
+    plots/plot_utils.cpp
+    plots/plotly_plotter.cpp
+    plots/samples_line_plot.cpp
+    plots/violin_plot.cpp
     reporter/compressed_msgpack_reporter.cpp
     reporter/console_reporter.cpp
     reporter/data_file_helper.cpp
     reporter/data_file_reporter_base.cpp
-    reporter/jinja_renderer.cpp
     reporter/json_reporter.cpp
     reporter/msgpack_reporter.cpp
-    reporter/simple_line_plot_reporter.cpp
-    reporter/violin_plot_reporter.cpp
+    reporter/plot_reporter.cpp
     runner/command_line_parser.cpp
     runner/runner.cpp
     stat/calc_stat.cpp

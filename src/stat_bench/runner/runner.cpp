@@ -34,13 +34,11 @@
 #include "stat_bench/measurer/processing_time_measurer.h"
 #include "stat_bench/param/parameter_config.h"
 #include "stat_bench/param/parameter_generator.h"
-#include "stat_bench/reporter/cdf_line_plot_reporter.h"
 #include "stat_bench/reporter/compressed_msgpack_reporter.h"
 #include "stat_bench/reporter/console_reporter.h"
 #include "stat_bench/reporter/json_reporter.h"
 #include "stat_bench/reporter/msgpack_reporter.h"
-#include "stat_bench/reporter/simple_line_plot_reporter.h"
-#include "stat_bench/reporter/violin_plot_reporter.h"
+#include "stat_bench/reporter/plot_reporter.h"
 
 namespace stat_bench {
 namespace runner {
@@ -58,12 +56,8 @@ Runner::Runner(
     reporters_.push_back(std::make_shared<reporter::ConsoleReporter>());
 
     if (!config.plot_prefix.empty()) {
-        reporters_.push_back(std::make_shared<reporter::SimpleLinePlotReporter>(
-            config.plot_prefix));
-        reporters_.push_back(std::make_shared<reporter::CdfLinePlotReporter>(
-            config.plot_prefix));
         reporters_.push_back(
-            std::make_shared<reporter::ViolinPlotReporter>(config.plot_prefix));
+            std::make_shared<reporter::PlotReporter>(config.plot_prefix));
     }
 
     if (!config.json_file_path.empty()) {

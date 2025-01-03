@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 MusicScience37 (Kenta Kabashima)
+ * Copyright 2025 MusicScience37 (Kenta Kabashima)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,38 +15,32 @@
  */
 /*!
  * \file
- * \brief Test of CdfLinePlotReporter class.
+ * \brief Test of PlotReporter class.
  */
-#include "stat_bench/reporter/cdf_line_plot_reporter.h"
+#include "stat_bench/reporter/plot_reporter.h"
 
-#include <memory>
+#include <filesystem>
 
-#include <ApprovalTests.hpp>
 #include <catch2/catch_test_macros.hpp>
 #include <fmt/format.h>
 
-#include "read_file.h"
 #include "remove_directory.h"
-#include "stat_bench/clock/duration.h"
-#include "stat_bench/clock/system_clock.h"
 #include "use_reporter_for_test.h"
 
-TEST_CASE("stat_bench::reporter::CdfLinePlotReporter") {
-    using stat_bench::clock::Duration;
-    using stat_bench::clock::SystemClock;
-    using stat_bench::measurer::Measurement;
-
+TEST_CASE("stat_bench::reporter::PlotReporter") {
     SECTION("write") {
-        const auto prefix = std::string("./CdfLinePlotReporterTest");
+        const auto prefix = std::string("./PlotReporter");
         remove_directory(prefix);
 
         const auto reporter =
-            std::make_shared<stat_bench::reporter::CdfLinePlotReporter>(prefix);
+            std::make_shared<stat_bench::reporter::PlotReporter>(prefix);
         REQUIRE_NOTHROW(stat_bench_test::use_reporter_for_test(reporter.get()));
 
-        ApprovalTests::Approvals::verify(
-            stat_bench_test::read_file(
-                fmt::format("{}/Group1/Measurement1_cdf.html", prefix)),
-            ApprovalTests::Options().fileOptions().withFileExtension(".html"));
+        CHECK(std::filesystem::exists(
+            fmt::format("{}/Group1/Measurement1_samples.html", prefix)));
+        CHECK(std::filesystem::exists(
+            fmt::format("{}/Group1/Measurement1_cdf.html", prefix)));
+        CHECK(std::filesystem::exists(
+            fmt::format("{}/Group1/Measurement1_violin.html", prefix)));
     }
 }

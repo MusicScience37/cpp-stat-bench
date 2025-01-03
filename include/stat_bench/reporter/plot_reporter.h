@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 MusicScience37 (Kenta Kabashima)
+ * Copyright 2025 MusicScience37 (Kenta Kabashima)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,31 +15,34 @@
  */
 /*!
  * \file
- * \brief Definition of SimpleLinePlotReporter class.
+ * \brief Definition of PlotReporter class.
  */
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
 #include "stat_bench/measurer/measurement.h"
+#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/plots/i_plot.h"
+#include "stat_bench/plots/i_plotter.h"
 #include "stat_bench/reporter/i_reporter.h"
-#include "stat_bench/reporter/jinja_renderer.h"
 
 namespace stat_bench {
 namespace reporter {
 
 /*!
- * \brief Class to generates line plots of results.
+ * \brief Class to generate plots of measurement results.
  */
-class SimpleLinePlotReporter final : public IReporter {
+class PlotReporter final : public IReporter {
 public:
     /*!
      * \brief Constructor.
      *
      * \param[in] prefix File prefix.
      */
-    explicit SimpleLinePlotReporter(std::string prefix);
+    explicit PlotReporter(std::string prefix);
 
     //! \copydoc stat_bench::reporter::IReporter::experiment_starts
     void experiment_starts(const clock::SystemTimePoint& time_stamp) override;
@@ -79,13 +82,16 @@ private:
     std::string prefix_;
 
     //! Measurer name.
-    std::string measurer_name_{};
+    measurer::MeasurerName measurer_name_;
 
     //! Measurements.
     std::vector<measurer::Measurement> measurements_{};
 
-    //! Renderer of Jinja templates.
-    JinjaRenderer renderer_{};
+    //! Plotter.
+    std::shared_ptr<plots::IPlotter> plotter_;
+
+    //! Plots.
+    std::vector<std::shared_ptr<plots::IPlot>> plots_{};
 };
 
 }  // namespace reporter

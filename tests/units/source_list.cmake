@@ -23,15 +23,18 @@ set(SOURCE_FILES
     stat_bench/param/parameter_generator_test.cpp
     stat_bench/param/parameter_value_test.cpp
     stat_bench/param/parameter_value_vector_test.cpp
-    stat_bench/reporter/cdf_line_plot_reporter_test.cpp
+    stat_bench/plots/cdf_line_plot_test.cpp
+    stat_bench/plots/jinja_renderer_test.cpp
+    stat_bench/plots/plot_utils_test.cpp
+    stat_bench/plots/plotly_plotter_test.cpp
+    stat_bench/plots/samples_line_plot_test.cpp
+    stat_bench/plots/violin_plot_test.cpp
     stat_bench/reporter/compressed_msgpack_reporter_test.cpp
     stat_bench/reporter/console_reporter_test.cpp
-    stat_bench/reporter/jinja_renderer_test.cpp
     stat_bench/reporter/json_data_file_helper_test.cpp
     stat_bench/reporter/json_reporter_test.cpp
     stat_bench/reporter/msgpack_reporter_test.cpp
-    stat_bench/reporter/simple_line_plot_reporter_test.cpp
-    stat_bench/reporter/violin_plot_reporter_test.cpp
+    stat_bench/reporter/plot_reporter_test.cpp
     stat_bench/runner/command_line_parser_test.cpp
     stat_bench/runner/runner_test.cpp
     stat_bench/stat/calc_stat_test.cpp

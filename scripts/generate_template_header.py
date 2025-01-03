@@ -9,7 +9,7 @@ import click
 
 THIS_DIR = pathlib.Path(__file__).absolute().parent
 ROOT_DIR = THIS_DIR.parent
-TEMPLATE_DIR = ROOT_DIR / "src" / "stat_bench" / "reporter" / "template"
+TEMPLATE_DIR = ROOT_DIR / "src" / "stat_bench" / "plots" / "template"
 
 TEMPLATE_SUFFIX = ".jinja"
 
@@ -52,7 +52,7 @@ def generate_header_contents(template_path: pathlib.Path) -> None:
 #pragma once
 
 namespace stat_bench {{
-namespace reporter {{
+namespace plots {{
 
 /*!
  * @brief Contents of file
@@ -60,7 +60,7 @@ namespace reporter {{
  */
 static constexpr const char* {var_name} = R"({html_contents})";
 
-}}  // namespace reporter
+}}  // namespace plots
 }}  // namespace stat_bench
 """
 
