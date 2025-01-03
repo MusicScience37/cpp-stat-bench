@@ -17,6 +17,8 @@
  * \file
  * \brief Definition of PlotlyPlotter class.
  */
+#include "stat_bench/plots/plotly_plotter.h"
+
 #include <fstream>
 #include <vector>
 
