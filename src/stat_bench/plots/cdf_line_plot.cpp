@@ -19,6 +19,7 @@
  */
 #include "stat_bench/plots/cdf_line_plot.h"
 
+#include "stat_bench/plots/plot_utils.h"
 #include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
@@ -52,9 +53,8 @@ void CdfLinePlot::write(IPlotter* plotter,
         }
 
         figure->add_line(x, y,
-            util::Utf8String(
-                fmt::format("{} ({})", measurement.case_info().case_name(),
-                    measurement.cond().params())));
+            generate_plot_name(measurement.case_info().case_name(),
+                measurement.cond().params()));
     }
 
     figure->set_x_title(util::Utf8String("Time [sec]"));

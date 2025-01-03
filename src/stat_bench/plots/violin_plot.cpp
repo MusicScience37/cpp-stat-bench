@@ -19,6 +19,8 @@
  */
 #include "stat_bench/plots/violin_plot.h"
 
+#include "stat_bench/plots/plot_utils.h"
+
 namespace stat_bench {
 namespace plots {
 
@@ -40,9 +42,8 @@ void ViolinPlot::write(IPlotter* plotter,
         const auto& y = measurement.durations_stat().unsorted_samples();
 
         figure->add_violin(y,
-            util::Utf8String(
-                fmt::format("{} ({})", measurement.case_info().case_name(),
-                    measurement.cond().params())));
+            generate_plot_name(measurement.case_info().case_name(),
+                measurement.cond().params()));
     }
 
     figure->set_y_title(util::Utf8String("Time [sec]"));

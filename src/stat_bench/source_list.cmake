@@ -22,6 +22,7 @@ set(SOURCE_FILES
     param/parameter_name.cpp
     plots/cdf_line_plot.cpp
     plots/jinja_renderer.cpp
+    plots/plot_utils.cpp
     plots/plotly_plotter.cpp
     plots/samples_line_plot.cpp
     plots/violin_plot.cpp

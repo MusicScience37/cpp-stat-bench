@@ -19,6 +19,7 @@
  */
 #include "stat_bench/plots/samples_line_plot.h"
 
+#include "stat_bench/plots/plot_utils.h"
 #include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
@@ -42,9 +43,8 @@ void SamplesLinePlot::write(IPlotter* plotter,
         const auto& y = measurement.durations_stat().unsorted_samples();
 
         figure->add_line_with_sequential_number(y,
-            util::Utf8String(
-                fmt::format("{} ({})", measurement.case_info().case_name(),
-                    measurement.cond().params())));
+            generate_plot_name(measurement.case_info().case_name(),
+                measurement.cond().params()));
     }
 
     figure->set_x_title(util::Utf8String("Sample Index"));
