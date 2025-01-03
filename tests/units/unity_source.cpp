@@ -40,6 +40,7 @@
 #include "stat_bench/stat/custom_stat_output_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/util/check_glob_pattern_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/util/escape_for_html_test.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "stat_bench/util/ordered_map_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/util/prepare_directory_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/util/sync_barrier_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/util/utf8_string_test.cpp"  // NOLINT(bugprone-suspicious-include)
