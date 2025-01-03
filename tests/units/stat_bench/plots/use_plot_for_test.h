@@ -19,8 +19,12 @@
  */
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "../reporter/create_test_measurement.h"
 #include "stat_bench/benchmark_group_name.h"
+#include "stat_bench/clock/duration.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/measurer/measurer_name.h"
 #include "stat_bench/plots/i_plot.h"

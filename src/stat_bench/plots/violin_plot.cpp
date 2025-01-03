@@ -19,7 +19,16 @@
  */
 #include "stat_bench/plots/violin_plot.h"
 
+#include <memory>
+#include <vector>
+
+#include "stat_bench/benchmark_condition.h"
+#include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/measurer/measurement.h"
+#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/plots/i_plotter.h"
 #include "stat_bench/plots/plot_utils.h"
+#include "stat_bench/stat/statistics.h"
 
 namespace stat_bench {
 namespace plots {

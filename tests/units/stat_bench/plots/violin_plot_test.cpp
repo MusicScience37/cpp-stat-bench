@@ -19,6 +19,8 @@
  */
 #include "stat_bench/plots/violin_plot.h"
 
+#include <memory>
+
 #include <ApprovalTests.hpp>
 #include <catch2/catch_test_macros.hpp>
 

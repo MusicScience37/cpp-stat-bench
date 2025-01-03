@@ -25,6 +25,9 @@
 #include <ApprovalTests.hpp>
 // clang-format on
 
+#include <string>
+#include <vector>
+
 #include <catch2/catch_test_macros.hpp>
 
 #include "../reporter/read_file.h"

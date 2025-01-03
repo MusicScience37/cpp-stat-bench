@@ -20,6 +20,7 @@
 #pragma once
 
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "stat_bench/util/utf8_string.h"

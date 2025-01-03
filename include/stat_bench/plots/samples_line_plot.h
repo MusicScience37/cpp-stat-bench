@@ -19,6 +19,8 @@
  */
 #pragma once
 
+#include <string>
+
 #include "stat_bench/plots/i_plot.h"
 #include "stat_bench/util/utf8_string.h"
 

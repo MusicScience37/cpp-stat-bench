@@ -19,6 +19,11 @@
  */
 #include "stat_bench/plots/plot_utils.h"
 
+#include <functional>
+#include <string>
+#include <unordered_map>
+#include <utility>
+
 #include <catch2/catch_test_macros.hpp>
 
 #include "stat_bench/benchmark_case_name.h"

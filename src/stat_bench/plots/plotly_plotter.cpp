@@ -19,7 +19,12 @@
  */
 #include "stat_bench/plots/plotly_plotter.h"
 
+#include <algorithm>
+#include <cmath>
+#include <cstddef>
 #include <fstream>
+#include <limits>
+#include <string>
 #include <vector>
 
 #include <nlohmann/json.hpp>
@@ -27,6 +32,7 @@
 #include "stat_bench/plots/i_plotter.h"
 #include "stat_bench/plots/jinja_renderer.h"
 #include "stat_bench/util/prepare_directory.h"
+#include "stat_bench/util/utf8_string.h"
 #include "template/plotly_plot.h"
 
 namespace stat_bench {
