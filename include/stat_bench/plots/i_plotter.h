@@ -43,6 +43,15 @@ public:
         const std::vector<double>& y, const util::Utf8String& name) = 0;
 
     /*!
+     * \brief Add a violin plot to the figure.
+     *
+     * \param[in] y Y values.
+     * \param[in] name Name of the violin plot.
+     */
+    virtual void add_violin(
+        const std::vector<double>& y, const util::Utf8String& name) = 0;
+
+    /*!
      * \brief Set the title of the x-axis.
      *
      * \param[in] title Title.
@@ -65,6 +74,11 @@ public:
      * \brief Set the y-axis to be log scale.
      */
     virtual void set_log_y() = 0;
+
+    /*!
+     * \brief Set the range of the y-axis for log scale.
+     */
+    virtual void set_y_range_for_log() = 0;
 
     /*!
      * \brief Write a figure to a file.

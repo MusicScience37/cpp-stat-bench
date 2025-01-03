@@ -88,6 +88,24 @@ public:
         }
     }
 
+    //! \copydoc stat_bench::plots::IFigure::add_violin
+    void add_violin(
+        const std::vector<double>& y, const util::Utf8String& name) override {
+        nlohmann::json trace;
+        trace["y"] = y;
+        trace["type"] = "violin";
+        trace["name"] = name.str();
+        trace["box"]["visible"] = true;
+        trace["meanline"]["visible"] = true;
+        trace["points"] = "outliers";
+        data_.push_back(trace);
+
+        for (const auto& value : y) {
+            max_y_ = std::max(max_y_, value);
+            min_y_ = std::min(min_y_, value);
+        }
+    }
+
     //! \copydoc stat_bench::plots::IFigure::set_x_title
     void set_x_title(const util::Utf8String& title) override {
         layout_["xaxis"]["title"] = title.str();
@@ -96,6 +114,17 @@ public:
     //! \copydoc stat_bench::plots::IFigure::set_y_title
     void set_y_title(const util::Utf8String& title) override {
         layout_["yaxis"]["title"] = title.str();
+    }
+
+    //! \copydoc stat_bench::plots::IFigure::set_y_range_for_log
+    void set_y_range_for_log() override {
+        constexpr double min_value_limit = 1e-9;
+        constexpr double margin_coeff = 1.5;
+        const double lower_bound =
+            std::max(min_y_, min_value_limit) / margin_coeff;
+        const double upper_bound = max_y_ * margin_coeff;
+        layout_["yaxis"]["range"] = std::vector<double>{
+            std::log10(lower_bound), std::log10(upper_bound)};
     }
 
     //! \copydoc stat_bench::plots::IFigure::set_log_x
