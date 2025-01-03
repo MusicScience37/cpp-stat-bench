@@ -19,6 +19,8 @@
  */
 #include "stat_bench/param/parameter_value.h"
 
+#include <functional>
+
 #include <catch2/catch_test_macros.hpp>
 
 #include "stat_bench/util/utf8_string.h"
@@ -78,6 +80,67 @@ TEST_CASE("stat_bench::param::ParameterValue") {
 
         value.clear();
         REQUIRE(value.to_string().str() == "null");
+    }
+
+    SECTION("convert to double") {
+        stat_bench::param::ParameterValue value;
+        REQUIRE_THROWS((void)value.to_double());
+
+        const int val1 = 5;
+        value.emplace<int>(val1);
+        REQUIRE(value.to_double() == 5.0);  // NOLINT(*-magic-numbers)
+
+        const char* val2 = "Test";
+        value.emplace<std::string>(val2);
+        REQUIRE_THROWS((void)value.to_double());
+
+        value.clear();
+        REQUIRE_THROWS((void)value.to_double());
+    }
+
+    SECTION("calculate hash value") {
+        // Since the hash can differ between platforms,
+        // here we only check if the function finishes correctly.
+        stat_bench::param::ParameterValue value;
+        std::hash<stat_bench::param::ParameterValue> hash;
+        REQUIRE_NOTHROW(hash(value));
+
+        const int val1 = 5;
+        value.emplace<int>(val1);
+        REQUIRE_NOTHROW(hash(value));
+
+        const char* val2 = "Test";
+        value.emplace<std::string>(val2);
+        REQUIRE_NOTHROW(hash(value));
+
+        value.clear();
+        REQUIRE_NOTHROW(hash(value));
+    }
+
+    SECTION("check equality") {
+        stat_bench::param::ParameterValue value1;
+        stat_bench::param::ParameterValue value2;
+        REQUIRE(value1 == value2);
+
+        const int val1 = 5;
+        value1.emplace<int>(val1);
+        REQUIRE(value1 != value2);
+
+        value2.emplace<int>(val1);
+        REQUIRE(value1 == value2);
+
+        const char* val2 = "Test";
+        value1.emplace<std::string>(val2);
+        REQUIRE(value1 != value2);
+
+        value2.emplace<std::string>(val2);
+        REQUIRE(value1 == value2);
+
+        value1.clear();
+        REQUIRE(value1 != value2);
+
+        value2.clear();
+        REQUIRE(value1 == value2);
     }
 
     SECTION("copy") {

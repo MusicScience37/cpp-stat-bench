@@ -19,8 +19,10 @@
  */
 #pragma once
 
+#include <functional>
 #include <memory>
 #include <string>
+#include <typeindex>
 #include <typeinfo>
 #include <utility>
 
@@ -31,6 +33,77 @@
 
 namespace stat_bench {
 namespace param {
+
+/*!
+ * \brief Class of traits of parameter values.
+ *
+ * \tparam T Type of value.
+ */
+template <typename T>
+struct ParameterValueTraits {
+    /*!
+     * \brief Get the type.
+     *
+     * \return Type info.
+     */
+    [[nodiscard]] static auto get_type() -> const std::type_info& {
+        return typeid(T);
+    }
+
+    /*!
+     * \brief Format to string.
+     *
+     * \param[in] data Data.
+     * \return Formatted string.
+     */
+    [[nodiscard]] static auto to_string(const std::shared_ptr<void>& data)
+        -> util::Utf8String {
+        return util::Utf8String(
+            fmt::format("{}", *static_cast<const T*>(data.get())));
+    }
+
+    /*!
+     * \brief Convert to double.
+     *
+     * \param[in] data Data.
+     * \return Value as double.
+     */
+    [[nodiscard]] static auto to_double(const std::shared_ptr<void>& data)
+        -> double {
+        if constexpr (std::is_convertible_v<T, double>) {
+            return static_cast<double>(*static_cast<const T*>(data.get()));
+        } else {
+            throw StatBenchException(
+                fmt::format("Cannot convert {} to double.", typeid(T).name()));
+        }
+    }
+
+    /*!
+     * \brief Calculate hash value.
+     *
+     * \param[in] data Data.
+     * \return Hash value.
+     */
+    [[nodiscard]] static auto calculate_hash(const std::shared_ptr<void>& data)
+        -> std::size_t {
+        return std::hash<std::type_index>{}(std::type_index(typeid(T))) ^
+            std::hash<T>{}(*static_cast<const T*>(data.get()));
+    }
+
+    /*!
+     * \brief Check whether two values are equal.
+     *
+     * \param[in] data1 Data.
+     * \param[in] data2 Data.
+     * \retval true Two values are equal.
+     * \retval false Two values are not equal.
+     */
+    [[nodiscard]] static auto equal(const std::shared_ptr<void>& data1,
+        const std::shared_ptr<void>& data2) -> bool {
+        return *static_cast<const T*>(data1.get()) ==
+            *static_cast<const T*>(data2.get());
+    }
+};
 
 /*!
  * \brief Class of values of parameters.
@@ -53,8 +126,11 @@ public:
     template <typename T, typename... Args>
     auto emplace(Args&&... args) -> ParameterValue& {
         data_ = std::make_shared<T>(std::forward<Args>(args)...);
-        get_type_ = &ParameterValue::get_type<T>;
-        to_string_impl_ = &ParameterValue::to_string_impl<T>;
+        get_type_ = &ParameterValueTraits<T>::get_type;
+        to_string_ = &ParameterValueTraits<T>::to_string;
+        to_double_ = &ParameterValueTraits<T>::to_double;
+        calculate_hash_ = &ParameterValueTraits<T>::calculate_hash;
+        equal_ = &ParameterValueTraits<T>::equal;
         return *this;
     }
 
@@ -106,41 +182,81 @@ public:
         if (!data_) {
             return util::Utf8String("null");
         }
-        return to_string_impl_(data_);
+        return to_string_(data_);
+    }
+
+    /*!
+     * \brief Convert to double.
+     *
+     * \return Value as double.
+     */
+    [[nodiscard]] auto to_double() const -> double {
+        if (!data_) {
+            throw StatBenchException(
+                "Tried to convert empty ParameterValue object to double.");
+        }
+        return to_double_(data_);
+    }
+
+    /*!
+     * \brief Calculate hash value.
+     *
+     * \return Hash value.
+     */
+    [[nodiscard]] auto calculate_hash() const -> std::size_t {
+        if (!data_) {
+            return 0;
+        }
+        return calculate_hash_(data_);
+    }
+
+    /*!
+     * \brief Check whether two values are equal.
+     *
+     * \param[in] rhs Right-hand-side value.
+     * \retval true Two values are equal.
+     * \retval false Two values are not equal.
+     */
+    [[nodiscard]] auto operator==(const ParameterValue& rhs) const -> bool {
+        if (!data_ && !rhs.data_) {
+            return true;
+        }
+        if (!data_ || !rhs.data_) {
+            return false;
+        }
+        if (get_type_() != rhs.get_type_()) {
+            return false;
+        }
+        return equal_(data_, rhs.data_);
+    }
+
+    /*!
+     * \brief Check whether two values are not equal.
+     *
+     * \param[in] rhs Right-hand-side value.
+     * \retval true Two values are not equal.
+     * \retval false Two values are equal.
+     */
+    [[nodiscard]] auto operator!=(const ParameterValue& rhs) const -> bool {
+        return !(*this == rhs);
     }
 
 private:
     //! Signature of get_type function.
     using GetTypeSignature = const std::type_info&();
 
-    //! Signature of to_string_impl function.
-    using ToStringImplSignature = util::Utf8String(
-        const std::shared_ptr<void>&);
+    //! Signature of to_string function.
+    using ToStringSignature = util::Utf8String(const std::shared_ptr<void>&);
 
-    /*!
-     * \brief Get the type.
-     *
-     * \tparam T Type.
-     * \return Type info.
-     */
-    template <typename T>
-    [[nodiscard]] static auto get_type() -> const std::type_info& {
-        return typeid(T);
-    }
+    //! Signature of to_double function.
+    using ToDoubleSignature = double(const std::shared_ptr<void>&);
 
-    /*!
-     * \brief Format to string.
-     *
-     * \tparam T Type of data.
-     * \param[in] data Data.
-     * \return Formatted string.
-     */
-    template <typename T>
-    [[nodiscard]] static auto to_string_impl(const std::shared_ptr<void>& data)
-        -> util::Utf8String {
-        return util::Utf8String(
-            fmt::format("{}", *static_cast<const T*>(data.get())));
-    }
+    //! Signature of calculate_hash function.
+    using CalculateHashSignature = std::size_t(const std::shared_ptr<void>&);
+
+    //! Signature of equal function.
+    using EqualSignature = bool(
+        const std::shared_ptr<void>&, const std::shared_ptr<void>&);
 
     //! Data.
     std::shared_ptr<void> data_{};
@@ -149,8 +265,39 @@ private:
     GetTypeSignature* get_type_{nullptr};
 
     //! Function to format to string.
-    ToStringImplSignature* to_string_impl_{nullptr};
+    ToStringSignature* to_string_{nullptr};
+
+    //! Function to convert to double.
+    ToDoubleSignature* to_double_{nullptr};
+
+    //! Function to calculate hash value.
+    CalculateHashSignature* calculate_hash_{nullptr};
+
+    //! Function to check whether two values are equal.
+    EqualSignature* equal_{nullptr};
 };
 
 }  // namespace param
 }  // namespace stat_bench
+
+namespace std {
+
+/*!
+ * \brief Implementation of std::hash for stat_bench::param::ParameterValue.
+ */
+template <>
+class hash<stat_bench::param::ParameterValue> {
+public:
+    /*!
+     * \brief Hash function.
+     *
+     * \param[in] val Value.
+     * \return Hash value.
+     */
+    auto operator()(const stat_bench::param::ParameterValue& val) const
+        -> std::size_t {
+        return val.calculate_hash();
+    }
+};
+
+}  // namespace std
