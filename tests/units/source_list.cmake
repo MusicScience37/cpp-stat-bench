@@ -34,6 +34,7 @@ set(SOURCE_FILES
     stat_bench/reporter/json_data_file_helper_test.cpp
     stat_bench/reporter/json_reporter_test.cpp
     stat_bench/reporter/msgpack_reporter_test.cpp
+    stat_bench/reporter/plot_reporter_test.cpp
     stat_bench/reporter/simple_line_plot_reporter_test.cpp
     stat_bench/reporter/violin_plot_reporter_test.cpp
     stat_bench/runner/command_line_parser_test.cpp

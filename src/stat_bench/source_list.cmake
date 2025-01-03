@@ -32,6 +32,7 @@ set(SOURCE_FILES
     reporter/data_file_reporter_base.cpp
     reporter/json_reporter.cpp
     reporter/msgpack_reporter.cpp
+    reporter/plot_reporter.cpp
     reporter/simple_line_plot_reporter.cpp
     reporter/violin_plot_reporter.cpp
     runner/command_line_parser.cpp

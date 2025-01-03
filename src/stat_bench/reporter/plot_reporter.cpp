@@ -1,0 +1,101 @@
+/*
+ * Copyright 2025 MusicScience37 (Kenta Kabashima)
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/*!
+ * \file
+ * \brief Implementation of PlotReporter class.
+ */
+#include "stat_bench/reporter/plot_reporter.h"
+
+#include <memory>
+
+#include <fmt/format.h>
+
+#include "stat_bench/benchmark_group_name.h"
+#include "stat_bench/plots/cdf_line_plot.h"
+#include "stat_bench/plots/plotly_plotter.h"
+#include "stat_bench/plots/samples_line_plot.h"
+#include "stat_bench/plots/violin_plot.h"
+
+namespace stat_bench {
+namespace reporter {
+
+PlotReporter::PlotReporter(std::string prefix)
+    : prefix_(std::move(prefix)),
+      measurer_name_(""),
+      plotter_(plots::create_plotly_plotter()) {
+    plots_.push_back(std::make_shared<plots::SamplesLinePlot>());
+    plots_.push_back(std::make_shared<plots::CdfLinePlot>());
+    plots_.push_back(std::make_shared<plots::ViolinPlot>());
+}
+
+void PlotReporter::experiment_starts(
+    const clock::SystemTimePoint& /*time_stamp*/) {
+    // no operation
+}
+
+void PlotReporter::experiment_finished(
+    const clock::SystemTimePoint& /*time_stamp*/) {
+    // no operation
+}
+
+void PlotReporter::measurer_starts(const measurer::MeasurerName& name) {
+    measurer_name_ = name;
+}
+
+void PlotReporter::measurer_finished(const measurer::MeasurerName& /*name*/) {
+    // no operation
+}
+
+void PlotReporter::group_starts(const BenchmarkGroupName& /*name*/) {
+    // no operation
+}
+
+void PlotReporter::group_finished(const BenchmarkGroupName& name) {
+    std::string measurer_name_without_space = measurer_name_.str().str();
+    std::size_t pos = 0;
+    while ((pos = measurer_name_without_space.find(' ', pos)) !=
+        std::string::npos) {
+        measurer_name_without_space.erase(pos, 1);
+    }
+
+    for (const auto& plot : plots_) {
+        const std::string file_path = fmt::format("{}/{}/{}_{}.html", prefix_,
+            name, measurer_name_, plot->name_for_file());
+        plot->write(
+            plotter_.get(), measurer_name_, name, measurements_, file_path);
+    }
+}
+
+void PlotReporter::case_starts(const BenchmarkFullName& /*case_info*/) {
+    // no operation
+}
+
+void PlotReporter::case_finished(const BenchmarkFullName& /*case_info*/) {
+    // no operation
+}
+
+void PlotReporter::measurement_succeeded(
+    const measurer::Measurement& measurement) {
+    measurements_.push_back(measurement);
+}
+
+void PlotReporter::measurement_failed(const BenchmarkFullName& /*case_info*/,
+    const BenchmarkCondition& /*cond*/, const std::exception_ptr& /*error*/) {
+    // no operation
+}
+
+}  // namespace reporter
+}  // namespace stat_bench
