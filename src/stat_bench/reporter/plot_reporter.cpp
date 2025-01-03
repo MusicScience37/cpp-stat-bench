@@ -60,7 +60,7 @@ void PlotReporter::measurer_finished(const measurer::MeasurerName& /*name*/) {
 }
 
 void PlotReporter::group_starts(const BenchmarkGroupName& /*name*/) {
-    // no operation
+    measurements_.clear();
 }
 
 void PlotReporter::group_finished(const BenchmarkGroupName& name) {
@@ -73,7 +73,7 @@ void PlotReporter::group_finished(const BenchmarkGroupName& name) {
 
     for (const auto& plot : plots_) {
         const std::string file_path = fmt::format("{}/{}/{}_{}.html", prefix_,
-            name, measurer_name_, plot->name_for_file());
+            name, measurer_name_without_space, plot->name_for_file());
         plot->write(
             plotter_.get(), measurer_name_, name, measurements_, file_path);
     }
