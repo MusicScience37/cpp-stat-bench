@@ -143,13 +143,11 @@ public:
 
     //! \copydoc stat_bench::plots::IFigure::set_y_range_for_log
     void set_y_range_for_log() override {
-        constexpr double min_value_limit = 1e-9;
-        constexpr double margin_coeff = 1.5;
-        const double lower_bound =
-            std::max(min_y_, min_value_limit) / margin_coeff;
-        const double upper_bound = max_y_ * margin_coeff;
-        layout_["yaxis"]["range"] = std::vector<double>{
-            std::log10(lower_bound), std::log10(upper_bound)};
+        constexpr double margin_in_log = 0.17;
+        const double lower_bound_in_log = std::log10(min_y_) - margin_in_log;
+        const double upper_bound_in_log = std::log10(max_y_) + margin_in_log;
+        layout_["yaxis"]["range"] =
+            std::vector<double>{lower_bound_in_log, upper_bound_in_log};
         layout_["yaxis"]["constrain"] = "range";
     }
 

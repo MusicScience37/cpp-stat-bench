@@ -44,7 +44,7 @@ inline void use_plot_for_test(stat_bench::plots::IPlot* plot,
                     Duration(2.0), Duration(3.0), Duration(20.0)}}),
         create_test_measurement(group_name, "Case2", measurer_name,
             std::vector<std::vector<Duration>>{std::vector<Duration>{
-                Duration(3.0e+2), Duration(4.0e+2), Duration(5.0e+2)}})};
+                Duration(800.0), Duration(900.0), Duration(1000.0)}})};
 
     plot->write(plotter, MeasurerName(measurer_name),
         BenchmarkGroupName(group_name), measurements, file_path);
