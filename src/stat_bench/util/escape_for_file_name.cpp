@@ -19,6 +19,8 @@
  */
 #include "stat_bench/util/escape_for_file_name.h"
 
+#include <cstdint>
+#include <string>
 #include <string_view>
 
 namespace stat_bench {

@@ -46,7 +46,7 @@ TEST_CASE("stat_bench::util::escape_for_file_name") {
     }
 
     SECTION("escape non-ASCII characters") {
-        const auto input = Utf8String(u8"あいうえお");
+        const auto input = Utf8String("あいうえお");
         const auto expected =
             Utf8String("%E3%81%82%E3%81%84%E3%81%86%E3%81%88%E3%81%8A");
 
