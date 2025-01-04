@@ -39,6 +39,7 @@ set(SOURCE_FILES
     stat/calc_stat.cpp
     use_pointer.cpp
     util/check_glob_pattern.cpp
+    util/escape_for_file_name.cpp
     util/escape_for_html.cpp
     util/prepare_directory.cpp
     util/sync_barrier.cpp

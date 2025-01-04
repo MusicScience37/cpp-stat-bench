@@ -41,6 +41,7 @@ set(SOURCE_FILES
     stat_bench/stat/calc_stat_test.cpp
     stat_bench/stat/custom_stat_output_test.cpp
     stat_bench/util/check_glob_pattern_test.cpp
+    stat_bench/util/escape_for_file_name_test.cpp
     stat_bench/util/escape_for_html_test.cpp
     stat_bench/util/ordered_map_test.cpp
     stat_bench/util/prepare_directory_test.cpp

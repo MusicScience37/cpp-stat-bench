@@ -27,6 +27,7 @@
 #include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/plots/plot_utils.h"
+#include "stat_bench/util/escape_for_file_name.h"
 #include "stat_bench/util/ordered_map.h"
 
 namespace std {
@@ -61,8 +62,8 @@ ParameterToTimeLinePlot::ParameterToTimeLinePlot(
     param::ParameterName parameter_name, bool plot_parameter_as_log_scale)
     : parameter_name_(std::move(parameter_name)),
       plot_parameter_as_log_scale_(plot_parameter_as_log_scale),
-      // TODO percent encoding of parameter name
-      name_for_file_(fmt::format("{}", parameter_name_.str())) {}
+      name_for_file_(fmt::format(
+          "by_{}", util::escape_for_file_name(parameter_name_.str()))) {}
 
 auto ParameterToTimeLinePlot::name_for_file() const -> const util::Utf8String& {
     return name_for_file_;

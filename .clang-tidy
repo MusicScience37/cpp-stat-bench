@@ -13,6 +13,7 @@ Checks: >
     -readability-convert-member-functions-to-static,
     -readability-identifier-length,
     -readability-redundant-member-init,
+    -readability-math-missing-parentheses,
   modernize-*,
     -modernize-return-braced-init-list,
     -modernize-concat-nested-namespaces,
