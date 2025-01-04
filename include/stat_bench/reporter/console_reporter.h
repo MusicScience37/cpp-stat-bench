@@ -53,7 +53,8 @@ public:
     void measurer_finished(const measurer::MeasurerName& name) override;
 
     //! \copydoc stat_bench::reporter::IReporter::group_starts
-    void group_starts(const BenchmarkGroupName& name) override;
+    void group_starts(const BenchmarkGroupName& name,
+        const bench_impl::BenchmarkGroupConfig& config) override;
 
     //! \copydoc stat_bench::reporter::IReporter::group_finished
     void group_finished(const BenchmarkGroupName& name) override;

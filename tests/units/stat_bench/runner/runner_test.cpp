@@ -88,7 +88,8 @@ TEST_CASE("stat_bench::runner::Runner") {
             .IN_SEQUENCE(seq);
         REQUIRE_CALL(*reporter, measurer_starts(measurer_name))
             .IN_SEQUENCE(seq);
-        REQUIRE_CALL(*reporter, group_starts(group_name1)).IN_SEQUENCE(seq);
+        REQUIRE_CALL(*reporter, group_starts(group_name1, trompeloeil::_))
+            .IN_SEQUENCE(seq);
         REQUIRE_CALL(*reporter, case_starts(trompeloeil::_)).IN_SEQUENCE(seq);
 
         const std::size_t iterations = 7;
@@ -161,7 +162,8 @@ TEST_CASE("stat_bench::runner::Runner") {
             .IN_SEQUENCE(seq);
         REQUIRE_CALL(*reporter, measurer_starts(measurer_name))
             .IN_SEQUENCE(seq);
-        REQUIRE_CALL(*reporter, group_starts(group_name1)).IN_SEQUENCE(seq);
+        REQUIRE_CALL(*reporter, group_starts(group_name1, trompeloeil::_))
+            .IN_SEQUENCE(seq);
         REQUIRE_CALL(*reporter, case_starts(trompeloeil::_)).IN_SEQUENCE(seq);
 
         const std::size_t iterations = 7;

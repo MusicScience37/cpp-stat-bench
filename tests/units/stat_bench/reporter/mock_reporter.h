@@ -52,8 +52,10 @@ public:
         void(const stat_bench::measurer::MeasurerName&), override);
 
     // NOLINTNEXTLINE
-    MAKE_MOCK1(
-        group_starts, void(const stat_bench::BenchmarkGroupName&), override);
+    MAKE_MOCK2(group_starts,
+        void(const stat_bench::BenchmarkGroupName&,
+            const stat_bench::bench_impl::BenchmarkGroupConfig&),
+        override);
 
     // NOLINTNEXTLINE
     MAKE_MOCK1(

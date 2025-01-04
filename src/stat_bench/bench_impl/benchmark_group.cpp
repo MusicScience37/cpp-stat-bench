@@ -72,5 +72,13 @@ auto BenchmarkGroup::cases() const noexcept
     return cases_;
 }
 
+auto BenchmarkGroup::config() noexcept -> BenchmarkGroupConfig& {
+    return config_;
+}
+
+auto BenchmarkGroup::config() const noexcept -> const BenchmarkGroupConfig& {
+    return config_;
+}
+
 }  // namespace bench_impl
 }  // namespace stat_bench
