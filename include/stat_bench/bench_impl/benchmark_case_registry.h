@@ -24,6 +24,7 @@
 
 #include "stat_bench/bench_impl/benchmark_group.h"
 #include "stat_bench/bench_impl/i_benchmark_case.h"
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/filters/composed_filter.h"
 
 namespace stat_bench {
@@ -45,6 +46,14 @@ public:
      * \param[in] bench_case Case.
      */
     void add(std::shared_ptr<IBenchmarkCase> bench_case);
+
+    /*!
+     * \brief Add a group if not exists, and return it.
+     *
+     * \param[in] name Name of the group.
+     * \return Group.
+     */
+    auto add_or_get_group(const BenchmarkGroupName& name) -> BenchmarkGroup&;
 
     /*!
      * \brief Filter.
@@ -70,7 +79,7 @@ public:
 
 private:
     //! Groups.
-    std::vector<BenchmarkGroup> groups_{};
+    std::vector<BenchmarkGroup> groups_{};  // TODO Use OrderedMap.
 };
 
 }  // namespace bench_impl

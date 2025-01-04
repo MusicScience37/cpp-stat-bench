@@ -1,6 +1,7 @@
 set(SOURCE_FILES
     bench_impl/benchmark_case_registry.cpp
     bench_impl/benchmark_group.cpp
+    bench_impl/benchmark_group_register.cpp
     bench_impl/invocation_context_registry.cpp
     benchmark_case_name.cpp
     benchmark_full_name.cpp

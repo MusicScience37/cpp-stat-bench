@@ -1,5 +1,6 @@
 #include "bench_impl/benchmark_case_registry.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "bench_impl/benchmark_group.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "bench_impl/benchmark_group_register.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "bench_impl/invocation_context_registry.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "benchmark_case_name.cpp"        // NOLINT(bugprone-suspicious-include)
 #include "benchmark_full_name.cpp"        // NOLINT(bugprone-suspicious-include)

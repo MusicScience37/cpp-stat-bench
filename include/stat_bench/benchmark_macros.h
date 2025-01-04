@@ -22,9 +22,19 @@
 #include "stat_bench/bench_impl/benchmark_case_register.h"  // IWYU pragma: export
 #include "stat_bench/bench_impl/case_impl.h"
 #include "stat_bench/bench_impl/default_main.h"
+#include "stat_bench/bench_impl/group_impl.h"
 #include "stat_bench/bench_impl/measure_impl.h"
 #include "stat_bench/bench_impl/unique_name.h"
 #include "stat_bench/fixture_base.h"  // IWYU pragma: keep
+
+/*!
+ * \brief Macro to define and configure a group.
+ *
+ * \param[in] GROUP_NAME Group name.
+ */
+#define STAT_BENCH_GROUP(GROUP_NAME) \
+    STAT_BENCH_IMPL_GROUP_IMPL(      \
+        GROUP_NAME, STAT_BENCH_IMPL_UNIQUE_NAME(stat_bench_group_register_))
 
 /*!
  * \brief Macro to define a case.

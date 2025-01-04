@@ -65,4 +65,6 @@ STAT_BENCH_CASE_F(Fixture, "FibonacciParametrized", "Fibonacci") {
     };
 }
 
+STAT_BENCH_GROUP("FibonacciParametrized").add_parameter_to_time_plot("number");
+
 STAT_BENCH_MAIN
