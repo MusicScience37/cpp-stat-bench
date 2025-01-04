@@ -62,6 +62,7 @@ TEST_CASE("stat_bench::param::ParameterDict") {
 
         REQUIRE_THROWS((void)dict.get<std::string>(ParameterName("Invalid")));
         REQUIRE_THROWS((void)dict.get<int>(ParameterName("Param2")));
+        REQUIRE_THROWS((void)dict.get<int>(ParameterName("Invalid")));
 
         REQUIRE_THAT(fmt::format("{}", dict),
             Catch::Matchers::ContainsSubstring("Param1=5") &&
@@ -80,6 +81,7 @@ TEST_CASE("stat_bench::param::ParameterDict") {
 
         REQUIRE(dict.get_as_double(ParameterName("Param1")) == 5.0);  // NOLINT
         REQUIRE_THROWS((void)dict.get_as_double(ParameterName("Param2")));
+        REQUIRE_THROWS((void)dict.get_as_double(ParameterName("Invalid")));
     }
 
     SECTION("calculate hash value") {
