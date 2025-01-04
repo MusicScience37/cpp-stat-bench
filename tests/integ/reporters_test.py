@@ -86,6 +86,31 @@ class TestPlot:
         assert (
             plot_dir / "FibonacciParametrized" / "MeanProcessingTime_by_number.html"
         ).exists()
+        assert (plot_dir / "VectorPushBackParametrized").exists()
+        assert (
+            plot_dir / "VectorPushBackParametrized" / "ProcessingTime_samples.html"
+        ).exists()
+        assert (
+            plot_dir / "VectorPushBackParametrized" / "ProcessingTime_cdf.html"
+        ).exists()
+        assert (
+            plot_dir / "VectorPushBackParametrized" / "ProcessingTime_violin.html"
+        ).exists()
+        assert (
+            plot_dir / "VectorPushBackParametrized" / "ProcessingTime_by_size.html"
+        ).exists()
+        assert (
+            plot_dir / "VectorPushBackParametrized" / "MeanProcessingTime_samples.html"
+        ).exists()
+        assert (
+            plot_dir / "VectorPushBackParametrized" / "MeanProcessingTime_cdf.html"
+        ).exists()
+        assert (
+            plot_dir / "VectorPushBackParametrized" / "MeanProcessingTime_violin.html"
+        ).exists()
+        assert (
+            plot_dir / "VectorPushBackParametrized" / "MeanProcessingTime_by_size.html"
+        ).exists()
 
 
 class TestJson:

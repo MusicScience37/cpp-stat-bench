@@ -30,9 +30,9 @@
 #include "stat_bench/param/parameter_value_vector.h"
 #include "stat_bench/stat/custom_stat_output.h"
 
-class Fixture : public stat_bench::FixtureBase {
+class FibonacciFixture : public stat_bench::FixtureBase {
 public:
-    Fixture() {
+    FibonacciFixture() {
         // NOLINTNEXTLINE
         add_param<std::uint64_t>("number")->add(20)->add(30);
     }
@@ -57,7 +57,7 @@ protected:
 
 static constexpr auto duration = std::chrono::milliseconds(10);
 
-STAT_BENCH_CASE_F(Fixture, "FibonacciParametrized", "Fibonacci") {
+STAT_BENCH_CASE_F(FibonacciFixture, "FibonacciParametrized", "Fibonacci") {
     STAT_BENCH_MEASURE_INDEXED(
         thread_index, sample_index, /*iteration_index*/) {
         std::this_thread::sleep_for(duration);
@@ -66,5 +66,40 @@ STAT_BENCH_CASE_F(Fixture, "FibonacciParametrized", "Fibonacci") {
 }
 
 STAT_BENCH_GROUP("FibonacciParametrized").add_parameter_to_time_plot("number");
+
+class VectorPushBackFixture : public stat_bench::FixtureBase {
+public:
+    VectorPushBackFixture() {
+        // NOLINTNEXTLINE
+        add_param<std::size_t>("size")->add(100)->add(1000)->add(10000);
+        add_param<bool>("reserve")->add(false)->add(true);
+    }
+
+    void setup(stat_bench::InvocationContext& context) override {
+        size_ = context.get_param<std::size_t>("size");
+        reserve_ = context.get_param<bool>("reserve");
+    }
+
+protected:
+    std::size_t size_{0};
+    bool reserve_{false};
+};
+
+STAT_BENCH_CASE_F(
+    VectorPushBackFixture, "VectorPushBackParametrized", "VectorPushBack") {
+    STAT_BENCH_MEASURE_INDEXED(
+        thread_index, sample_index, /*iteration_index*/) {
+        std::vector<std::size_t> vec;
+        if (reserve_) {
+            vec.reserve(size_);
+        }
+        for (std::size_t i = 0; i < size_; ++i) {
+            vec.push_back(i);
+        }
+    };
+}
+
+STAT_BENCH_GROUP("VectorPushBackParametrized")
+    .add_parameter_to_time_plot_log("size");
 
 STAT_BENCH_MAIN
