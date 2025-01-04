@@ -20,10 +20,14 @@
 #include <cstddef>
 #include <deque>
 #include <list>
+#include <memory>
+#include <string>
 #include <vector>
 
 #include "stat_bench/benchmark_macros.h"
 #include "stat_bench/fixture_base.h"
+#include "stat_bench/invocation_context.h"
+#include "stat_bench/param/parameter_value_vector.h"
 
 class Fixture : public stat_bench::FixtureBase {
 public:

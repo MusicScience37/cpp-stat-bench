@@ -21,6 +21,7 @@
 
 // IWYU pragma: no_include <string>
 
+#include <cstddef>
 #include <functional>
 #include <unordered_map>
 

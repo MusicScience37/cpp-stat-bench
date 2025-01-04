@@ -20,6 +20,7 @@
 #pragma once
 
 #include "stat_bench/bench_impl/benchmark_group_register.h"  // IWYU pragma: keep
+#include "stat_bench/benchmark_group_name.h"  // IWYU pragma: keep
 
 /*!
  * \brief Macro to define and configure a group.

@@ -19,9 +19,11 @@
  */
 #pragma once
 
+#include <cstddef>
 #include <functional>
 #include <memory>
 #include <string>
+#include <type_traits>
 #include <typeindex>
 #include <typeinfo>
 #include <utility>

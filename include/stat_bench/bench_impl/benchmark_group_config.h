@@ -20,6 +20,7 @@
 #pragma once
 
 #include <memory>
+#include <utility>
 #include <vector>
 
 #include "stat_bench/plots/i_plot.h"

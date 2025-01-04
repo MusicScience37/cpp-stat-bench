@@ -19,16 +19,29 @@
  */
 #include "stat_bench/plots/parameter_to_time_line_plot.h"
 
+#include <cstddef>
+#include <functional>
 #include <memory>
+#include <unordered_map>
+#include <utility>
+#include <vector>
 
 #include <ApprovalTests.hpp>
 #include <catch2/catch_test_macros.hpp>
 
 #include "../reporter/read_file.h"
+#include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/benchmark_group_name.h"
+#include "stat_bench/clock/duration.h"
+#include "stat_bench/custom_output_name.h"
+#include "stat_bench/measurer/measurement.h"
+#include "stat_bench/measurer/measurer_name.h"
 #include "stat_bench/param/num_threads_parameter_name.h"
+#include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/param/parameter_name.h"
+#include "stat_bench/param/parameter_value.h"
 #include "stat_bench/plots/plotly_plotter.h"
 
 TEST_CASE("stat_bench::plots::ParameterToTimeLinePlot") {

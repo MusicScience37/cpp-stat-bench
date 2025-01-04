@@ -22,8 +22,11 @@
 #include <cstdlib>
 #include <exception>
 #include <iostream>
+#include <memory>
+#include <string>
 
 #include "stat_bench/bench_impl/benchmark_case_registry.h"
+#include "stat_bench/bench_impl/benchmark_group_config.h"
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/plots/parameter_to_time_line_plot.h"

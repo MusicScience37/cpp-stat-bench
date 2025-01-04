@@ -22,6 +22,7 @@
 #include <exception>
 
 #include "../../trompeloeil.h"
+#include "stat_bench/bench_impl/benchmark_group_config.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/benchmark_group_name.h"

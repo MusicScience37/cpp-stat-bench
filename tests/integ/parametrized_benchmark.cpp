@@ -23,6 +23,7 @@
 #include <memory>
 #include <string>
 #include <thread>
+#include <vector>
 
 #include "stat_bench/benchmark_macros.h"
 #include "stat_bench/fixture_base.h"

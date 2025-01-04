@@ -25,6 +25,7 @@
 
 #include <fmt/format.h>
 
+#include "stat_bench/bench_impl/benchmark_group_config.h"
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/plots/cdf_line_plot.h"
 #include "stat_bench/plots/plotly_plotter.h"

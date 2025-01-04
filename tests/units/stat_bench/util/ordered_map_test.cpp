@@ -19,6 +19,8 @@
  */
 #include "stat_bench/util/ordered_map.h"
 
+#include <string>
+
 #include <catch2/catch_test_macros.hpp>
 
 TEST_CASE("stat_bench::util::OrderedMap") {

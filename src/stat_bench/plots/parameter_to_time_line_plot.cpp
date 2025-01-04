@@ -19,14 +19,23 @@
  */
 #include "stat_bench/plots/parameter_to_time_line_plot.h"
 
+#include <cstddef>
 #include <functional>
+#include <memory>
 #include <utility>
+#include <vector>
 
 #include <fmt/format.h>
 
 #include "stat_bench/benchmark_case_name.h"
+#include "stat_bench/benchmark_condition.h"
+#include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/measurer/measurement.h"
+#include "stat_bench/measurer/measurer_name.h"
 #include "stat_bench/param/parameter_dict.h"
+#include "stat_bench/plots/i_plotter.h"
 #include "stat_bench/plots/plot_utils.h"
+#include "stat_bench/stat/statistics.h"
 #include "stat_bench/util/escape_for_file_name.h"
 #include "stat_bench/util/ordered_map.h"
 
