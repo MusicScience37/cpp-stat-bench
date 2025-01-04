@@ -32,6 +32,7 @@ TEST_CASE("stat_bench::util::OrderedMap") {
 
         CHECK(map[2] == "two");
         CHECK(map[1] == "one");
+        CHECK(map[3] == "");
     }
 
     SECTION("get values using at function") {
@@ -42,6 +43,7 @@ TEST_CASE("stat_bench::util::OrderedMap") {
 
         CHECK(map.at(2) == "two");
         CHECK(map.at(1) == "one");
+        CHECK_THROWS((void)map.at(3));
     }
 
     SECTION("iterate over pairs") {
