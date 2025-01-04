@@ -39,13 +39,13 @@ public:
      * \param[in] data Pointer to the string.
      * \param[in] size Size of the string.
      */
-    constexpr StringView(const char* data, std::size_t size)
+    constexpr StringView(const char* data, std::size_t size) noexcept
         : data_(data), size_(size) {}
 
     /*!
      * \brief Constructor of an empty string.
      */
-    constexpr StringView() : StringView("", 0) {}
+    constexpr StringView() noexcept : StringView("", 0) {}
 
     /*!
      * \brief Constructor of implicit conversion from std::string objects.
@@ -53,7 +53,7 @@ public:
      * \param[in] str String.
      */
     StringView(  // NOLINT(google-explicit-constructor, hicpp-explicit-conversions)
-        const std::string& str)
+        const std::string& str) noexcept
         : StringView(str.data(), str.size()) {}
 
     /*!
@@ -62,7 +62,7 @@ public:
      * \param[in] str String.
      */
     StringView(  // NOLINT(google-explicit-constructor, hicpp-explicit-conversions)
-        const char* str)
+        const char* str) noexcept
         : StringView(str, std::strlen(str)) {}
 
     /*!

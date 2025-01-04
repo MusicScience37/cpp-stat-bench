@@ -107,7 +107,8 @@ auto format_duration(double val) -> std::string {
 #define CONSOLE_TABLE_FORMAT "{:<58}  {:>10} {:>7}  {:>9} {:>9} {:>9} "
 #define CONSOLE_TABLE_FORMAT_ERROR "{:<58}  {}"
 
-void ConsoleReporter::group_starts(const BenchmarkGroupName& name) {
+void ConsoleReporter::group_starts(const BenchmarkGroupName& name,
+    const bench_impl::BenchmarkGroupConfig& /*config*/) {
     fmt::print(file_, FMT_STRING(">> {}\n"), name);
     fmt::print(file_, FMT_STRING(CONSOLE_TABLE_FORMAT "{}\n"), "", "", "",
         "Time [us]", "", "", "");

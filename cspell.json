@@ -79,6 +79,7 @@
     "libstdc",
     "maxdepth",
     "MAXSIZE",
+    "mayfail",
     "meanline",
     "mkdir",
     "msgpack",

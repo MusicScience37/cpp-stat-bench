@@ -57,7 +57,8 @@ public:
     void measurer_finished(const measurer::MeasurerName& name) override;
 
     //! \copydoc stat_bench::reporter::IReporter::group_starts
-    void group_starts(const BenchmarkGroupName& name) override;
+    void group_starts(const BenchmarkGroupName& name,
+        const bench_impl::BenchmarkGroupConfig& config) override;
 
     //! \copydoc stat_bench::reporter::IReporter::group_finished
     void group_finished(const BenchmarkGroupName& name) override;
@@ -90,8 +91,11 @@ private:
     //! Plotter.
     std::shared_ptr<plots::IPlotter> plotter_;
 
-    //! Plots.
-    std::vector<std::shared_ptr<plots::IPlot>> plots_{};
+    //! Builtin plots.
+    std::vector<std::shared_ptr<plots::IPlot>> builtin_plots_{};
+
+    //! Plots in groups.
+    std::vector<std::shared_ptr<plots::IPlot>> group_plots_{};
 };
 
 }  // namespace reporter

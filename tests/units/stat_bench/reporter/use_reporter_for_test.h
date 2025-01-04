@@ -25,6 +25,7 @@
 #include <vector>
 
 #include "create_test_measurement.h"
+#include "stat_bench/bench_impl/benchmark_group_config.h"
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/clock/system_clock.h"
@@ -41,6 +42,7 @@ namespace stat_bench_test {
 
 inline void use_reporter_for_test(stat_bench::reporter::IReporter* reporter) {
     using stat_bench::BenchmarkGroupName;
+    using stat_bench::bench_impl::BenchmarkGroupConfig;
     using stat_bench::clock::Duration;
     using stat_bench::clock::SystemClock;
     using stat_bench::measurer::Measurement;
@@ -50,7 +52,8 @@ inline void use_reporter_for_test(stat_bench::reporter::IReporter* reporter) {
     const std::string measurer_name = "Measurement1";
     reporter->measurer_starts(MeasurerName(measurer_name));
     const std::string group1_name = "Group1";
-    reporter->group_starts(BenchmarkGroupName(group1_name));
+    reporter->group_starts(
+        BenchmarkGroupName(group1_name), BenchmarkGroupConfig());
 
     const auto measurement1 = stat_bench_test::create_test_measurement(
         group1_name, "Case1", measurer_name,

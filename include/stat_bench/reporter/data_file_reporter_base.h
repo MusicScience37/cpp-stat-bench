@@ -61,7 +61,8 @@ public:
     void measurer_finished(const measurer::MeasurerName& name) final;
 
     //! \copydoc stat_bench::reporter::IReporter::group_starts
-    void group_starts(const BenchmarkGroupName& name) final;
+    void group_starts(const BenchmarkGroupName& name,
+        const bench_impl::BenchmarkGroupConfig& config) final;
 
     //! \copydoc stat_bench::reporter::IReporter::group_finished
     void group_finished(const BenchmarkGroupName& name) final;

@@ -20,11 +20,31 @@
 #pragma once
 
 #include "stat_bench/bench_impl/benchmark_case_register.h"  // IWYU pragma: export
+#include "stat_bench/bench_impl/benchmark_group_register.h"  // IWYU pragma: export
 #include "stat_bench/bench_impl/case_impl.h"
 #include "stat_bench/bench_impl/default_main.h"
+#include "stat_bench/bench_impl/group_impl.h"
 #include "stat_bench/bench_impl/measure_impl.h"
 #include "stat_bench/bench_impl/unique_name.h"
 #include "stat_bench/fixture_base.h"  // IWYU pragma: keep
+
+/*!
+ * \brief Macro to define and configure a group.
+ *
+ * \param[in] GROUP_NAME Group name.
+ *
+ * This macro returns stat_bench::bench_impl::BenchmarkGroupRegister object.
+ * You can use this macro to configure a group like following:
+ *
+ * \code {.cpp}
+ * STAT_BENCH_GROUP("group_name")
+ *     .add_parameter_to_time_plot("parameter_name")
+ *     .add_parameter_to_time_plot_log("another_parameter_name");
+ * \endcode
+ */
+#define STAT_BENCH_GROUP(GROUP_NAME) \
+    STAT_BENCH_IMPL_GROUP_IMPL(      \
+        GROUP_NAME, STAT_BENCH_IMPL_UNIQUE_NAME(stat_bench_group_register_))
 
 /*!
  * \brief Macro to define a case.

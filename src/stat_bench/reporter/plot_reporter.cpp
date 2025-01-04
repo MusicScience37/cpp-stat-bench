@@ -25,6 +25,7 @@
 
 #include <fmt/format.h>
 
+#include "stat_bench/bench_impl/benchmark_group_config.h"
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/plots/cdf_line_plot.h"
 #include "stat_bench/plots/plotly_plotter.h"
@@ -39,9 +40,9 @@ PlotReporter::PlotReporter(std::string prefix)
     : prefix_(std::move(prefix)),
       measurer_name_(""),
       plotter_(plots::create_plotly_plotter()) {
-    plots_.push_back(std::make_shared<plots::SamplesLinePlot>());
-    plots_.push_back(std::make_shared<plots::CdfLinePlot>());
-    plots_.push_back(std::make_shared<plots::ViolinPlot>());
+    builtin_plots_.push_back(std::make_shared<plots::SamplesLinePlot>());
+    builtin_plots_.push_back(std::make_shared<plots::CdfLinePlot>());
+    builtin_plots_.push_back(std::make_shared<plots::ViolinPlot>());
 }
 
 void PlotReporter::experiment_starts(
@@ -62,8 +63,10 @@ void PlotReporter::measurer_finished(const measurer::MeasurerName& /*name*/) {
     // no operation
 }
 
-void PlotReporter::group_starts(const BenchmarkGroupName& /*name*/) {
+void PlotReporter::group_starts(const BenchmarkGroupName& /*name*/,
+    const bench_impl::BenchmarkGroupConfig& config) {
     measurements_.clear();
+    group_plots_ = config.plots();
 }
 
 void PlotReporter::group_finished(const BenchmarkGroupName& name) {
@@ -74,11 +77,18 @@ void PlotReporter::group_finished(const BenchmarkGroupName& name) {
         measurer_name_without_space.erase(pos, 1);
     }
 
-    for (const auto& plot : plots_) {
+    const auto process_plot = [this, &name, &measurer_name_without_space](
+                                  const std::shared_ptr<plots::IPlot>& plot) {
         const std::string file_path = fmt::format("{}/{}/{}_{}.html", prefix_,
             name, measurer_name_without_space, plot->name_for_file());
         plot->write(
             plotter_.get(), measurer_name_, name, measurements_, file_path);
+    };
+    for (const auto& plot : builtin_plots_) {
+        process_plot(plot);
+    }
+    for (const auto& plot : group_plots_) {
+        process_plot(plot);
     }
 }
 

@@ -20,8 +20,9 @@
 #pragma once
 
 // IWYU pragma: no_include <string>
-// IWYU pragma: no_include <functional>
 
+#include <cstddef>
+#include <functional>
 #include <unordered_map>
 
 #include <fmt/base.h>
@@ -83,6 +84,15 @@ public:
     }
 
     /*!
+     * \brief Get a parameter value as double.
+     *
+     * \param[in] param_name Parameter name.
+     * \return Value.
+     */
+    [[nodiscard]] auto get_as_double(const ParameterName& param_name) const
+        -> double;
+
+    /*!
      * \brief Format to string.
      *
      * \param[in] out Output iterator to write the formatted string.
@@ -98,6 +108,40 @@ public:
      */
     [[nodiscard]] auto as_string_dict() const
         -> std::unordered_map<util::Utf8String, util::Utf8String>;
+
+    /*!
+     * \brief Create a new dictionary without a parameter.
+     *
+     * \param[in] param_name Parameter name to remove.
+     * \return New dictionary.
+     */
+    [[nodiscard]] auto clone_without(const ParameterName& param_name) const
+        -> ParameterDict;
+
+    /*!
+     * \brief Calculate hash value.
+     *
+     * \return Hash value.
+     */
+    [[nodiscard]] auto calculate_hash() const -> std::size_t;
+
+    /*!
+     * \brief Check whether this is equal to another dictionary.
+     *
+     * \param[in] rhs Right-hand-side dictionary.
+     * \retval true This is equal to the right-hand-side dictionary.
+     * \retval false This is not equal to the right-hand-side dictionary.
+     */
+    [[nodiscard]] auto operator==(const ParameterDict& rhs) const -> bool;
+
+    /*!
+     * \brief Check whether this is not equal to another dictionary.
+     *
+     * \param[in] rhs Right-hand-side dictionary.
+     * \retval true This is not equal to the right-hand-side dictionary.
+     * \retval false This is equal to the right-hand-side dictionary.
+     */
+    [[nodiscard]] auto operator!=(const ParameterDict& rhs) const -> bool;
 
 private:
     //! Data.
@@ -128,3 +172,25 @@ struct formatter<stat_bench::param::ParameterDict>
 };
 
 }  // namespace fmt
+
+namespace std {
+
+/*!
+ * \brief Implementation of std::hash for stat_bench::param::ParameterDict.
+ */
+template <>
+class hash<stat_bench::param::ParameterDict> {
+public:
+    /*!
+     * \brief Operator.
+     *
+     * \param[in] dict Dictionary.
+     * \return Hash value.
+     */
+    auto operator()(const stat_bench::param::ParameterDict& dict) const
+        -> std::size_t {
+        return dict.calculate_hash();
+    }
+};
+
+}  // namespace std

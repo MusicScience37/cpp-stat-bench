@@ -57,7 +57,8 @@ void DataFileReporterBase::measurer_finished(
     // no operation
 }
 
-void DataFileReporterBase::group_starts(const BenchmarkGroupName& /*name*/) {
+void DataFileReporterBase::group_starts(const BenchmarkGroupName& /*name*/,
+    const bench_impl::BenchmarkGroupConfig& /*config*/) {
     // no operation
 }
 

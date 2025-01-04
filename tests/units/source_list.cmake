@@ -25,6 +25,7 @@ set(SOURCE_FILES
     stat_bench/param/parameter_value_vector_test.cpp
     stat_bench/plots/cdf_line_plot_test.cpp
     stat_bench/plots/jinja_renderer_test.cpp
+    stat_bench/plots/parameter_to_time_line_plot_test.cpp
     stat_bench/plots/plot_utils_test.cpp
     stat_bench/plots/plotly_plotter_test.cpp
     stat_bench/plots/samples_line_plot_test.cpp
@@ -40,7 +41,9 @@ set(SOURCE_FILES
     stat_bench/stat/calc_stat_test.cpp
     stat_bench/stat/custom_stat_output_test.cpp
     stat_bench/util/check_glob_pattern_test.cpp
+    stat_bench/util/escape_for_file_name_test.cpp
     stat_bench/util/escape_for_html_test.cpp
+    stat_bench/util/ordered_map_test.cpp
     stat_bench/util/prepare_directory_test.cpp
     stat_bench/util/sync_barrier_test.cpp
     stat_bench/util/utf8_string_test.cpp

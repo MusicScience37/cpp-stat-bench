@@ -43,6 +43,17 @@ void BenchmarkCaseRegistry::add(std::shared_ptr<IBenchmarkCase> bench_case) {
     group.add(std::move(bench_case));
 }
 
+auto BenchmarkCaseRegistry::add_or_get_group(const BenchmarkGroupName& name)
+    -> BenchmarkGroup& {
+    auto iter = std::find_if(groups_.begin(), groups_.end(),
+        [&name](const BenchmarkGroup& group) { return group.name() == name; });
+    if (iter != groups_.end() && iter->name() == name) {
+        return *iter;
+    }
+
+    return groups_.emplace_back(name);
+}
+
 void BenchmarkCaseRegistry::filter_by(const filters::ComposedFilter& filter) {
     for (auto iter = groups_.begin(); iter < groups_.end();) {
         auto& group = *iter;

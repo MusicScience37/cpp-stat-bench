@@ -15,7 +15,7 @@
  */
 /*!
  * \file
- * \brief Benchmark of push_back in STL containers.
+ * \brief Benchmark of for loops.
  */
 #include <cstddef>
 #include <string>

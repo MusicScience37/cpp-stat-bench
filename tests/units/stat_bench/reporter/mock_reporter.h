@@ -22,6 +22,7 @@
 #include <exception>
 
 #include "../../trompeloeil.h"
+#include "stat_bench/bench_impl/benchmark_group_config.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/benchmark_group_name.h"
@@ -52,8 +53,10 @@ public:
         void(const stat_bench::measurer::MeasurerName&), override);
 
     // NOLINTNEXTLINE
-    MAKE_MOCK1(
-        group_starts, void(const stat_bench::BenchmarkGroupName&), override);
+    MAKE_MOCK2(group_starts,
+        void(const stat_bench::BenchmarkGroupName&,
+            const stat_bench::bench_impl::BenchmarkGroupConfig&),
+        override);
 
     // NOLINTNEXTLINE
     MAKE_MOCK1(

@@ -1,6 +1,7 @@
 set(SOURCE_FILES
     bench_impl/benchmark_case_registry.cpp
     bench_impl/benchmark_group.cpp
+    bench_impl/benchmark_group_register.cpp
     bench_impl/invocation_context_registry.cpp
     benchmark_case_name.cpp
     benchmark_full_name.cpp
@@ -22,6 +23,7 @@ set(SOURCE_FILES
     param/parameter_name.cpp
     plots/cdf_line_plot.cpp
     plots/jinja_renderer.cpp
+    plots/parameter_to_time_line_plot.cpp
     plots/plot_utils.cpp
     plots/plotly_plotter.cpp
     plots/samples_line_plot.cpp
@@ -38,6 +40,7 @@ set(SOURCE_FILES
     stat/calc_stat.cpp
     use_pointer.cpp
     util/check_glob_pattern.cpp
+    util/escape_for_file_name.cpp
     util/escape_for_html.cpp
     util/prepare_directory.cpp
     util/sync_barrier.cpp

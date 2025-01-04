@@ -22,6 +22,7 @@
 #include <memory>
 #include <vector>
 
+#include "stat_bench/bench_impl/benchmark_group_config.h"
 #include "stat_bench/bench_impl/i_benchmark_case.h"
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/filters/composed_filter.h"
@@ -70,12 +71,29 @@ public:
     [[nodiscard]] auto cases() const noexcept
         -> const std::vector<std::shared_ptr<IBenchmarkCase>>&;
 
+    /*!
+     * \brief Get the configuration.
+     *
+     * \return Configuration.
+     */
+    [[nodiscard]] auto config() noexcept -> BenchmarkGroupConfig&;
+
+    /*!
+     * \brief Get the configuration.
+     *
+     * \return Configuration.
+     */
+    [[nodiscard]] auto config() const noexcept -> const BenchmarkGroupConfig&;
+
 private:
     //! Name.
     BenchmarkGroupName name_;
 
     //! Cases.
     std::vector<std::shared_ptr<IBenchmarkCase>> cases_{};
+
+    //! Configuration.
+    BenchmarkGroupConfig config_{};
 };
 
 }  // namespace bench_impl

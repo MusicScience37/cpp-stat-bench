@@ -21,6 +21,7 @@
 
 #include <exception>
 
+#include "stat_bench/bench_impl/benchmark_group_config.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/benchmark_group_name.h"
@@ -70,8 +71,10 @@ public:
      * \brief Start a group of benchmarks.
      *
      * \param[in] name Group name.
+     * \param[in] config Configuration.
      */
-    virtual void group_starts(const BenchmarkGroupName& name) = 0;
+    virtual void group_starts(const BenchmarkGroupName& name,
+        const bench_impl::BenchmarkGroupConfig& config) = 0;
 
     /*!
      * \brief Finished a group of benchmarks.

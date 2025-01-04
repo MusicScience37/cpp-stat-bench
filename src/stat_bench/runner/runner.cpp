@@ -110,7 +110,7 @@ void Runner::run() const {
 
         for (const auto& group : registry_.benchmarks()) {
             for (const auto& reporter : reporters_) {
-                reporter->group_starts(group.name());
+                reporter->group_starts(group.name(), group.config());
             }
 
             for (const auto& bench_case : group.cases()) {

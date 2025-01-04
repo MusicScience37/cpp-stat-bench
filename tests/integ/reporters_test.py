@@ -52,6 +52,66 @@ class TestPlot:
         assert (plot_dir / "Group2" / "MeanProcessingTime_cdf.html").exists()
         assert (plot_dir / "Group2" / "MeanProcessingTime_violin.html").exists()
 
+    def test_plot_with_parameter(
+        self, bench_executor: BenchExecutor, parametrized_benchmark: pathlib.Path
+    ) -> None:
+        """Test to plot with parameter."""
+        result = bench_executor.execute(
+            parametrized_benchmark, "--plot", bench_executor.test_name, verify=False
+        )
+
+        assert result.returncode == 0
+        plot_dir = bench_executor.temp_test_dir / bench_executor.test_name
+        assert plot_dir.exists()
+        assert (plot_dir / "FibonacciParametrized").exists()
+        assert (
+            plot_dir / "FibonacciParametrized" / "ProcessingTime_samples.html"
+        ).exists()
+        assert (plot_dir / "FibonacciParametrized" / "ProcessingTime_cdf.html").exists()
+        assert (
+            plot_dir / "FibonacciParametrized" / "ProcessingTime_violin.html"
+        ).exists()
+        assert (
+            plot_dir / "FibonacciParametrized" / "ProcessingTime_by_number.html"
+        ).exists()
+        assert (
+            plot_dir / "FibonacciParametrized" / "MeanProcessingTime_samples.html"
+        ).exists()
+        assert (
+            plot_dir / "FibonacciParametrized" / "MeanProcessingTime_cdf.html"
+        ).exists()
+        assert (
+            plot_dir / "FibonacciParametrized" / "MeanProcessingTime_violin.html"
+        ).exists()
+        assert (
+            plot_dir / "FibonacciParametrized" / "MeanProcessingTime_by_number.html"
+        ).exists()
+        assert (plot_dir / "VectorPushBackParametrized").exists()
+        assert (
+            plot_dir / "VectorPushBackParametrized" / "ProcessingTime_samples.html"
+        ).exists()
+        assert (
+            plot_dir / "VectorPushBackParametrized" / "ProcessingTime_cdf.html"
+        ).exists()
+        assert (
+            plot_dir / "VectorPushBackParametrized" / "ProcessingTime_violin.html"
+        ).exists()
+        assert (
+            plot_dir / "VectorPushBackParametrized" / "ProcessingTime_by_size.html"
+        ).exists()
+        assert (
+            plot_dir / "VectorPushBackParametrized" / "MeanProcessingTime_samples.html"
+        ).exists()
+        assert (
+            plot_dir / "VectorPushBackParametrized" / "MeanProcessingTime_cdf.html"
+        ).exists()
+        assert (
+            plot_dir / "VectorPushBackParametrized" / "MeanProcessingTime_violin.html"
+        ).exists()
+        assert (
+            plot_dir / "VectorPushBackParametrized" / "MeanProcessingTime_by_size.html"
+        ).exists()
+
 
 class TestJson:
     """Test of JSON output."""
