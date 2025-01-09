@@ -20,6 +20,7 @@
 #pragma once
 
 #include <cstddef>
+#include <cstdint>
 #include <functional>
 #include <memory>
 #include <string>
@@ -27,6 +28,7 @@
 #include <typeindex>
 #include <typeinfo>
 #include <utility>
+#include <variant>
 
 #include <fmt/format.h>
 
@@ -35,6 +37,12 @@
 
 namespace stat_bench {
 namespace param {
+
+/*!
+ * \brief Type of variant of parameter values.
+ */
+using ParameterValueVariant =
+    std::variant<bool, std::intmax_t, std::uintmax_t, long double, std::string>;
 
 /*!
  * \brief Class of traits of parameter values.
@@ -77,6 +85,31 @@ struct ParameterValueTraits {
         } else {
             throw StatBenchException(
                 fmt::format("Cannot convert {} to double.", typeid(T).name()));
+        }
+    }
+
+    /*!
+     * \brief Convert to a variant object.
+     *
+     * \param[in] data Data.
+     * \return Value as a variant object.
+     */
+    [[nodiscard]] static auto to_variant(const std::shared_ptr<void>& data)
+        -> ParameterValueVariant {
+        if constexpr (std::is_same_v<T, bool>) {
+            return *static_cast<const bool*>(data.get());
+        } else if constexpr (std::is_integral_v<T> && std::is_signed_v<T>) {
+            return static_cast<std::intmax_t>(
+                *static_cast<const T*>(data.get()));
+        } else if constexpr (std::is_integral_v<T> && std::is_unsigned_v<T>) {
+            return static_cast<std::uintmax_t>(
+                *static_cast<const T*>(data.get()));
+        } else if constexpr (std::is_floating_point_v<T>) {
+            return static_cast<long double>(*static_cast<const T*>(data.get()));
+        } else if constexpr (std::is_same_v<T, std::string>) {
+            return *static_cast<const std::string*>(data.get());
+        } else {
+            return fmt::format("{}", *static_cast<const T*>(data.get()));
         }
     }
 
@@ -131,6 +164,7 @@ public:
         get_type_ = &ParameterValueTraits<T>::get_type;
         to_string_ = &ParameterValueTraits<T>::to_string;
         to_double_ = &ParameterValueTraits<T>::to_double;
+        to_variant_ = &ParameterValueTraits<T>::to_variant;
         calculate_hash_ = &ParameterValueTraits<T>::calculate_hash;
         equal_ = &ParameterValueTraits<T>::equal;
         return *this;
@@ -195,9 +229,23 @@ public:
     [[nodiscard]] auto to_double() const -> double {
         if (!data_) {
             throw StatBenchException(
-                "Tried to convert empty ParameterValue object to double.");
+                "Tried to convert an empty ParameterValue object to double.");
         }
         return to_double_(data_);
+    }
+
+    /*!
+     * \brief Convert to a variant object.
+     *
+     * \return Value as a variant object.
+     */
+    [[nodiscard]] auto to_variant() const -> ParameterValueVariant {
+        if (!data_) {
+            throw StatBenchException(
+                "Tried to convert an empty ParameterValue object to a variant "
+                "object.");
+        }
+        return to_variant_(data_);
     }
 
     /*!
@@ -253,6 +301,10 @@ private:
     //! Signature of to_double function.
     using ToDoubleSignature = double(const std::shared_ptr<void>&);
 
+    //! Signature of to_variant function.
+    using ToVariantSignature = ParameterValueVariant(
+        const std::shared_ptr<void>&);
+
     //! Signature of calculate_hash function.
     using CalculateHashSignature = std::size_t(const std::shared_ptr<void>&);
 
@@ -271,6 +323,9 @@ private:
 
     //! Function to convert to double.
     ToDoubleSignature* to_double_{nullptr};
+
+    //! Function to convert to a variant object.
+    ToVariantSignature* to_variant_{nullptr};
 
     //! Function to calculate hash value.
     CalculateHashSignature* calculate_hash_{nullptr};
