@@ -93,6 +93,15 @@ public:
         -> double;
 
     /*!
+     * \brief Get a parameter value as a variant object.
+     *
+     * \param[in] param_name Parameter name.
+     * \return Value.
+     */
+    [[nodiscard]] auto get_as_variant(const ParameterName& param_name) const
+        -> ParameterValueVariant;
+
+    /*!
      * \brief Format to string.
      *
      * \param[in] out Output iterator to write the formatted string.

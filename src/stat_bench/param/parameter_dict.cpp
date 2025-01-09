@@ -49,6 +49,16 @@ auto ParameterDict::get_as_double(const ParameterName& param_name) const
     return iter->second.to_double();
 }
 
+auto ParameterDict::get_as_variant(const ParameterName& param_name) const
+    -> ParameterValueVariant {
+    const auto iter = data_.find(param_name);
+    if (iter == data_.end()) {
+        throw StatBenchException(
+            fmt::format("Parameter {} not found.", param_name));
+    }
+    return iter->second.to_variant();
+}
+
 auto ParameterDict::format_to(fmt::format_context::iterator out) const
     -> fmt::format_context::iterator {
     // Sort keys.

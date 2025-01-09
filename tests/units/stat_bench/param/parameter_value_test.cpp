@@ -19,9 +19,11 @@
  */
 #include "stat_bench/param/parameter_value.h"
 
+#include <cstdint>
 #include <functional>
 
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_floating_point.hpp>
 
 #include "stat_bench/util/utf8_string.h"
 
@@ -96,6 +98,35 @@ TEST_CASE("stat_bench::param::ParameterValue") {
 
         value.clear();
         REQUIRE_THROWS((void)value.to_double());
+    }
+
+    SECTION("convert to variant") {
+        stat_bench::param::ParameterValue value;
+        REQUIRE_THROWS((void)value.to_variant());
+
+        const bool val1 = true;
+        value.emplace<bool>(val1);
+        REQUIRE(std::get<bool>(value.to_variant()) == val1);
+
+        const int val2 = 5;
+        value.emplace<int>(val2);
+        REQUIRE(std::get<std::intmax_t>(value.to_variant()) == val2);
+
+        const std::uintmax_t val3 = 10;
+        value.emplace<std::uintmax_t>(val3);
+        REQUIRE(std::get<std::uintmax_t>(value.to_variant()) == val3);
+
+        const double val4 = 3.14;
+        value.emplace<double>(val4);
+        REQUIRE_THAT(std::get<long double>(value.to_variant()),
+            Catch::Matchers::WithinRel(val4));
+
+        const char* val5 = "Test";
+        value.emplace<std::string>(val5);
+        REQUIRE(std::get<std::string>(value.to_variant()) == val5);
+
+        value.clear();
+        REQUIRE_THROWS((void)value.to_variant());
     }
 
     SECTION("calculate hash value") {

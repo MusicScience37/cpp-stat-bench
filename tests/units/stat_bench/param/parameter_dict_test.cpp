@@ -84,6 +84,22 @@ TEST_CASE("stat_bench::param::ParameterDict") {
         REQUIRE_THROWS((void)dict.get_as_double(ParameterName("Invalid")));
     }
 
+    SECTION("get parameter as variant") {
+        std::unordered_map<ParameterName, ParameterValue> data;
+        data.emplace(ParameterName("Param1"),
+            ParameterValue().emplace<int>(5));  // NOLINT
+        data.emplace(ParameterName("Param2"),
+            ParameterValue().emplace<std::string>("Value2"));
+
+        const auto dict = stat_bench::param::ParameterDict(std::move(data));
+
+        REQUIRE(std::get<std::intmax_t>(dict.get_as_variant(
+                    ParameterName("Param1"))) == 5);  // NOLINT
+        REQUIRE(std::get<std::string>(
+                    dict.get_as_variant(ParameterName("Param2"))) == "Value2");
+        REQUIRE_THROWS((void)dict.get_as_variant(ParameterName("Invalid")));
+    }
+
     SECTION("calculate hash value") {
         std::unordered_map<ParameterName, ParameterValue> data;
         data.emplace(ParameterName("Param1"),

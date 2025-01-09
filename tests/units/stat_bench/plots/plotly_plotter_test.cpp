@@ -31,10 +31,13 @@
 #include <catch2/catch_test_macros.hpp>
 
 #include "../reporter/read_file.h"
+#include "stat_bench/param/parameter_value.h"
 #include "stat_bench/util/utf8_string.h"
 
 TEST_CASE("stat_bench::plots::PlotlyPlotter") {
+    using stat_bench::param::ParameterValueVariant;
     using stat_bench::util::Utf8String;
+    using std::string_literals::operator""s;
 
     auto plotter = stat_bench::plots::create_plotly_plotter();
 
@@ -42,9 +45,11 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
         auto figure = plotter->create_figure(Utf8String("Simple Line Plot"));
 
         // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_line({1.0, 2.0, 3.0}, {1.1, 2.2, 3.3}, Utf8String("Line1"));
+        figure->add_line(std::vector<double>{1.0, 2.0, 3.0}, {1.1, 2.2, 3.3},
+            Utf8String("Line1"));
         // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_line({2.0, 3.0, 4.0}, {3.3, 4.4, 5.5}, Utf8String("Line2"));
+        figure->add_line(std::vector<double>{2.0, 3.0, 4.0}, {3.3, 4.4, 5.5},
+            Utf8String("Line2"));
 
         figure->set_x_title(Utf8String("X"));
         figure->set_y_title(Utf8String("Y"));
@@ -61,9 +66,11 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
         auto figure = plotter->create_figure(Utf8String("Log Line Plot"));
 
         // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_line({1.0, 2.0, 3.0}, {1.1, 2.2, 3.3}, Utf8String("Line1"));
+        figure->add_line(std::vector<double>{1.0, 2.0, 3.0}, {1.1, 2.2, 3.3},
+            Utf8String("Line1"));
         // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_line({2.0, 3.0, 4.0}, {3.3, 4.4, 5.5}, Utf8String("Line2"));
+        figure->add_line(std::vector<double>{2.0, 3.0, 4.0}, {3.3, 4.4, 5.5},
+            Utf8String("Line2"));
 
         figure->set_x_title(Utf8String("X"));
         figure->set_y_title(Utf8String("Y"));
@@ -77,18 +84,39 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
             ApprovalTests::Options().fileOptions().withFileExtension(".html"));
     }
 
+    SECTION("create a line plot using string parameters") {
+        auto figure = plotter->create_figure(Utf8String("Parameter Line Plot"));
+
+        figure->add_line(std::vector<ParameterValueVariant>{"a"s, "b"s, "c"s},
+            // NOLINTNEXTLINE(*-magic-numbers)
+            {1.1, 2.2, 3.3}, Utf8String("Line1"));
+        figure->add_line(std::vector<ParameterValueVariant>{"a"s, "b"s, "c"s},
+            // NOLINTNEXTLINE(*-magic-numbers)
+            {3.3, 4.4, 5.5}, Utf8String("Line2"));
+
+        figure->set_x_title(Utf8String("X"));
+        figure->set_y_title(Utf8String("Y"));
+
+        const auto file_path =
+            std::string("./PlotlyPlotter/StringParamLinePlot.html");
+        figure->write_to_file(file_path);
+
+        ApprovalTests::Approvals::verify(stat_bench_test::read_file(file_path),
+            ApprovalTests::Options().fileOptions().withFileExtension(".html"));
+    }
+
     SECTION("create a line plot with error") {
         auto figure =
             plotter->create_figure(Utf8String("Line Plot with Error"));
 
         // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_line_with_error({1.0, 2.0, 3.0}, {1.1, 2.2, 3.3},
+        figure->add_line_with_error(std::vector<double>{1.0, 2.0, 3.0},
             // NOLINTNEXTLINE(*-magic-numbers)
-            {0.1, 0.2, 0.3}, Utf8String("Line1"));
+            {1.1, 2.2, 3.3}, {0.1, 0.2, 0.3}, Utf8String("Line1"));
         // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_line_with_error({2.0, 3.0, 4.0}, {3.3, 4.4, 5.5},
+        figure->add_line_with_error(std::vector<double>{2.0, 3.0, 4.0},
             // NOLINTNEXTLINE(*-magic-numbers)
-            {0.3, 0.4, 0.5}, Utf8String("Line2"));
+            {3.3, 4.4, 5.5}, {0.3, 0.4, 0.5}, Utf8String("Line2"));
 
         figure->set_x_title(Utf8String("X"));
         figure->set_y_title(Utf8String("Y"));
@@ -96,6 +124,31 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
 
         const auto file_path =
             std::string("./PlotlyPlotter/LinePlotWithError.html");
+        figure->write_to_file(file_path);
+
+        ApprovalTests::Approvals::verify(stat_bench_test::read_file(file_path),
+            ApprovalTests::Options().fileOptions().withFileExtension(".html"));
+    }
+
+    SECTION("create a line plot with error and string parameters") {
+        auto figure = plotter->create_figure(
+            Utf8String("Line Plot with Error and String Parameters"));
+
+        figure->add_line_with_error(
+            std::vector<ParameterValueVariant>{"a"s, "b"s, "c"s},
+            // NOLINTNEXTLINE(*-magic-numbers)
+            {1.1, 2.2, 3.3}, {0.1, 0.2, 0.3}, Utf8String("Line1"));
+        figure->add_line_with_error(
+            std::vector<ParameterValueVariant>{"a"s, "b"s, "c"s},
+            // NOLINTNEXTLINE(*-magic-numbers)
+            {3.3, 4.4, 5.5}, {0.3, 0.4, 0.5}, Utf8String("Line2"));
+
+        figure->set_x_title(Utf8String("X"));
+        figure->set_y_title(Utf8String("Y"));
+        figure->set_log_y();
+
+        const auto file_path = std::string(
+            "./PlotlyPlotter/LinePlotWithErrorAndStringParameters.html");
         figure->write_to_file(file_path);
 
         ApprovalTests::Approvals::verify(stat_bench_test::read_file(file_path),

@@ -96,6 +96,24 @@ public:
         }
     }
 
+    //! \copydoc stat_bench::plots::IFigure::add_line
+    void add_line(const std::vector<param::ParameterValueVariant>& x,
+        const std::vector<double>& y, const util::Utf8String& name) override {
+        nlohmann::json trace;
+        auto& x_json = trace["x"];
+        x_json = nlohmann::json::array();
+        for (const auto& value : x) {
+            std::visit(
+                [&x_json](const auto& value) { x_json.push_back(value); },
+                value);
+        }
+        trace["y"] = y;
+        trace["mode"] = "lines";
+        trace["type"] = "scatter";
+        trace["name"] = name.str();
+        data_.push_back(trace);
+    }
+
     //! \copydoc stat_bench::plots::IFigure::add_line_with_error
     void add_line_with_error(const std::vector<double>& x,
         const std::vector<double>& y, const std::vector<double>& y_error,
@@ -120,6 +138,29 @@ public:
             max_y_ = std::max(max_y_, value);
             min_y_ = std::min(min_y_, value);
         }
+    }
+
+    //! \copydoc stat_bench::plots::IFigure::add_line_with_error
+    void add_line_with_error(const std::vector<param::ParameterValueVariant>& x,
+        const std::vector<double>& y, const std::vector<double>& y_error,
+        const util::Utf8String& name) override {
+        nlohmann::json trace;
+        auto& x_json = trace["x"];
+        x_json = nlohmann::json::array();
+        for (const auto& value : x) {
+            std::visit(
+                [&x_json](const auto& value) { x_json.push_back(value); },
+                value);
+        }
+        trace["y"] = y;
+        trace["error_y"] = nlohmann::json::object();
+        trace["error_y"]["type"] = "data";
+        trace["error_y"]["array"] = y_error;
+        trace["error_y"]["visible"] = true;
+        trace["mode"] = "lines";
+        trace["type"] = "scatter";
+        trace["name"] = name.str();
+        data_.push_back(trace);
     }
 
     //! \copydoc stat_bench::plots::IFigure::add_line_with_sequential_number
