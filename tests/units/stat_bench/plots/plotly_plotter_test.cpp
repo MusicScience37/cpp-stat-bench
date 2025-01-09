@@ -37,6 +37,7 @@
 TEST_CASE("stat_bench::plots::PlotlyPlotter") {
     using stat_bench::param::ParameterValueVariant;
     using stat_bench::util::Utf8String;
+    using std::string_literals::operator""s;
 
     auto plotter = stat_bench::plots::create_plotly_plotter();
 
@@ -86,10 +87,10 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
     SECTION("create a line plot using string parameters") {
         auto figure = plotter->create_figure(Utf8String("Parameter Line Plot"));
 
-        figure->add_line(std::vector<ParameterValueVariant>{"a", "b", "c"},
+        figure->add_line(std::vector<ParameterValueVariant>{"a"s, "b"s, "c"s},
             // NOLINTNEXTLINE(*-magic-numbers)
             {1.1, 2.2, 3.3}, Utf8String("Line1"));
-        figure->add_line(std::vector<ParameterValueVariant>{"a", "b", "c"},
+        figure->add_line(std::vector<ParameterValueVariant>{"a"s, "b"s, "c"s},
             // NOLINTNEXTLINE(*-magic-numbers)
             {3.3, 4.4, 5.5}, Utf8String("Line2"));
 
@@ -134,11 +135,11 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
             Utf8String("Line Plot with Error and String Parameters"));
 
         figure->add_line_with_error(
-            std::vector<ParameterValueVariant>{"a", "b", "c"},
+            std::vector<ParameterValueVariant>{"a"s, "b"s, "c"s},
             // NOLINTNEXTLINE(*-magic-numbers)
             {1.1, 2.2, 3.3}, {0.1, 0.2, 0.3}, Utf8String("Line1"));
         figure->add_line_with_error(
-            std::vector<ParameterValueVariant>{"a", "b", "c"},
+            std::vector<ParameterValueVariant>{"a"s, "b"s, "c"s},
             // NOLINTNEXTLINE(*-magic-numbers)
             {3.3, 4.4, 5.5}, {0.3, 0.4, 0.5}, Utf8String("Line2"));
 
