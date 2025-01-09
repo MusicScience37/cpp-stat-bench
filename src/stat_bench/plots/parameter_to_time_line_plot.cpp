@@ -33,6 +33,7 @@
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/measurer/measurer_name.h"
 #include "stat_bench/param/parameter_dict.h"
+#include "stat_bench/param/parameter_value.h"
 #include "stat_bench/plots/i_plotter.h"
 #include "stat_bench/plots/plot_utils.h"
 #include "stat_bench/stat/statistics.h"
@@ -86,7 +87,7 @@ void ParameterToTimeLinePlot::write(IPlotter* plotter,
     (void)group_name;
 
     struct FigureData {
-        std::vector<double> x;
+        std::vector<param::ParameterValueVariant> x;
         std::vector<double> y;
         std::vector<double> y_error;
     };
@@ -101,7 +102,7 @@ void ParameterToTimeLinePlot::write(IPlotter* plotter,
         const auto key = std::make_pair(case_name, params_without_target);
         auto& figure_data = figure_data_map[key];
 
-        figure_data.x.push_back(params.get_as_double(parameter_name_));
+        figure_data.x.push_back(params.get_as_variant(parameter_name_));
         figure_data.y.push_back(measurement.durations_stat().mean());
         figure_data.y_error.push_back(
             measurement.durations_stat().standard_error());

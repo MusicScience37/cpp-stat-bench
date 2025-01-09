@@ -23,6 +23,7 @@
 #include <string>
 #include <vector>
 
+#include "stat_bench/param/parameter_value.h"
 #include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
@@ -44,6 +45,16 @@ public:
         const std::vector<double>& y, const util::Utf8String& name) = 0;
 
     /*!
+     * \brief Add a line to the figure.
+     *
+     * \param[in] x X values.
+     * \param[in] y Y values.
+     * \param[in] name Name of the line.
+     */
+    virtual void add_line(const std::vector<param::ParameterValueVariant>& x,
+        const std::vector<double>& y, const util::Utf8String& name) = 0;
+
+    /*!
      * \brief Add a line with errors to the figure.
      *
      * \param[in] x X values.
@@ -52,6 +63,19 @@ public:
      * \param[in] name Name of the line.
      */
     virtual void add_line_with_error(const std::vector<double>& x,
+        const std::vector<double>& y, const std::vector<double>& y_error,
+        const util::Utf8String& name) = 0;
+
+    /*!
+     * \brief Add a line with errors to the figure.
+     *
+     * \param[in] x X values.
+     * \param[in] y Y values.
+     * \param[in] y_error Errors of y values.
+     * \param[in] name Name of the line.
+     */
+    virtual void add_line_with_error(
+        const std::vector<param::ParameterValueVariant>& x,
         const std::vector<double>& y, const std::vector<double>& y_error,
         const util::Utf8String& name) = 0;
 

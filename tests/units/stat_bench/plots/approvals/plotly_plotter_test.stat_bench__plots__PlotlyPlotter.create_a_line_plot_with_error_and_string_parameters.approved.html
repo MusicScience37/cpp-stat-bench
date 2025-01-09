@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Line Plot with Error and String Parameters</title>
+    <style>
+        html,
+        body,
+        .container {
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="plot" class="container"></div>
+
+    <!-- Import Plotly -->
+    <script src="https://cdn.plot.ly/plotly-2.35.0.min.js" charset="utf-8"></script>
+
+    <div id="dataset" style="display:none">
+        {&quot;config&quot;:{&quot;responsive&quot;:true,&quot;scrollZoom&quot;:true},&quot;data&quot;:[{&quot;error_y&quot;:{&quot;array&quot;:[0.1,0.2,0.3],&quot;type&quot;:&quot;data&quot;,&quot;visible&quot;:true},&quot;mode&quot;:&quot;lines&quot;,&quot;name&quot;:&quot;Line1&quot;,&quot;type&quot;:&quot;scatter&quot;,&quot;x&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;],&quot;y&quot;:[1.1,2.2,3.3]},{&quot;error_y&quot;:{&quot;array&quot;:[0.3,0.4,0.5],&quot;type&quot;:&quot;data&quot;,&quot;visible&quot;:true},&quot;mode&quot;:&quot;lines&quot;,&quot;name&quot;:&quot;Line2&quot;,&quot;type&quot;:&quot;scatter&quot;,&quot;x&quot;:[&quot;a&quot;,&quot;b&quot;,&quot;c&quot;],&quot;y&quot;:[3.3,4.4,5.5]}],&quot;layout&quot;:{&quot;layout&quot;:{&quot;showlegend&quot;:true},&quot;title&quot;:&quot;Line Plot with Error and String Parameters&quot;,&quot;xaxis&quot;:{&quot;title&quot;:&quot;X&quot;,&quot;type&quot;:&quot;-&quot;},&quot;yaxis&quot;:{&quot;title&quot;:&quot;Y&quot;,&quot;type&quot;:&quot;log&quot;}}}
+    </div>
+
+    <script type="text/javascript">
+        var dataset_str = document.querySelector('#dataset').textContent
+        var dataset = JSON.parse(dataset_str);
+
+        Plotly.newPlot("plot", dataset.data, dataset.layout, dataset.config);
+    </script>
+</body>
+
+</html>
+
