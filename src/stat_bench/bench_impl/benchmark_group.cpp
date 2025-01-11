@@ -46,7 +46,7 @@ void BenchmarkGroup::add(std::shared_ptr<IBenchmarkCase> bench_case) {
     }
 
     const auto& case_name = bench_case->info().case_name();
-    const auto [iter, inserted] = cases_.emplace(case_name, bench_case);
+    const auto [iter, inserted] = cases_.try_emplace(case_name, bench_case);
     if (!inserted) {
         throw StatBenchException(
             fmt::format("Duplicate benchmark name {}.", bench_case->info()));

@@ -122,6 +122,27 @@ public:
     }
 
     /*!
+     * \brief Insert a pair if the key does not exist.
+     *
+     * \tparam Args Types of arguments.
+     * \param[in] key Key.
+     * \param[in] args Arguments.
+     * \return A pair of the iterator and whether the insertion is successful.
+     */
+    template <typename... Args>
+    auto try_emplace(const Key& key, Args&&... args)
+        -> std::pair<iterator, bool> {
+        const auto iter = key_to_index_.find(key);
+        if (iter != key_to_index_.end()) {
+            return {pairs_.begin() + static_cast<std::ptrdiff_t>(iter->second),
+                false};
+        }
+        pairs_.emplace_back(key, MappedValue{std::forward<Args>(args)...});
+        key_to_index_[key] = pairs_.size() - 1;
+        return {pairs_.end() - 1, true};
+    }
+
+    /*!
      * \brief Erase a pair.
      *
      * \param[in] iter Iterator pointing to the pair.

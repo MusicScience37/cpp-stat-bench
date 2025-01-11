@@ -36,7 +36,7 @@ void BenchmarkCaseRegistry::add(std::shared_ptr<IBenchmarkCase> bench_case) {
 
 auto BenchmarkCaseRegistry::add_or_get_group(const BenchmarkGroupName& name)
     -> BenchmarkGroup& {
-    const auto [iter, inserted] = groups_.emplace(name, BenchmarkGroup(name));
+    const auto [iter, inserted] = groups_.try_emplace(name, name);
     return iter->second;
 }
 

@@ -40,9 +40,9 @@ TEST_CASE("stat_bench::param::ParameterDict") {
 
     SECTION("check parameter existence") {
         OrderedMap<ParameterName, ParameterValue> data;
-        data.emplace(ParameterName("Param1"),
+        data.try_emplace(ParameterName("Param1"),
             ParameterValue().emplace<int>(5));  // NOLINT
-        data.emplace(ParameterName("Param2"),
+        data.try_emplace(ParameterName("Param2"),
             ParameterValue().emplace<std::string>("Value2"));
 
         const auto dict = stat_bench::param::ParameterDict(std::move(data));
@@ -54,9 +54,9 @@ TEST_CASE("stat_bench::param::ParameterDict") {
 
     SECTION("get parameter") {
         OrderedMap<ParameterName, ParameterValue> data;
-        data.emplace(ParameterName("Param1"),
+        data.try_emplace(ParameterName("Param1"),
             ParameterValue().emplace<int>(5));  // NOLINT
-        data.emplace(ParameterName("Param2"),
+        data.try_emplace(ParameterName("Param2"),
             ParameterValue().emplace<std::string>("Value2"));
 
         const auto dict = stat_bench::param::ParameterDict(std::move(data));
@@ -76,9 +76,9 @@ TEST_CASE("stat_bench::param::ParameterDict") {
 
     SECTION("get parameter as double") {
         OrderedMap<ParameterName, ParameterValue> data;
-        data.emplace(ParameterName("Param1"),
+        data.try_emplace(ParameterName("Param1"),
             ParameterValue().emplace<int>(5));  // NOLINT
-        data.emplace(ParameterName("Param2"),
+        data.try_emplace(ParameterName("Param2"),
             ParameterValue().emplace<std::string>("Value2"));
 
         const auto dict = stat_bench::param::ParameterDict(std::move(data));
@@ -90,9 +90,9 @@ TEST_CASE("stat_bench::param::ParameterDict") {
 
     SECTION("get parameter as variant") {
         OrderedMap<ParameterName, ParameterValue> data;
-        data.emplace(ParameterName("Param1"),
+        data.try_emplace(ParameterName("Param1"),
             ParameterValue().emplace<int>(5));  // NOLINT
-        data.emplace(ParameterName("Param2"),
+        data.try_emplace(ParameterName("Param2"),
             ParameterValue().emplace<std::string>("Value2"));
 
         const auto dict = stat_bench::param::ParameterDict(std::move(data));
@@ -106,9 +106,9 @@ TEST_CASE("stat_bench::param::ParameterDict") {
 
     SECTION("calculate hash value") {
         OrderedMap<ParameterName, ParameterValue> data;
-        data.emplace(ParameterName("Param1"),
+        data.try_emplace(ParameterName("Param1"),
             ParameterValue().emplace<int>(5));  // NOLINT
-        data.emplace(ParameterName("Param2"),
+        data.try_emplace(ParameterName("Param2"),
             ParameterValue().emplace<std::string>("Value2"));
 
         const auto dict = stat_bench::param::ParameterDict(std::move(data));
@@ -119,25 +119,25 @@ TEST_CASE("stat_bench::param::ParameterDict") {
 
     SECTION("compare equality") {
         OrderedMap<ParameterName, ParameterValue> data1;
-        data1.emplace(ParameterName("Param1"),
+        data1.try_emplace(ParameterName("Param1"),
             ParameterValue().emplace<int>(5));  // NOLINT
-        data1.emplace(ParameterName("Param2"),
+        data1.try_emplace(ParameterName("Param2"),
             ParameterValue().emplace<std::string>("Value2"));
 
         const auto dict1 = stat_bench::param::ParameterDict(std::move(data1));
 
         OrderedMap<ParameterName, ParameterValue> data2;
-        data2.emplace(ParameterName("Param1"),
+        data2.try_emplace(ParameterName("Param1"),
             ParameterValue().emplace<int>(5));  // NOLINT
-        data2.emplace(ParameterName("Param2"),
+        data2.try_emplace(ParameterName("Param2"),
             ParameterValue().emplace<std::string>("Value2"));
 
         const auto dict2 = stat_bench::param::ParameterDict(std::move(data2));
 
         OrderedMap<ParameterName, ParameterValue> data3;
-        data3.emplace(ParameterName("Param1"),
+        data3.try_emplace(ParameterName("Param1"),
             ParameterValue().emplace<int>(5));  // NOLINT
-        data3.emplace(ParameterName("Param2"),
+        data3.try_emplace(ParameterName("Param2"),
             ParameterValue().emplace<std::string>("Value3"));
 
         const auto dict3 = stat_bench::param::ParameterDict(std::move(data3));
