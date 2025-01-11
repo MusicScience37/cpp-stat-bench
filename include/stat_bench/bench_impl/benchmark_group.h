@@ -20,12 +20,13 @@
 #pragma once
 
 #include <memory>
-#include <vector>
 
 #include "stat_bench/bench_impl/benchmark_group_config.h"
 #include "stat_bench/bench_impl/i_benchmark_case.h"
+#include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/filters/composed_filter.h"
+#include "stat_bench/util/ordered_map.h"
 
 namespace stat_bench {
 namespace bench_impl {
@@ -68,8 +69,8 @@ public:
      *
      * \return Cases.
      */
-    [[nodiscard]] auto cases() const noexcept
-        -> const std::vector<std::shared_ptr<IBenchmarkCase>>&;
+    [[nodiscard]] auto cases() const noexcept -> const
+        util::OrderedMap<BenchmarkCaseName, std::shared_ptr<IBenchmarkCase>>&;
 
     /*!
      * \brief Get the configuration.
@@ -90,7 +91,8 @@ private:
     BenchmarkGroupName name_;
 
     //! Cases.
-    std::vector<std::shared_ptr<IBenchmarkCase>> cases_{};
+    util::OrderedMap<BenchmarkCaseName, std::shared_ptr<IBenchmarkCase>>
+        cases_{};
 
     //! Configuration.
     BenchmarkGroupConfig config_{};

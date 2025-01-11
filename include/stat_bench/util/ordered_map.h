@@ -39,6 +39,10 @@ template <typename Key, typename MappedValue>
 class OrderedMap {
 public:
     //! Type of iterators.
+    using iterator =
+        typename std::vector<std::pair<Key, MappedValue>>::iterator;
+
+    //! Type of iterators.
     using const_iterator =
         typename std::vector<std::pair<Key, MappedValue>>::const_iterator;
 
@@ -106,12 +110,36 @@ public:
      * \return A pair of the iterator and whether the insertion is successful.
      */
     template <typename... Args>
-    auto emplace(Args&&... args) -> std::pair<const_iterator, bool> {
+    auto emplace(Args&&... args) -> std::pair<iterator, bool> {
         pairs_.emplace_back(std::forward<Args>(args)...);
         const auto [iter, success] =
             key_to_index_.emplace(pairs_.back().first, pairs_.size() - 1);
+        if (!success) {
+            pairs_.pop_back();
+        }
         return {pairs_.begin() + static_cast<std::ptrdiff_t>(iter->second),
             success};
+    }
+
+    /*!
+     * \brief Insert a pair if the key does not exist.
+     *
+     * \tparam Args Types of arguments.
+     * \param[in] key Key.
+     * \param[in] args Arguments.
+     * \return A pair of the iterator and whether the insertion is successful.
+     */
+    template <typename... Args>
+    auto try_emplace(const Key& key, Args&&... args)
+        -> std::pair<iterator, bool> {
+        const auto iter = key_to_index_.find(key);
+        if (iter != key_to_index_.end()) {
+            return {pairs_.begin() + static_cast<std::ptrdiff_t>(iter->second),
+                false};
+        }
+        pairs_.emplace_back(key, MappedValue{std::forward<Args>(args)...});
+        key_to_index_[key] = pairs_.size() - 1;
+        return {pairs_.end() - 1, true};
     }
 
     /*!
@@ -120,7 +148,7 @@ public:
      * \param[in] iter Iterator pointing to the pair.
      * \return Iterator pointing to the next pair.
      */
-    auto erase(const_iterator iter) -> const_iterator {
+    auto erase(const_iterator iter) -> iterator {
         const auto index = iter - pairs_.begin();
         key_to_index_.erase(pairs_[index].first);
         pairs_.erase(iter);
@@ -179,9 +207,23 @@ public:
      *
      * \return Iterator.
      */
+    [[nodiscard]] auto begin() -> iterator { return pairs_.begin(); }
+
+    /*!
+     * \brief Get an iterator pointing to the beginning of pairs.
+     *
+     * \return Iterator.
+     */
     [[nodiscard]] auto begin() const -> const_iterator {
         return pairs_.begin();
     }
+
+    /*!
+     * \brief Get an iterator pointing to the end of pairs.
+     *
+     * \return Iterator.
+     */
+    [[nodiscard]] auto end() -> iterator { return pairs_.end(); }
 
     /*!
      * \brief Get an iterator pointing to the end of pairs.
@@ -219,6 +261,16 @@ public:
      */
     [[nodiscard]] auto operator!=(const OrderedMap& rhs) const -> bool {
         return !(*this == rhs);
+    }
+
+    /*!
+     * \brief Get pairs.
+     *
+     * \return Pairs.
+     */
+    [[nodiscard]] auto pairs() const noexcept
+        -> const std::vector<std::pair<Key, MappedValue>>& {
+        return pairs_;
     }
 
 private:

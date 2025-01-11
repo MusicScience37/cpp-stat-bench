@@ -20,8 +20,7 @@
 #pragma once
 
 #include <cstddef>
-#include <functional>
-#include <unordered_map>
+#include <utility>
 
 #include "stat_bench/param/num_threads_parameter_name.h"
 #include "stat_bench/param/parameter_dict.h"
@@ -42,7 +41,7 @@ namespace param {
     stat_bench::util::OrderedMap<stat_bench::param::ParameterName,
         stat_bench::param::ParameterValue>
         data;
-    data.emplace(stat_bench::param::num_threads_parameter_name(),
+    data.try_emplace(stat_bench::param::num_threads_parameter_name(),
         stat_bench::param::ParameterValue().emplace<std::size_t>(1));
     return stat_bench::param::ParameterDict(std::move(data));
 }

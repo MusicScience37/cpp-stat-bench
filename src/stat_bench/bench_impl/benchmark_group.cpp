@@ -19,7 +19,6 @@
  */
 #include "stat_bench/bench_impl/benchmark_group.h"
 
-#include <algorithm>
 #include <utility>
 
 #include <fmt/format.h>
@@ -45,21 +44,18 @@ void BenchmarkGroup::add(std::shared_ptr<IBenchmarkCase> bench_case) {
                         "{}, Actual: {}).",
                 name_, bench_case->info().group_name()));
     }
-    const auto iter = std::find_if(cases_.begin(), cases_.end(),
-        [&bench_case](const std::shared_ptr<IBenchmarkCase>& elem) {
-            return elem->info().case_name() == bench_case->info().case_name();
-        });
-    if (iter != cases_.end()) {
+
+    const auto& case_name = bench_case->info().case_name();
+    const auto [iter, inserted] = cases_.try_emplace(case_name, bench_case);
+    if (!inserted) {
         throw StatBenchException(
             fmt::format("Duplicate benchmark name {}.", bench_case->info()));
     }
-
-    cases_.push_back(std::move(bench_case));
 }
 
 void BenchmarkGroup::filter_by(const filters::ComposedFilter& filter) {
     for (auto iter = cases_.begin(); iter < cases_.end();) {
-        if (filter.check((**iter).info())) {
+        if (filter.check((*iter->second).info())) {
             ++iter;
         } else {
             iter = cases_.erase(iter);
@@ -67,8 +63,8 @@ void BenchmarkGroup::filter_by(const filters::ComposedFilter& filter) {
     }
 }
 
-auto BenchmarkGroup::cases() const noexcept
-    -> const std::vector<std::shared_ptr<IBenchmarkCase>>& {
+auto BenchmarkGroup::cases() const noexcept -> const
+    util::OrderedMap<BenchmarkCaseName, std::shared_ptr<IBenchmarkCase>>& {
     return cases_;
 }
 

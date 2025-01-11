@@ -71,6 +71,22 @@ TEST_CASE("stat_bench::util::OrderedMap") {
         CHECK(map[2] == "two");
     }
 
+    SECTION("add pairs using try_emplace function") {
+        OrderedMap<int, std::string> map;
+
+        auto [iter, success] = map.try_emplace(2, "two");
+        CHECK(iter->first == 2);
+        CHECK(iter->second == "two");
+        CHECK(success);
+        CHECK(map[2] == "two");
+
+        std::tie(iter, success) = map.try_emplace(2, "one");
+        CHECK(iter->first == 2);
+        CHECK(iter->second == "two");
+        CHECK_FALSE(success);
+        CHECK(map[2] == "two");
+    }
+
     SECTION("erase pairs using erase function") {
         OrderedMap<int, std::string> map;
 

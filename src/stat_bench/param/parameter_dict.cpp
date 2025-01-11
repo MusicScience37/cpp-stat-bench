@@ -19,7 +19,6 @@
  */
 #include "stat_bench/param/parameter_dict.h"
 
-#include <set>
 #include <utility>
 
 #include <fmt/format.h>  // IWYU pragma: keep
@@ -82,7 +81,7 @@ auto ParameterDict::as_string_dict() const
     std::unordered_map<util::Utf8String, util::Utf8String> data;
     data.reserve(data_.size());
     for (const auto& pair : data_) {
-        data.emplace(pair.first.str(), pair.second.to_string());
+        data.try_emplace(pair.first.str(), pair.second.to_string());
     }
     return data;
 }
@@ -97,7 +96,7 @@ auto ParameterDict::clone_without(const ParameterName& param_name) const
     new_data.reserve(data_.size());
     for (const auto& pair : data_) {
         if (pair.first != param_name) {
-            new_data.emplace(pair.first, pair.second);
+            new_data.try_emplace(pair.first, pair.second);
         }
     }
     return ParameterDict{std::move(new_data)};

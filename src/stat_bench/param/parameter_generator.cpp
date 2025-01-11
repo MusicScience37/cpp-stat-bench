@@ -19,11 +19,9 @@
  */
 #include "stat_bench/param/parameter_generator.h"
 
-#include <functional>
-#include <unordered_map>
-
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value.h"
+#include "stat_bench/util/ordered_map.h"
 
 namespace stat_bench {
 namespace param {
@@ -55,7 +53,7 @@ auto ParameterGenerator::generate() const -> ParameterDict {
     util::OrderedMap<ParameterName, ParameterValue> data;
     data.reserve(params_.size());
     for (const auto& param : params_) {
-        data.emplace(param.name, *param.next);
+        data.try_emplace(param.name, *param.next);
     }
     return ParameterDict(data);
 }
