@@ -29,13 +29,15 @@
 
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value.h"
+#include "stat_bench/util/ordered_map.h"
 
 TEST_CASE("stat_bench::param::ParameterDict") {
     using stat_bench::param::ParameterName;
     using stat_bench::param::ParameterValue;
+    using stat_bench::util::OrderedMap;
 
     SECTION("check parameter existence") {
-        std::unordered_map<ParameterName, ParameterValue> data;
+        OrderedMap<ParameterName, ParameterValue> data;
         data.emplace(ParameterName("Param1"),
             ParameterValue().emplace<int>(5));  // NOLINT
         data.emplace(ParameterName("Param2"),
@@ -49,7 +51,7 @@ TEST_CASE("stat_bench::param::ParameterDict") {
     }
 
     SECTION("get parameter") {
-        std::unordered_map<ParameterName, ParameterValue> data;
+        OrderedMap<ParameterName, ParameterValue> data;
         data.emplace(ParameterName("Param1"),
             ParameterValue().emplace<int>(5));  // NOLINT
         data.emplace(ParameterName("Param2"),
@@ -71,7 +73,7 @@ TEST_CASE("stat_bench::param::ParameterDict") {
     }
 
     SECTION("get parameter as double") {
-        std::unordered_map<ParameterName, ParameterValue> data;
+        OrderedMap<ParameterName, ParameterValue> data;
         data.emplace(ParameterName("Param1"),
             ParameterValue().emplace<int>(5));  // NOLINT
         data.emplace(ParameterName("Param2"),
@@ -85,7 +87,7 @@ TEST_CASE("stat_bench::param::ParameterDict") {
     }
 
     SECTION("get parameter as variant") {
-        std::unordered_map<ParameterName, ParameterValue> data;
+        OrderedMap<ParameterName, ParameterValue> data;
         data.emplace(ParameterName("Param1"),
             ParameterValue().emplace<int>(5));  // NOLINT
         data.emplace(ParameterName("Param2"),
@@ -101,7 +103,7 @@ TEST_CASE("stat_bench::param::ParameterDict") {
     }
 
     SECTION("calculate hash value") {
-        std::unordered_map<ParameterName, ParameterValue> data;
+        OrderedMap<ParameterName, ParameterValue> data;
         data.emplace(ParameterName("Param1"),
             ParameterValue().emplace<int>(5));  // NOLINT
         data.emplace(ParameterName("Param2"),
@@ -114,7 +116,7 @@ TEST_CASE("stat_bench::param::ParameterDict") {
     }
 
     SECTION("compare equality") {
-        std::unordered_map<ParameterName, ParameterValue> data1;
+        OrderedMap<ParameterName, ParameterValue> data1;
         data1.emplace(ParameterName("Param1"),
             ParameterValue().emplace<int>(5));  // NOLINT
         data1.emplace(ParameterName("Param2"),
@@ -122,7 +124,7 @@ TEST_CASE("stat_bench::param::ParameterDict") {
 
         const auto dict1 = stat_bench::param::ParameterDict(std::move(data1));
 
-        std::unordered_map<ParameterName, ParameterValue> data2;
+        OrderedMap<ParameterName, ParameterValue> data2;
         data2.emplace(ParameterName("Param1"),
             ParameterValue().emplace<int>(5));  // NOLINT
         data2.emplace(ParameterName("Param2"),
@@ -130,7 +132,7 @@ TEST_CASE("stat_bench::param::ParameterDict") {
 
         const auto dict2 = stat_bench::param::ParameterDict(std::move(data2));
 
-        std::unordered_map<ParameterName, ParameterValue> data3;
+        OrderedMap<ParameterName, ParameterValue> data3;
         data3.emplace(ParameterName("Param1"),
             ParameterValue().emplace<int>(5));  // NOLINT
         data3.emplace(ParameterName("Param2"),

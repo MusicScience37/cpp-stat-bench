@@ -30,7 +30,7 @@ namespace stat_bench {
 namespace param {
 
 ParameterDict::ParameterDict(
-    std::unordered_map<ParameterName, ParameterValue> data)
+    util::OrderedMap<ParameterName, ParameterValue> data)
     : data_(std::move(data)) {}
 
 auto ParameterDict::empty() const noexcept -> bool { return data_.empty(); }
@@ -61,14 +61,8 @@ auto ParameterDict::get_as_variant(const ParameterName& param_name) const
 
 auto ParameterDict::format_to(fmt::format_context::iterator out) const
     -> fmt::format_context::iterator {
-    // Sort keys.
-    std::set<ParameterName> keys;
-    for (const auto& pair : data_) {
-        keys.insert(pair.first);
-    }
-
     bool is_first = true;
-    for (const auto& key : keys) {
+    for (const auto& [key, value] : data_) {
         if (is_first) {
             is_first = false;
         } else {
@@ -77,7 +71,7 @@ auto ParameterDict::format_to(fmt::format_context::iterator out) const
             *out = ' ';
             ++out;
         }
-        out = fmt::format_to(out, "{}={}", key, data_.at(key).to_string());
+        out = fmt::format_to(out, "{}={}", key, value.to_string());
     }
 
     return out;
@@ -99,7 +93,7 @@ auto ParameterDict::clone_without(const ParameterName& param_name) const
         throw StatBenchException(
             fmt::format("Parameter {} not found.", param_name));
     }
-    std::unordered_map<ParameterName, ParameterValue> new_data;
+    util::OrderedMap<ParameterName, ParameterValue> new_data;
     new_data.reserve(data_.size());
     for (const auto& pair : data_) {
         if (pair.first != param_name) {

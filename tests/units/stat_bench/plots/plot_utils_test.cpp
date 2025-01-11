@@ -50,8 +50,7 @@ TEST_CASE("stat_bench::plots::generate_plot_name") {
     SECTION("generate a name with one parameter") {
         const BenchmarkCaseName case_name{"case_name"};
         const ParameterDict params{
-            std::unordered_map<ParameterName, ParameterValue>{
-                {ParameterName("param1"), ParameterValue().emplace<int>(3)}}};
+            {{ParameterName("param1"), ParameterValue().emplace<int>(3)}}};
 
         const auto name = generate_plot_name(case_name, params);
 
@@ -61,8 +60,7 @@ TEST_CASE("stat_bench::plots::generate_plot_name") {
     SECTION("generate a name with two parameters") {
         const BenchmarkCaseName case_name{"case_name"};
         const ParameterDict params{
-            std::unordered_map<ParameterName, ParameterValue>{
-                {ParameterName("param1"), ParameterValue().emplace<int>(3)},
+            {{ParameterName("param1"), ParameterValue().emplace<int>(3)},
                 {ParameterName("param2"),
                     ParameterValue().emplace<std::string>("str")}}};
 

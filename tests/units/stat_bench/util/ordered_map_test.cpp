@@ -20,6 +20,7 @@
 #include "stat_bench/util/ordered_map.h"
 
 #include <string>
+#include <tuple>
 
 #include <catch2/catch_test_macros.hpp>
 
@@ -37,6 +38,51 @@ TEST_CASE("stat_bench::util::OrderedMap") {
         CHECK(map[3] == "");
     }
 
+    SECTION("check size") {
+        OrderedMap<int, std::string> map;
+
+        CHECK(map.size() == 0);
+        CHECK(map.empty());
+
+        map[2] = "two";
+
+        CHECK(map.size() == 1);
+        CHECK_FALSE(map.empty());
+
+        map[1] = "one";
+
+        CHECK(map.size() == 2);
+        CHECK_FALSE(map.empty());
+    }
+
+    SECTION("add pairs using emplace function") {
+        OrderedMap<int, std::string> map;
+
+        auto [iter, success] = map.emplace(2, "two");
+        CHECK(iter->first == 2);
+        CHECK(iter->second == "two");
+        CHECK(success);
+        CHECK(map[2] == "two");
+
+        std::tie(iter, success) = map.emplace(2, "one");
+        CHECK(iter->first == 2);
+        CHECK(iter->second == "two");
+        CHECK_FALSE(success);
+        CHECK(map[2] == "two");
+    }
+
+    SECTION("erase pairs using erase function") {
+        OrderedMap<int, std::string> map;
+
+        map[2] = "two";
+        map[1] = "one";
+
+        map.erase(map.begin());
+        CHECK(map.size() == 1);
+        CHECK(map[1] == "one");
+        CHECK_THROWS(map.at(2));
+    }
+
     SECTION("get values using at function") {
         OrderedMap<int, std::string> map;
 
@@ -46,6 +92,17 @@ TEST_CASE("stat_bench::util::OrderedMap") {
         CHECK(map.at(2) == "two");
         CHECK(map.at(1) == "one");
         CHECK_THROWS((void)map.at(3));
+    }
+
+    SECTION("find values using find function") {
+        OrderedMap<int, std::string> map;
+
+        map[2] = "two";
+        map[1] = "one";
+
+        CHECK(map.find(2)->second == "two");
+        CHECK(map.find(1)->second == "one");
+        CHECK(map.find(3) == map.end());
     }
 
     SECTION("iterate over pairs") {
@@ -61,5 +118,19 @@ TEST_CASE("stat_bench::util::OrderedMap") {
 
         CHECK(pairs ==
             std::vector<std::pair<int, std::string>>{{2, "two"}, {1, "one"}});
+    }
+
+    SECTION("compare maps") {
+        const OrderedMap<int, std::string> map1{{2, "two"}, {1, "one"}};
+        const OrderedMap<int, std::string> map2{{1, "one"}, {2, "two"}};
+        const OrderedMap<int, std::string> map3{
+            {1, "one"}, {2, "two"}, {3, "three"}};
+
+        CHECK(map1 == map2);
+        CHECK_FALSE(map1 == map3);
+        CHECK_FALSE(map2 == map3);
+        CHECK_FALSE(map1 != map2);
+        CHECK(map1 != map3);
+        CHECK(map2 != map3);
     }
 }

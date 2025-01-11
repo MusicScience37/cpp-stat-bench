@@ -52,7 +52,7 @@ auto ParameterGenerator::iterate() -> bool {
 }
 
 auto ParameterGenerator::generate() const -> ParameterDict {
-    std::unordered_map<ParameterName, ParameterValue> data;
+    util::OrderedMap<ParameterName, ParameterValue> data;
     data.reserve(params_.size());
     for (const auto& param : params_) {
         data.emplace(param.name, *param.next);
