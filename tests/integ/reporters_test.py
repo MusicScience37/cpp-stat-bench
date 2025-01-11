@@ -100,6 +100,16 @@ class TestPlot:
             plot_dir / "VectorPushBackParametrized" / "ProcessingTime_by_size.html"
         ).exists()
         assert (
+            plot_dir
+            / "VectorPushBackParametrized"
+            / "ProcessingTime_throughput_stat_by_size.html"
+        ).exists()
+        assert (
+            plot_dir
+            / "VectorPushBackParametrized"
+            / "ProcessingTime_processed_numbers_by_size.html"
+        ).exists()
+        assert (
             plot_dir / "VectorPushBackParametrized" / "MeanProcessingTime_samples.html"
         ).exists()
         assert (
@@ -110,6 +120,16 @@ class TestPlot:
         ).exists()
         assert (
             plot_dir / "VectorPushBackParametrized" / "MeanProcessingTime_by_size.html"
+        ).exists()
+        assert (
+            plot_dir
+            / "VectorPushBackParametrized"
+            / "MeanProcessingTime_throughput_stat_by_size.html"
+        ).exists()
+        assert (
+            plot_dir
+            / "VectorPushBackParametrized"
+            / "MeanProcessingTime_processed_numbers_by_size.html"
         ).exists()
 
 

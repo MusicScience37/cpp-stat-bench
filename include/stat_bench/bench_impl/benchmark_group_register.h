@@ -21,6 +21,7 @@
 
 #include "stat_bench/bench_impl/benchmark_group.h"
 #include "stat_bench/benchmark_group_name.h"
+#include "stat_bench/plot_option.h"
 #include "stat_bench/util/string_view.h"
 
 namespace stat_bench {
@@ -43,9 +44,11 @@ public:
      * group.
      *
      * \param[in] parameter_name Parameter name.
+     * \param[in] options Options for the plot.
      * \return Reference to this object.
      */
-    auto add_parameter_to_time_plot(util::StringView parameter_name) noexcept
+    auto add_parameter_to_time_plot(util::StringView parameter_name,
+        PlotOption::Value options = PlotOption::none) noexcept
         -> BenchmarkGroupRegister&;
 
     /*!
@@ -57,6 +60,20 @@ public:
      */
     auto add_parameter_to_time_plot_log(
         util::StringView parameter_name) noexcept -> BenchmarkGroupRegister&;
+
+    /*!
+     * \brief Add a plot of a custom output with respect to a parameter to the
+     * group.
+     *
+     * \param[in] parameter_name Parameter name.
+     * \param[in] custom_output_name Custom output name.
+     * \param[in] options Options for the plot.
+     * \return Reference to this object.
+     */
+    auto add_parameter_to_output_plot(util::StringView parameter_name,
+        util::StringView custom_output_name,
+        PlotOption::Value options = PlotOption::none) noexcept
+        -> BenchmarkGroupRegister&;
 
 private:
     //! Group.
