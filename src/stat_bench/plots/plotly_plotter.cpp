@@ -140,6 +140,7 @@ public:
         }
         if (is_violin_ && traces_.front()->has_x()) {
             layout_["violinmode"] = "group";
+            layout_["xaxis"]["type"] = "category";
         }
 
         nlohmann::json input;
