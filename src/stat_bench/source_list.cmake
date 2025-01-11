@@ -28,6 +28,7 @@ set(SOURCE_FILES
     plots/plot_utils.cpp
     plots/plotly_plotter.cpp
     plots/samples_line_plot.cpp
+    plots/time_to_output_by_parameter_line_plot.cpp
     plots/violin_plot.cpp
     reporter/compressed_msgpack_reporter.cpp
     reporter/console_reporter.cpp
