@@ -41,7 +41,7 @@ TEST_CASE("stat_bench::util::OrderedMap") {
     SECTION("check size") {
         OrderedMap<int, std::string> map;
 
-        CHECK(map.size() == 0);
+        CHECK(map.size() == 0);  // NOLINT
         CHECK(map.empty());
 
         map[2] = "two";

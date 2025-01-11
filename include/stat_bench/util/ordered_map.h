@@ -200,16 +200,13 @@ public:
         if (key_to_index_.size() != rhs.key_to_index_.size()) {
             return false;
         }
-        for (const auto& [key, index] : key_to_index_) {
-            const auto rhs_iter = rhs.key_to_index_.find(key);
-            if (rhs_iter == rhs.key_to_index_.end()) {
-                return false;
-            }
-            if (pairs_[index].second != rhs.pairs_[rhs_iter->second].second) {
-                return false;
-            }
-        }
-        return true;
+        return std::all_of(key_to_index_.begin(), key_to_index_.end(),
+            [this, &rhs](const auto& pair) {
+                const auto rhs_iter = rhs.key_to_index_.find(pair.first);
+                return rhs_iter != rhs.key_to_index_.end() &&
+                    pairs_[pair.second].second ==
+                    rhs.pairs_[rhs_iter->second].second;
+            });
     }
 
     /*!
