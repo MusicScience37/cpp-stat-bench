@@ -166,8 +166,6 @@ TEST_CASE("stat_bench::runner::Runner") {
             .IN_SEQUENCE(seq);
         REQUIRE_CALL(*reporter, case_starts(trompeloeil::_)).IN_SEQUENCE(seq);
 
-        const std::size_t iterations = 7;
-        const std::size_t samples = 11;
         const auto durations =
             std::vector<std::vector<stat_bench::clock::Duration>>{
                 std::vector<stat_bench::clock::Duration>{

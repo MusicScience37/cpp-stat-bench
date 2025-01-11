@@ -84,6 +84,9 @@ void DataFileReporterBase::measurement_failed(
     const BenchmarkFullName& case_info, const BenchmarkCondition& cond,
     const std::exception_ptr& error) {
     // no operation
+    (void)case_info;
+    (void)cond;
+    (void)error;
 }
 
 }  // namespace reporter

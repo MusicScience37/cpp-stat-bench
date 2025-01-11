@@ -19,9 +19,7 @@
  */
 #include "stat_bench/plots/plot_utils.h"
 
-#include <functional>
 #include <string>
-#include <unordered_map>
 #include <utility>
 
 #include <catch2/catch_test_macros.hpp>
@@ -30,6 +28,7 @@
 #include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value.h"
+#include "stat_bench/util/ordered_map.h"
 
 TEST_CASE("stat_bench::plots::generate_plot_name") {
     using stat_bench::BenchmarkCaseName;

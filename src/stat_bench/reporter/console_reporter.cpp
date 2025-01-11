@@ -88,6 +88,7 @@ void ConsoleReporter::measurer_starts(const measurer::MeasurerName& name) {
 
 void ConsoleReporter::measurer_finished(const measurer::MeasurerName& name) {
     // no operation
+    (void)name;
 }
 
 namespace {

@@ -32,6 +32,7 @@ buildType:
         STAT_BENCH_TEST_BENCHMARKS: OFF
         STAT_BENCH_BUILD_EXAMPLES: ON
         STAT_BENCH_BUILD_DOC: OFF
+        STAT_BENCH_ENABLE_CPP_WARNINGS: ON
     clang-asan-ubsan-unit-dox:
       short: ClangAUSan-Unit-Dox
       long: ASan and USan in Clang + Unit tests + Doxygen
@@ -46,6 +47,7 @@ buildType:
         STAT_BENCH_BUILD_EXAMPLES: ON
         STAT_BENCH_BUILD_DOC: ON
         STAT_BENCH_BUILD_DOC_SPHINX: OFF
+        STAT_BENCH_ENABLE_CPP_WARNINGS: ON
     clang-asan-ubsan-unit-docs:
       short: ClangAUSan-Unit-Docs
       long: ASan and USan in Clang + Unit tests + Document
@@ -60,6 +62,7 @@ buildType:
         STAT_BENCH_BUILD_EXAMPLES: ON
         STAT_BENCH_BUILD_DOC: ON
         STAT_BENCH_BUILD_DOC_SPHINX: ON
+        STAT_BENCH_ENABLE_CPP_WARNINGS: ON
     clang-tsan-unit:
       short: ClangTSan-Unit
       long: TSan in Clang + Unit tests
@@ -73,6 +76,7 @@ buildType:
         STAT_BENCH_TEST_BENCHMARKS: OFF
         STAT_BENCH_BUILD_EXAMPLES: ON
         STAT_BENCH_BUILD_DOC: OFF
+        STAT_BENCH_ENABLE_CPP_WARNINGS: ON
     debug-unit:
       short: Debug-Unit
       long: Debug build + Unit tests
@@ -86,6 +90,7 @@ buildType:
         STAT_BENCH_TEST_BENCHMARKS: OFF
         STAT_BENCH_BUILD_EXAMPLES: ON
         STAT_BENCH_BUILD_DOC: OFF
+        STAT_BENCH_ENABLE_CPP_WARNINGS: ON
     relwithdebinfo-unit:
       short: RelWithDebInfo-Unit
       long: RelWithDebInfo build + Unit tests
@@ -99,6 +104,7 @@ buildType:
         STAT_BENCH_TEST_BENCHMARKS: OFF
         STAT_BENCH_BUILD_EXAMPLES: ON
         STAT_BENCH_BUILD_DOC: OFF
+        STAT_BENCH_ENABLE_CPP_WARNINGS: ON
     release-unit:
       short: Release-Unit
       long: Release build + Unit tests
@@ -112,3 +118,4 @@ buildType:
         STAT_BENCH_TEST_BENCHMARKS: OFF
         STAT_BENCH_BUILD_EXAMPLES: ON
         STAT_BENCH_BUILD_DOC: OFF
+        STAT_BENCH_ENABLE_CPP_WARNINGS: ON

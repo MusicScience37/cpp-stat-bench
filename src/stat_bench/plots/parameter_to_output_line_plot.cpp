@@ -61,6 +61,7 @@ void ParameterToOutputLinePlot::write(IPlotter* plotter,
     const BenchmarkGroupName& group_name,
     const std::vector<measurer::Measurement>& measurements,
     const std::string& file_path) {
+    (void)measurer_name;
     (void)group_name;
 
     const auto& title = custom_output_name_.str();

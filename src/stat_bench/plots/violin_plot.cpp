@@ -50,9 +50,8 @@ void ViolinPlot::write(IPlotter* plotter,
     for (const auto& measurement : measurements) {
         const auto& y = measurement.durations_stat().unsorted_samples();
 
-        figure->add_violin(y,
-            generate_plot_name(measurement.case_info().case_name(),
-                measurement.cond().params()));
+        figure->add_violin_trace()->y(y)->name(generate_plot_name(
+            measurement.case_info().case_name(), measurement.cond().params()));
     }
 
     figure->set_y_title(util::Utf8String("Time [sec]"));

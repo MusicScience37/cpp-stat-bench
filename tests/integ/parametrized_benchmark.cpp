@@ -61,10 +61,7 @@ protected:
 }
 
 STAT_BENCH_CASE_F(FibonacciFixture, "FibonacciParametrized", "Fibonacci") {
-    STAT_BENCH_MEASURE_INDEXED(
-        thread_index, sample_index, /*iteration_index*/) {
-        result_ = fibonacci(number_);
-    };
+    STAT_BENCH_MEASURE() { result_ = fibonacci(number_); };
 }
 
 STAT_BENCH_GROUP("FibonacciParametrized")

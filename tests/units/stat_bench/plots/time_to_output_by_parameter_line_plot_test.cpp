@@ -20,9 +20,7 @@
 #include "stat_bench/plots/time_to_output_by_parameter_line_plot.h"
 
 #include <cstddef>
-#include <functional>
 #include <memory>
-#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -44,6 +42,7 @@
 #include "stat_bench/param/parameter_value.h"
 #include "stat_bench/plots/plotly_plotter.h"
 #include "stat_bench/stat/custom_stat_output.h"
+#include "stat_bench/util/ordered_map.h"
 
 TEST_CASE("stat_bench::plots::TimeToOutputByParameterLinePlot") {
     using stat_bench::BenchmarkCaseName;
