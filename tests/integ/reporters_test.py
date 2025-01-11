@@ -75,6 +75,14 @@ class TestPlot:
             plot_dir / "FibonacciParametrized" / "ProcessingTime_by_number.html"
         ).exists()
         assert (
+            plot_dir / "FibonacciParametrized" / "ProcessingTime_result_by_number.html"
+        ).exists()
+        assert (
+            plot_dir
+            / "FibonacciParametrized"
+            / "ProcessingTime_to_result_by_number.html"
+        ).exists()
+        assert (
             plot_dir / "FibonacciParametrized" / "MeanProcessingTime_samples.html"
         ).exists()
         assert (
@@ -85,6 +93,16 @@ class TestPlot:
         ).exists()
         assert (
             plot_dir / "FibonacciParametrized" / "MeanProcessingTime_by_number.html"
+        ).exists()
+        assert (
+            plot_dir
+            / "FibonacciParametrized"
+            / "MeanProcessingTime_result_by_number.html"
+        ).exists()
+        assert (
+            plot_dir
+            / "FibonacciParametrized"
+            / "MeanProcessingTime_to_result_by_number.html"
         ).exists()
         assert (plot_dir / "VectorPushBackParametrized").exists()
         assert (
@@ -110,6 +128,11 @@ class TestPlot:
             / "ProcessingTime_processed_numbers_by_size.html"
         ).exists()
         assert (
+            plot_dir
+            / "VectorPushBackParametrized"
+            / "ProcessingTime_to_throughput_stat_by_size.html"
+        ).exists()
+        assert (
             plot_dir / "VectorPushBackParametrized" / "MeanProcessingTime_samples.html"
         ).exists()
         assert (
@@ -130,6 +153,11 @@ class TestPlot:
             plot_dir
             / "VectorPushBackParametrized"
             / "MeanProcessingTime_processed_numbers_by_size.html"
+        ).exists()
+        assert (
+            plot_dir
+            / "VectorPushBackParametrized"
+            / "MeanProcessingTime_to_throughput_stat_by_size.html"
         ).exists()
 
 

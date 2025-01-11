@@ -15,9 +15,9 @@ Processing Time
                                                                                 Time [us]                     
                                                             Iterations Samples       Mean Std. Err.       Max Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-Fibonacci (number=10)                                                 n        n           n          n          n 
-Fibonacci (number=20)                                                 n        n           n          n          n 
-Fibonacci (number=30)                                                 n        n           n          n          n 
+Fibonacci (number=10)                                                 n        n           n          n          n result=         n, 
+Fibonacci (number=20)                                                 n        n           n          n          n result=         n, 
+Fibonacci (number=30)                                                 n        n           n          n          n result=         n, 
 
 >> VectorPushBackParametrized
                                                                                 Time [us]                     
@@ -38,9 +38,9 @@ Mean Processing Time
                                                                                 Time [us]                     
                                                             Iterations Samples       Mean Std. Err.       Max Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-Fibonacci (number=10)                                                 n        n           n          n          n 
-Fibonacci (number=20)                                                 n        n           n          n          n 
-Fibonacci (number=30)                                                 n        n           n          n          n 
+Fibonacci (number=10)                                                 n        n           n          n          n result=         n, 
+Fibonacci (number=20)                                                 n        n           n          n          n result=         n, 
+Fibonacci (number=30)                                                 n        n           n          n          n result=         n, 
 
 >> VectorPushBackParametrized
                                                                                 Time [us]                     

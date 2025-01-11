@@ -75,6 +75,20 @@ public:
         PlotOption::Value options = PlotOption::none) noexcept
         -> BenchmarkGroupRegister&;
 
+    /*!
+     * \brief Add a plot of a custom output with respect to processing time
+     * while parameter changes.
+     *
+     * \param[in] parameter_name Parameter name.
+     * \param[in] custom_output_name Custom output name.
+     * \param[in] options Options for the plot.
+     * \return Reference to this object.
+     */
+    auto add_time_to_output_by_parameter_plot(util::StringView parameter_name,
+        util::StringView custom_output_name,
+        PlotOption::Value options = PlotOption::none) noexcept
+        -> BenchmarkGroupRegister&;
+
 private:
     //! Group.
     BenchmarkGroup* group_{nullptr};

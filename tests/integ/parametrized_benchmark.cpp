@@ -44,8 +44,13 @@ public:
         number_ = context.get_param<std::size_t>("number");
     }
 
+    void tear_down(stat_bench::InvocationContext& context) override {
+        context.add_custom_output("result", static_cast<double>(result_));
+    }
+
 protected:
     std::uint64_t number_{0};
+    std::uint64_t result_{0};
 };
 
 [[nodiscard]] auto fibonacci(std::uint64_t number) -> std::uint64_t {
@@ -58,11 +63,16 @@ protected:
 STAT_BENCH_CASE_F(FibonacciFixture, "FibonacciParametrized", "Fibonacci") {
     STAT_BENCH_MEASURE_INDEXED(
         thread_index, sample_index, /*iteration_index*/) {
-        stat_bench::do_not_optimize(fibonacci(number_));
+        result_ = fibonacci(number_);
     };
 }
 
-STAT_BENCH_GROUP("FibonacciParametrized").add_parameter_to_time_plot("number");
+STAT_BENCH_GROUP("FibonacciParametrized")
+    .add_parameter_to_time_plot("number")
+    .add_parameter_to_output_plot(
+        "number", "result", stat_bench::PlotOption::log_output)
+    .add_time_to_output_by_parameter_plot(
+        "number", "result", stat_bench::PlotOption::log_output);
 
 class VectorPushBackFixture : public stat_bench::FixtureBase {
 public:
@@ -111,6 +121,8 @@ STAT_BENCH_GROUP("VectorPushBackParametrized")
     .add_parameter_to_output_plot("size", "throughput_stat",
         stat_bench::PlotOption::log_parameter |
             stat_bench::PlotOption::log_output)
+    .add_time_to_output_by_parameter_plot(
+        "size", "throughput_stat", stat_bench::PlotOption::log_output)
     .add_parameter_to_output_plot("size", "processed_numbers",
         stat_bench::PlotOption::log_parameter |
             stat_bench::PlotOption::log_output);
