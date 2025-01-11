@@ -116,8 +116,8 @@ public:
         data_.push_back(trace);
     }
 
-    //! \copydoc stat_bench::plots::IFigure::add_line_with_error
-    void add_line_with_error(const std::vector<double>& x,
+    //! \copydoc stat_bench::plots::IFigure::add_line_with_y_error
+    void add_line_with_y_error(const std::vector<double>& x,
         const std::vector<double>& y, const std::vector<double>& y_error,
         const util::Utf8String& name) override {
         nlohmann::json trace;
@@ -142,8 +142,9 @@ public:
         }
     }
 
-    //! \copydoc stat_bench::plots::IFigure::add_line_with_error
-    void add_line_with_error(const std::vector<param::ParameterValueVariant>& x,
+    //! \copydoc stat_bench::plots::IFigure::add_line_with_y_error
+    void add_line_with_y_error(
+        const std::vector<param::ParameterValueVariant>& x,
         const std::vector<double>& y, const std::vector<double>& y_error,
         const util::Utf8String& name) override {
         nlohmann::json trace;
@@ -163,6 +164,63 @@ public:
         trace["type"] = "scatter";
         trace["name"] = name.str();
         data_.push_back(trace);
+    }
+
+    //! \copydoc stat_bench::plots::IFigure::add_line_with_x_error
+    void add_line_with_x_error(const std::vector<double>& x,
+        const std::vector<double>& y, const std::vector<double>& x_error,
+        const util::Utf8String& name) override {
+        nlohmann::json trace;
+        trace["x"] = x;
+        trace["y"] = y;
+        trace["error_x"] = nlohmann::json::object();
+        trace["error_x"]["type"] = "data";
+        trace["error_x"]["array"] = x_error;
+        trace["error_x"]["visible"] = true;
+        trace["mode"] = "lines";
+        trace["type"] = "scatter";
+        trace["name"] = name.str();
+        data_.push_back(trace);
+
+        for (const auto& value : x) {
+            max_x_ = std::max(max_x_, value);
+            min_x_ = std::min(min_x_, value);
+        }
+        for (const auto& value : y) {
+            max_y_ = std::max(max_y_, value);
+            min_y_ = std::min(min_y_, value);
+        }
+    }
+
+    //! \copydoc stat_bench::plots::IFigure::add_line_with_xy_error
+    void add_line_with_xy_error(const std::vector<double>& x,
+        const std::vector<double>& y, const std::vector<double>& x_error,
+        const std::vector<double>& y_error,
+        const util::Utf8String& name) override {
+        nlohmann::json trace;
+        trace["x"] = x;
+        trace["y"] = y;
+        trace["error_x"] = nlohmann::json::object();
+        trace["error_x"]["type"] = "data";
+        trace["error_x"]["array"] = x_error;
+        trace["error_x"]["visible"] = true;
+        trace["error_y"] = nlohmann::json::object();
+        trace["error_y"]["type"] = "data";
+        trace["error_y"]["array"] = y_error;
+        trace["error_y"]["visible"] = true;
+        trace["mode"] = "lines";
+        trace["type"] = "scatter";
+        trace["name"] = name.str();
+        data_.push_back(trace);
+
+        for (const auto& value : x) {
+            max_x_ = std::max(max_x_, value);
+            min_x_ = std::min(min_x_, value);
+        }
+        for (const auto& value : y) {
+            max_y_ = std::max(max_y_, value);
+            min_y_ = std::min(min_y_, value);
+        }
     }
 
     //! \copydoc stat_bench::plots::IFigure::add_line_with_sequential_number

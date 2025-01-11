@@ -55,29 +55,54 @@ public:
         const std::vector<double>& y, const util::Utf8String& name) = 0;
 
     /*!
-     * \brief Add a line with errors to the figure.
+     * \brief Add a line with errors of y to the figure.
      *
      * \param[in] x X values.
      * \param[in] y Y values.
      * \param[in] y_error Errors of y values.
      * \param[in] name Name of the line.
      */
-    virtual void add_line_with_error(const std::vector<double>& x,
+    virtual void add_line_with_y_error(const std::vector<double>& x,
         const std::vector<double>& y, const std::vector<double>& y_error,
         const util::Utf8String& name) = 0;
 
     /*!
-     * \brief Add a line with errors to the figure.
+     * \brief Add a line with errors of y to the figure.
      *
      * \param[in] x X values.
      * \param[in] y Y values.
      * \param[in] y_error Errors of y values.
      * \param[in] name Name of the line.
      */
-    virtual void add_line_with_error(
+    virtual void add_line_with_y_error(
         const std::vector<param::ParameterValueVariant>& x,
         const std::vector<double>& y, const std::vector<double>& y_error,
         const util::Utf8String& name) = 0;
+
+    /*!
+     * \brief Add a line with errors of x to the figure.
+     *
+     * \param[in] x X values.
+     * \param[in] y Y values.
+     * \param[in] x_error Errors of x values.
+     * \param[in] name Name of the line.
+     */
+    virtual void add_line_with_x_error(const std::vector<double>& x,
+        const std::vector<double>& y, const std::vector<double>& x_error,
+        const util::Utf8String& name) = 0;
+
+    /*!
+     * \brief Add a line with errors of x and y to the figure.
+     *
+     * \param[in] x X values.
+     * \param[in] y Y values.
+     * \param[in] x_error Errors of x values.
+     * \param[in] y_error Errors of y values.
+     * \param[in] name Name of the line.
+     */
+    virtual void add_line_with_xy_error(const std::vector<double>& x,
+        const std::vector<double>& y, const std::vector<double>& x_error,
+        const std::vector<double>& y_error, const util::Utf8String& name) = 0;
 
     /*!
      * \brief Add a line to the figure with sequential numbers as x values.

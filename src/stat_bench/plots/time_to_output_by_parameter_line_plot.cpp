@@ -69,8 +69,8 @@ void TimeToOutputByParameterLinePlot::write(IPlotter* plotter,
         [this](const auto& pair) { return pair.first == custom_output_name_; });
     if (first_custom_output_iter != first_custom_outputs.end()) {
         // Case of custom output without statistics.
-        plot_by_parameter_impl(measurements, parameter_name_, figure.get(),
-            [this](const measurer::Measurement& measurement) {
+        plot_by_parameter_with_x_error_impl(measurements, parameter_name_,
+            figure.get(), [this](const measurer::Measurement& measurement) {
                 const auto& custom_outputs = measurement.custom_outputs();
                 const auto iter = std::find_if(custom_outputs.begin(),
                     custom_outputs.end(), [this](const auto& pair) {
@@ -82,12 +82,13 @@ void TimeToOutputByParameterLinePlot::write(IPlotter* plotter,
                         custom_output_name_));
                 }
 
-                return std::make_tuple(
-                    measurement.durations_stat().mean(), iter->second);
+                return std::make_tuple(measurement.durations_stat().mean(),
+                    iter->second,
+                    measurement.durations_stat().standard_error());
             });
     } else {
         // Case of custom output with statistics.
-        plot_by_parameter_with_error_impl(measurements, parameter_name_,
+        plot_by_parameter_with_xy_error_impl(measurements, parameter_name_,
             figure.get(), [this](const measurer::Measurement& measurement) {
                 const auto& custom_outputs = measurement.custom_stat_outputs();
                 const auto iter = std::find_if(custom_outputs.begin(),
@@ -103,7 +104,8 @@ void TimeToOutputByParameterLinePlot::write(IPlotter* plotter,
                 const std::size_t index = iter - custom_outputs.begin();
                 const auto& stat = measurement.custom_stat().at(index);
                 return std::make_tuple(measurement.durations_stat().mean(),
-                    stat.mean(), stat.standard_error());
+                    stat.mean(), measurement.durations_stat().standard_error(),
+                    stat.standard_error());
             });
     }
 

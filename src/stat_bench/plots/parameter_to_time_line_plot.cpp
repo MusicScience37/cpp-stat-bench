@@ -57,7 +57,7 @@ void ParameterToTimeLinePlot::write(IPlotter* plotter,
 
     const auto& title = measurer_name.str();
     auto figure = plotter->create_figure(title);
-    plot_by_parameter_with_error_impl(measurements, parameter_name_,
+    plot_by_parameter_with_y_error_impl(measurements, parameter_name_,
         figure.get(), [this](const measurer::Measurement& measurement) {
             return std::make_tuple(
                 measurement.cond().params().get_as_variant(parameter_name_),

@@ -91,7 +91,7 @@ void ParameterToOutputLinePlot::write(IPlotter* plotter,
             });
     } else {
         // Case of custom output with statistics.
-        plot_by_parameter_with_error_impl(measurements, parameter_name_,
+        plot_by_parameter_with_y_error_impl(measurements, parameter_name_,
             figure.get(), [this](const measurer::Measurement& measurement) {
                 const auto& custom_outputs = measurement.custom_stat_outputs();
                 const auto iter = std::find_if(custom_outputs.begin(),

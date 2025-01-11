@@ -107,7 +107,7 @@ void plot_by_parameter_impl(
 }
 
 /*!
- * \brief Plot data by parameter with error.
+ * \brief Plot data by parameter with error in x.
  *
  * \tparam MeasurementToPlotDataFunction Type of the function to get data from a
  * measurement.
@@ -118,7 +118,52 @@ void plot_by_parameter_impl(
  * measurement.
  */
 template <typename MeasurementToPlotDataFunction>
-void plot_by_parameter_with_error_impl(
+void plot_by_parameter_with_x_error_impl(
+    const std::vector<measurer::Measurement>& measurements,
+    const param::ParameterName& parameter_name, IFigure* figure,
+    MeasurementToPlotDataFunction&& convert_measurement_to_plot_data) {
+    struct FigureData {
+        std::vector<double> x;
+        std::vector<double> y;
+        std::vector<double> x_error;
+    };
+    util::OrderedMap<std::pair<BenchmarkCaseName, param::ParameterDict>,
+        FigureData>
+        figure_data_map;
+    for (const auto& measurement : measurements) {
+        const auto& case_name = measurement.case_info().case_name();
+        const auto& params = measurement.cond().params();
+        const auto params_without_target = params.clone_without(parameter_name);
+        const auto key = std::make_pair(case_name, params_without_target);
+        auto& figure_data = figure_data_map[key];
+
+        const auto [x, y, x_error] =
+            convert_measurement_to_plot_data(measurement);
+
+        figure_data.x.push_back(x);
+        figure_data.y.push_back(y);
+        figure_data.x_error.push_back(x_error);
+    }
+
+    for (const auto& [key, figure_data] : figure_data_map) {
+        figure->add_line_with_x_error(figure_data.x, figure_data.y,
+            figure_data.x_error, generate_plot_name(key.first, key.second));
+    }
+}
+
+/*!
+ * \brief Plot data by parameter with error in y.
+ *
+ * \tparam MeasurementToPlotDataFunction Type of the function to get data from a
+ * measurement.
+ * \param[in] measurements Measurements.
+ * \param[in] parameter_name Parameter name.
+ * \param[in,out] figure Figure to plot.
+ * \param[in] convert_measurement_to_plot_data Function to get data from a
+ * measurement.
+ */
+template <typename MeasurementToPlotDataFunction>
+void plot_by_parameter_with_y_error_impl(
     const std::vector<measurer::Measurement>& measurements,
     const param::ParameterName& parameter_name, IFigure* figure,
     MeasurementToPlotDataFunction&& convert_measurement_to_plot_data) {
@@ -146,8 +191,56 @@ void plot_by_parameter_with_error_impl(
     }
 
     for (const auto& [key, figure_data] : figure_data_map) {
-        figure->add_line_with_error(figure_data.x, figure_data.y,
+        figure->add_line_with_y_error(figure_data.x, figure_data.y,
             figure_data.y_error, generate_plot_name(key.first, key.second));
+    }
+}
+
+/*!
+ * \brief Plot data by parameter with error in x and y.
+ *
+ * \tparam MeasurementToPlotDataFunction Type of the function to get data from a
+ * measurement.
+ * \param[in] measurements Measurements.
+ * \param[in] parameter_name Parameter name.
+ * \param[in,out] figure Figure to plot.
+ * \param[in] convert_measurement_to_plot_data Function to get data from a
+ * measurement.
+ */
+template <typename MeasurementToPlotDataFunction>
+void plot_by_parameter_with_xy_error_impl(
+    const std::vector<measurer::Measurement>& measurements,
+    const param::ParameterName& parameter_name, IFigure* figure,
+    MeasurementToPlotDataFunction&& convert_measurement_to_plot_data) {
+    struct FigureData {
+        std::vector<double> x;
+        std::vector<double> y;
+        std::vector<double> x_error;
+        std::vector<double> y_error;
+    };
+    util::OrderedMap<std::pair<BenchmarkCaseName, param::ParameterDict>,
+        FigureData>
+        figure_data_map;
+    for (const auto& measurement : measurements) {
+        const auto& case_name = measurement.case_info().case_name();
+        const auto& params = measurement.cond().params();
+        const auto params_without_target = params.clone_without(parameter_name);
+        const auto key = std::make_pair(case_name, params_without_target);
+        auto& figure_data = figure_data_map[key];
+
+        const auto [x, y, x_error, y_error] =
+            convert_measurement_to_plot_data(measurement);
+
+        figure_data.x.push_back(x);
+        figure_data.y.push_back(y);
+        figure_data.x_error.push_back(x_error);
+        figure_data.y_error.push_back(y_error);
+    }
+
+    for (const auto& [key, figure_data] : figure_data_map) {
+        figure->add_line_with_xy_error(figure_data.x, figure_data.y,
+            figure_data.x_error, figure_data.y_error,
+            generate_plot_name(key.first, key.second));
     }
 }
 
