@@ -102,8 +102,10 @@ void plot_by_parameter_impl(
     }
 
     for (const auto& [key, figure_data] : figure_data_map) {
-        figure->add_line(figure_data.x, figure_data.y,
-            generate_plot_name(key.first, key.second));
+        figure->add_line_trace()
+            ->x(figure_data.x)
+            ->y(figure_data.y)
+            ->name(generate_plot_name(key.first, key.second));
     }
 }
 
@@ -154,9 +156,12 @@ void plot_by_parameter_with_x_error_with_param_impl(
     }
 
     for (const auto& [key, figure_data] : figure_data_map) {
-        figure->add_line_with_x_error(figure_data.x, figure_data.y,
-            figure_data.x_error, generate_plot_name(key.first, key.second));
-        figure->add_text_to_last_trace(figure_data.texts);
+        figure->add_line_trace()
+            ->x(figure_data.x)
+            ->y(figure_data.y)
+            ->x_error(figure_data.x_error)
+            ->text(figure_data.texts)
+            ->name(generate_plot_name(key.first, key.second));
     }
 }
 
@@ -200,8 +205,11 @@ void plot_by_parameter_with_y_error_impl(
     }
 
     for (const auto& [key, figure_data] : figure_data_map) {
-        figure->add_line_with_y_error(figure_data.x, figure_data.y,
-            figure_data.y_error, generate_plot_name(key.first, key.second));
+        figure->add_line_trace()
+            ->x(figure_data.x)
+            ->y(figure_data.y)
+            ->y_error(figure_data.y_error)
+            ->name(generate_plot_name(key.first, key.second));
     }
 }
 
@@ -254,10 +262,13 @@ void plot_by_parameter_with_xy_error_with_param_impl(
     }
 
     for (const auto& [key, figure_data] : figure_data_map) {
-        figure->add_line_with_xy_error(figure_data.x, figure_data.y,
-            figure_data.x_error, figure_data.y_error,
-            generate_plot_name(key.first, key.second));
-        figure->add_text_to_last_trace(figure_data.texts);
+        figure->add_line_trace()
+            ->x(figure_data.x)
+            ->y(figure_data.y)
+            ->x_error(figure_data.x_error)
+            ->y_error(figure_data.y_error)
+            ->text(figure_data.texts)
+            ->name(generate_plot_name(key.first, key.second));
     }
 }
 

@@ -24,12 +24,15 @@
 #include <cstddef>
 #include <fstream>
 #include <limits>
+#include <memory>
 #include <string>
 #include <variant>
 #include <vector>
 
 #include <nlohmann/json.hpp>
 
+#include "i_plotly_trace.h"
+#include "line_trace.h"
 #include "stat_bench/param/parameter_value.h"
 #include "stat_bench/plots/i_plotter.h"
 #include "stat_bench/plots/jinja_renderer.h"
@@ -77,175 +80,11 @@ public:
      */
     ~PlotlyFigure() override = default;
 
-    //! \copydoc stat_bench::plots::IFigure::add_line
-    void add_line(const std::vector<double>& x, const std::vector<double>& y,
-        const util::Utf8String& name) override {
-        nlohmann::json trace;
-        trace["x"] = x;
-        trace["y"] = y;
-        trace["mode"] = "lines";
-        trace["type"] = "scatter";
-        trace["name"] = name.str();
-        data_.push_back(trace);
-
-        for (const auto& value : x) {
-            max_x_ = std::max(max_x_, value);
-            min_x_ = std::min(min_x_, value);
-        }
-        for (const auto& value : y) {
-            max_y_ = std::max(max_y_, value);
-            min_y_ = std::min(min_y_, value);
-        }
-    }
-
-    //! \copydoc stat_bench::plots::IFigure::add_line
-    void add_line(const std::vector<param::ParameterValueVariant>& x,
-        const std::vector<double>& y, const util::Utf8String& name) override {
-        nlohmann::json trace;
-        auto& x_json = trace["x"];
-        x_json = nlohmann::json::array();
-        for (const auto& value : x) {
-            std::visit(
-                [&x_json](const auto& value) { x_json.push_back(value); },
-                value);
-        }
-        trace["y"] = y;
-        trace["mode"] = "lines";
-        trace["type"] = "scatter";
-        trace["name"] = name.str();
-        data_.push_back(trace);
-    }
-
-    //! \copydoc stat_bench::plots::IFigure::add_line_with_y_error
-    void add_line_with_y_error(const std::vector<double>& x,
-        const std::vector<double>& y, const std::vector<double>& y_error,
-        const util::Utf8String& name) override {
-        nlohmann::json trace;
-        trace["x"] = x;
-        trace["y"] = y;
-        trace["error_y"] = nlohmann::json::object();
-        trace["error_y"]["type"] = "data";
-        trace["error_y"]["array"] = y_error;
-        trace["error_y"]["visible"] = true;
-        trace["mode"] = "lines";
-        trace["type"] = "scatter";
-        trace["name"] = name.str();
-        data_.push_back(trace);
-
-        for (const auto& value : x) {
-            max_x_ = std::max(max_x_, value);
-            min_x_ = std::min(min_x_, value);
-        }
-        for (const auto& value : y) {
-            max_y_ = std::max(max_y_, value);
-            min_y_ = std::min(min_y_, value);
-        }
-    }
-
-    //! \copydoc stat_bench::plots::IFigure::add_line_with_y_error
-    void add_line_with_y_error(
-        const std::vector<param::ParameterValueVariant>& x,
-        const std::vector<double>& y, const std::vector<double>& y_error,
-        const util::Utf8String& name) override {
-        nlohmann::json trace;
-        auto& x_json = trace["x"];
-        x_json = nlohmann::json::array();
-        for (const auto& value : x) {
-            std::visit(
-                [&x_json](const auto& value) { x_json.push_back(value); },
-                value);
-        }
-        trace["y"] = y;
-        trace["error_y"] = nlohmann::json::object();
-        trace["error_y"]["type"] = "data";
-        trace["error_y"]["array"] = y_error;
-        trace["error_y"]["visible"] = true;
-        trace["mode"] = "lines";
-        trace["type"] = "scatter";
-        trace["name"] = name.str();
-        data_.push_back(trace);
-    }
-
-    //! \copydoc stat_bench::plots::IFigure::add_line_with_x_error
-    void add_line_with_x_error(const std::vector<double>& x,
-        const std::vector<double>& y, const std::vector<double>& x_error,
-        const util::Utf8String& name) override {
-        nlohmann::json trace;
-        trace["x"] = x;
-        trace["y"] = y;
-        trace["error_x"] = nlohmann::json::object();
-        trace["error_x"]["type"] = "data";
-        trace["error_x"]["array"] = x_error;
-        trace["error_x"]["visible"] = true;
-        trace["mode"] = "lines";
-        trace["type"] = "scatter";
-        trace["name"] = name.str();
-        data_.push_back(trace);
-
-        for (const auto& value : x) {
-            max_x_ = std::max(max_x_, value);
-            min_x_ = std::min(min_x_, value);
-        }
-        for (const auto& value : y) {
-            max_y_ = std::max(max_y_, value);
-            min_y_ = std::min(min_y_, value);
-        }
-    }
-
-    //! \copydoc stat_bench::plots::IFigure::add_line_with_xy_error
-    void add_line_with_xy_error(const std::vector<double>& x,
-        const std::vector<double>& y, const std::vector<double>& x_error,
-        const std::vector<double>& y_error,
-        const util::Utf8String& name) override {
-        nlohmann::json trace;
-        trace["x"] = x;
-        trace["y"] = y;
-        trace["error_x"] = nlohmann::json::object();
-        trace["error_x"]["type"] = "data";
-        trace["error_x"]["array"] = x_error;
-        trace["error_x"]["visible"] = true;
-        trace["error_y"] = nlohmann::json::object();
-        trace["error_y"]["type"] = "data";
-        trace["error_y"]["array"] = y_error;
-        trace["error_y"]["visible"] = true;
-        trace["mode"] = "lines";
-        trace["type"] = "scatter";
-        trace["name"] = name.str();
-        data_.push_back(trace);
-
-        for (const auto& value : x) {
-            max_x_ = std::max(max_x_, value);
-            min_x_ = std::min(min_x_, value);
-        }
-        for (const auto& value : y) {
-            max_y_ = std::max(max_y_, value);
-            min_y_ = std::min(min_y_, value);
-        }
-    }
-
-    //! \copydoc stat_bench::plots::IFigure::add_line_with_sequential_number
-    void add_line_with_sequential_number(
-        const std::vector<double>& y, const util::Utf8String& name) override {
-        std::vector<std::size_t> x;
-        x.reserve(y.size());
-        for (std::size_t i = 0; i < y.size(); ++i) {
-            x.push_back(i + 1);
-        }
-
-        nlohmann::json trace;
-        trace["x"] = x;
-        trace["y"] = y;
-        trace["mode"] = "lines";
-        trace["type"] = "scatter";
-        trace["name"] = name.str();
-        data_.push_back(trace);
-
-        max_x_ = std::max(max_x_, static_cast<double>(y.size()));
-        min_x_ = std::min(min_x_, 1.0);
-        for (const auto& value : y) {
-            max_y_ = std::max(max_y_, value);
-            min_y_ = std::min(min_y_, value);
-        }
+    //! \copydoc stat_bench::plots::IFigure::add_line_trace
+    [[nodiscard]] auto add_line_trace() -> std::shared_ptr<ITrace> override {
+        auto trace = std::make_shared<LineTrace>();
+        traces_.push_back(trace);
+        return trace;
     }
 
     //! \copydoc stat_bench::plots::IFigure::add_violin
@@ -300,6 +139,13 @@ public:
 
     //! \copydoc stat_bench::plots::IFigure::write_to_file
     void write_to_file(const std::string& file_path) override {
+        for (const auto& trace : traces_) {
+            data_.push_back(trace->data());
+            const auto [trace_min_y, trace_max_y] = trace->y_range();
+            min_y_ = std::min(min_y_, trace_min_y);
+            max_y_ = std::max(max_y_, trace_max_y);
+        }
+
         if (is_violin_ && is_log_y_) {
             // For this case, spacial treatment is needed to prevent wrong
             // automatic range in plotly library.
@@ -325,6 +171,9 @@ public:
     }
 
 private:
+    //! Traces.
+    std::vector<std::shared_ptr<IPlotlyTrace>> traces_;
+
     //! Data in plotly.
     nlohmann::json data_;
 

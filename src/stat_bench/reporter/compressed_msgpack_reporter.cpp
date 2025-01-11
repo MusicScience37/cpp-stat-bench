@@ -73,7 +73,7 @@ public:
      * \param[in] size Size of the data.
      */
     void write(const unsigned char* data, std::size_t size) override {
-        if (gzwrite(file_, data, size) != size) {
+        if (gzwrite(file_, data, size) != static_cast<int>(size)) {
             throw StatBenchException("Failed to write data.");
         }
     }

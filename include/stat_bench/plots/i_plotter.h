@@ -19,6 +19,7 @@
  */
 #pragma once
 
+#include <cstddef>
 #include <memory>
 #include <string>
 #include <vector>
@@ -30,88 +31,111 @@ namespace stat_bench {
 namespace plots {
 
 /*!
+ * \brief Class of interface of traces in figures.
+ */
+class ITrace {
+public:
+    /*!
+     * \brief Set the name of the trace.
+     *
+     * \param[in] name Name.
+     * \return This object.
+     */
+    virtual auto name(const util::Utf8String& name) -> ITrace* = 0;
+
+    /*!
+     * \brief Set x values.
+     *
+     * \param[in] x X values.
+     * \return This object.
+     */
+    virtual auto x(const std::vector<double>& x) -> ITrace* = 0;
+
+    /*!
+     * \brief Set x values.
+     *
+     * \param[in] x X values.
+     * \return This object.
+     */
+    virtual auto x(const std::vector<param::ParameterValueVariant>& x)
+        -> ITrace* = 0;
+
+    /*!
+     * \brief Generate sequential numbers for x values.
+     *
+     * \param[in] size Number of sequential numbers.
+     * \return This object.
+     */
+    virtual auto generate_sequential_number_for_x(std::size_t size)
+        -> ITrace* = 0;
+
+    /*!
+     * \brief Set y values.
+     *
+     * \param[in] y Y values.
+     * \return This object.
+     */
+    virtual auto y(const std::vector<double>& y) -> ITrace* = 0;
+
+    /*!
+     * \brief Set the errors of x values.
+     *
+     * \param[in] x_error Errors of x values.
+     * \return This object.
+     */
+    virtual auto x_error(const std::vector<double>& x_error) -> ITrace* = 0;
+
+    /*!
+     * \brief Set the errors of y values.
+     *
+     * \param[in] y_error Errors of y values.
+     * \return This object.
+     */
+    virtual auto y_error(const std::vector<double>& y_error) -> ITrace* = 0;
+
+    /*!
+     * \brief Set the texts.
+     *
+     * \param[in] text Texts.
+     * \return This object.
+     */
+    virtual auto text(const std::vector<util::Utf8String>& text) -> ITrace* = 0;
+
+    /*!
+     * \brief Constructor.
+     */
+    ITrace() = default;
+
+    ITrace(const ITrace&) = delete;
+    ITrace(ITrace&&) = delete;
+    auto operator=(const ITrace&) -> ITrace& = delete;
+    auto operator=(ITrace&&) -> ITrace& = delete;
+
+    /*!
+     * \brief Destructor.
+     */
+    virtual ~ITrace() = default;
+};
+
+/*!
  * \brief Class of interface of figures.
  */
 class IFigure {
 public:
     /*!
-     * \brief Add a line to the figure.
+     * \brief Add a trace of a line plot to the figure.
      *
-     * \param[in] x X values.
-     * \param[in] y Y values.
-     * \param[in] name Name of the line.
+     * \return Trace of the line.
      */
-    virtual void add_line(const std::vector<double>& x,
-        const std::vector<double>& y, const util::Utf8String& name) = 0;
+    virtual auto add_line_trace() -> std::shared_ptr<ITrace> = 0;
 
-    /*!
-     * \brief Add a line to the figure.
+    /*
+     * \brief Add a trace of a violin plot to the figure.
      *
-     * \param[in] x X values.
-     * \param[in] y Y values.
-     * \param[in] name Name of the line.
+     * \return Trace of the violin plot.
      */
-    virtual void add_line(const std::vector<param::ParameterValueVariant>& x,
-        const std::vector<double>& y, const util::Utf8String& name) = 0;
-
-    /*!
-     * \brief Add a line with errors of y to the figure.
-     *
-     * \param[in] x X values.
-     * \param[in] y Y values.
-     * \param[in] y_error Errors of y values.
-     * \param[in] name Name of the line.
-     */
-    virtual void add_line_with_y_error(const std::vector<double>& x,
-        const std::vector<double>& y, const std::vector<double>& y_error,
-        const util::Utf8String& name) = 0;
-
-    /*!
-     * \brief Add a line with errors of y to the figure.
-     *
-     * \param[in] x X values.
-     * \param[in] y Y values.
-     * \param[in] y_error Errors of y values.
-     * \param[in] name Name of the line.
-     */
-    virtual void add_line_with_y_error(
-        const std::vector<param::ParameterValueVariant>& x,
-        const std::vector<double>& y, const std::vector<double>& y_error,
-        const util::Utf8String& name) = 0;
-
-    /*!
-     * \brief Add a line with errors of x to the figure.
-     *
-     * \param[in] x X values.
-     * \param[in] y Y values.
-     * \param[in] x_error Errors of x values.
-     * \param[in] name Name of the line.
-     */
-    virtual void add_line_with_x_error(const std::vector<double>& x,
-        const std::vector<double>& y, const std::vector<double>& x_error,
-        const util::Utf8String& name) = 0;
-
-    /*!
-     * \brief Add a line with errors of x and y to the figure.
-     *
-     * \param[in] x X values.
-     * \param[in] y Y values.
-     * \param[in] x_error Errors of x values.
-     * \param[in] y_error Errors of y values.
-     * \param[in] name Name of the line.
-     */
-    virtual void add_line_with_xy_error(const std::vector<double>& x,
-        const std::vector<double>& y, const std::vector<double>& x_error,
-        const std::vector<double>& y_error, const util::Utf8String& name) = 0;
-
-    /*!
-     * \brief Add a line to the figure with sequential numbers as x values.
-     *
-     * \param[in] y Y values.
-     * \param[in] name Name of the line.
-     */
-    virtual void add_line_with_sequential_number(
-        const std::vector<double>& y, const util::Utf8String& name) = 0;
+    // TODO implement later.
+    // virtual auto add_violin_trace() -> std::shared_ptr<ITrace> = 0;
 
     /*!
      * \brief Add a violin plot to the figure.

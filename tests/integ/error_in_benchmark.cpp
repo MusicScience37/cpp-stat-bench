@@ -25,6 +25,7 @@
 #include "stat_bench/do_not_optimize.h"
 
 [[nodiscard]] auto throw_exception(std::uint64_t number) -> std::uint64_t {
+    (void)number;
     throw std::runtime_error("Test exception.");
 }
 

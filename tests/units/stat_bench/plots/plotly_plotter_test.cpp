@@ -45,12 +45,20 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
     SECTION("create a simple line plot") {
         auto figure = plotter->create_figure(Utf8String("Simple Line Plot"));
 
-        // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_line(std::vector<double>{1.0, 2.0, 3.0}, {1.1, 2.2, 3.3},
-            Utf8String("Line1"));
-        // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_line(std::vector<double>{2.0, 3.0, 4.0}, {3.3, 4.4, 5.5},
-            Utf8String("Line2"));
+        figure
+            ->add_line_trace()
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->x(std::vector<double>{1.0, 2.0, 3.0})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y({1.1, 2.2, 3.3})
+            ->name(Utf8String("Line1"));
+        figure
+            ->add_line_trace()
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->x(std::vector<double>{2.0, 3.0, 4.0})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y({3.3, 4.4, 5.5})
+            ->name(Utf8String("Line2"));
 
         figure->set_x_title(Utf8String("X"));
         figure->set_y_title(Utf8String("Y"));
@@ -66,12 +74,20 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
     SECTION("create a line plot in log scale") {
         auto figure = plotter->create_figure(Utf8String("Log Line Plot"));
 
-        // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_line(std::vector<double>{1.0, 2.0, 3.0}, {1.1, 2.2, 3.3},
-            Utf8String("Line1"));
-        // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_line(std::vector<double>{2.0, 3.0, 4.0}, {3.3, 4.4, 5.5},
-            Utf8String("Line2"));
+        figure
+            ->add_line_trace()
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->x(std::vector<double>{1.0, 2.0, 3.0})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y({1.1, 2.2, 3.3})
+            ->name(Utf8String("Line1"));
+        figure
+            ->add_line_trace()
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->x(std::vector<double>{2.0, 3.0, 4.0})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y({3.3, 4.4, 5.5})
+            ->name(Utf8String("Line2"));
 
         figure->set_x_title(Utf8String("X"));
         figure->set_y_title(Utf8String("Y"));
@@ -88,12 +104,16 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
     SECTION("create a line plot using string parameters") {
         auto figure = plotter->create_figure(Utf8String("Parameter Line Plot"));
 
-        figure->add_line(std::vector<ParameterValueVariant>{"a"s, "b"s, "c"s},
+        figure->add_line_trace()
+            ->x(std::vector<ParameterValueVariant>{"a"s, "b"s, "c"s})
             // NOLINTNEXTLINE(*-magic-numbers)
-            {1.1, 2.2, 3.3}, Utf8String("Line1"));
-        figure->add_line(std::vector<ParameterValueVariant>{"a"s, "b"s, "c"s},
+            ->y({1.1, 2.2, 3.3})
+            ->name(Utf8String("Line1"));
+        figure->add_line_trace()
+            ->x(std::vector<ParameterValueVariant>{"a"s, "b"s, "c"s})
             // NOLINTNEXTLINE(*-magic-numbers)
-            {3.3, 4.4, 5.5}, Utf8String("Line2"));
+            ->y({3.3, 4.4, 5.5})
+            ->name(Utf8String("Line2"));
 
         figure->set_x_title(Utf8String("X"));
         figure->set_y_title(Utf8String("Y"));
@@ -110,14 +130,24 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
         auto figure =
             plotter->create_figure(Utf8String("Line Plot with Error"));
 
-        // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_line_with_y_error(std::vector<double>{1.0, 2.0, 3.0},
+        figure
+            ->add_line_trace()
             // NOLINTNEXTLINE(*-magic-numbers)
-            {1.1, 2.2, 3.3}, {0.1, 0.2, 0.3}, Utf8String("Line1"));
-        // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_line_with_y_error(std::vector<double>{2.0, 3.0, 4.0},
+            ->x(std::vector<double>{1.0, 2.0, 3.0})
             // NOLINTNEXTLINE(*-magic-numbers)
-            {3.3, 4.4, 5.5}, {0.3, 0.4, 0.5}, Utf8String("Line2"));
+            ->y({1.1, 2.2, 3.3})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y_error({0.1, 0.2, 0.3})
+            ->name(Utf8String("Line1"));
+        figure
+            ->add_line_trace()
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->x(std::vector<double>{2.0, 3.0, 4.0})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y({3.3, 4.4, 5.5})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y_error({0.3, 0.4, 0.5})
+            ->name(Utf8String("Line2"));
 
         figure->set_x_title(Utf8String("X"));
         figure->set_y_title(Utf8String("Y"));
@@ -135,14 +165,20 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
         auto figure = plotter->create_figure(
             Utf8String("Line Plot with Error and String Parameters"));
 
-        figure->add_line_with_y_error(
-            std::vector<ParameterValueVariant>{"a"s, "b"s, "c"s},
+        figure->add_line_trace()
+            ->x(std::vector<ParameterValueVariant>{"a"s, "b"s, "c"s})
             // NOLINTNEXTLINE(*-magic-numbers)
-            {1.1, 2.2, 3.3}, {0.1, 0.2, 0.3}, Utf8String("Line1"));
-        figure->add_line_with_y_error(
-            std::vector<ParameterValueVariant>{"a"s, "b"s, "c"s},
+            ->y({1.1, 2.2, 3.3})
             // NOLINTNEXTLINE(*-magic-numbers)
-            {3.3, 4.4, 5.5}, {0.3, 0.4, 0.5}, Utf8String("Line2"));
+            ->y_error({0.1, 0.2, 0.3})
+            ->name(Utf8String("Line1"));
+        figure->add_line_trace()
+            ->x(std::vector<ParameterValueVariant>{"a"s, "b"s, "c"s})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y({3.3, 4.4, 5.5})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y_error({0.3, 0.4, 0.5})
+            ->name(Utf8String("Line2"));
 
         figure->set_x_title(Utf8String("X"));
         figure->set_y_title(Utf8String("Y"));
@@ -160,14 +196,24 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
         auto figure =
             plotter->create_figure(Utf8String("Line Plot with Error"));
 
-        // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_line_with_x_error(std::vector<double>{1.0, 2.0, 3.0},
+        figure
+            ->add_line_trace()
             // NOLINTNEXTLINE(*-magic-numbers)
-            {1.1, 2.2, 3.3}, {0.1, 0.2, 0.3}, Utf8String("Line1"));
-        // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_line_with_x_error(std::vector<double>{2.0, 3.0, 4.0},
+            ->x(std::vector<double>{1.0, 2.0, 3.0})
             // NOLINTNEXTLINE(*-magic-numbers)
-            {3.3, 4.4, 5.5}, {0.3, 0.4, 0.5}, Utf8String("Line2"));
+            ->y({1.1, 2.2, 3.3})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->x_error({0.1, 0.2, 0.3})
+            ->name(Utf8String("Line1"));
+        figure
+            ->add_line_trace()
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->x(std::vector<double>{2.0, 3.0, 4.0})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y({3.3, 4.4, 5.5})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->x_error({0.3, 0.4, 0.5})
+            ->name(Utf8String("Line2"));
 
         figure->set_x_title(Utf8String("X"));
         figure->set_y_title(Utf8String("Y"));
@@ -185,16 +231,28 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
         auto figure =
             plotter->create_figure(Utf8String("Line Plot with Error"));
 
-        // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_line_with_xy_error(std::vector<double>{1.0, 2.0, 3.0},
+        figure
+            ->add_line_trace()
             // NOLINTNEXTLINE(*-magic-numbers)
-            {1.1, 2.2, 3.3}, {0.1, 0.2, 0.3}, {0.4, 0.5, 0.6},
-            Utf8String("Line1"));
-        // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_line_with_xy_error(std::vector<double>{2.0, 3.0, 4.0},
+            ->x(std::vector<double>{1.0, 2.0, 3.0})
             // NOLINTNEXTLINE(*-magic-numbers)
-            {3.3, 4.4, 5.5}, {0.3, 0.4, 0.5}, {0.6, 0.7, 0.8},
-            Utf8String("Line2"));
+            ->y({1.1, 2.2, 3.3})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->x_error({0.1, 0.2, 0.3})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y_error({0.4, 0.5, 0.6})
+            ->name(Utf8String("Line1"));
+        figure
+            ->add_line_trace()
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->x(std::vector<double>{2.0, 3.0, 4.0})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y({3.3, 4.4, 5.5})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->x_error({0.3, 0.4, 0.5})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y_error({0.6, 0.7, 0.8})
+            ->name(Utf8String("Line2"));
 
         figure->set_x_title(Utf8String("X"));
         figure->set_y_title(Utf8String("Y"));
@@ -212,9 +270,11 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
         auto figure = plotter->create_figure(
             Utf8String("Line Plot with Sequential Number"));
 
-        figure->add_line_with_sequential_number(
+        figure->add_line_trace()
+            ->generate_sequential_number_for_x(3)
             // NOLINTNEXTLINE(*-magic-numbers)
-            {1.1, 2.2, 3.3}, Utf8String("Line1"));
+            ->y({1.1, 2.2, 3.3})
+            ->name(Utf8String("Line1"));
 
         figure->set_x_title(Utf8String("X"));
         figure->set_y_title(Utf8String("Y"));
@@ -270,18 +330,28 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
         auto figure =
             plotter->create_figure(Utf8String("Line Plot with Error"));
 
-        // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_line_with_x_error(std::vector<double>{1.0, 2.0, 3.0},
+        figure
+            ->add_line_trace()
             // NOLINTNEXTLINE(*-magic-numbers)
-            {1.1, 2.2, 3.3}, {0.1, 0.2, 0.3}, Utf8String("Line1"));
-        figure->add_text_to_last_trace(
-            {Utf8String{"Text1"}, Utf8String{"Text2"}, Utf8String{"Text3"}});
-        // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_line_with_x_error(std::vector<double>{2.0, 3.0, 4.0},
+            ->x(std::vector<double>{1.0, 2.0, 3.0})
             // NOLINTNEXTLINE(*-magic-numbers)
-            {3.3, 4.4, 5.5}, {0.3, 0.4, 0.5}, Utf8String("Line2"));
-        figure->add_text_to_last_trace(
-            {Utf8String{"Text4"}, Utf8String{"Text5"}, Utf8String{"Text6"}});
+            ->y({1.1, 2.2, 3.3})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->x_error({0.1, 0.2, 0.3})
+            ->text(
+                {Utf8String{"Text1"}, Utf8String{"Text2"}, Utf8String{"Text3"}})
+            ->name(Utf8String("Line1"));
+        figure
+            ->add_line_trace()
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->x(std::vector<double>{2.0, 3.0, 4.0})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y({3.3, 4.4, 5.5})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->x_error({0.3, 0.4, 0.5})
+            ->text(
+                {Utf8String{"Text4"}, Utf8String{"Text5"}, Utf8String{"Text6"}})
+            ->name(Utf8String("Line2"));
 
         figure->set_x_title(Utf8String("X"));
         figure->set_y_title(Utf8String("Y"));

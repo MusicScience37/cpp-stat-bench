@@ -157,7 +157,6 @@ void Runner::run_case_with_condition(
         reporter->case_starts(bench_case->info());
     }
 
-    constexpr std::size_t threads = 1;
     std::exception_ptr error_in_reporter;
     try {
         const auto measurement = measurer->measure(bench_case.get(), cond);

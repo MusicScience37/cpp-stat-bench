@@ -44,8 +44,6 @@ public:
 };
 
 STAT_BENCH_CASE_F(Fixture, "push_back", "vector") {
-    const std::size_t iterations =
-        stat_bench::current_invocation_context().iterations();
     const std::size_t samples =
         stat_bench::current_invocation_context().samples();
     std::vector<std::vector<int>> cont_vec;
@@ -67,8 +65,6 @@ STAT_BENCH_CASE_F(Fixture, "push_back", "vector_reserved") {
 }
 
 STAT_BENCH_CASE_F(Fixture, "push_back", "deque") {
-    const std::size_t iterations =
-        stat_bench::current_invocation_context().iterations();
     const std::size_t samples =
         stat_bench::current_invocation_context().samples();
     std::vector<std::deque<int>> cont_vec;
@@ -77,8 +73,6 @@ STAT_BENCH_CASE_F(Fixture, "push_back", "deque") {
 }
 
 STAT_BENCH_CASE_F(Fixture, "push_back", "list") {
-    const std::size_t iterations =
-        stat_bench::current_invocation_context().iterations();
     const std::size_t samples =
         stat_bench::current_invocation_context().samples();
     std::vector<std::list<int>> cont_vec;

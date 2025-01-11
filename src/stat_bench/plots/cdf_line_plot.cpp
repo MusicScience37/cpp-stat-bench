@@ -64,9 +64,8 @@ void CdfLinePlot::write(IPlotter* plotter,
                 static_cast<double>(i + 1) / static_cast<double>(samples));
         }
 
-        figure->add_line(x, y,
-            generate_plot_name(measurement.case_info().case_name(),
-                measurement.cond().params()));
+        figure->add_line_trace()->x(x)->y(y)->name(generate_plot_name(
+            measurement.case_info().case_name(), measurement.cond().params()));
     }
 
     figure->set_x_title(util::Utf8String("Time [sec]"));

@@ -79,8 +79,8 @@ TEST_CASE("stat_bench::bench_impl::ThreadableInvoker") {
             threads, iterations, samples, warm_up_samples};
 
         REQUIRE_THROWS(invoker.measure(
-            [](std::size_t thread_index, std::size_t sample_index,
-                std::size_t iteration_index) {
+            [](std::size_t /*thread_index*/, std::size_t /*sample_index*/,
+                std::size_t /*iteration_index*/) {
                 throw std::runtime_error("Test exception.");
             }));
     }
@@ -121,8 +121,8 @@ TEST_CASE("stat_bench::bench_impl::ThreadableInvoker") {
             threads, iterations, samples, warm_up_samples};
 
         REQUIRE_THROWS(invoker.measure(
-            [](std::size_t thread_index, std::size_t sample_index,
-                std::size_t iteration_index) {
+            [](std::size_t /*thread_index*/, std::size_t /*sample_index*/,
+                std::size_t /*iteration_index*/) {
                 throw std::runtime_error("Test exception.");
             }));
     }
