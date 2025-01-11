@@ -47,7 +47,7 @@ ParameterToTimeViolinPlot::ParameterToTimeViolinPlot(
     param::ParameterName parameter_name)
     : parameter_name_(std::move(parameter_name)),
       name_for_file_(fmt::format(
-          "by_{}", util::escape_for_file_name(parameter_name_.str()))) {}
+          "by_{}_violin", util::escape_for_file_name(parameter_name_.str()))) {}
 
 auto ParameterToTimeViolinPlot::name_for_file() const
     -> const util::Utf8String& {

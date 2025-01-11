@@ -32,6 +32,7 @@
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/plots/parameter_to_output_line_plot.h"
 #include "stat_bench/plots/parameter_to_time_line_plot.h"
+#include "stat_bench/plots/parameter_to_time_violin_plot.h"
 #include "stat_bench/plots/time_to_output_by_parameter_line_plot.h"
 #include "stat_bench/util/string_view.h"
 
@@ -49,7 +50,7 @@ BenchmarkGroupRegister::BenchmarkGroupRegister(
     }
 }
 
-auto BenchmarkGroupRegister::add_parameter_to_time_plot(
+auto BenchmarkGroupRegister::add_parameter_to_time_line_plot(
     util::StringView parameter_name, PlotOption::Value options) noexcept
     -> BenchmarkGroupRegister& {
     try {
@@ -68,13 +69,28 @@ auto BenchmarkGroupRegister::add_parameter_to_time_plot(
     }
 }
 
-auto BenchmarkGroupRegister::add_parameter_to_time_plot_log(
+auto BenchmarkGroupRegister::add_parameter_to_time_line_plot_log(
     util::StringView parameter_name) noexcept -> BenchmarkGroupRegister& {
-    return add_parameter_to_time_plot(
+    return add_parameter_to_time_line_plot(
         parameter_name, PlotOption::log_parameter);
 }
 
-auto BenchmarkGroupRegister::add_parameter_to_output_plot(
+auto BenchmarkGroupRegister::add_parameter_to_time_violin_plot(
+    util::StringView parameter_name) noexcept -> BenchmarkGroupRegister& {
+    try {
+        group_->config().add_plot(
+            std::make_shared<plots::ParameterToTimeViolinPlot>(
+                param::ParameterName(std::string(
+                    parameter_name.data(), parameter_name.size()))));
+        return *this;
+    } catch (const std::exception& e) {
+        std::cerr << "Failed to append a plot to a benchmark group: "
+                  << e.what() << std::endl;  // NOLINT(performance-avoid-endl)
+        std::exit(1);                        // NOLINT(concurrency-mt-unsafe)
+    }
+}
+
+auto BenchmarkGroupRegister::add_parameter_to_output_line_plot(
     util::StringView parameter_name, util::StringView custom_output_name,
     PlotOption::Value options) noexcept -> BenchmarkGroupRegister& {
     try {
@@ -97,7 +113,7 @@ auto BenchmarkGroupRegister::add_parameter_to_output_plot(
     }
 }
 
-auto BenchmarkGroupRegister::add_time_to_output_by_parameter_plot(
+auto BenchmarkGroupRegister::add_time_to_output_by_parameter_line_plot(
     util::StringView parameter_name, util::StringView custom_output_name,
     PlotOption::Value options) noexcept -> BenchmarkGroupRegister& {
     try {
