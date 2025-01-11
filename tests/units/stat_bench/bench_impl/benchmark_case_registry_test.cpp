@@ -20,6 +20,7 @@
 #include "stat_bench/bench_impl/benchmark_case_registry.h"
 
 #include <string>
+#include <utility>
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers.hpp>
@@ -84,19 +85,25 @@ TEST_CASE("stat_bench::bench_impl::BenchmarkCaseRegistry") {
 
             REQUIRE(registry.benchmarks().size() == 2);
 
-            const auto& group1 = registry.benchmarks().at(0);
+            const auto& group1 = registry.benchmarks().begin()->second;
             REQUIRE(group1.name() == group_name1);
             REQUIRE(group1.cases().size() == 1);
-            REQUIRE(group1.cases().at(0)->info().group_name() == group_name1);
-            REQUIRE(group1.cases().at(0)->info().case_name() == case_name1);
+            REQUIRE(group1.cases().begin()->second->info().group_name() ==
+                group_name1);
+            REQUIRE(group1.cases().begin()->second->info().case_name() ==
+                case_name1);
 
-            const auto& group2 = registry.benchmarks().at(1);
+            const auto& group2 = (registry.benchmarks().begin() + 1)->second;
             REQUIRE(group2.name() == group_name2);
             REQUIRE(group2.cases().size() == 2);
-            REQUIRE(group2.cases().at(0)->info().group_name() == group_name2);
-            REQUIRE(group2.cases().at(0)->info().case_name() == case_name2);
-            REQUIRE(group2.cases().at(1)->info().group_name() == group_name3);
-            REQUIRE(group2.cases().at(1)->info().case_name() == case_name3);
+            REQUIRE(group2.cases().begin()->second->info().group_name() ==
+                group_name2);
+            REQUIRE(group2.cases().begin()->second->info().case_name() ==
+                case_name2);
+            REQUIRE((group2.cases().begin() + 1)->second->info().group_name() ==
+                group_name3);
+            REQUIRE((group2.cases().begin() + 1)->second->info().case_name() ==
+                case_name3);
         }
     }
 
@@ -144,11 +151,13 @@ TEST_CASE("stat_bench::bench_impl::BenchmarkCaseRegistry") {
 
             REQUIRE(registry.benchmarks().size() == 2);
 
-            const auto& group1 = registry.benchmarks().at(0);
+            const auto& group1 = registry.benchmarks().begin()->second;
             REQUIRE(group1.name() == group_name1);
             REQUIRE(group1.cases().size() == 1);
-            REQUIRE(group1.cases().at(0)->info().group_name() == group_name1);
-            REQUIRE(group1.cases().at(0)->info().case_name() == case_name1);
+            REQUIRE(group1.cases().begin()->second->info().group_name() ==
+                group_name1);
+            REQUIRE(group1.cases().begin()->second->info().case_name() ==
+                case_name1);
         }
     }
 }

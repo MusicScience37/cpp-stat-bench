@@ -20,6 +20,7 @@
 #include "stat_bench/bench_impl/benchmark_group.h"
 
 #include <string>
+#include <utility>
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers.hpp>
@@ -72,8 +73,10 @@ TEST_CASE("stat_bench::bench_impl::BenchmarkGroup") {
             REQUIRE_NOTHROW(group.add(case1));
 
             CHECK(group.cases().size() == 2);
-            CHECK(group.cases().at(0)->info().case_name() == case_name2);
-            CHECK(group.cases().at(1)->info().case_name() == case_name1);
+            CHECK(group.cases().begin()->second->info().case_name() ==
+                case_name2);
+            CHECK((group.cases().begin() + 1)->second->info().case_name() ==
+                case_name1);
         }
     }
 

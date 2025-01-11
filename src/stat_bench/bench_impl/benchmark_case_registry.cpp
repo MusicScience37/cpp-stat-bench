@@ -19,9 +19,9 @@
  */
 #include "stat_bench/bench_impl/benchmark_case_registry.h"
 
-#include <algorithm>
 #include <utility>
 
+#include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/benchmark_group_name.h"
 
@@ -30,33 +30,19 @@ namespace bench_impl {
 
 void BenchmarkCaseRegistry::add(std::shared_ptr<IBenchmarkCase> bench_case) {
     const auto& group_name = bench_case->info().group_name();
-    auto iter = std::find_if(groups_.begin(), groups_.end(),
-        [&group_name](const BenchmarkGroup& group) {
-            return group.name() == group_name;
-        });
-    if (iter != groups_.end() && iter->name() == group_name) {
-        iter->add(std::move(bench_case));
-        return;
-    }
-
-    auto& group = groups_.emplace_back(group_name);
+    auto& group = add_or_get_group(group_name);
     group.add(std::move(bench_case));
 }
 
 auto BenchmarkCaseRegistry::add_or_get_group(const BenchmarkGroupName& name)
     -> BenchmarkGroup& {
-    auto iter = std::find_if(groups_.begin(), groups_.end(),
-        [&name](const BenchmarkGroup& group) { return group.name() == name; });
-    if (iter != groups_.end() && iter->name() == name) {
-        return *iter;
-    }
-
-    return groups_.emplace_back(name);
+    const auto [iter, inserted] = groups_.emplace(name, BenchmarkGroup(name));
+    return iter->second;
 }
 
 void BenchmarkCaseRegistry::filter_by(const filters::ComposedFilter& filter) {
     for (auto iter = groups_.begin(); iter < groups_.end();) {
-        auto& group = *iter;
+        auto& group = iter->second;
         group.filter_by(filter);
         if (group.cases().empty()) {
             iter = groups_.erase(iter);
@@ -67,9 +53,10 @@ void BenchmarkCaseRegistry::filter_by(const filters::ComposedFilter& filter) {
 }
 
 auto BenchmarkCaseRegistry::benchmarks() const noexcept
-    -> const std::vector<BenchmarkGroup>& {
+    -> const util::OrderedMap<BenchmarkGroupName, BenchmarkGroup>& {
     return groups_;
 }
+
 auto BenchmarkCaseRegistry::instance() -> BenchmarkCaseRegistry& {
     static BenchmarkCaseRegistry registry;
     return registry;

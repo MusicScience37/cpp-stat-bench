@@ -20,12 +20,12 @@
 #pragma once
 
 #include <memory>
-#include <vector>
 
 #include "stat_bench/bench_impl/benchmark_group.h"
 #include "stat_bench/bench_impl/i_benchmark_case.h"
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/filters/composed_filter.h"
+#include "stat_bench/util/ordered_map.h"
 
 namespace stat_bench {
 namespace bench_impl {
@@ -68,7 +68,7 @@ public:
      * \return Benchmarks per group.
      */
     [[nodiscard]] auto benchmarks() const noexcept
-        -> const std::vector<BenchmarkGroup>&;
+        -> const util::OrderedMap<BenchmarkGroupName, BenchmarkGroup>&;
 
     /*!
      * \brief Get an instance of the registry.
@@ -79,7 +79,7 @@ public:
 
 private:
     //! Groups.
-    std::vector<BenchmarkGroup> groups_{};  // TODO Use OrderedMap.
+    util::OrderedMap<BenchmarkGroupName, BenchmarkGroup> groups_{};
 };
 
 }  // namespace bench_impl

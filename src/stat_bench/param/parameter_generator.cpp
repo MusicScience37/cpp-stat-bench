@@ -19,11 +19,9 @@
  */
 #include "stat_bench/param/parameter_generator.h"
 
-#include <functional>
-#include <unordered_map>
-
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value.h"
+#include "stat_bench/util/ordered_map.h"
 
 namespace stat_bench {
 namespace param {

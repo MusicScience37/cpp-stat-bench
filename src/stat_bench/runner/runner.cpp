@@ -19,14 +19,15 @@
  */
 #include "stat_bench/runner/runner.h"
 
-#include <cstddef>
 #include <exception>
 #include <memory>
 #include <string>
 
 #include "stat_bench/bench_impl/benchmark_case_registry.h"
 #include "stat_bench/bench_impl/benchmark_group.h"
+#include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_condition.h"
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/system_clock.h"
 #include "stat_bench/clock/system_time_point.h"
 #include "stat_bench/filters/composed_filter.h"
@@ -39,6 +40,7 @@
 #include "stat_bench/reporter/json_reporter.h"
 #include "stat_bench/reporter/msgpack_reporter.h"
 #include "stat_bench/reporter/plot_reporter.h"
+#include "stat_bench/util/ordered_map.h"
 
 namespace stat_bench {
 namespace runner {
@@ -108,12 +110,14 @@ void Runner::run() const {
             reporter->measurer_starts(measurer->name());
         }
 
-        for (const auto& group : registry_.benchmarks()) {
+        for (const auto& group_pair : registry_.benchmarks()) {
+            const auto& group = group_pair.second;
             for (const auto& reporter : reporters_) {
                 reporter->group_starts(group.name(), group.config());
             }
 
-            for (const auto& bench_case : group.cases()) {
+            for (const auto& bench_case_pair : group.cases()) {
+                const auto& bench_case = bench_case_pair.second;
                 run_case(measurer, bench_case);
             }
 

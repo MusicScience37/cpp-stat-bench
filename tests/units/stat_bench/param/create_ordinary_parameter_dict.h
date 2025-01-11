@@ -20,8 +20,7 @@
 #pragma once
 
 #include <cstddef>
-#include <functional>
-#include <unordered_map>
+#include <utility>
 
 #include "stat_bench/param/num_threads_parameter_name.h"
 #include "stat_bench/param/parameter_dict.h"

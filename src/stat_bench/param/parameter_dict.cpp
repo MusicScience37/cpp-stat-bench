@@ -19,7 +19,6 @@
  */
 #include "stat_bench/param/parameter_dict.h"
 
-#include <set>
 #include <utility>
 
 #include <fmt/format.h>  // IWYU pragma: keep

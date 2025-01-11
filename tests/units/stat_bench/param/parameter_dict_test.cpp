@@ -19,9 +19,11 @@
  */
 #include "stat_bench/param/parameter_dict.h"
 
+#include <cstdint>
 #include <functional>
 #include <string>
 #include <utility>
+#include <variant>
 
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/matchers/catch_matchers.hpp>
