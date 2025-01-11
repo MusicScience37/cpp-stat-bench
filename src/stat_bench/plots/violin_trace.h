@@ -35,6 +35,7 @@ public:
      * \brief Constructor.
      */
     ViolinTrace() {
+        trace_ = nlohmann::json::object();
         trace_["type"] = "violin";
         trace_["box"]["visible"] = true;
         trace_["meanline"]["visible"] = true;

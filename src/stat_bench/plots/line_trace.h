@@ -37,6 +37,7 @@ public:
      * \brief Constructor.
      */
     LineTrace() {
+        trace_ = nlohmann::json::object();
         trace_["type"] = "scatter";
         trace_["mode"] = "lines";
     }

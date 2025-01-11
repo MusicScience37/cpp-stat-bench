@@ -120,7 +120,7 @@ public:
 
 protected:
     //! Data of the trace.
-    nlohmann::json trace_{nlohmann::json::object()};
+    nlohmann::json trace_;
 
 private:
     //! Minimum value of y-axis.
