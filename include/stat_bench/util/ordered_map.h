@@ -19,7 +19,9 @@
  */
 #pragma once
 
+#include <algorithm>
 #include <cstddef>
+#include <initializer_list>
 #include <unordered_map>
 #include <utility>
 #include <vector>
@@ -36,10 +38,97 @@ namespace util {
 template <typename Key, typename MappedValue>
 class OrderedMap {
 public:
+    //! Type of iterators.
+    using const_iterator =
+        typename std::vector<std::pair<Key, MappedValue>>::const_iterator;
+
     /*!
      * \brief Constructor.
      */
     OrderedMap() = default;
+
+    /*!
+     * \brief Constructor.
+     *
+     * \param[in] initializer_list Initializer list.
+     */
+    OrderedMap(
+        std::initializer_list<std::pair<Key, MappedValue>> initializer_list) {
+        for (auto& pair : initializer_list) {
+            emplace(std::move(pair.first), std::move(pair.second));
+        }
+    }
+
+    /*!
+     * \brief Check whether this mapping is empty.
+     *
+     * \retval true This mapping is empty.
+     * \retval false This mapping is not empty.
+     */
+    [[nodiscard]] auto empty() const noexcept -> bool {
+        return key_to_index_.empty();
+    }
+
+    /*!
+     * \brief Get the number of pairs.
+     *
+     * \return Number of pairs.
+     */
+    [[nodiscard]] auto size() const noexcept -> std::size_t {
+        return key_to_index_.size();
+    }
+
+    /*!
+     * \brief Count the number of pairs with a key.
+     *
+     * \param[in] key Key.
+     * \return Number of pairs with the key.
+     */
+    [[nodiscard]] auto count(const Key& key) const -> std::size_t {
+        return key_to_index_.count(key);
+    }
+
+    /*!
+     * \brief Reserve memory space.
+     *
+     * \param[in] size Number of pairs.
+     */
+    void reserve(std::size_t size) {
+        key_to_index_.reserve(size);
+        pairs_.reserve(size);
+    }
+
+    /*!
+     * \brief Insert a pair.
+     *
+     * \tparam Args Types of arguments.
+     * \param[in] args Arguments.
+     * \return A pair of the iterator and whether the insertion is successful.
+     */
+    template <typename... Args>
+    auto emplace(Args&&... args) -> std::pair<const_iterator, bool> {
+        pairs_.emplace_back(std::forward<Args>(args)...);
+        const auto [iter, success] =
+            key_to_index_.emplace(pairs_.back().first, pairs_.size() - 1);
+        return {pairs_.begin() + static_cast<std::ptrdiff_t>(iter->second),
+            success};
+    }
+
+    /*!
+     * \brief Erase a pair.
+     *
+     * \param[in] iter Iterator pointing to the pair.
+     * \return Iterator pointing to the next pair.
+     */
+    auto erase(const_iterator iter) -> const_iterator {
+        const auto index = iter - pairs_.begin();
+        key_to_index_.erase(pairs_[index].first);
+        pairs_.erase(iter);
+        for (std::size_t i = index; i < pairs_.size(); ++i) {
+            key_to_index_[pairs_[i].first] = i;
+        }
+        return pairs_.begin() + static_cast<std::ptrdiff_t>(index);
+    }
 
     /*!
      * \brief Access a mapped value.
@@ -72,12 +161,25 @@ public:
     }
 
     /*!
+     * \brief Find a pair with a key.
+     *
+     * \param[in] key Key.
+     * \return Iterator pointing to the pair. If not found, end() is returned.
+     */
+    [[nodiscard]] auto find(const Key& key) const -> const_iterator {
+        const auto iter = key_to_index_.find(key);
+        if (iter == key_to_index_.end()) {
+            return pairs_.end();
+        }
+        return pairs_.begin() + static_cast<std::ptrdiff_t>(iter->second);
+    }
+
+    /*!
      * \brief Get an iterator pointing to the beginning of pairs.
      *
      * \return Iterator.
      */
-    [[nodiscard]] auto begin() const ->
-        typename std::vector<std::pair<Key, MappedValue>>::const_iterator {
+    [[nodiscard]] auto begin() const -> const_iterator {
         return pairs_.begin();
     }
 
@@ -86,9 +188,37 @@ public:
      *
      * \return Iterator.
      */
-    [[nodiscard]] auto end() const ->
-        typename std::vector<std::pair<Key, MappedValue>>::const_iterator {
-        return pairs_.end();
+    [[nodiscard]] auto end() const -> const_iterator { return pairs_.end(); }
+
+    /*!
+     * \brief Check whether this is equal to another mapping.
+     *
+     * \param[in] rhs Right-hand-side mapping.
+     * \retval true This is equal to the right-hand-side mapping.
+     * \retval false This is not equal to the right-hand-side mapping.
+     */
+    [[nodiscard]] auto operator==(const OrderedMap& rhs) const -> bool {
+        if (key_to_index_.size() != rhs.key_to_index_.size()) {
+            return false;
+        }
+        return std::all_of(key_to_index_.begin(), key_to_index_.end(),
+            [this, &rhs](const auto& pair) {
+                const auto rhs_iter = rhs.key_to_index_.find(pair.first);
+                return rhs_iter != rhs.key_to_index_.end() &&
+                    pairs_[pair.second].second ==
+                    rhs.pairs_[rhs_iter->second].second;
+            });
+    }
+
+    /*!
+     * \brief Check whether this is not equal to another mapping.
+     *
+     * \param[in] rhs Right-hand-side mapping.
+     * \retval true This is not equal to the right-hand-side mapping.
+     * \retval false This is equal to the right-hand-side mapping.
+     */
+    [[nodiscard]] auto operator!=(const OrderedMap& rhs) const -> bool {
+        return !(*this == rhs);
     }
 
 private:

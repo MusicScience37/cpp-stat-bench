@@ -65,9 +65,8 @@ namespace stat_bench_test {
     return Measurement(BenchmarkFullName(BenchmarkGroupName(group_name),
                            BenchmarkCaseName(case_name)),
         BenchmarkCondition(
-            ParameterDict(std::unordered_map<ParameterName, ParameterValue>{
-                {stat_bench::param::num_threads_parameter_name(),
-                    ParameterValue().emplace<std::size_t>(threads)},
+            ParameterDict({{stat_bench::param::num_threads_parameter_name(),
+                               ParameterValue().emplace<std::size_t>(threads)},
                 {ParameterName("param"),
                     ParameterValue().emplace<std::string>("value")}})),
         MeasurerName(measurer_name), iterations, samples, durations,

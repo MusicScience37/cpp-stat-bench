@@ -31,6 +31,7 @@
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value.h"
 #include "stat_bench/stat_bench_exception.h"
+#include "stat_bench/util/ordered_map.h"
 #include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
@@ -47,7 +48,7 @@ public:
      * \param[in] data Data.
      */
     explicit ParameterDict(
-        std::unordered_map<ParameterName, ParameterValue> data);
+        util::OrderedMap<ParameterName, ParameterValue> data);
 
     /*!
      * \brief Check whether this is empty.
@@ -154,7 +155,7 @@ public:
 
 private:
     //! Data.
-    std::unordered_map<ParameterName, ParameterValue> data_;
+    util::OrderedMap<ParameterName, ParameterValue> data_;
 };
 
 }  // namespace param

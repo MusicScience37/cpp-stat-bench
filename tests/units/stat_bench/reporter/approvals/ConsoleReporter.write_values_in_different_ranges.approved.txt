@@ -12,9 +12,9 @@ Measurement1
                                                                                 Time [us]                     
                                                             Iterations Samples       Mean Std. Err.       Max Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-Case1 (param=value, threads=1)                                    1000       1     1.2345    0.0000    1.2345 
-Case2 (param=value, threads=1)                                    1000       1      1,234    0.0000     1,234 
-Case3 (param=value, threads=1)                                    1000       1  1,234,567    0.0000 1,234,567 
+Case1 (threads=1, param=value)                                    1000       1     1.2345    0.0000    1.2345 
+Case2 (threads=1, param=value)                                    1000       1      1,234    0.0000     1,234 
+Case3 (threads=1, param=value)                                    1000       1  1,234,567    0.0000 1,234,567 
 
 Benchmark finished at <time>
 
