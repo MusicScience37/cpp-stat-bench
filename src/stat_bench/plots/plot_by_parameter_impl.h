@@ -35,6 +35,7 @@
 #include "stat_bench/plots/i_plotter.h"
 #include "stat_bench/plots/plot_utils.h"
 #include "stat_bench/util/ordered_map.h"
+#include "stat_bench/util/utf8_string.h"
 
 namespace std {
 
@@ -118,7 +119,7 @@ void plot_by_parameter_impl(
  * measurement.
  */
 template <typename MeasurementToPlotDataFunction>
-void plot_by_parameter_with_x_error_impl(
+void plot_by_parameter_with_x_error_with_param_impl(
     const std::vector<measurer::Measurement>& measurements,
     const param::ParameterName& parameter_name, IFigure* figure,
     MeasurementToPlotDataFunction&& convert_measurement_to_plot_data) {
@@ -126,6 +127,7 @@ void plot_by_parameter_with_x_error_impl(
         std::vector<double> x;
         std::vector<double> y;
         std::vector<double> x_error;
+        std::vector<util::Utf8String> texts;
     };
     util::OrderedMap<std::pair<BenchmarkCaseName, param::ParameterDict>,
         FigureData>
@@ -143,11 +145,18 @@ void plot_by_parameter_with_x_error_impl(
         figure_data.x.push_back(x);
         figure_data.y.push_back(y);
         figure_data.x_error.push_back(x_error);
+        std::visit(
+            [&figure_data, &parameter_name](const auto& value) {
+                figure_data.texts.push_back(util::Utf8String(
+                    fmt::format("{}={}", parameter_name, value)));
+            },
+            measurement.cond().params().get_as_variant(parameter_name));
     }
 
     for (const auto& [key, figure_data] : figure_data_map) {
         figure->add_line_with_x_error(figure_data.x, figure_data.y,
             figure_data.x_error, generate_plot_name(key.first, key.second));
+        figure->add_text_to_last_trace(figure_data.texts);
     }
 }
 
@@ -208,7 +217,7 @@ void plot_by_parameter_with_y_error_impl(
  * measurement.
  */
 template <typename MeasurementToPlotDataFunction>
-void plot_by_parameter_with_xy_error_impl(
+void plot_by_parameter_with_xy_error_with_param_impl(
     const std::vector<measurer::Measurement>& measurements,
     const param::ParameterName& parameter_name, IFigure* figure,
     MeasurementToPlotDataFunction&& convert_measurement_to_plot_data) {
@@ -217,6 +226,7 @@ void plot_by_parameter_with_xy_error_impl(
         std::vector<double> y;
         std::vector<double> x_error;
         std::vector<double> y_error;
+        std::vector<util::Utf8String> texts;
     };
     util::OrderedMap<std::pair<BenchmarkCaseName, param::ParameterDict>,
         FigureData>
@@ -235,12 +245,19 @@ void plot_by_parameter_with_xy_error_impl(
         figure_data.y.push_back(y);
         figure_data.x_error.push_back(x_error);
         figure_data.y_error.push_back(y_error);
+        std::visit(
+            [&figure_data, &parameter_name](const auto& value) {
+                figure_data.texts.push_back(util::Utf8String(
+                    fmt::format("{}={}", parameter_name, value)));
+            },
+            measurement.cond().params().get_as_variant(parameter_name));
     }
 
     for (const auto& [key, figure_data] : figure_data_map) {
         figure->add_line_with_xy_error(figure_data.x, figure_data.y,
             figure_data.x_error, figure_data.y_error,
             generate_plot_name(key.first, key.second));
+        figure->add_text_to_last_trace(figure_data.texts);
     }
 }
 

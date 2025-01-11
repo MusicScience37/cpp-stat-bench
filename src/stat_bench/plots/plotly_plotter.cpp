@@ -268,6 +268,17 @@ public:
         is_violin_ = true;
     }
 
+    //! \copydoc stat_bench::plots::IFigure::add_text_to_last_trace
+    void add_text_to_last_trace(
+        const std::vector<util::Utf8String>& texts) override {
+        auto& trace = data_.back();
+        auto& text_json = trace["text"];
+        text_json = nlohmann::json::array();
+        for (const auto& text : texts) {
+            text_json.push_back(text.str());
+        }
+    }
+
     //! \copydoc stat_bench::plots::IFigure::set_x_title
     void set_x_title(const util::Utf8String& title) override {
         layout_["xaxis"]["title"] = title.str();

@@ -123,6 +123,14 @@ public:
         const std::vector<double>& y, const util::Utf8String& name) = 0;
 
     /*!
+     * \brief Add texts to the last trace.
+     *
+     * \param[in] texts Texts to add.
+     */
+    virtual void add_text_to_last_trace(
+        const std::vector<util::Utf8String>& texts) = 0;
+
+    /*!
      * \brief Set the title of the x-axis.
      *
      * \param[in] title Title.

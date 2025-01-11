@@ -265,4 +265,33 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
         ApprovalTests::Approvals::verify(stat_bench_test::read_file(file_path),
             ApprovalTests::Options().fileOptions().withFileExtension(".html"));
     }
+
+    SECTION("create a line plot with texts") {
+        auto figure =
+            plotter->create_figure(Utf8String("Line Plot with Error"));
+
+        // NOLINTNEXTLINE(*-magic-numbers)
+        figure->add_line_with_x_error(std::vector<double>{1.0, 2.0, 3.0},
+            // NOLINTNEXTLINE(*-magic-numbers)
+            {1.1, 2.2, 3.3}, {0.1, 0.2, 0.3}, Utf8String("Line1"));
+        figure->add_text_to_last_trace(
+            {Utf8String{"Text1"}, Utf8String{"Text2"}, Utf8String{"Text3"}});
+        // NOLINTNEXTLINE(*-magic-numbers)
+        figure->add_line_with_x_error(std::vector<double>{2.0, 3.0, 4.0},
+            // NOLINTNEXTLINE(*-magic-numbers)
+            {3.3, 4.4, 5.5}, {0.3, 0.4, 0.5}, Utf8String("Line2"));
+        figure->add_text_to_last_trace(
+            {Utf8String{"Text4"}, Utf8String{"Text5"}, Utf8String{"Text6"}});
+
+        figure->set_x_title(Utf8String("X"));
+        figure->set_y_title(Utf8String("Y"));
+        figure->set_log_x();
+
+        const auto file_path =
+            std::string("./PlotlyPlotter/LinePlotWithText.html");
+        figure->write_to_file(file_path);
+
+        ApprovalTests::Approvals::verify(stat_bench_test::read_file(file_path),
+            ApprovalTests::Options().fileOptions().withFileExtension(".html"));
+    }
 }
