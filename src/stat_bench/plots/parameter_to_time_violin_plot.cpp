@@ -79,9 +79,8 @@ void ParameterToTimeViolinPlot::write(IPlotter* plotter,
         const auto key = std::make_pair(case_name, params_without_target);
         auto& figure_data = figure_data_map[key];
 
-        const param::ParameterValueVariant x_value = std::visit(
-            [](const auto& value) { return fmt::format("{}", value); },
-            measurement.cond().params().get_as_variant(parameter_name_));
+        const param::ParameterValueVariant x_value =
+            measurement.cond().params().get_as_variant(parameter_name_);
         const auto& y_list = measurement.durations_stat().unsorted_samples();
         const auto x_list =
             std::vector<param::ParameterValueVariant>(y_list.size(), x_value);
