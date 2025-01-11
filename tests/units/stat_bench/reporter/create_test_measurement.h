@@ -20,10 +20,8 @@
 #pragma once
 
 #include <cstddef>
-#include <functional>
 #include <memory>
 #include <string>
-#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -40,6 +38,7 @@
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value.h"
 #include "stat_bench/stat/custom_stat_output.h"
+#include "stat_bench/util/ordered_map.h"
 
 namespace stat_bench_test {
 

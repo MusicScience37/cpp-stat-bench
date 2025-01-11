@@ -20,9 +20,7 @@
 #include "stat_bench/plots/parameter_to_time_line_plot.h"
 
 #include <cstddef>
-#include <functional>
 #include <memory>
-#include <unordered_map>
 #include <utility>
 #include <vector>
 
@@ -43,6 +41,7 @@
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value.h"
 #include "stat_bench/plots/plotly_plotter.h"
+#include "stat_bench/util/ordered_map.h"
 
 TEST_CASE("stat_bench::plots::ParameterToTimeLinePlot") {
     using stat_bench::BenchmarkCaseName;

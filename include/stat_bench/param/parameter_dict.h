@@ -24,6 +24,7 @@
 #include <cstddef>
 #include <functional>
 #include <unordered_map>
+#include <utility>
 
 #include <fmt/base.h>
 #include <fmt/format.h>

@@ -15,7 +15,7 @@
  */
 /*!
  * \file
- * \brief Definition of LineTrace class.
+ * \brief Definition of ViolinTrace class.
  */
 #pragma once
 
@@ -36,27 +36,29 @@ namespace stat_bench {
 namespace plots {
 
 /*!
- * \brief Class of traces of line plots.
+ * \brief Class of traces of violin plots.
  */
-class LineTrace final : public IPlotlyTrace {
+class ViolinTrace final : public IPlotlyTrace {
 public:
     /*!
      * \brief Constructor.
      */
-    LineTrace() {
-        trace_["type"] = "scatter";
-        trace_["mode"] = "lines";
+    ViolinTrace() {
+        trace_["type"] = "violin";
+        trace_["box"]["visible"] = true;
+        trace_["meanline"]["visible"] = true;
+        trace_["points"] = "outliers";
     }
 
-    LineTrace(const LineTrace&) = delete;
-    LineTrace(LineTrace&&) = delete;
-    auto operator=(const LineTrace&) -> LineTrace& = delete;
-    auto operator=(LineTrace&&) -> LineTrace& = delete;
+    ViolinTrace(const ViolinTrace&) = delete;
+    ViolinTrace(ViolinTrace&&) = delete;
+    auto operator=(const ViolinTrace&) -> ViolinTrace& = delete;
+    auto operator=(ViolinTrace&&) -> ViolinTrace& = delete;
 
     /*!
      * \brief Destructor.
      */
-    ~LineTrace() override = default;
+    ~ViolinTrace() override = default;
 
     //! \copydoc stat_bench::plots::ITrace::name
     auto name(const util::Utf8String& name) -> ITrace* override {
@@ -105,19 +107,15 @@ public:
 
     //! \copydoc stat_bench::plots::ITrace::x_error
     auto x_error(const std::vector<double>& x_error) -> ITrace* override {
-        trace_["error_x"] = nlohmann::json::object();
-        trace_["error_x"]["type"] = "data";
-        trace_["error_x"]["array"] = x_error;
-        trace_["error_x"]["visible"] = true;
+        // Violin plots do not have x errors.
+        (void)x_error;
         return this;
     }
 
     //! \copydoc stat_bench::plots::ITrace::y_error
     auto y_error(const std::vector<double>& y_error) -> ITrace* override {
-        trace_["error_y"] = nlohmann::json::object();
-        trace_["error_y"]["type"] = "data";
-        trace_["error_y"]["array"] = y_error;
-        trace_["error_y"]["visible"] = true;
+        // Violin plots do not have y errors.
+        (void)y_error;
         return this;
     }
 

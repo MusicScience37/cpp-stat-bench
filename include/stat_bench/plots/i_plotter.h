@@ -129,30 +129,12 @@ public:
      */
     virtual auto add_line_trace() -> std::shared_ptr<ITrace> = 0;
 
-    /*
+    /*!
      * \brief Add a trace of a violin plot to the figure.
      *
      * \return Trace of the violin plot.
      */
-    // TODO implement later.
-    // virtual auto add_violin_trace() -> std::shared_ptr<ITrace> = 0;
-
-    /*!
-     * \brief Add a violin plot to the figure.
-     *
-     * \param[in] y Y values.
-     * \param[in] name Name of the violin plot.
-     */
-    virtual void add_violin(
-        const std::vector<double>& y, const util::Utf8String& name) = 0;
-
-    /*!
-     * \brief Add texts to the last trace.
-     *
-     * \param[in] texts Texts to add.
-     */
-    virtual void add_text_to_last_trace(
-        const std::vector<util::Utf8String>& texts) = 0;
+    virtual auto add_violin_trace() -> std::shared_ptr<ITrace> = 0;
 
     /*!
      * \brief Set the title of the x-axis.

@@ -19,6 +19,8 @@
  */
 #pragma once
 
+#include <utility>
+
 #include <nlohmann/json.hpp>
 
 #include "stat_bench/plots/i_plotter.h"

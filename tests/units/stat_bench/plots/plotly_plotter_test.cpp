@@ -290,10 +290,16 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
     SECTION("create a violin plot") {
         auto figure = plotter->create_figure(Utf8String("Violin Plot"));
 
-        // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_violin({1.1, 2.2, 2.2, 3.3, 11.0}, Utf8String("Violin1"));
-        // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_violin({3.3, 4.4, 4.4, 5.5}, Utf8String("Violin2"));
+        figure
+            ->add_violin_trace()
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y({1.1, 2.2, 2.2, 3.3, 11.0})
+            ->name(Utf8String("Violin1"));
+        figure
+            ->add_violin_trace()
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y({3.3, 4.4, 4.4, 5.5})
+            ->name(Utf8String("Violin2"));
 
         figure->set_x_title(Utf8String("X"));
         figure->set_y_title(Utf8String("Y"));
@@ -308,11 +314,16 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
     SECTION("create a violin plot in log scale") {
         auto figure = plotter->create_figure(Utf8String("Log Violin Plot"));
 
-        // NOLINTNEXTLINE(*-magic-numbers)
-        figure->add_violin({1.0, 2.2, 2.2, 3.3, 11.0}, Utf8String("Violin1"));
-        figure->add_violin(
+        figure
+            ->add_violin_trace()
             // NOLINTNEXTLINE(*-magic-numbers)
-            {3.3e+2, 4.4e+2, 4.4e+2, 5.5e+2, 1e+3}, Utf8String("Violin2"));
+            ->y({1.0, 2.2, 2.2, 3.3, 11.0})
+            ->name(Utf8String("Violin1"));
+        figure
+            ->add_violin_trace()
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y({3.3e+2, 4.4e+2, 4.4e+2, 5.5e+2, 1e+3})
+            ->name(Utf8String("Violin2"));
 
         figure->set_x_title(Utf8String("X"));
         figure->set_y_title(Utf8String("Y"));

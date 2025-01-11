@@ -19,11 +19,16 @@
  */
 #pragma once
 
+// IWYU pragma: no_include <string>
+
 #include <cstddef>
 #include <functional>
-#include <string>
+#include <memory>
 #include <utility>
+#include <variant>
 #include <vector>
+
+#include <fmt/format.h>
 
 #include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_condition.h"
