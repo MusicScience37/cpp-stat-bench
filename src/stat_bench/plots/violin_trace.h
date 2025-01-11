@@ -19,18 +19,9 @@
  */
 #pragma once
 
-#include <algorithm>
-#include <cstddef>
-#include <limits>
-#include <utility>
-#include <variant>
-#include <vector>
-
 #include <nlohmann/json.hpp>
 
-#include "i_plotly_trace.h"
-#include "stat_bench/param/parameter_value.h"
-#include "stat_bench/util/utf8_string.h"
+#include "plotly_trace_common.h"
 
 namespace stat_bench {
 namespace plots {
@@ -38,7 +29,7 @@ namespace plots {
 /*!
  * \brief Class of traces of violin plots.
  */
-class ViolinTrace final : public IPlotlyTrace {
+class ViolinTrace final : public PlotlyTraceCommon {
 public:
     /*!
      * \brief Constructor.
@@ -60,51 +51,6 @@ public:
      */
     ~ViolinTrace() override = default;
 
-    //! \copydoc stat_bench::plots::ITrace::name
-    auto name(const util::Utf8String& name) -> ITrace* override {
-        trace_["name"] = name.str();
-        return this;
-    }
-
-    //! \copydoc stat_bench::plots::ITrace::x
-    auto x(const std::vector<double>& x) -> ITrace* override {
-        trace_["x"] = x;
-        return this;
-    }
-
-    //! \copydoc stat_bench::plots::ITrace::x
-    auto x(const std::vector<param::ParameterValueVariant>& x)
-        -> ITrace* override {
-        auto& x_json = trace_["x"];
-        x_json = nlohmann::json::array();
-        for (const auto& value : x) {
-            std::visit(
-                [&x_json](const auto& value) { x_json.push_back(value); },
-                value);
-        }
-        return this;
-    }
-
-    //! \copydoc stat_bench::plots::ITrace::generate_sequential_number_for_x
-    auto generate_sequential_number_for_x(std::size_t size)
-        -> ITrace* override {
-        trace_["x"] = nlohmann::json::array();
-        for (std::size_t i = 0; i < size; ++i) {
-            trace_["x"].push_back(i + 1U);
-        }
-        return this;
-    }
-
-    //! \copydoc stat_bench::plots::ITrace::y
-    auto y(const std::vector<double>& y) -> ITrace* override {
-        trace_["y"] = y;
-        for (const auto& value : y) {
-            min_y_ = std::min(min_y_, value);
-            max_y_ = std::max(max_y_, value);
-        }
-        return this;
-    }
-
     //! \copydoc stat_bench::plots::ITrace::x_error
     auto x_error(const std::vector<double>& x_error) -> ITrace* override {
         // Violin plots do not have x errors.
@@ -118,34 +64,6 @@ public:
         (void)y_error;
         return this;
     }
-
-    //! \copydoc stat_bench::plots::ITrace::text
-    auto text(const std::vector<util::Utf8String>& text) -> ITrace* override {
-        auto& text_json = trace_["text"];
-        text_json = nlohmann::json::array();
-        for (const auto& text : text) {
-            text_json.push_back(text.str());
-        }
-        return this;
-    }
-
-    //! \copydoc stat_bench::plots::ITrace::data
-    auto data() -> const nlohmann::json& override { return trace_; }
-
-    //! \copydoc stat_bench::plots::ITrace::y_range
-    auto y_range() -> std::pair<double, double> override {
-        return std::make_pair(min_y_, max_y_);
-    }
-
-private:
-    //! Data of the trace.
-    nlohmann::json trace_{nlohmann::json::object()};
-
-    //! Minimum value of y-axis.
-    double min_y_{std::numeric_limits<double>::max()};
-
-    //! Maximum value of y-axis.
-    double max_y_{std::numeric_limits<double>::min()};
 };
 
 }  // namespace plots
