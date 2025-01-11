@@ -19,51 +19,20 @@
  */
 #include "stat_bench/plots/parameter_to_time_line_plot.h"
 
-#include <cstddef>
-#include <functional>
 #include <memory>
+#include <tuple>
 #include <utility>
-#include <vector>
 
 #include <fmt/format.h>
 
-#include "stat_bench/benchmark_case_name.h"
+#include "plot_by_parameter_impl.h"
 #include "stat_bench/benchmark_condition.h"
-#include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/measurer/measurer_name.h"
 #include "stat_bench/param/parameter_dict.h"
-#include "stat_bench/param/parameter_value.h"
 #include "stat_bench/plots/i_plotter.h"
-#include "stat_bench/plots/plot_utils.h"
 #include "stat_bench/stat/statistics.h"
 #include "stat_bench/util/escape_for_file_name.h"
-#include "stat_bench/util/ordered_map.h"
-
-namespace std {
-
-/*!
- * \brief Implementation of std::hash for
- * std::pair<stat_bench::BenchmarkCaseName, stat_bench::param::ParameterDict>.
- */
-template <>
-class hash<std::pair<stat_bench::BenchmarkCaseName,
-    stat_bench::param::ParameterDict>> {
-public:
-    /*!
-     * \brief Operator to calculate hash value.
-     *
-     * \param[in] value Value to calculate hash value.
-     * \return Hash value.
-     */
-    auto operator()(const std::pair<stat_bench::BenchmarkCaseName,
-        stat_bench::param::ParameterDict>& value) const -> size_t {
-        return std::hash<stat_bench::BenchmarkCaseName>{}(value.first) ^
-            std::hash<stat_bench::param::ParameterDict>{}(value.second);
-    }
-};
-
-}  // namespace std
 
 namespace stat_bench {
 namespace plots {
@@ -86,34 +55,15 @@ void ParameterToTimeLinePlot::write(IPlotter* plotter,
     const std::string& file_path) {
     (void)group_name;
 
-    struct FigureData {
-        std::vector<param::ParameterValueVariant> x;
-        std::vector<double> y;
-        std::vector<double> y_error;
-    };
-    util::OrderedMap<std::pair<BenchmarkCaseName, param::ParameterDict>,
-        FigureData>
-        figure_data_map;
-    for (const auto& measurement : measurements) {
-        const auto& case_name = measurement.case_info().case_name();
-        const auto& params = measurement.cond().params();
-        const auto params_without_target =
-            params.clone_without(parameter_name_);
-        const auto key = std::make_pair(case_name, params_without_target);
-        auto& figure_data = figure_data_map[key];
-
-        figure_data.x.push_back(params.get_as_variant(parameter_name_));
-        figure_data.y.push_back(measurement.durations_stat().mean());
-        figure_data.y_error.push_back(
-            measurement.durations_stat().standard_error());
-    }
-
     const auto& title = measurer_name.str();
     auto figure = plotter->create_figure(title);
-    for (const auto& [key, figure_data] : figure_data_map) {
-        figure->add_line_with_error(figure_data.x, figure_data.y,
-            figure_data.y_error, generate_plot_name(key.first, key.second));
-    }
+    plot_by_parameter_with_y_error_impl(measurements, parameter_name_,
+        figure.get(), [this](const measurer::Measurement& measurement) {
+            return std::make_tuple(
+                measurement.cond().params().get_as_variant(parameter_name_),
+                measurement.durations_stat().mean(),
+                measurement.durations_stat().standard_error());
+        });
 
     figure->set_x_title(parameter_name_.str());
     figure->set_y_title(util::Utf8String("Time [sec]"));

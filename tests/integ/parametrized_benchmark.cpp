@@ -26,47 +26,53 @@
 #include <vector>
 
 #include "stat_bench/benchmark_macros.h"
+#include "stat_bench/do_not_optimize.h"
 #include "stat_bench/fixture_base.h"
 #include "stat_bench/invocation_context.h"
 #include "stat_bench/param/parameter_value_vector.h"
+#include "stat_bench/plot_option.h"
 #include "stat_bench/stat/custom_stat_output.h"
 
 class FibonacciFixture : public stat_bench::FixtureBase {
 public:
     FibonacciFixture() {
         // NOLINTNEXTLINE
-        add_param<std::uint64_t>("number")->add(20)->add(30);
+        add_param<std::uint64_t>("number")->add(10)->add(20)->add(30);
     }
 
     void setup(stat_bench::InvocationContext& context) override {
         number_ = context.get_param<std::size_t>("number");
-        throughput_stat_ = context.add_custom_stat("throughput_stat",
-            stat_bench::stat::CustomOutputAnalysisType::rate_per_sec);
     }
 
     void tear_down(stat_bench::InvocationContext& context) override {
-        context.add_custom_output("processed_numbers",
-            static_cast<double>(context.samples()) *
-                static_cast<double>(context.iterations()));
+        context.add_custom_output("result", static_cast<double>(result_));
     }
 
 protected:
     std::uint64_t number_{0};
-
-    std::shared_ptr<stat_bench::stat::CustomStatOutput> throughput_stat_{};
+    std::uint64_t result_{0};
 };
 
-static constexpr auto duration = std::chrono::milliseconds(10);
+[[nodiscard]] auto fibonacci(std::uint64_t number) -> std::uint64_t {
+    if (number < 2) {
+        return 1;
+    }
+    return fibonacci(number - 1) + fibonacci(number - 2);
+}
 
 STAT_BENCH_CASE_F(FibonacciFixture, "FibonacciParametrized", "Fibonacci") {
     STAT_BENCH_MEASURE_INDEXED(
         thread_index, sample_index, /*iteration_index*/) {
-        std::this_thread::sleep_for(duration);
-        throughput_stat_->add(thread_index, sample_index, 1.0);
+        result_ = fibonacci(number_);
     };
 }
 
-STAT_BENCH_GROUP("FibonacciParametrized").add_parameter_to_time_plot("number");
+STAT_BENCH_GROUP("FibonacciParametrized")
+    .add_parameter_to_time_plot("number")
+    .add_parameter_to_output_plot(
+        "number", "result", stat_bench::PlotOption::log_output)
+    .add_time_to_output_by_parameter_plot(
+        "number", "result", stat_bench::PlotOption::log_output);
 
 class VectorPushBackFixture : public stat_bench::FixtureBase {
 public:
@@ -79,11 +85,20 @@ public:
     void setup(stat_bench::InvocationContext& context) override {
         size_ = context.get_param<std::size_t>("size");
         reserve_ = context.get_param<bool>("reserve");
+        throughput_stat_ = context.add_custom_stat("throughput_stat",
+            stat_bench::stat::CustomOutputAnalysisType::rate_per_sec);
+    }
+
+    void tear_down(stat_bench::InvocationContext& context) override {
+        context.add_custom_output("processed_numbers",
+            static_cast<double>(context.samples()) *
+                static_cast<double>(context.iterations()));
     }
 
 protected:
     std::size_t size_{0};
     bool reserve_{false};
+    std::shared_ptr<stat_bench::stat::CustomStatOutput> throughput_stat_{};
 };
 
 STAT_BENCH_CASE_F(
@@ -97,10 +112,19 @@ STAT_BENCH_CASE_F(
         for (std::size_t i = 0; i < size_; ++i) {
             vec.push_back(i);
         }
+        throughput_stat_->add(thread_index, sample_index, 1.0);
     };
 }
 
 STAT_BENCH_GROUP("VectorPushBackParametrized")
-    .add_parameter_to_time_plot_log("size");
+    .add_parameter_to_time_plot("size", stat_bench::PlotOption::log_parameter)
+    .add_parameter_to_output_plot("size", "throughput_stat",
+        stat_bench::PlotOption::log_parameter |
+            stat_bench::PlotOption::log_output)
+    .add_time_to_output_by_parameter_plot(
+        "size", "throughput_stat", stat_bench::PlotOption::log_output)
+    .add_parameter_to_output_plot("size", "processed_numbers",
+        stat_bench::PlotOption::log_parameter |
+            stat_bench::PlotOption::log_output);
 
 STAT_BENCH_MAIN
