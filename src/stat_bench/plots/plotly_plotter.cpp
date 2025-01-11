@@ -33,6 +33,7 @@
 #include "line_trace.h"
 #include "stat_bench/plots/i_plotter.h"
 #include "stat_bench/plots/jinja_renderer.h"
+#include "stat_bench/stat_bench_exception.h"
 #include "stat_bench/util/prepare_directory.h"
 #include "stat_bench/util/utf8_string.h"
 #include "template/plotly_plot.h"
@@ -113,6 +114,10 @@ public:
 
     //! \copydoc stat_bench::plots::IFigure::write_to_file
     void write_to_file(const std::string& file_path) override {
+        if (traces_.empty()) {
+            throw StatBenchException("No traces are added to the figure.");
+        }
+
         nlohmann::json data = nlohmann::json::array();
         double min_y = std::numeric_limits<double>::infinity();
         double max_y = -std::numeric_limits<double>::infinity();
@@ -132,6 +137,9 @@ public:
             layout_["yaxis"]["range"] =
                 std::vector<double>{lower_bound_in_log, upper_bound_in_log};
             layout_["yaxis"]["constrain"] = "range";
+        }
+        if (is_violin_ && traces_.front()->has_x()) {
+            layout_["violinmode"] = "group";
         }
 
         nlohmann::json input;

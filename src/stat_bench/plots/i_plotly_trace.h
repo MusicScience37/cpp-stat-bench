@@ -48,6 +48,14 @@ public:
     virtual auto y_range() -> std::pair<double, double> = 0;
 
     /*!
+     * \brief Check whether x values are set.
+     *
+     * \retval true X values are set.
+     * \retval false X values are not set.
+     */
+    virtual auto has_x() -> bool = 0;
+
+    /*!
      * \brief Constructor.
      */
     IPlotlyTrace() = default;
