@@ -25,10 +25,12 @@
 #include <fstream>
 #include <limits>
 #include <string>
+#include <variant>
 #include <vector>
 
 #include <nlohmann/json.hpp>
 
+#include "stat_bench/param/parameter_value.h"
 #include "stat_bench/plots/i_plotter.h"
 #include "stat_bench/plots/jinja_renderer.h"
 #include "stat_bench/util/prepare_directory.h"

@@ -22,6 +22,7 @@
 #include "param/parameter_name.cpp"       // NOLINT(bugprone-suspicious-include)
 #include "plots/cdf_line_plot.cpp"        // NOLINT(bugprone-suspicious-include)
 #include "plots/jinja_renderer.cpp"       // NOLINT(bugprone-suspicious-include)
+#include "plots/parameter_to_output_line_plot.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "plots/parameter_to_time_line_plot.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "plots/plot_utils.cpp"         // NOLINT(bugprone-suspicious-include)
 #include "plots/plotly_plotter.cpp"     // NOLINT(bugprone-suspicious-include)
