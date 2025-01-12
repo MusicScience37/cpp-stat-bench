@@ -64,6 +64,7 @@ public:
     //! \copydoc stat_bench::plots::ITrace::x
     auto x(const std::vector<double>& x) -> ITrace* override {
         trace_["x"] = x;
+        has_x_ = true;
         return this;
     }
 
@@ -77,6 +78,7 @@ public:
                 [&x_json](const auto& value) { x_json.push_back(value); },
                 value);
         }
+        has_x_ = true;
         return this;
     }
 
@@ -110,13 +112,16 @@ public:
         return this;
     }
 
-    //! \copydoc stat_bench::plots::ITrace::data
+    //! \copydoc stat_bench::plots::IPlotlyTrace::data
     auto data() -> const nlohmann::json& override { return trace_; }
 
-    //! \copydoc stat_bench::plots::ITrace::y_range
+    //! \copydoc stat_bench::plots::IPlotlyTrace::y_range
     auto y_range() -> std::pair<double, double> override {
         return std::make_pair(min_y_, max_y_);
     }
+
+    //! \copydoc stat_bench::plots::IPlotlyTrace::has_x
+    auto has_x() -> bool override { return has_x_; }
 
 protected:
     //! Data of the trace.
@@ -128,6 +133,9 @@ private:
 
     //! Maximum value of y-axis.
     double max_y_{std::numeric_limits<double>::min()};
+
+    //! Whether x values are set.
+    bool has_x_{false};
 };
 
 }  // namespace plots

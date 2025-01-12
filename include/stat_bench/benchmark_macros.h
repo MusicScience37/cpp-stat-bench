@@ -38,8 +38,8 @@
  *
  * \code {.cpp}
  * STAT_BENCH_GROUP("group_name")
- *     .add_parameter_to_time_plot("parameter_name")
- *     .add_parameter_to_time_plot_log("another_parameter_name");
+ *     .add_parameter_to_time_line_plot("parameter_name")
+ *     .add_parameter_to_time_line_plot_log("another_parameter_name");
  * \endcode
  */
 #define STAT_BENCH_GROUP(GROUP_NAME) \

@@ -40,43 +40,53 @@ public:
     explicit BenchmarkGroupRegister(const BenchmarkGroupName& name) noexcept;
 
     /*!
-     * \brief Add a plot of processing time with respect to a parameter to the
-     * group.
+     * \brief Add a line plot of processing time with respect to a parameter to
+     * the group.
      *
      * \param[in] parameter_name Parameter name.
      * \param[in] options Options for the plot.
      * \return Reference to this object.
      */
-    auto add_parameter_to_time_plot(util::StringView parameter_name,
+    auto add_parameter_to_time_line_plot(util::StringView parameter_name,
         PlotOption::Value options = PlotOption::none) noexcept
         -> BenchmarkGroupRegister&;
 
     /*!
-     * \brief Add a plot of processing time with respect to a parameter in the
-     * log scale to the group.
+     * \brief Add a line plot of processing time with respect to a parameter in
+     * the log scale to the group.
      *
      * \param[in] parameter_name Parameter name.
      * \return Reference to this object.
      */
-    auto add_parameter_to_time_plot_log(
+    auto add_parameter_to_time_line_plot_log(
         util::StringView parameter_name) noexcept -> BenchmarkGroupRegister&;
 
     /*!
-     * \brief Add a plot of a custom output with respect to a parameter to the
-     * group.
+     * \brief Add a violin plot of processing time with respect to a parameter
+     * to the group.
+     *
+     * \param[in] parameter_name Parameter name.
+     * \return Reference to this object.
+     */
+    auto add_parameter_to_time_violin_plot(
+        util::StringView parameter_name) noexcept -> BenchmarkGroupRegister&;
+
+    /*!
+     * \brief Add a line plot of a custom output with respect to a parameter to
+     * the group.
      *
      * \param[in] parameter_name Parameter name.
      * \param[in] custom_output_name Custom output name.
      * \param[in] options Options for the plot.
      * \return Reference to this object.
      */
-    auto add_parameter_to_output_plot(util::StringView parameter_name,
+    auto add_parameter_to_output_line_plot(util::StringView parameter_name,
         util::StringView custom_output_name,
         PlotOption::Value options = PlotOption::none) noexcept
         -> BenchmarkGroupRegister&;
 
     /*!
-     * \brief Add a plot of a custom output with respect to processing time
+     * \brief Add a line plot of a custom output with respect to processing time
      * while parameter changes.
      *
      * \param[in] parameter_name Parameter name.
@@ -84,8 +94,8 @@ public:
      * \param[in] options Options for the plot.
      * \return Reference to this object.
      */
-    auto add_time_to_output_by_parameter_plot(util::StringView parameter_name,
-        util::StringView custom_output_name,
+    auto add_time_to_output_by_parameter_line_plot(
+        util::StringView parameter_name, util::StringView custom_output_name,
         PlotOption::Value options = PlotOption::none) noexcept
         -> BenchmarkGroupRegister&;
 

@@ -25,6 +25,7 @@ set(SOURCE_FILES
     plots/jinja_renderer.cpp
     plots/parameter_to_output_line_plot.cpp
     plots/parameter_to_time_line_plot.cpp
+    plots/parameter_to_time_violin_plot.cpp
     plots/plot_utils.cpp
     plots/plotly_plotter.cpp
     plots/samples_line_plot.cpp

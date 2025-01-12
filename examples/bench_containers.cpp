@@ -46,7 +46,7 @@ protected:
 
 STAT_BENCH_MAIN
 
-STAT_BENCH_GROUP("push_back").add_parameter_to_time_plot_log("size");
+STAT_BENCH_GROUP("push_back").add_parameter_to_time_line_plot_log("size");
 
 STAT_BENCH_CASE_F(Fixture, "push_back", "vector") {
     const std::size_t size = size_;

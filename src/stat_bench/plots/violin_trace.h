@@ -22,6 +22,7 @@
 #include <nlohmann/json.hpp>
 
 #include "plotly_trace_common.h"
+#include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
 namespace plots {
@@ -51,6 +52,13 @@ public:
      * \brief Destructor.
      */
     ~ViolinTrace() override = default;
+
+    //! \copydoc stat_bench::plots::ITrace::name
+    auto name(const util::Utf8String& name) -> ITrace* override {
+        PlotlyTraceCommon::name(name);
+        trace_["legendgroup"] = name.str();
+        return this;
+    }
 
     //! \copydoc stat_bench::plots::ITrace::x_error
     auto x_error(const std::vector<double>& x_error) -> ITrace* override {
