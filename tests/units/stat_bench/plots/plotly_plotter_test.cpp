@@ -345,13 +345,13 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
             ->x(std::vector<ParameterValueVariant>{
                 "a"s, "a"s, "a"s, "a"s, "a"s, "b"s, "b"s, "b"s, "b"s, "b"s})
             // NOLINTNEXTLINE(*-magic-numbers)
-            ->y({1.1, 2.2, 2.2, 3.3, 11.0, 3.3e2, 4.4e2, 4.4e2, 5.5e2, 1e3})
+            ->y({1.0, 2.2, 2.2, 3.3, 11.0, 3.3e2, 4.4e2, 4.4e2, 5.5e2, 1e3})
             ->name(Utf8String("Violin1"));
         figure->add_violin_trace()
             ->x(std::vector<ParameterValueVariant>{
                 "a"s, "a"s, "a"s, "a"s, "a"s, "b"s, "b"s, "b"s, "b"s})
             // NOLINTNEXTLINE(*-magic-numbers)
-            ->y({1.1, 2.2, 2.2, 3.3, 11.0, 3.3, 4.4, 4.4, 5.5})
+            ->y({1.0, 2.2, 2.2, 3.3, 11.0, 3.3, 4.4, 4.4, 5.5})
             ->name(Utf8String("Violin2"));
 
         figure->set_x_title(Utf8String("X"));
