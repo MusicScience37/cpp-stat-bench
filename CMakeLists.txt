@@ -21,6 +21,9 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/CTestCustom.cmake
                ${CMAKE_BINARY_DIR}/CTestCustom.cmake)
 include(CTest)
 
+# ##############################################################################
+# Options.
+# ##############################################################################
 option(BUILD_SHARED_LIBS "Build shared library" ON)
 
 option(STAT_BENCH_BUILD_DOC "build documentation of ${FULL_PROJECT_NAME}" OFF)
@@ -28,16 +31,15 @@ option(STAT_BENCH_TESTING "enable tests of ${FULL_PROJECT_NAME}" OFF)
 option(STAT_BENCH_BUILD_EXAMPLES "build examples of ${FULL_PROJECT_NAME}" OFF)
 option(STAT_BENCH_ENABLE_INSTALL
        "enable CMake target to install ${FULL_PROJECT_NAME}" ON)
+option(STAT_BENCH_ENABLE_PRECOMPILED_HEADERS "enable precompiled headers." OFF)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS
     ON
     CACHE BOOL "export compile commands" FORCE)
 
-include(GNUInstallDirs)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY $<1:${CMAKE_BINARY_DIR}/lib>)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY $<1:${CMAKE_BINARY_DIR}/lib>)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $<1:${CMAKE_BINARY_DIR}/bin>)
-
+# ##############################################################################
+# Libraries.
+# ##############################################################################
 find_package(Threads REQUIRED)
 find_package(fmt REQUIRED)
 find_package(lyra REQUIRED)
@@ -58,6 +60,14 @@ if(STAT_BENCH_TESTING)
                                INTERFACE ${APPROVAL_TESTS_CPP_INCLUDE_DIRS})
     add_library(ApprovalTests::ApprovalTests ALIAS ApprovalTests_ApprovalTests)
 endif()
+
+# ##############################################################################
+# Configurations.
+# ##############################################################################
+include(GNUInstallDirs)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY $<1:${CMAKE_BINARY_DIR}/lib>)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY $<1:${CMAKE_BINARY_DIR}/lib>)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY $<1:${CMAKE_BINARY_DIR}/bin>)
 
 include(CppWarningFlags)
 include(ConfigureSanitizer)

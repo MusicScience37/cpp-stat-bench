@@ -22,6 +22,15 @@ if(MSVC)
     target_compile_definitions(stat_bench PUBLIC _CRT_SECURE_NO_WARNINGS=1)
 endif()
 target_add_sanitizer(stat_bench)
+if(STAT_BENCH_ENABLE_PRECOMPILED_HEADERS)
+    target_precompile_headers(stat_bench PRIVATE <fmt/format.h>)
+    if(CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+        target_compile_options(
+            stat_bench
+            PRIVATE
+                "$<$<COMPILE_LANGUAGE:CXX>:SHELL:-Xclang -fno-pch-timestamp>")
+    endif()
+endif()
 
 target_link_libraries(stat_bench PUBLIC Threads::Threads)
 

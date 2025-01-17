@@ -17,7 +17,8 @@
     "CCACHE_COMPILERCHECK": "content",
     "CCACHE_DIR": "/cache_volume/ccache/",
     "VCPKG_DEFAULT_BINARY_CACHE": "/cache_volume/vcpkg/",
-    "POETRY_CACHE_DIR": "/cache_volume/poetry/"
+    "POETRY_CACHE_DIR": "/cache_volume/poetry/",
+    "CCACHE_SLOPPINESS": "pch_defines,time_macros,include_file_mtime,include_file_ctime"
   },
   "customizations": {
     // Configure properties specific to VS Code.
