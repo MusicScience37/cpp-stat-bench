@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Measurer</title>
+    <style>
+        html,
+        body,
+        .container {
+            height: 100%;
+            width: 100%;
+            margin: 0px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="plot" class="container"></div>
+
+    <!-- Import Plotly -->
+    <script src="https://cdn.plot.ly/plotly-2.35.3.min.js" charset="utf-8"></script>
+
+    <div id="dataset" style="display:none">
+        {&quot;config&quot;:{&quot;responsive&quot;:true,&quot;scrollZoom&quot;:true},&quot;data&quot;:[{&quot;boxmean&quot;:&quot;sd&quot;,&quot;boxpoints&quot;:&quot;Outliers&quot;,&quot;name&quot;:&quot;Case1 (Parameter2=value1, threads=1)&quot;,&quot;type&quot;:&quot;box&quot;,&quot;x&quot;:[1,1,1,2,2,2,5,5,5],&quot;y&quot;:[1.0,2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0]},{&quot;boxmean&quot;:&quot;sd&quot;,&quot;boxpoints&quot;:&quot;Outliers&quot;,&quot;name&quot;:&quot;Case1 (Parameter2=value2, threads=1)&quot;,&quot;type&quot;:&quot;box&quot;,&quot;x&quot;:[1,1,1,2,2,2,5,5,5],&quot;y&quot;:[2.0,3.0,4.0,5.0,6.0,7.0,8.0,9.0,10.0]},{&quot;boxmean&quot;:&quot;sd&quot;,&quot;boxpoints&quot;:&quot;Outliers&quot;,&quot;name&quot;:&quot;Case2 (threads=1)&quot;,&quot;type&quot;:&quot;box&quot;,&quot;x&quot;:[1,1,1,2,2,2],&quot;y&quot;:[3.0,4.0,5.0,6.0,7.0,8.0]}],&quot;layout&quot;:{&quot;boxmode&quot;:&quot;group&quot;,&quot;layout&quot;:{&quot;showlegend&quot;:true},&quot;title&quot;:&quot;Measurer&quot;,&quot;xaxis&quot;:{&quot;title&quot;:&quot;Parameter1&quot;,&quot;type&quot;:&quot;category&quot;},&quot;yaxis&quot;:{&quot;title&quot;:&quot;Time [sec]&quot;,&quot;type&quot;:&quot;log&quot;}}}
+    </div>
+
+    <script type="text/javascript">
+        var dataset_str = document.querySelector('#dataset').textContent
+        var dataset = JSON.parse(dataset_str);
+
+        Plotly.newPlot("plot", dataset.data, dataset.layout, dataset.config);
+    </script>
+</body>
+
+</html>
+

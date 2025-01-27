@@ -26,6 +26,7 @@
 #include "stat_bench/plots/cdf_line_plot_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/plots/jinja_renderer_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/plots/parameter_to_output_line_plot_test.cpp"  // NOLINT(bugprone-suspicious-include)
+#include "stat_bench/plots/parameter_to_time_box_plot_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/plots/parameter_to_time_line_plot_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/plots/parameter_to_time_violin_plot_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/plots/plot_utils_test.cpp"  // NOLINT(bugprone-suspicious-include)
