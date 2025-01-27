@@ -15,20 +15,20 @@ Processing Time
                                                                                 Time [us]                     
                                                             Iterations Samples       Mean Std. Err.       Max Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
+Fibonacci (number=5)                                                  n        n           n          n          n result=         n, 
 Fibonacci (number=10)                                                 n        n           n          n          n result=         n, 
-Fibonacci (number=20)                                                 n        n           n          n          n result=         n, 
-Fibonacci (number=30)                                                 n        n           n          n          n result=         n, 
+Fibonacci (number=15)                                                 n        n           n          n          n result=         n, 
 
 >> VectorPushBackParametrized
                                                                                 Time [us]                     
                                                             Iterations Samples       Mean Std. Err.       Max Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-VectorPushBack (size=100, reserve=false)                              n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
-VectorPushBack (size=100, reserve=true)                               n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
-VectorPushBack (size=1000, reserve=false)                             n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
-VectorPushBack (size=1000, reserve=true)                              n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
-VectorPushBack (size=10000, reserve=false)                            n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
-VectorPushBack (size=10000, reserve=true)                             n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
+VectorPushBack (size=8, reserve=false)                                n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
+VectorPushBack (size=8, reserve=true)                                 n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
+VectorPushBack (size=64, reserve=false)                               n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
+VectorPushBack (size=64, reserve=true)                                n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
+VectorPushBack (size=512, reserve=false)                              n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
+VectorPushBack (size=512, reserve=true)                               n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
 
 ========================================================================================================================
 Mean Processing Time
@@ -38,20 +38,20 @@ Mean Processing Time
                                                                                 Time [us]                     
                                                             Iterations Samples       Mean Std. Err.       Max Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
+Fibonacci (number=5)                                                  n        n           n          n          n result=         n, 
 Fibonacci (number=10)                                                 n        n           n          n          n result=         n, 
-Fibonacci (number=20)                                                 n        n           n          n          n result=         n, 
-Fibonacci (number=30)                                                 n        n           n          n          n result=         n, 
+Fibonacci (number=15)                                                 n        n           n          n          n result=         n, 
 
 >> VectorPushBackParametrized
                                                                                 Time [us]                     
                                                             Iterations Samples       Mean Std. Err.       Max Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-VectorPushBack (size=100, reserve=false)                              n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
-VectorPushBack (size=100, reserve=true)                               n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
-VectorPushBack (size=1000, reserve=false)                             n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
-VectorPushBack (size=1000, reserve=true)                              n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
-VectorPushBack (size=10000, reserve=false)                            n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
-VectorPushBack (size=10000, reserve=true)                             n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
+VectorPushBack (size=8, reserve=false)                                n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
+VectorPushBack (size=8, reserve=true)                                 n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
+VectorPushBack (size=64, reserve=false)                               n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
+VectorPushBack (size=64, reserve=true)                                n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
+VectorPushBack (size=512, reserve=false)                              n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
+VectorPushBack (size=512, reserve=true)                               n        n           n          n          n throughput_stat=         n, processed_numbers=         n, 
 
 Benchmark finished at <time>
 

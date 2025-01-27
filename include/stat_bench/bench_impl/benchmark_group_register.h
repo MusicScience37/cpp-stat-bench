@@ -72,6 +72,16 @@ public:
         util::StringView parameter_name) noexcept -> BenchmarkGroupRegister&;
 
     /*!
+     * \brief Add a box plot of processing time with respect to a parameter to
+     * the group.
+     *
+     * \param[in] parameter_name Parameter name.
+     * \return Reference to this object.
+     */
+    auto add_parameter_to_time_box_plot(
+        util::StringView parameter_name) noexcept -> BenchmarkGroupRegister&;
+
+    /*!
      * \brief Add a line plot of a custom output with respect to a parameter to
      * the group.
      *

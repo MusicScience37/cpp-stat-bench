@@ -29,6 +29,7 @@
 
 #include <nlohmann/json.hpp>
 
+#include "box_trace.h"
 #include "i_plotly_trace.h"
 #include "line_trace.h"
 #include "stat_bench/plots/i_plotter.h"
@@ -93,6 +94,14 @@ public:
         return trace;
     }
 
+    //! \copydoc stat_bench::plots::IFigure::add_box_trace
+    [[nodiscard]] auto add_box_trace() -> std::shared_ptr<ITrace> override {
+        auto trace = std::make_shared<BoxTrace>();
+        traces_.push_back(trace);
+        is_box_ = true;
+        return trace;
+    }
+
     //! \copydoc stat_bench::plots::IFigure::set_x_title
     void set_x_title(const util::Utf8String& title) override {
         layout_["xaxis"]["title"] = title.str();
@@ -142,6 +151,10 @@ public:
             layout_["violinmode"] = "group";
             layout_["xaxis"]["type"] = "category";
         }
+        if (is_box_ && traces_.front()->has_x()) {
+            layout_["boxmode"] = "group";
+            layout_["xaxis"]["type"] = "category";
+        }
 
         nlohmann::json input;
         input["title"] = title_;
@@ -172,6 +185,9 @@ private:
 
     //! Whether this plot is a violin plot.
     bool is_violin_{false};
+
+    //! Whether this plot is a box plot.
+    bool is_box_{false};
 
     //! Whether y-axis is in log scale.
     bool is_log_y_{false};

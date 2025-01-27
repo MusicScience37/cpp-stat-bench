@@ -21,9 +21,11 @@ set(SOURCE_FILES
     param/parameter_dict.cpp
     param/parameter_generator.cpp
     param/parameter_name.cpp
+    plots/box_plot.cpp
     plots/cdf_line_plot.cpp
     plots/jinja_renderer.cpp
     plots/parameter_to_output_line_plot.cpp
+    plots/parameter_to_time_box_plot.cpp
     plots/parameter_to_time_line_plot.cpp
     plots/parameter_to_time_violin_plot.cpp
     plots/plot_utils.cpp

@@ -15,7 +15,7 @@
  */
 /*!
  * \file
- * \brief Benchmark of fibonacci.
+ * \brief Parameterized benchmark.
  */
 #include <cstddef>
 #include <cstdint>
@@ -34,7 +34,7 @@ class FibonacciFixture : public stat_bench::FixtureBase {
 public:
     FibonacciFixture() {
         // NOLINTNEXTLINE
-        add_param<std::uint64_t>("number")->add(10)->add(20)->add(30);
+        add_param<std::uint64_t>("number")->add(5)->add(10)->add(15);
     }
 
     void setup(stat_bench::InvocationContext& context) override {
@@ -64,6 +64,7 @@ STAT_BENCH_CASE_F(FibonacciFixture, "FibonacciParametrized", "Fibonacci") {
 STAT_BENCH_GROUP("FibonacciParametrized")
     .add_parameter_to_time_line_plot("number")
     .add_parameter_to_time_violin_plot("number")
+    .add_parameter_to_time_box_plot("number")
     .add_parameter_to_output_line_plot(
         "number", "result", stat_bench::PlotOption::log_output)
     .add_time_to_output_by_parameter_line_plot(
@@ -73,7 +74,7 @@ class VectorPushBackFixture : public stat_bench::FixtureBase {
 public:
     VectorPushBackFixture() {
         // NOLINTNEXTLINE
-        add_param<std::size_t>("size")->add(100)->add(1000)->add(10000);
+        add_param<std::size_t>("size")->add(8)->add(64)->add(512);
         add_param<bool>("reserve")->add(false)->add(true);
     }
 
@@ -115,6 +116,7 @@ STAT_BENCH_GROUP("VectorPushBackParametrized")
     .add_parameter_to_time_line_plot(
         "size", stat_bench::PlotOption::log_parameter)
     .add_parameter_to_time_violin_plot("size")
+    .add_parameter_to_time_box_plot("size")
     .add_parameter_to_output_line_plot("size", "throughput_stat",
         stat_bench::PlotOption::log_parameter |
             stat_bench::PlotOption::log_output)

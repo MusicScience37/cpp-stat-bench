@@ -366,6 +366,84 @@ TEST_CASE("stat_bench::plots::PlotlyPlotter") {
             ApprovalTests::Options().fileOptions().withFileExtension(".html"));
     }
 
+    SECTION("create a box plot") {
+        auto figure = plotter->create_figure(Utf8String("Box Plot"));
+
+        figure
+            ->add_box_trace()
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y({1.1, 2.2, 2.2, 3.3, 11.0})
+            ->name(Utf8String("Box1"));
+        figure
+            ->add_box_trace()
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y({3.3, 4.4, 4.4, 5.5})
+            ->name(Utf8String("Box2"));
+
+        figure->set_x_title(Utf8String("X"));
+        figure->set_y_title(Utf8String("Y"));
+
+        const auto file_path = std::string("./PlotlyPlotter/BoxPlot.html");
+        figure->write_to_file(file_path);
+
+        ApprovalTests::Approvals::verify(stat_bench_test::read_file(file_path),
+            ApprovalTests::Options().fileOptions().withFileExtension(".html"));
+    }
+
+    SECTION("create a box plot in log scale") {
+        auto figure = plotter->create_figure(Utf8String("Log Box Plot"));
+
+        figure
+            ->add_box_trace()
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y({1.0, 2.2, 2.2, 3.3, 11.0})
+            ->name(Utf8String("Box1"));
+        figure
+            ->add_box_trace()
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y({3.3e+2, 4.4e+2, 4.4e+2, 5.5e+2, 1e+3})
+            ->name(Utf8String("Box2"));
+
+        figure->set_x_title(Utf8String("X"));
+        figure->set_y_title(Utf8String("Y"));
+        figure->set_log_y();
+
+        const auto file_path = std::string("./PlotlyPlotter/LogBoxPlot.html");
+        figure->write_to_file(file_path);
+
+        ApprovalTests::Approvals::verify(stat_bench_test::read_file(file_path),
+            ApprovalTests::Options().fileOptions().withFileExtension(".html"));
+    }
+
+    SECTION("create a box plot with string parameters") {
+        auto figure = plotter->create_figure(
+            Utf8String("Box Plot with String Parameters"));
+
+        figure->add_box_trace()
+            ->x(std::vector<ParameterValueVariant>{
+                "a"s, "a"s, "a"s, "a"s, "a"s, "b"s, "b"s, "b"s, "b"s, "b"s})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y({1.0, 2.2, 2.2, 3.3, 11.0, 3.3e2, 4.4e2, 4.4e2, 5.5e2, 1e3})
+            ->name(Utf8String("Box1"));
+        figure->add_box_trace()
+            ->x(std::vector<ParameterValueVariant>{
+                "a"s, "a"s, "a"s, "a"s, "a"s, "b"s, "b"s, "b"s, "b"s})
+            // NOLINTNEXTLINE(*-magic-numbers)
+            ->y({1.0, 2.2, 2.2, 3.3, 11.0, 3.3, 4.4, 4.4, 5.5})
+            ->name(Utf8String("Box2"));
+
+        figure->set_x_title(Utf8String("X"));
+        figure->set_y_title(Utf8String("Y"));
+        figure->set_log_y();
+
+        const auto file_path =
+            std::string("./PlotlyPlotter/BoxPlotWithStringParameters.html");
+        figure->write_to_file(file_path);
+
+        ApprovalTests::Approvals::verify(stat_bench_test::read_file(file_path),
+            ApprovalTests::Options().fileOptions().withFileExtension(".html"));
+    }
+
     SECTION("create a line plot with texts") {
         auto figure =
             plotter->create_figure(Utf8String("Line Plot with Error"));

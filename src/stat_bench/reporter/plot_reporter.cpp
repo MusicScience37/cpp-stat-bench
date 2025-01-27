@@ -27,6 +27,7 @@
 
 #include "stat_bench/bench_impl/benchmark_group_config.h"
 #include "stat_bench/benchmark_group_name.h"
+#include "stat_bench/plots/box_plot.h"
 #include "stat_bench/plots/cdf_line_plot.h"
 #include "stat_bench/plots/plotly_plotter.h"
 #include "stat_bench/plots/samples_line_plot.h"
@@ -43,6 +44,7 @@ PlotReporter::PlotReporter(std::string prefix)
     builtin_plots_.push_back(std::make_shared<plots::SamplesLinePlot>());
     builtin_plots_.push_back(std::make_shared<plots::CdfLinePlot>());
     builtin_plots_.push_back(std::make_shared<plots::ViolinPlot>());
+    builtin_plots_.push_back(std::make_shared<plots::BoxPlot>());
 }
 
 void PlotReporter::experiment_starts(

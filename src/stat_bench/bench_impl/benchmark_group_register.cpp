@@ -31,6 +31,7 @@
 #include "stat_bench/custom_output_name.h"
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/plots/parameter_to_output_line_plot.h"
+#include "stat_bench/plots/parameter_to_time_box_plot.h"
 #include "stat_bench/plots/parameter_to_time_line_plot.h"
 #include "stat_bench/plots/parameter_to_time_violin_plot.h"
 #include "stat_bench/plots/time_to_output_by_parameter_line_plot.h"
@@ -80,6 +81,21 @@ auto BenchmarkGroupRegister::add_parameter_to_time_violin_plot(
     try {
         group_->config().add_plot(
             std::make_shared<plots::ParameterToTimeViolinPlot>(
+                param::ParameterName(std::string(
+                    parameter_name.data(), parameter_name.size()))));
+        return *this;
+    } catch (const std::exception& e) {
+        std::cerr << "Failed to append a plot to a benchmark group: "
+                  << e.what() << std::endl;  // NOLINT(performance-avoid-endl)
+        std::exit(1);                        // NOLINT(concurrency-mt-unsafe)
+    }
+}
+
+auto BenchmarkGroupRegister::add_parameter_to_time_box_plot(
+    util::StringView parameter_name) noexcept -> BenchmarkGroupRegister& {
+    try {
+        group_->config().add_plot(
+            std::make_shared<plots::ParameterToTimeBoxPlot>(
                 param::ParameterName(std::string(
                     parameter_name.data(), parameter_name.size()))));
         return *this;
