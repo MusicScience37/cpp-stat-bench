@@ -21,6 +21,7 @@ set(SOURCE_FILES
     param/parameter_dict.cpp
     param/parameter_generator.cpp
     param/parameter_name.cpp
+    plots/box_plot.cpp
     plots/cdf_line_plot.cpp
     plots/jinja_renderer.cpp
     plots/parameter_to_output_line_plot.cpp

@@ -41,16 +41,20 @@ class TestPlot:
         assert (plot_dir / "Group1" / "ProcessingTime_samples.html").exists()
         assert (plot_dir / "Group1" / "ProcessingTime_cdf.html").exists()
         assert (plot_dir / "Group1" / "ProcessingTime_violin.html").exists()
+        assert (plot_dir / "Group1" / "ProcessingTime_box.html").exists()
         assert (plot_dir / "Group1" / "MeanProcessingTime_samples.html").exists()
         assert (plot_dir / "Group1" / "MeanProcessingTime_cdf.html").exists()
         assert (plot_dir / "Group1" / "MeanProcessingTime_violin.html").exists()
+        assert (plot_dir / "Group1" / "MeanProcessingTime_box.html").exists()
         assert (plot_dir / "Group2").exists()
         assert (plot_dir / "Group2" / "ProcessingTime_samples.html").exists()
         assert (plot_dir / "Group2" / "ProcessingTime_cdf.html").exists()
         assert (plot_dir / "Group2" / "ProcessingTime_violin.html").exists()
+        assert (plot_dir / "Group2" / "ProcessingTime_box.html").exists()
         assert (plot_dir / "Group2" / "MeanProcessingTime_samples.html").exists()
         assert (plot_dir / "Group2" / "MeanProcessingTime_cdf.html").exists()
         assert (plot_dir / "Group2" / "MeanProcessingTime_violin.html").exists()
+        assert (plot_dir / "Group2" / "MeanProcessingTime_box.html").exists()
 
     def test_plot_with_parameter(
         self, bench_executor: BenchExecutor, parametrized_benchmark: pathlib.Path
@@ -71,8 +75,12 @@ class TestPlot:
         assert (
             plot_dir / "FibonacciParametrized" / "ProcessingTime_violin.html"
         ).exists()
+        assert (plot_dir / "FibonacciParametrized" / "ProcessingTime_box.html").exists()
         assert (
             plot_dir / "FibonacciParametrized" / "ProcessingTime_by_number.html"
+        ).exists()
+        assert (
+            plot_dir / "FibonacciParametrized" / "ProcessingTime_by_number_violin.html"
         ).exists()
         assert (
             plot_dir / "FibonacciParametrized" / "ProcessingTime_result_by_number.html"
@@ -92,7 +100,15 @@ class TestPlot:
             plot_dir / "FibonacciParametrized" / "MeanProcessingTime_violin.html"
         ).exists()
         assert (
+            plot_dir / "FibonacciParametrized" / "MeanProcessingTime_box.html"
+        ).exists()
+        assert (
             plot_dir / "FibonacciParametrized" / "MeanProcessingTime_by_number.html"
+        ).exists()
+        assert (
+            plot_dir
+            / "FibonacciParametrized"
+            / "MeanProcessingTime_by_number_violin.html"
         ).exists()
         assert (
             plot_dir
@@ -113,6 +129,9 @@ class TestPlot:
         ).exists()
         assert (
             plot_dir / "VectorPushBackParametrized" / "ProcessingTime_violin.html"
+        ).exists()
+        assert (
+            plot_dir / "VectorPushBackParametrized" / "ProcessingTime_box.html"
         ).exists()
         assert (
             plot_dir / "VectorPushBackParametrized" / "ProcessingTime_by_size.html"
@@ -140,6 +159,9 @@ class TestPlot:
         ).exists()
         assert (
             plot_dir / "VectorPushBackParametrized" / "MeanProcessingTime_violin.html"
+        ).exists()
+        assert (
+            plot_dir / "VectorPushBackParametrized" / "MeanProcessingTime_box.html"
         ).exists()
         assert (
             plot_dir / "VectorPushBackParametrized" / "MeanProcessingTime_by_size.html"
