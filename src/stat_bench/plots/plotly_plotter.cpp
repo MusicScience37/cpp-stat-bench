@@ -29,6 +29,7 @@
 
 #include <nlohmann/json.hpp>
 
+#include "box_trace.h"
 #include "i_plotly_trace.h"
 #include "line_trace.h"
 #include "stat_bench/plots/i_plotter.h"
@@ -90,6 +91,13 @@ public:
         auto trace = std::make_shared<ViolinTrace>();
         traces_.push_back(trace);
         is_violin_ = true;
+        return trace;
+    }
+
+    //! \copydoc stat_bench::plots::IFigure::add_box_trace
+    [[nodiscard]] auto add_box_trace() -> std::shared_ptr<ITrace> override {
+        auto trace = std::make_shared<BoxTrace>();
+        traces_.push_back(trace);
         return trace;
     }
 

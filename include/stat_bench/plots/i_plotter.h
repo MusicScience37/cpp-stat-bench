@@ -137,6 +137,13 @@ public:
     virtual auto add_violin_trace() -> std::shared_ptr<ITrace> = 0;
 
     /*!
+     * \brief Add a trace of a box plot to the figure.
+     *
+     * \return Trace of the box plot.
+     */
+    virtual auto add_box_trace() -> std::shared_ptr<ITrace> = 0;
+
+    /*!
      * \brief Set the title of the x-axis.
      *
      * \param[in] title Title.
