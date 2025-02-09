@@ -82,7 +82,7 @@ This library can be installed via vcpkg using following configurations:
 To build this repository,
 you will require following dependencies:
 
-- [Python](https://www.python.org/) 3.12
+- [Python](https://www.python.org/) 3.13
   - You may want to use [pyenv](https://github.com/pyenv/pyenv).
 - [poetry](https://python-poetry.org)
   - Required Python packages can be installed using poetry.

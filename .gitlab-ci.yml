@@ -46,8 +46,8 @@ pre-commit:
     POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
   script:
     - poetry config virtualenvs.in-project true
-    - poetry env use 3.12
-    - poetry install --without doc --sync
+    - poetry env use 3.13
+    - poetry sync --without doc
     - poetry run pre-commit run --all-files
   cache:
     - key:
@@ -102,8 +102,8 @@ spell check:
     POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
   before_script:
     - poetry config virtualenvs.in-project true
-    - poetry env use 3.12
-    - poetry install --without doc --sync
+    - poetry env use 3.13
+    - poetry sync --without doc
     - mkdir -p $VCPKG_DEFAULT_BINARY_CACHE
     - mkdir $BUILD_DIR
   script:
@@ -272,7 +272,7 @@ msvc-release:
     - RefreshEnv
     - pip install poetry
     - poetry config virtualenvs.in-project true
-    - poetry install --only test --sync
+    - poetry sync --only test
     - .\vcpkg\bootstrap-vcpkg.bat
     - mkdir $BUILD_DIR
   script:
@@ -362,8 +362,8 @@ doc:
     BUILD_DIR: build_doc
   before_script:
     - poetry config virtualenvs.in-project true
-    - poetry env use 3.12
-    - poetry install --only doc --sync
+    - poetry env use 3.13
+    - poetry sync --only doc
     - mkdir -p $VCPKG_DEFAULT_BINARY_CACHE
     - mkdir $BUILD_DIR
   script:

@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{ include = "scripts" }]
 
 [tool.poetry.dependencies]
-python = ">=3.11,<3.13"
+python = ">=3.11,<3.14"
 # Some tools require setuptools.
 setuptools = "^75.8.0"
 
