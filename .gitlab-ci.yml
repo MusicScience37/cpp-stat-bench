@@ -272,7 +272,7 @@ msvc-release:
     - RefreshEnv
     - pip install poetry
     - poetry config virtualenvs.in-project true
-    - poetry install --only test --sync
+    - poetry sync --only test
     - .\vcpkg\bootstrap-vcpkg.bat
     - mkdir $BUILD_DIR
   script:
