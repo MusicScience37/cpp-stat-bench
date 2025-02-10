@@ -351,6 +351,28 @@ static analysis:
       paths:
         - .clang-tidy-cache
 
+python checks:
+  stage: test
+  needs: []
+  image: musicscience37/clang-ci:clang19
+  variables:
+    POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
+  script:
+    - poetry config virtualenvs.in-project true
+    - poetry env use 3.13
+    - poetry sync --without doc
+    - poetry run pylint ./tests/integ
+    - poetry run flake8 ./tests/integ
+    - poetry run mypy ./tests/integ
+  cache:
+    - key:
+        prefix: poetry-${CI_JOB_NAME}
+        files:
+          - poetry.lock
+      paths:
+        - .poetry-cache
+  interruptible: true
+
 doc:
   extends: .test linux base
   parallel:
