@@ -4,10 +4,10 @@ import pathlib
 
 import approvaltests
 import approvaltests.reporters
+import pytest
 from approvaltests.reporters.reporter_that_automatically_approves import (
     ReporterThatAutomaticallyApproves,
 )
-import pytest
 
 from .bench_executor import BenchExecutor
 

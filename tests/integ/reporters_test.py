@@ -2,14 +2,14 @@
 
 import gzip
 import json
-import msgpack
 import pathlib
 import typing
 
 import fastjsonschema
+import msgpack
 import pytest
-from .bench_executor import BenchExecutor
 
+from .bench_executor import BenchExecutor
 
 THIS_DIR = pathlib.Path(__file__).absolute().parent
 SCHEMAS_DIR = THIS_DIR.parent.parent / "schemas"
