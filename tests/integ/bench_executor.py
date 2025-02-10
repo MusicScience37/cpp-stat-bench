@@ -1,7 +1,6 @@
 """Function to execute benchmarks."""
 
 import pathlib
-import shutil
 import subprocess
 import typing
 
@@ -14,6 +13,13 @@ from .scrubbers import scrub_console
 
 
 class BenchExecutor:
+    """Class to execute benchmarks.
+
+    Args:
+        request (pytest.FixtureRequest): An instance of pytest.FixtureRequest.
+        temp_test_dir (pathlib.Path): The temporary directory for tests.
+    """
+
     def __init__(
         self,
         request: pytest.FixtureRequest,
@@ -24,10 +30,12 @@ class BenchExecutor:
 
     @property
     def test_name(self) -> str:
+        """Get the test name."""
         return self._test_name
 
     @property
     def temp_test_dir(self) -> pathlib.Path:
+        """Get the temporary directory for tests."""
         return self._temp_test_dir
 
     def execute(
@@ -42,6 +50,29 @@ class BenchExecutor:
         cwd: typing.Optional[str] = None,
         verify: bool = True,
     ) -> subprocess.CompletedProcess[str]:
+        """Execute a benchmark.
+
+        Args:
+            bench_bin_path (pathlib.Path): The path to the binary of the benchmark.
+            additional_args (str): Additional arguments to pass to the benchmark.
+            samples (typing.Optional[int], optional): The number of samples.
+                Defaults to 3.
+            mean_samples (typing.Optional[int], optional): The number of samples for
+                mean. Defaults to 2.
+            min_sample_duration (float, optional): The minimum duration of a sample.
+                Defaults to 0.001.
+            min_warming_up_iterations (int, optional): The minimum number of iterations
+                for warming up. Defaults to 1.
+            min_warming_up_duration_sec (float, optional): The minimum duration of
+                warming up. Defaults to 0.001.
+            cwd (typing.Optional[str], optional): Current working directory.
+                Defaults to None.
+            verify (bool, optional): Verify outputs using ApprovalTests.
+                Defaults to True.
+
+        Returns:
+            subprocess.CompletedProcess[str]: The result of execution.
+        """
         args: typing.List[str] = []
         if samples is not None:
             args = args + ["--samples", str(samples)]
@@ -64,7 +95,7 @@ class BenchExecutor:
         command = [str(bench_bin_path)] + args
 
         if not cwd:
-            cwd = self._temp_test_dir
+            cwd = str(self._temp_test_dir)
 
         result = subprocess.run(
             command,

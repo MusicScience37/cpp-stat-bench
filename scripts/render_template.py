@@ -2,14 +2,13 @@
 """Render template.
 """
 
-from typing import Any, Dict
-from pathlib import Path
-from math import log10
 import json
+from math import log10
+from pathlib import Path
+from typing import Any, Dict
 
-from aiohttp import web
 import jinja2
-
+from aiohttp import web
 
 THIS_DIR = Path(__file__).absolute().parent
 

@@ -3,10 +3,10 @@
 """
 
 import asyncio
+import multiprocessing
 import pathlib
 import random
 import typing
-import multiprocessing
 
 import click
 import tqdm

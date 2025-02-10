@@ -2,14 +2,14 @@
 
 import gzip
 import json
-import msgpack
 import pathlib
 import typing
 
 import fastjsonschema
+import msgpack
 import pytest
-from .bench_executor import BenchExecutor
 
+from .bench_executor import BenchExecutor
 
 THIS_DIR = pathlib.Path(__file__).absolute().parent
 SCHEMAS_DIR = THIS_DIR.parent.parent / "schemas"
@@ -18,7 +18,8 @@ CURRENT_SCHEMA_FILE = SCHEMAS_DIR / "data_file_schema_v3.json"
 
 @pytest.fixture
 def data_file_schema_validate():
-    with open(str(CURRENT_SCHEMA_FILE), mode="r") as file:
+    """Function to validate data file schema."""
+    with open(str(CURRENT_SCHEMA_FILE), mode="r", encoding="utf-8") as file:
         data = json.load(file)
     return fastjsonschema.compile(data)
 
@@ -345,7 +346,7 @@ class TestJson:
         assert result.returncode == 0
         data_path = bench_executor.temp_test_dir / f"{bench_executor.test_name}.json"
         assert data_path.exists()
-        with open(data_path, mode="r") as data_file:
+        with open(data_path, mode="r", encoding="utf-8") as data_file:
             data = json.load(data_file)
         data_file_schema_validate(data)
 

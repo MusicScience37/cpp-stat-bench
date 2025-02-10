@@ -8,7 +8,6 @@ import typing
 
 import click
 
-
 HEADER = R"""/*
  * Copyright {year} MusicScience37 (Kenta Kabashima)
  *

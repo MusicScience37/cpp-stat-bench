@@ -1,6 +1,5 @@
 """Test of command line options not checked in other tests."""
 
-
 import pathlib
 
 from .bench_executor import BenchExecutor
