@@ -46,7 +46,7 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pylint.main]
-disable = "too-many-instance-attributes,line-too-long,fixme"
+disable = "too-many-instance-attributes,line-too-long,fixme,too-few-public-methods,redefined-outer-name,redefined-builtin,too-many-arguments"
 load-plugins = "pylint.extensions.docparams"
 
 [tool.isort]
