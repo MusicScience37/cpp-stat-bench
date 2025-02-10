@@ -82,13 +82,9 @@ WinMonotoneTimePoint::WinMonotoneTimePoint(DataType data) noexcept
 #include <cstdio>
 #include <cstdlib>
 
-#include <time.h>  // NOLINT: std::timespec doesn't exist in C++ 14.
+#include <time.h>  // NOLINT: For clock_gettime and cloock_getres.
 
-#ifdef CLOCK_MONOTONIC_RAW
-#define STAT_BENCH_CLOCK_ID CLOCK_MONOTONIC_RAW
-#else
 #define STAT_BENCH_CLOCK_ID CLOCK_MONOTONIC
-#endif
 
 namespace stat_bench {
 namespace clock {
