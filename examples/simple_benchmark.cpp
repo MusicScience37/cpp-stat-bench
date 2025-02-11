@@ -26,6 +26,9 @@
 // and the second argument is the name of the case of the benchmark.
 STAT_BENCH_CASE("Fibonacci", "fibonacci(10)") {
     const int number = 10;
+    // Measure the time to invoke a function.
+    // The return value is handled by cpp-stat-bench library to prevent
+    // compilers from optimizing out the function call.
     STAT_BENCH_MEASURE() { return fibonacci(number); };
 }
 
