@@ -1,0 +1,78 @@
+@startuml classes_run_bench
+
+title Basic Classes to Run Benchmarks
+
+class "main function" as main
+hide main circle
+
+package stat_bench {
+    package runner {
+        class CommandLineParser
+        main ..> CommandLineParser : use
+
+        class Runner
+        main ..> Runner : use
+
+        class Config
+        CommandLineParser ..> Config : create
+        Runner ..> Config : use
+    }
+
+    package clock {
+        class SystemClock
+        Runner ...> SystemClock : use
+
+        class SystemTimePoint
+        SystemClock ..> SystemTimePoint : create
+    }
+
+    package bench_impl {
+        class BenchmarkCaseRegistry
+        Runner ...> BenchmarkCaseRegistry : use
+
+        class BenchmarkGroup
+        BenchmarkCaseRegistry "1" o-- "1.." BenchmarkGroup
+
+        interface IBenchmarkCase
+        BenchmarkGroup "1" o-- "1.." IBenchmarkCase
+    }
+
+    package measurer {
+        interface IMeasurer
+        Runner "1" o--- "1.." IMeasurer
+
+        class Measurement
+        IMeasurer ..> Measurement : create
+    }
+
+    package reporter {
+        interface IReporter
+        Runner "1" o--- "1.." IReporter
+        IReporter ..> Measurement : use
+        IReporter ..> SystemTimePoint : use
+    }
+
+    package param {
+        class ParameterConfig
+        IBenchmarkCase "1" o-- "1" ParameterConfig
+        ParameterConfig ..> ParameterGenerator : create
+
+        class ParameterGenerator
+        Runner ..> ParameterGenerator : use
+
+        class ParameterDict
+        ParameterGenerator ..> ParameterDict : create
+    }
+
+    class BenchmarkCondition
+    Runner ..> BenchmarkCondition : create
+    IMeasurer ..> BenchmarkCondition : use
+    BenchmarkCondition "1" o-- "1" ParameterDict
+
+    class InvocationContext
+    InvocationContext "1" o-- "1" BenchmarkCondition
+    IMeasurer ..> InvocationContext : create
+    IBenchmarkCase ..> InvocationContext : use
+}
+
+@enduml
