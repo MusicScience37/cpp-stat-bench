@@ -23,7 +23,6 @@
 #include <string>
 
 #include "stat_bench/benchmark_macros.h"
-#include "stat_bench/do_not_optimize.h"
 #include "stat_bench/fixture_base.h"
 #include "stat_bench/invocation_context.h"
 #include "stat_bench/param/parameter_value_vector.h"
@@ -51,10 +50,7 @@ protected:
 };
 
 STAT_BENCH_CASE_F(Fixture, "Fibonacci", "Fibonacci") {
-    STAT_BENCH_MEASURE() {
-        stat_bench::do_not_optimize(number_);
-        stat_bench::do_not_optimize(fibonacci(number_));
-    };
+    STAT_BENCH_MEASURE() { return fibonacci(number_); };
 }
 
 STAT_BENCH_MAIN
