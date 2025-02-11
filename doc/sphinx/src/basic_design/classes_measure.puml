@@ -1,0 +1,61 @@
+@startuml classes_measure
+
+title Basic Classes to Measure Processing Time
+
+class "Custom Output without Statistics" as NoStatisticsCustomOutput
+note bottom
+    Custom outputs without statistics
+    are saved in "double" variables.
+end note
+hide NoStatisticsCustomOutput circle
+
+package stat_bench {
+    package bench_impl {
+        interface IBenchmarkCase
+
+        class ThreadableInvoker
+    }
+
+    class BenchmarkCondition
+
+    package clock {
+        class StopWatch
+        ThreadableInvoker ..> StopWatch : create
+
+        class MonotoneTimePoint
+        StopWatch ..> MonotoneTimePoint : create
+
+        class Duration
+        StopWatch ..> Duration : create
+    }
+
+    package stat {
+        class CustomStatOutput
+
+        class Statistics
+        CustomStatOutput ..> Statistics : create
+    }
+
+    package measurer {
+        interface IMeasurer
+
+        class Measurement
+        IMeasurer ..> Measurement : create
+        Measurement "1" o-- "1" BenchmarkCondition
+        Measurement "1" o-- "1.." Duration
+        Measurement "1" o-- "1.." CustomStatOutput
+        Measurement "1" o-- "1.." Statistics
+        Measurement "1" o-- "1.." NoStatisticsCustomOutput
+    }
+
+    class InvocationContext
+    InvocationContext "1" o-- "1" BenchmarkCondition
+    InvocationContext "1" o-- "1.." Duration
+    InvocationContext "1" o-- "1.." CustomStatOutput
+    InvocationContext "1" o-- "1.." NoStatisticsCustomOutput
+    IMeasurer ..> InvocationContext : create
+    IBenchmarkCase ..> InvocationContext : use
+    InvocationContext ..> ThreadableInvoker : use
+}
+
+@enduml

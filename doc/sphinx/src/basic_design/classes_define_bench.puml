@@ -1,0 +1,35 @@
+@startuml classes_define_bench
+
+title Basic Classes to Define Benchmarks
+
+package stat_bench {
+    package bench_impl {
+        interface IBenchmarkCase
+    }
+
+    class FixtureBase
+    IBenchmarkCase <|.. FixtureBase
+
+    package bench_impl {
+        class NullFixture
+        FixtureBase <|-- NullFixture
+    }
+
+    package param {
+        class ParameterConfig
+        FixtureBase "1" o-- "1" ParameterConfig
+    }
+}
+
+package "User's Program" {
+    class "User-Defined Fixture" as UserFixture
+    FixtureBase <|-- UserFixture
+
+    class "User-Defined Benchmark Case with Fixture" as FixtureBenchmarkCase
+    UserFixture <|-- FixtureBenchmarkCase
+
+    class "User-Defined Benchmark Case without Fixture" as NoFixtureBenchmarkCase
+    NullFixture <|-- NoFixtureBenchmarkCase
+}
+
+@enduml

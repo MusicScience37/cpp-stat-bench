@@ -105,7 +105,10 @@ auto format_duration(double val) -> std::string {
 
 }  // namespace
 
+//! Format of the table for console output.
 #define CONSOLE_TABLE_FORMAT "{:<58}  {:>10} {:>7}  {:>9} {:>9} {:>9} "
+
+//! Format of the table for console output when an error occurs.
 #define CONSOLE_TABLE_FORMAT_ERROR "{:<58}  {}"
 
 void ConsoleReporter::group_starts(const BenchmarkGroupName& name,

@@ -1,0 +1,34 @@
+@startuml classes_param
+
+title Basic Classes of Parameters in Benchmarks
+
+package stat_bench {
+    class BenchmarkCondition
+
+    package param {
+        class ParameterConfig
+
+        class ParameterGenerator
+        ParameterConfig ..> ParameterGenerator : create
+
+        class ParameterName
+        ParameterConfig "1" o-- "1.." ParameterName
+
+        interface IParameterValueVector
+        ParameterConfig "1" o-- "1.." IParameterValueVector
+
+        class ParameterValueVector<T>
+        IParameterValueVector <|.. ParameterValueVector
+
+        class ParameterValue
+        ParameterValueVector "1" o-- "1.." ParameterValue
+
+        class ParameterDict
+        ParameterGenerator ..> ParameterDict : create
+        ParameterDict "1" o-- "1.." ParameterName
+        ParameterDict "1" o-- "1.." ParameterValue
+        BenchmarkCondition "1" o-- "1" ParameterDict
+    }
+}
+
+@enduml

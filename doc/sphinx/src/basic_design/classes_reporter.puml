@@ -1,0 +1,34 @@
+@startuml classes_reporter
+
+title Basic Classes to Report Benchmark Results
+
+package stat_bench {
+    package measurer {
+        class Measurement
+    }
+
+    package reporter {
+        interface IReporter
+        IReporter ..> Measurement : use
+
+        class ConsoleReporter
+        IReporter <|.. ConsoleReporter
+
+        class DataFileReporterBase
+        IReporter <|.. DataFileReporterBase
+
+        class JsonReporter
+        DataFileReporterBase <|.. JsonReporter
+
+        class MsgPackReporter
+        DataFileReporterBase <|.. MsgPackReporter
+
+        class CompressedMsgPackReporter
+        DataFileReporterBase <|.. CompressedMsgPackReporter
+
+        class PlotReporter
+        IReporter <|.. PlotReporter
+    }
+}
+
+@enduml

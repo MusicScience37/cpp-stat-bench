@@ -1,4 +1,4 @@
-API Reference
+Basic API Reference
 ====================
 
 .. note::

@@ -77,10 +77,14 @@ void prepare_directory_for(const std::string& path) {
 namespace stat_bench {
 namespace util {
 
-[[nodiscard]] static auto path_exists(const std::string& path) -> bool {
+namespace {
+
+[[nodiscard]] auto path_exists(const std::string& path) -> bool {
     struct stat buf{};
     return ::stat(path.c_str(), &buf) == 0;
 }
+
+}  // namespace
 
 void prepare_directory(const std::string& path) {
     if (path_exists(path)) {

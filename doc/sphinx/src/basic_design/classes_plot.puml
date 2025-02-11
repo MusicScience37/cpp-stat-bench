@@ -1,0 +1,55 @@
+@startuml classes_plot
+
+title Basic Classes to Plot Benchmark Results
+
+package stat_bench {
+    package reporter {
+        class PlotReporter
+    }
+
+    package plots {
+        interface IPlotter
+        PlotReporter "1" o-- "1" IPlotter
+
+        class PlotlyPlotter
+        IPlotter <|.. PlotlyPlotter
+
+        interface IFigure
+        IPlotter ..> IFigure : create
+
+        class PlotlyFigure
+        IFigure <|.. PlotlyFigure
+        PlotlyPlotter ..> PlotlyFigure : create
+
+        interface ITrace
+        IFigure ..> ITrace : create
+
+        interface IPlotlyTrace
+        ITrace <|-- IPlotlyTrace
+        PlotlyFigure "1" o-- "1.." IPlotlyTrace
+
+        class XxxTrace
+        note right
+            Xxx is a placeholder
+            for the actual plot type.
+        end note
+        IPlotlyTrace <|.. XxxTrace
+        PlotlyFigure ..> XxxTrace : create
+
+        class JinjaRenderer
+        PlotlyPlotter "1" o-- "1" JinjaRenderer
+
+        interface IPlot
+        PlotReporter "1" o-- "1.." IPlot
+
+        class XxxPlot
+        note right
+            Xxx is a placeholder
+            for the actual plot type.
+        end note
+        IPlot <|.. XxxPlot
+        XxxPlot ..> IPlotter : use
+    }
+}
+
+@enduml

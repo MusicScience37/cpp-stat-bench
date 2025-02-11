@@ -31,6 +31,11 @@ namespace stat_bench {
      * \brief Directory of internal implementation.
      */
 
+    /*!
+     * \dir src/stat_bench/bench_impl
+     * \brief Directory of internal implementation.
+     */
+
     //! Namespace of internal implementation.
     namespace bench_impl {}
 
@@ -42,11 +47,21 @@ namespace stat_bench {
      * \brief Directory of clocks for benchmarks.
      */
 
+    /*!
+     * \dir src/stat_bench/clock
+     * \brief Directory of clocks for benchmarks.
+     */
+
     //! Namespace of clocks for benchmarks.
     namespace clock {}
 
     /*!
      * \dir include/stat_bench/filters
+     * \brief Directory of filters of benchmarks.
+     */
+
+    /*!
+     * \dir src/stat_bench/filters
      * \brief Directory of filters of benchmarks.
      */
 
@@ -58,6 +73,11 @@ namespace stat_bench {
      * \brief Directory of classes to measure time in benchmarks.
      */
 
+    /*!
+     * \dir src/stat_bench/measurer
+     * \brief Directory of classes to measure time in benchmarks.
+     */
+
     //! Namespace of classes to measure time in benchmarks.
     namespace measurer {}
 
@@ -66,11 +86,34 @@ namespace stat_bench {
      * \brief Directory of parameters of benchmarks.
      */
 
+    /*!
+     * \dir src/stat_bench/param
+     * \brief Directory of parameters of benchmarks.
+     */
+
     //! Namespace of parameters of benchmarks.
     namespace param {}
 
     /*!
+     * \dir include/stat_bench/plots
+     * \brief Directory of plotting.
+     */
+
+    /*!
+     * \dir src/stat_bench/plots
+     * \brief Directory of plotting.
+     */
+
+    //! Namespace of plotting.
+    namespace plots {}
+
+    /*!
      * \dir include/stat_bench/reporter
+     * \brief Directory of reporters of results of benchmarks.
+     */
+
+    /*!
+     * \dir src/stat_bench/reporter
      * \brief Directory of reporters of results of benchmarks.
      */
 
@@ -87,11 +130,21 @@ namespace stat_bench {
      * \brief Directory of classes to run benchmarks.
      */
 
+    /*!
+     * \dir src/stat_bench/runner
+     * \brief Directory of classes to run benchmarks.
+     */
+
     //! Namespace of classes to run benchmarks.
     namespace runner {}
 
     /*!
      * \dir include/stat_bench/stat
+     * \brief Directory of statistics.
+     */
+
+    /*!
+     * \dir src/stat_bench/stat
      * \brief Directory of statistics.
      */
 
@@ -103,6 +156,11 @@ namespace stat_bench {
      * \brief Directory of utility functions and classes.
      */
 
+    /*!
+     * \dir src/stat_bench/util
+     * \brief Directory of utility functions and classes.
+     */
+
     //! Namespace of utility functions and classes.
     namespace util {}
 
@@ -110,3 +168,14 @@ namespace stat_bench {
 
 //! Namespace of [fmt](https://fmt.dev/) library.
 namespace fmt {}
+
+//! Namespace of [nlohmann::json](https://github.com/nlohmann/json) library.
+namespace nlohmann {}
+
+//! Namespace of [cpp-msgpack-light](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-msgpack-light) library.
+namespace msgpack_light {
+
+    //! Namespace to support types.
+    namespace type_support {}
+
+}  // namespace msgpack_light

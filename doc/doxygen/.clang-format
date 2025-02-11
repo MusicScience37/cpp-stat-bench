@@ -20,3 +20,5 @@ IncludeCategories:
     Priority: 3
 
 NamespaceMacros: []
+
+CommentPragmas: "!"

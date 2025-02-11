@@ -1,8 +1,10 @@
-# Installation
+# Install This Library
+
+This library can be installed only via vcpkg currently.
 
 ## Via vcpkg
 
-This library can be installed via vcpkg using following configurations:
+This library can be installed via [vcpkg](https://vcpkg.io/) using following configurations:
 
 - Add a vcpkg registry
   `https://gitlab.com/MusicScience37Projects/vcpkg-registry`
