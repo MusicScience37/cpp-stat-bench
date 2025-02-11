@@ -26,7 +26,9 @@
 namespace stat_bench {
 namespace util {
 
-[[nodiscard]] static auto check_glob_pattern_impl_asterisk(
+namespace {
+
+[[nodiscard]] auto check_glob_pattern_impl_asterisk(
     StringView pattern, StringView str) -> bool {
     const StringView remaining_pattern = pattern.substr(1U);
     for (std::size_t size = 0; size < str.size(); ++size) {
@@ -36,6 +38,8 @@ namespace util {
     }
     return check_glob_pattern(remaining_pattern, StringView());
 }
+
+}  // namespace
 
 auto check_glob_pattern(StringView pattern, StringView str) -> bool {
     std::size_t pattern_index = 0;

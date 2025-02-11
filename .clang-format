@@ -21,4 +21,4 @@ IncludeCategories:
 
 NamespaceMacros: ["MSGPACK_API_VERSION_NAMESPACE"]
 
-CommentPragmas: "\\copydoc|NOLINT"
+CommentPragmas: "\\copydoc|NOLINT|!"
