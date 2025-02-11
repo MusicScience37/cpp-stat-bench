@@ -19,6 +19,7 @@ Developed at
     :caption: Usage
 
     installation
+    howto/index
     basic_api/index
     Full API Reference <https://cppstatbench.musicscience37.com/api/index.html>
     schemas/index
@@ -30,3 +31,4 @@ Developed at
     how_to_build_in_repository
     convention
     basic_design/index
+    todos

@@ -19,6 +19,11 @@
  */
 
 /*!
+ * \example simple_benchmark.cpp
+ * Example of a simple benchmark.
+ */
+
+/*!
  * \example bench_containers.cpp
  * Example of a benchmark of STL containers.
  */
