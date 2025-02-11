@@ -1,0 +1,2 @@
+add_executable(stat_bench_bench_do_not_optimize bench_do_not_optimize.cpp)
+target_link_libraries(stat_bench_bench_do_not_optimize PRIVATE stat_bench)
