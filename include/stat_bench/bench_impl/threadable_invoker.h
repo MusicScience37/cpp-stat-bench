@@ -25,16 +25,89 @@
 #include <iostream>
 #include <memory>
 #include <thread>
+#include <type_traits>
+#include <utility>
 #include <vector>
 
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/clock/stop_watch.h"
+#include "stat_bench/do_not_optimize.h"
 #include "stat_bench/memory_barrier.h"
 #include "stat_bench/stat_bench_exception.h"
 #include "stat_bench/util/sync_barrier.h"
 
 namespace stat_bench {
 namespace bench_impl {
+
+// Define invoke_result_t for C++14 and C++17
+#if defined(__cpp_lib_is_invocable) || defined(STAT_BENCH_DOCUMENTATION)
+// Since C++17
+/*!
+ * \brief Get the result type of invoking a function with arguments.
+ *
+ * \tparam Func Type of the function.
+ * \tparam Args Type of the arguments.
+ */
+template <typename Func, typename... Args>
+using invoke_result_t = std::invoke_result_t<Func, Args...>;
+#else
+// C++14
+template <typename Func, typename... Args>
+using invoke_result_t = std::result_of_t<Func(Args...)>;  // NOLINT
+#endif
+
+// Define invoke_result_t for C++14 and C++17
+#ifdef STAT_BENCH_DOCUMENTATION
+/*!
+ * \brief Invoke a function and ignore the return value.
+ *
+ * \tparam Func Type of the function.
+ * \tparam Args Type of the arguments.
+ * \param[in] func Function.
+ * \param[in] args Arguments.
+ */
+template <typename Func, typename... Args>
+void invoke_and_ignore_return_value(const Func& func, Args&&... args) {
+    do_not_optimize(func(std::forward<Args>(args)...));
+}
+#else
+/*!
+ * \brief Invoke a function and ignore the return value.
+ *
+ * \tparam Func Type of the function.
+ * \tparam Args Type of the arguments.
+ * \param[in] func Function.
+ * \param[in] args Arguments.
+ *
+ * \note This version is called when the return value of the function is void.
+ */
+template <typename Func, typename... Args>
+auto invoke_and_ignore_return_value(const Func& func, Args&&... args)
+    -> std::enable_if_t<
+        // NOLINTNEXTLINE(modernize-type-traits): is_same_v is unavailable in C++14.
+        std::is_same<invoke_result_t<Func, Args...>, void>::value> {
+    func(std::forward<Args>(args)...);
+}
+
+/*!
+ * \brief Invoke a function and ignore the return value.
+ *
+ * \tparam Func Type of the function.
+ * \tparam Args Type of the arguments.
+ * \param[in] func Function.
+ * \param[in] args Arguments.
+ *
+ * \note This version is called when the return value of the function is not
+ * void.
+ */
+template <typename Func, typename... Args>
+auto invoke_and_ignore_return_value(const Func& func, Args&&... args)
+    -> std::enable_if_t<
+        // NOLINTNEXTLINE(modernize-type-traits): is_same_v is unavailable in C++14.
+        !std::is_same<invoke_result_t<Func, Args...>, void>::value> {
+    do_not_optimize(func(std::forward<Args>(args)...));
+}
+#endif
 
 /*!
  * \brief Class to invoke functions measuring durations in threads if needed.
@@ -145,7 +218,8 @@ private:
             memory_barrier();
             for (std::size_t iteration_index = 0; iteration_index < iterations_;
                 ++iteration_index) {
-                func(thread_index, sample_index, iteration_index);
+                invoke_and_ignore_return_value(
+                    func, thread_index, sample_index, iteration_index);
             }
             memory_barrier();
         }
@@ -156,7 +230,8 @@ private:
             memory_barrier();
             for (std::size_t iteration_index = 0; iteration_index < iterations_;
                 ++iteration_index) {
-                func(thread_index, sample_index, iteration_index);
+                invoke_and_ignore_return_value(
+                    func, thread_index, sample_index, iteration_index);
             }
             memory_barrier();
             watch.lap();
