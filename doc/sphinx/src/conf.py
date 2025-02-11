@@ -42,7 +42,7 @@ plantuml_syntax_error_image = True
 
 # -- Options for breathe -----------------------------------------------------
 
-extensions += ["breathe"]
+extensions += ["breathe", "sphinx.ext.graphviz"]
 
 # this variable must be set from command line
 breathe_projects = {"stat_bench": ""}
