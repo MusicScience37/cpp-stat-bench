@@ -1,0 +1,69 @@
+@startuml use_cases
+
+title Use Cases
+
+left to right direction
+
+rectangle "Benchmarks" {
+    actor "Benchmarks of\nalgorithms" as algorithm
+    actor "Benchmarks of\ncommunication" as communication
+}
+actor "Developers" as developers
+actor "Writer of Documents" as documents
+developers <|- documents
+actor "Developers of CI" as ci
+developers <|- ci
+
+rectangle "Measurements" {
+    algorithm --> (Measure mean processing time)
+    communication --> (Measure processing time)
+}
+
+algorithm --> (Statistics of processing time)
+communication --> (Statistics of processing time)
+
+algorithm --> (Parameterized benchmarks)
+communication --> (Parameterized benchmarks)
+
+algorithm --> (Custom outputs)
+
+rectangle "Outputs" {
+    developers --> (See results in consoles)
+
+    rectangle "Plot results" as plotting {
+        algorithm --> (Plot mean processing time)
+        communication --> (Plot processing time samples)
+
+        communication --> (Violin plots)
+        algorithm --> (Violin plots)
+        communication --> (Box plots)
+        communication --> (Cumulative distribution functions)
+
+        algorithm --> (Plot processing time with respect to parameters)
+        communication --> (Plot processing time with respect to parameters)
+        algorithm --> (Plot custom outputs with respect to parameters)
+        algorithm --> (Plot custom outputs with respect to processing time)
+        note right of (Plot custom outputs with respect to processing time)
+            For example, work-error diagram
+            is used in evaluation of numerical algorithms
+            which estimate some values.
+        end note
+    }
+    developers --> plotting
+
+    documents --> (Create custom plots)
+    (Create custom plots) --> (Write results in JSON files)
+    (Create custom plots) --> (Write results in MessagePack files)
+    (Create custom plots) --> (Write results in files with compression)
+
+    (Write results in CSV files) << Not implemented >>
+    documents --> (Write results in CSV files)
+
+    (Write JUnit XML files) << Not implemented >>
+    ci --> (Write JUnit XML files)
+
+    (Write results in OpenMetrics format) << Not implemented >>
+    ci --> (Write results in OpenMetrics format)
+}
+
+@enduml

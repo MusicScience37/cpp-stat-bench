@@ -6,8 +6,6 @@ Benchmark library with statistics and plotting in C++.
 Developed at
 `https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench <https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench>`_.
 
-Full API reference generated using Doxygen can be viewed `here <api/index.html>`_.
-
 .. toctree::
     :maxdepth: 1
     :caption: About
@@ -22,6 +20,7 @@ Full API reference generated using Doxygen can be viewed `here <api/index.html>`
 
     installation
     basic_api/index
+    Full API Reference <https://cppstatbench.musicscience37.com/api/index.html>
     schemas/index
 
 .. toctree::

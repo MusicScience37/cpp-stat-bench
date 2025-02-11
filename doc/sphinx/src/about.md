@@ -12,6 +12,10 @@ cpp-stat-bench is a benchmark library with statistics and plotting for C++.
     - Processing time for each execution.
     - Cumulative distribution function of processing time.
     - Violin plots.
+    - Box plots.
+    - Plots of processing time with respect to parameters.
+    - Plots of custom outputs with respect to parameters.
+    - Plots of custom outputs with respect to processing time.
 - Measure processing time in two patterns.
   - Processing time of each execution.
   - Mean processing time of consecutive executions.

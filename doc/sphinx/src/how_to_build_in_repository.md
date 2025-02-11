@@ -1,4 +1,4 @@
-# How to Build in the Repository
+# Build in the Repository
 
 To build this repository,
 you will require following dependencies:
