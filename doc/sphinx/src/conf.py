@@ -27,6 +27,7 @@ author = "MusicScience37"
 extensions = [
     "sphinx.ext.todo",
     "myst_parser",
+    "sphinx_togglebutton",
 ]
 
 templates_path = ["_templates"]
