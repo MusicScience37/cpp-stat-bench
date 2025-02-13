@@ -5,3 +5,4 @@ How-to Guides
     :maxdepth: 1
 
     implement_simple_benchmark
+    implement_parameterized_benchmark

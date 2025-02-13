@@ -13,6 +13,7 @@ function(add_example TARGET)
 endfunction()
 
 add_example(stat_bench_ex_simple_benchmark simple_benchmark.cpp)
+add_example(stat_bench_ex_parameterized_benchmark parameterized_benchmark.cpp)
 
 add_example(stat_bench_ex_bench_for bench_for.cpp)
 

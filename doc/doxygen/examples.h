@@ -24,6 +24,11 @@
  */
 
 /*!
+ * \example parameterized_benchmark.cpp
+ * Example of a parameterized benchmark.
+ */
+
+/*!
  * \example bench_containers.cpp
  * Example of a benchmark of STL containers.
  */
