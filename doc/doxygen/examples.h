@@ -34,6 +34,11 @@
  */
 
 /*!
+ * \example custom_output_with_stat.cpp
+ * Example of a benchmark with a custom output with statistics.
+ */
+
+/*!
  * \example bench_containers.cpp
  * Example of a benchmark of STL containers.
  */

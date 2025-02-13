@@ -19,7 +19,7 @@
  */
 #include <stat_bench/benchmark_macros.h>
 
-[[nodiscard]] auto fibonacci(int number) -> int;
+[[nodiscard]] int fibonacci(int number);
 
 // Define a fixture to define parameters.
 class FibonacciFixture : public stat_bench::FixtureBase {
@@ -47,7 +47,7 @@ STAT_BENCH_CASE_F(FibonacciFixture, "Fibonacci", "fibonacci") {
 // Define main function. (Required once in an executable.)
 STAT_BENCH_MAIN
 
-auto fibonacci(int number) -> int {
+int fibonacci(int number) {
     if (number < 2) {
         return 1;
     }

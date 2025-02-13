@@ -19,7 +19,7 @@
  */
 #include <stat_bench/benchmark_macros.h>
 
-[[nodiscard]] auto fibonacci(int number) -> int;
+[[nodiscard]] int fibonacci(int number);
 
 // Define a benchmark.
 // First argument is the name of the group of benchmarks,
@@ -41,7 +41,7 @@ STAT_BENCH_CASE("Fibonacci", "fibonacci(15)") {
 // Define main function. (Required once in an executable.)
 STAT_BENCH_MAIN
 
-auto fibonacci(int number) -> int {
+int fibonacci(int number) {
     if (number < 2) {
         return 1;
     }

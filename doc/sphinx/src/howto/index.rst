@@ -7,3 +7,4 @@ How-to Guides
     implement_simple_benchmark
     implement_parameterized_benchmark
     implement_benchmark_with_custom_output_without_stat
+    implement_benchmark_with_custom_output_with_stat

@@ -1,11 +1,11 @@
-# Implement a Benchmark with a Custom Output Without Statistics
+# Implement a Benchmark with a Custom Output with Statistics
 
 This section shows how to implement a benchmark with a custom output
-without statistics using cpp-stat-bench library.
+with statistics using cpp-stat-bench library.
 
 ```{hint}
-If your custom output changes in each iteration, you should
-[implement a benchmark with a custom output with statistics](implement_benchmark_with_custom_output_with_stat.md).
+If your custom output doesn't change in each iteration, you should
+[implement a benchmark with a custom output without statistics](implement_benchmark_with_custom_output_without_stat.md).
 ```
 
 ## Prerequisites
@@ -17,8 +17,8 @@ If your custom output changes in each iteration, you should
 
 ## Sample Code with Explanation
 
-```{literalinclude} ../../../../examples/custom_output_without_stat.cpp
-:caption: Example of a benchmark with a custom output without statistics.
+```{literalinclude} ../../../../examples/custom_output_with_stat.cpp
+:caption: Example of a benchmark with a custom output with statistics.
 :language: cpp
 :start-at: "#include"
 ```
@@ -33,7 +33,7 @@ to see an output similar to the one below.
 
 cpp-stat-bench 0.21.0
 
-Benchmark start at 2025-02-13T13:35:41.832607+0000
+Benchmark start at 2025-02-13T14:03:35.480786+0000
 
 Time resolution: 1.000e-09 sec.
 
@@ -41,34 +41,33 @@ Time resolution: 1.000e-09 sec.
 Processing Time
 ========================================================================================================================
 
->> ApproxExp
+>> ApproxPi
                                                                                 Time [us]
                                                             Iterations Samples       Mean Std. Err.       Max Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-approx_exp (num_terms=1)                                             1     100     0.0367    0.0005    0.0810 error=1.718e+00,
-approx_exp (num_terms=2)                                             1     100     0.0352    0.0141    1.4270 error=7.183e-01,
-approx_exp (num_terms=5)                                             1     100     0.0248    0.0002    0.0360 error=9.948e-03,
-approx_exp (num_terms=10)                                            1     100     0.0299    0.0002    0.0500 error=3.029e-07,
+approx_pi (num_points=100)                                           1     100     5.3556    0.0630   10.0730 error=1.170e-01,
+approx_pi (num_points=1000)                                          1     100    12.6330    0.2983   35.7360 error=3.656e-02,
+approx_pi (num_points=10000)                                         1     100    98.4151    0.1109       104 error=1.194e-02,
 
 ========================================================================================================================
 Mean Processing Time
 ========================================================================================================================
 
->> ApproxExp
+>> ApproxPi
                                                                                 Time [us]
                                                             Iterations Samples       Mean Std. Err.       Max Custom Outputs (mean)
 ------------------------------------------------------------------------------------------------------------------------
-approx_exp (num_terms=1)                                       1000000      30     0.0010    0.0000    0.0012 error=1.718e+00,
-approx_exp (num_terms=2)                                       1000000      30     0.0022    0.0000    0.0023 error=7.183e-01,
-approx_exp (num_terms=5)                                       1000000      30     0.0040    0.0000    0.0043 error=9.948e-03,
-approx_exp (num_terms=10)                                      1000000      30     0.0088    0.0000    0.0095 error=3.029e-07,
+approx_pi (num_points=100)                                        7198      30     4.5389    0.0165    4.8675 error=1.317e-01,
+approx_pi (num_points=1000)                                       2884      30    12.4647    0.0464   12.9911 error=4.141e-02,
+approx_pi (num_points=10000)                                       378      30    89.6876    0.4341   97.2853 error=1.304e-02,
 
-Benchmark finished at 2025-02-13T13:35:42.799000+0000
+Benchmark finished at 2025-02-13T14:03:39.836305+0000
 ```
 
 ## Further Reading
 
-- [Implement a Benchmark with a Custom Output with Statistics](implement_benchmark_with_custom_output_with_stat.md)
+- [Implement a Benchmark with a Custom Output without Statistics](implement_benchmark_with_custom_output_without_stat.md)
 - API Reference
   - {cpp:func}`stat_bench::current_invocation_context`
-  - {cpp:func}`stat_bench::InvocationContext::add_custom_output`
+  - {cpp:func}`stat_bench::InvocationContext::add_custom_stat`
+  - {cpp:class}`stat_bench::stat::CustomStatOutput`

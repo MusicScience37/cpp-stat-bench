@@ -19,7 +19,7 @@
  */
 #include <stat_bench/benchmark_macros.h>
 
-[[nodiscard]] auto approx_exp(double x, int num_terms) -> double;
+[[nodiscard]] double approx_exp(double x, int num_terms);
 
 // Define a fixture to define parameters.
 class ApproxExpFixture : public stat_bench::FixtureBase {
@@ -57,7 +57,7 @@ STAT_BENCH_CASE_F(ApproxExpFixture, "ApproxExp", "approx_exp") {
 // Define main function. (Required once in an executable.)
 STAT_BENCH_MAIN
 
-auto approx_exp(double x, int num_terms) -> double {
+double approx_exp(double x, int num_terms) {
     double result = 1.0;
     double term = 1.0;
     for (int i = 1; i < num_terms; ++i) {
