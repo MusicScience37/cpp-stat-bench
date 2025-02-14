@@ -1,6 +1,6 @@
 # Create Data Files of Benchmark Results
 
-This section show how to create data files of benchmark results.
+This section shows how to create data files of benchmark results.
 
 cpp-stat-bench library supports the following formats:
 

@@ -15,3 +15,9 @@ How-to Guides
     :caption: Execute Benchmarks
 
     create_data_files
+
+.. toctree::
+    :maxdepth: 1
+    :caption: Generate Plots
+
+    generate_basic_plots
