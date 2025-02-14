@@ -71,3 +71,5 @@ Benchmark finished at 2025-02-13T14:03:39.836305+0000
   - {cpp:func}`stat_bench::current_invocation_context`
   - {cpp:func}`stat_bench::InvocationContext::add_custom_stat`
   - {cpp:class}`stat_bench::stat::CustomStatOutput`
+- [Generate Basic Plots of Processing Time](generate_basic_plots.md)
+- [Configure Plotting in Source Code for More Plots](configure_plotting.md)

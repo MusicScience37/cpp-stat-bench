@@ -67,3 +67,4 @@ When you view plots, the browser needs access to the internet to load JavaScript
 ## Further Reading
 
 - [Command Line Options](../command_line_options.md)
+- [Configure Plotting in Source Code for More Plots](configure_plotting.md)

@@ -59,3 +59,4 @@ Benchmark finished at 2025-02-11T14:12:36.373433+0000
   - {c:func}`STAT_BENCH_CASE`
   - {c:func}`STAT_BENCH_MEASURE`
   - {c:func}`STAT_BENCH_MAIN`
+- [Generate Basic Plots of Processing Time](generate_basic_plots.md)

@@ -41,3 +41,7 @@ This library can be installed via [vcpkg](https://vcpkg.io/) using following con
     "dependencies": ["cpp-stat-bench"]
   }
   ```
+
+## Further Reading
+
+- [Implement a Simple Benchmark](./howto/implement_simple_benchmark.md)
