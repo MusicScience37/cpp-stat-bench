@@ -26,7 +26,8 @@
     "ms-azuretools.vscode-docker",
     "tamasfe.even-better-toml",
     "redhat.vscode-yaml",
-    "samuelcolvin.jinjahtml"
+    "samuelcolvin.jinjahtml",
+    "executablebookproject.myst-highlight"
   ],
   // List of extensions recommended by VS Code that should not be recommended for users of this workspace.
   "unwantedRecommendations": []

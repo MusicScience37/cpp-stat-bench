@@ -27,11 +27,14 @@ author = "MusicScience37"
 extensions = [
     "sphinx.ext.todo",
     "myst_parser",
+    "sphinx_togglebutton",
 ]
 
 templates_path = ["_templates"]
 
 exclude_patterns = []
+
+todo_include_todos = True
 
 # -- Options for PlantUML ----------------------------------------------------
 

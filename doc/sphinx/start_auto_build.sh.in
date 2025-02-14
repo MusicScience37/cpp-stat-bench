@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Prevent errors in PlantUML.
+unset DISPLAY
+
 cd ${SRPC_SOURCE_DIR}
 sphinx-autobuild \
     ${CMAKE_CURRENT_SOURCE_DIR}/src ${STAT_BENCH_HTML_ROOT} \

@@ -1,0 +1,3 @@
+# Ignore all checks to prevent NOLINT comments unnecessary for users.
+Checks: >
+  -*

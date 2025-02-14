@@ -19,6 +19,31 @@
  */
 
 /*!
+ * \example simple_benchmark.cpp
+ * Example of a simple benchmark.
+ */
+
+/*!
+ * \example parameterized_benchmark.cpp
+ * Example of a parameterized benchmark.
+ */
+
+/*!
+ * \example custom_output_without_stat.cpp
+ * Example of a benchmark with a custom output without statistics.
+ */
+
+/*!
+ * \example custom_output_with_stat.cpp
+ * Example of a benchmark with a custom output with statistics.
+ */
+
+/*!
+ * \example configure_plotting.cpp
+ * Example of a benchmark with configurations of plotting.
+ */
+
+/*!
  * \example bench_containers.cpp
  * Example of a benchmark of STL containers.
  */

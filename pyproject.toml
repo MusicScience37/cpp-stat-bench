@@ -23,6 +23,7 @@ sphinx-orange-book-theme = "^0.15.0"
 sphinxcontrib-plantuml = "^0.30"
 breathe = "^4.35.0"
 myst-parser = "^4.0.0"
+sphinx-togglebutton = "^0.3.2"
 
 [tool.poetry.group.dev.dependencies]
 aiohttp = "^3.11.11"
