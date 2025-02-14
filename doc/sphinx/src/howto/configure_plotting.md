@@ -1,6 +1,6 @@
 # Configure Plotting in Source Code for More Plots
 
-This section show how to configure plotting in source code to generate more types of plots.
+This section shows how to configure plotting in source code to generate more types of plots.
 
 For plots generated without configurations in source codes,
 see [Generate Basic Plots of Processing Time](generate_basic_plots.md).
@@ -16,7 +16,7 @@ see [Generate Basic Plots of Processing Time](generate_basic_plots.md).
 ## Sample Code with Explanation
 
 ```{literalinclude} ../../../../examples/configure_plotting.cpp
-:caption: Example of a benchmark with configuration of plotting.
+:caption: Example of a benchmark with configurations of plotting.
 :language: cpp
 :start-at: "#include"
 ```
@@ -24,14 +24,18 @@ see [Generate Basic Plots of Processing Time](generate_basic_plots.md).
 ## Execution
 
 You can build the above code and run the resulting executable with `--plot` option
-as in [Generate Basic Plots of Processing Time](generate_basic_plots.md).
+similar to [Generate Basic Plots of Processing Time](generate_basic_plots.md):
 
-With the configuration in the source code,
+```shell
+./configure_plotting --plot results
+```
+
+With the configurations in the source code,
 more plots are generated in the `results` directory.
 Check the generated plots using a web browser.
 
 In the above example, the following plots are generated
-(plots added by the configuration are highlighted):
+(plots added by the configurations are highlighted):
 
 ```{uml}
 salt

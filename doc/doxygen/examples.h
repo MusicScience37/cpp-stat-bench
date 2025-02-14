@@ -40,7 +40,7 @@
 
 /*!
  * \example configure_plotting.cpp
- * Example of a benchmark with configuration of plotting.
+ * Example of a benchmark with configurations of plotting.
  */
 
 /*!

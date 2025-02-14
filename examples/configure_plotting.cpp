@@ -15,7 +15,7 @@
  */
 /*!
  * \file
- * \brief Example of a benchmark with configuration of plotting.
+ * \brief Example of a benchmark with configurations of plotting.
  */
 #include <stat_bench/benchmark_macros.h>
 

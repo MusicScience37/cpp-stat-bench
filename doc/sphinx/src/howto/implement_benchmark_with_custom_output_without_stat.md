@@ -68,9 +68,9 @@ Benchmark finished at 2025-02-13T13:35:42.799000+0000
 
 ## Further Reading
 
-- [Implement a Benchmark with a Custom Output with Statistics](implement_benchmark_with_custom_output_with_stat.md)
 - API Reference
   - {cpp:func}`stat_bench::current_invocation_context`
   - {cpp:func}`stat_bench::InvocationContext::add_custom_output`
+- [Implement a Benchmark with a Custom Output with Statistics](implement_benchmark_with_custom_output_with_stat.md)
 - [Generate Basic Plots of Processing Time](generate_basic_plots.md)
 - [Configure Plotting in Source Code for More Plots](configure_plotting.md)
