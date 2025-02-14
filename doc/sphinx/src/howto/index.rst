@@ -21,3 +21,4 @@ How-to Guides
     :caption: Generate Plots
 
     generate_basic_plots
+    configure_plotting

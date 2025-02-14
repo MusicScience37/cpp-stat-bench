@@ -39,6 +39,11 @@
  */
 
 /*!
+ * \example configure_plotting.cpp
+ * Example of a benchmark with configuration of plotting.
+ */
+
+/*!
  * \example bench_containers.cpp
  * Example of a benchmark of STL containers.
  */
