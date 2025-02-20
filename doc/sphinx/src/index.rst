@@ -31,5 +31,5 @@ Developed at
 
     how_to_build_in_repository
     convention
-    basic_design/index
+    design/index
     todos
