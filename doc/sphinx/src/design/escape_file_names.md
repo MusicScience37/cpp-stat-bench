@@ -1,7 +1,11 @@
-# Escaping file names
+# Escaping File Names
 
 In this library, user-specified names are used in file names.
 So a function to escape file names is required.
+
+## ASCII Characters
+
+For ASCII characters, the following rules are used:
 
 | Code | Character | Allow in This Library | Usability in Windows | Usability in Ubuntu | Notes                                          |
 | ---: | :-------- | :-------------------- | :------------------- | :------------------ | :--------------------------------------------- |
@@ -139,3 +143,7 @@ So a function to escape file names is required.
 | ×      | Not allowed.                             |
 | △      | Allowed, but some care is needed to use. |
 | ○      | Allowed.                                 |
+
+## Remaining Unicode Characters
+
+Remaining Unicode characters are always escaped.
