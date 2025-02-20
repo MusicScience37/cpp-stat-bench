@@ -8,4 +8,5 @@ Contents can include feature to be implemented later.
 
 use_cases
 classes
+escape_file_names
 ```
