@@ -71,7 +71,7 @@ constexpr std::size_t num_8bit_chars = 256;
  * \retval true The character is safe.
  * \retval false The character is not safe.
  */
-[[nodiscard]] auto is_safe_char(const char c) -> bool {
+[[nodiscard]] auto is_safe_char(char c) -> bool {
     static constexpr auto table = create_safe_char_table();
     return table[static_cast<std::uint8_t>(c)];
 }
@@ -81,7 +81,6 @@ constexpr std::size_t num_8bit_chars = 256;
 auto escape_for_file_name(const Utf8String& input) -> Utf8String {
     std::string output;
     for (const char c : input.str()) {
-        // TODO check if the character is valid for a file name
         if (!is_safe_char(c)) {
             output.push_back('%');
             constexpr std::string_view hex_chars = "0123456789ABCDEF";
