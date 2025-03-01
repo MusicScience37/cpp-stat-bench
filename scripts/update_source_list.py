@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Helper script to create lists of source codes for build.
-"""
+"""Helper script to create lists of source codes for build."""
 
 import subprocess
 from pathlib import Path

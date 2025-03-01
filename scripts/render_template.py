@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Render template.
-"""
+"""Render template."""
 
 import json
 from math import log10
