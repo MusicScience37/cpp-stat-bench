@@ -42,23 +42,3 @@
  * \example configure_plotting.cpp
  * Example of a benchmark with configurations of plotting.
  */
-
-/*!
- * \example bench_containers.cpp
- * Example of a benchmark of STL containers.
- */
-
-/*!
- * \example bench_fibonacci.cpp
- * Example of a benchmark of fibonacci.
- */
-
-/*!
- * \example bench_for.cpp
- * Example of a benchmark of for loops.
- */
-
-/*!
- * \example bench_push_back.cpp
- * Example of a benchmark of push_back in STL containers.
- */

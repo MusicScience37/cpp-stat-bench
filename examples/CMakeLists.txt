@@ -18,11 +18,3 @@ add_example(stat_bench_ex_custom_output_without_stat
             custom_output_without_stat.cpp)
 add_example(stat_bench_ex_custom_output_with_stat custom_output_with_stat.cpp)
 add_example(stat_bench_ex_configure_plotting configure_plotting.cpp)
-
-add_example(stat_bench_ex_bench_for bench_for.cpp)
-
-add_example(stat_bench_ex_bench_fibonacci bench_fibonacci.cpp)
-
-add_example(stat_bench_ex_bench_push_back bench_push_back.cpp)
-
-add_example(stat_bench_ex_bench_containers bench_containers.cpp)
