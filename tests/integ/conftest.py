@@ -79,3 +79,9 @@ def parametrized_benchmark(bin_dir: pathlib.Path) -> pathlib.Path:
 def duplicate_cases(bin_dir: pathlib.Path) -> pathlib.Path:
     """Get the path of executable stat_bench_test_integ_duplicate_cases."""
     return bin_dir / "stat_bench_test_integ_duplicate_cases"
+
+
+@pytest.fixture
+def escaped_names(bin_dir: pathlib.Path) -> pathlib.Path:
+    """Get the path of executable stat_bench_test_integ_escaped_names."""
+    return bin_dir / "stat_bench_test_integ_escaped_names"

@@ -32,6 +32,7 @@
 #include "stat_bench/plots/plotly_plotter.h"
 #include "stat_bench/plots/samples_line_plot.h"
 #include "stat_bench/plots/violin_plot.h"
+#include "stat_bench/util/escape_for_file_name.h"
 #include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
@@ -59,6 +60,16 @@ void PlotReporter::experiment_finished(
 
 void PlotReporter::measurer_starts(const measurer::MeasurerName& name) {
     measurer_name_ = name;
+
+    std::string measurer_name_without_space = measurer_name_.str().str();
+    std::size_t pos = 0;
+    while ((pos = measurer_name_without_space.find(' ', pos)) !=
+        std::string::npos) {
+        measurer_name_without_space.erase(pos, 1);
+    }
+
+    measurer_name_for_file_paths_ = util::escape_for_file_name(
+        util::Utf8String(measurer_name_without_space));
 }
 
 void PlotReporter::measurer_finished(const measurer::MeasurerName& /*name*/) {
@@ -72,17 +83,12 @@ void PlotReporter::group_starts(const BenchmarkGroupName& /*name*/,
 }
 
 void PlotReporter::group_finished(const BenchmarkGroupName& name) {
-    std::string measurer_name_without_space = measurer_name_.str().str();
-    std::size_t pos = 0;
-    while ((pos = measurer_name_without_space.find(' ', pos)) !=
-        std::string::npos) {
-        measurer_name_without_space.erase(pos, 1);
-    }
-
-    const auto process_plot = [this, &name, &measurer_name_without_space](
+    const auto process_plot = [this, &name](
                                   const std::shared_ptr<plots::IPlot>& plot) {
         const std::string file_path = fmt::format("{}/{}/{}_{}.html", prefix_,
-            name, measurer_name_without_space, plot->name_for_file());
+            util::escape_for_file_name(name.str()),
+            measurer_name_for_file_paths_,
+            util::escape_for_file_name(plot->name_for_file()));
         plot->write(
             plotter_.get(), measurer_name_, name, measurements_, file_path);
     };
