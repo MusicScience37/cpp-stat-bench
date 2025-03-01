@@ -28,6 +28,7 @@
 #include "stat_bench/plots/i_plot.h"
 #include "stat_bench/plots/i_plotter.h"
 #include "stat_bench/reporter/i_reporter.h"
+#include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
 namespace reporter {
@@ -84,6 +85,9 @@ private:
 
     //! Measurer name.
     measurer::MeasurerName measurer_name_;
+
+    //! Measurer name for file paths.
+    util::Utf8String measurer_name_for_file_paths_;
 
     //! Measurements.
     std::vector<measurer::Measurement> measurements_{};

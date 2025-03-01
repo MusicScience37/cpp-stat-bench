@@ -32,7 +32,12 @@
     "**/vcpkg/packages/**": true,
     "**/.venv/**": true
   },
-  "cSpell.enableFiletypes": ["cmake", "plantuml", "shellscript", "toml"],
+  "cSpell.enabledFileTypes": {
+    "cmake": true,
+    "plantuml": true,
+    "shellscript": true,
+    "toml": true
+  },
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
@@ -44,6 +49,12 @@
   },
   "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter",
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": "always"
+    }
   },
   "cmake.useCMakePresets": "never",
   "restructuredtext.pythonRecommendation.disabled": true
