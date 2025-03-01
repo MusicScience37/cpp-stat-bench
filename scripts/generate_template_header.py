@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Helper script to generate C++ header files of HTML templates.
-"""
+"""Helper script to generate C++ header files of HTML templates."""
 
 import pathlib
 import typing

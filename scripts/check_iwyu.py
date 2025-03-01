@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Check source codes with include-what-you-use.
-"""
+"""Check source codes with include-what-you-use."""
 
 import asyncio
 import multiprocessing

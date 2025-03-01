@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""Create a file of source codes in C++.
-"""
+"""Create a file of source codes in C++."""
 
 import datetime
 import pathlib
