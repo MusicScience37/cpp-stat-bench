@@ -267,7 +267,7 @@ msvc-release:
     - New-Item -ItemType Directory -Force -Path $VCPKG_DEFAULT_BINARY_CACHE
     - Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
     - choco install cmake -y --installargs 'ADD_CMAKE_TO_PATH=System'
-    - choco install python312 -y
+    - choco install python313 -y
     - choco install ccache -y
     - RefreshEnv
     - pip install poetry
