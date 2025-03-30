@@ -4,13 +4,14 @@
     "fmt",
     "bfgroup-lyra",
     "nlohmann-json",
-    "catch2",
-    "trompeloeil",
-    "approval-tests-cpp",
     "inja",
     "cpp-msgpack-light",
     "zlib",
     "eigen3",
-    "simdutf"
+    "simdutf",
+    "cpp-plotly-plotter",
+    "catch2",
+    "trompeloeil",
+    "approval-tests-cpp"
   ]
 }

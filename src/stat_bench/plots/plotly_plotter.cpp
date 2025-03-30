@@ -21,23 +21,23 @@
 
 #include <algorithm>
 #include <cmath>
-#include <fstream>
 #include <limits>
 #include <memory>
 #include <string>
+#include <string_view>
 #include <vector>
 
-#include <nlohmann/json.hpp>
+#include <plotly_plotter/figure.h>
+#include <plotly_plotter/layout.h>
+#include <plotly_plotter/write_html.h>
 
 #include "box_trace.h"
 #include "i_plotly_trace.h"
 #include "line_trace.h"
 #include "stat_bench/plots/i_plotter.h"
-#include "stat_bench/plots/jinja_renderer.h"
 #include "stat_bench/stat_bench_exception.h"
 #include "stat_bench/util/prepare_directory.h"
 #include "stat_bench/util/utf8_string.h"
-#include "template/plotly_plot.h"
 #include "violin_trace.h"
 
 namespace stat_bench {
@@ -52,21 +52,11 @@ public:
      * \brief Constructor.
      *
      * \param[in] title Title of this figure.
-     * \param[in] renderer Renderer.
      */
-    PlotlyFigure(const util::Utf8String& title, JinjaRenderer& renderer)
-        : layout_(nlohmann::json::object()),
-          config_(nlohmann::json::object()),
-          title_(title.str()),
-          renderer_(renderer) {
-        layout_["title"] = title.str();
+    explicit PlotlyFigure(const util::Utf8String& title) {
+        figure_.title(title.str());
 
-        layout_["xaxis"]["type"] = "-";
-        layout_["yaxis"]["type"] = "-";
-        layout_["layout"]["showlegend"] = true;
-
-        config_["scrollZoom"] = true;
-        config_["responsive"] = true;
+        figure_.layout().show_legend(true);
     }
 
     PlotlyFigure(const PlotlyFigure&) = delete;
@@ -81,14 +71,14 @@ public:
 
     //! \copydoc stat_bench::plots::IFigure::add_line_trace
     [[nodiscard]] auto add_line_trace() -> std::shared_ptr<ITrace> override {
-        auto trace = std::make_shared<LineTrace>();
+        auto trace = std::make_shared<LineTrace>(figure_.add_scatter());
         traces_.push_back(trace);
         return trace;
     }
 
     //! \copydoc stat_bench::plots::IFigure::add_violin_trace
     [[nodiscard]] auto add_violin_trace() -> std::shared_ptr<ITrace> override {
-        auto trace = std::make_shared<ViolinTrace>();
+        auto trace = std::make_shared<ViolinTrace>(figure_.add_violin());
         traces_.push_back(trace);
         is_violin_ = true;
         return trace;
@@ -96,7 +86,7 @@ public:
 
     //! \copydoc stat_bench::plots::IFigure::add_box_trace
     [[nodiscard]] auto add_box_trace() -> std::shared_ptr<ITrace> override {
-        auto trace = std::make_shared<BoxTrace>();
+        auto trace = std::make_shared<BoxTrace>(figure_.add_box());
         traces_.push_back(trace);
         is_box_ = true;
         return trace;
@@ -104,20 +94,20 @@ public:
 
     //! \copydoc stat_bench::plots::IFigure::set_x_title
     void set_x_title(const util::Utf8String& title) override {
-        layout_["xaxis"]["title"] = title.str();
+        figure_.layout().xaxis().title().text(title.str());
     }
 
     //! \copydoc stat_bench::plots::IFigure::set_y_title
     void set_y_title(const util::Utf8String& title) override {
-        layout_["yaxis"]["title"] = title.str();
+        figure_.layout().yaxis().title().text(title.str());
     }
 
     //! \copydoc stat_bench::plots::IFigure::set_log_x
-    void set_log_x() override { layout_["xaxis"]["type"] = "log"; }
+    void set_log_x() override { figure_.layout().xaxis().type("log"); }
 
     //! \copydoc stat_bench::plots::IFigure::set_log_y
     void set_log_y() override {
-        layout_["yaxis"]["type"] = "log";
+        figure_.layout().yaxis().type("log");
         is_log_y_ = true;
     }
 
@@ -127,11 +117,9 @@ public:
             throw StatBenchException("No traces are added to the figure.");
         }
 
-        nlohmann::json data = nlohmann::json::array();
         double min_y = std::numeric_limits<double>::infinity();
         double max_y = -std::numeric_limits<double>::infinity();
         for (const auto& trace : traces_) {
-            data.push_back(trace->data());
             const auto [trace_min_y, trace_max_y] = trace->y_range();
             min_y = std::min(min_y, trace_min_y);
             max_y = std::max(max_y, trace_max_y);
@@ -143,45 +131,29 @@ public:
             constexpr double margin_in_log = 0.17;
             const double lower_bound_in_log = std::log10(min_y) - margin_in_log;
             const double upper_bound_in_log = std::log10(max_y) + margin_in_log;
-            layout_["yaxis"]["range"] =
-                std::vector<double>{lower_bound_in_log, upper_bound_in_log};
-            layout_["yaxis"]["constrain"] = "range";
+            figure_.layout().yaxis().range(
+                lower_bound_in_log, upper_bound_in_log);
+            figure_.layout().yaxis().constrain("range");
         }
         if (is_violin_ && traces_.front()->has_x()) {
-            layout_["violinmode"] = "group";
-            layout_["xaxis"]["type"] = "category";
+            figure_.layout().violin_mode("group");
+            figure_.layout().xaxis().type("category");
         }
         if (is_box_ && traces_.front()->has_x()) {
-            layout_["boxmode"] = "group";
-            layout_["xaxis"]["type"] = "category";
+            figure_.layout().box_mode("group");
+            figure_.layout().xaxis().type("category");
         }
 
-        nlohmann::json input;
-        input["title"] = title_;
-        input["dataset"]["data"] = data;
-        input["dataset"]["layout"] = layout_;
-        input["dataset"]["config"] = config_;
-
         util::prepare_directory_for(file_path);
-        std::ofstream stream{file_path};
-        renderer_.render_to(stream, "plotly_plot", input);
+        plotly_plotter::write_html(file_path, figure_);
     }
 
 private:
     //! Traces.
     std::vector<std::shared_ptr<IPlotlyTrace>> traces_;
 
-    //! Layout in plotly.
-    nlohmann::json layout_;
-
-    //! Config in plotly.
-    nlohmann::json config_;
-
-    //! Title of the figure.
-    std::string title_;
-
-    //! Renderer.
-    JinjaRenderer& renderer_;
+    //! Figure.
+    plotly_plotter::figure figure_;
 
     //! Whether this plot is a violin plot.
     bool is_violin_{false};
@@ -201,7 +173,7 @@ public:
     /*!
      * \brief Constructor.
      */
-    PlotlyPlotter() { renderer_.load_from_text("plotly_plot", plotly_plot); }
+    PlotlyPlotter() = default;
 
     PlotlyPlotter(const PlotlyPlotter&) = delete;
     PlotlyPlotter(PlotlyPlotter&&) = delete;
@@ -216,12 +188,8 @@ public:
     //! \copydoc stat_bench::plots::IPlotter::create_figure
     [[nodiscard]] auto create_figure(const util::Utf8String& title)
         -> std::unique_ptr<IFigure> override {
-        return std::make_unique<PlotlyFigure>(title, renderer_);
+        return std::make_unique<PlotlyFigure>(title);
     }
-
-private:
-    //! Renderer.
-    JinjaRenderer renderer_;
 };
 
 auto create_plotly_plotter() -> std::shared_ptr<IPlotter> {

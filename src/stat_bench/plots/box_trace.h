@@ -19,7 +19,9 @@
  */
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include <string_view>
+
+#include <plotly_plotter/traces/box.h>
 
 #include "plotly_trace_common.h"
 
@@ -29,16 +31,17 @@ namespace plots {
 /*!
  * \brief Class of traces of box plots.
  */
-class BoxTrace final : public PlotlyTraceCommon {
+class BoxTrace final : public PlotlyTraceCommon<plotly_plotter::traces::box> {
 public:
     /*!
      * \brief Constructor.
+     *
+     * \param[in] trace Trace.
      */
-    BoxTrace() {
-        trace_ = nlohmann::json::object();
-        trace_["type"] = "box";
-        trace_["boxpoints"] = "Outliers";
-        trace_["boxmean"] = "sd";
+    explicit BoxTrace(const plotly_plotter::traces::box& trace)
+        : PlotlyTraceCommon(trace) {
+        trace_.box_points("outliers");
+        trace_.box_mean("sd");
     }
 
     BoxTrace(const BoxTrace&) = delete;

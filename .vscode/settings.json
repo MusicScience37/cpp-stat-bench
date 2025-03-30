@@ -57,5 +57,6 @@
     }
   },
   "cmake.useCMakePresets": "never",
-  "restructuredtext.pythonRecommendation.disabled": true
+  "restructuredtext.pythonRecommendation.disabled": true,
+  "cmake.loadCompileCommands": false
 }
