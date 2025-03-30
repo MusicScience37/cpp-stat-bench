@@ -8,7 +8,7 @@
     {
       "kind": "git",
       "repository": "https://gitlab.com/MusicScience37Projects/vcpkg-registry",
-      "baseline": "e9814bf742df3d99e3ef50ca9dcf8ed5d5a578c6",
+      "baseline": "3ef342fb166862105dbb176c83281c3f260e26b8",
       "packages": ["cpp-msgpack-light", "cpp-plotly-plotter"]
     }
   ],
