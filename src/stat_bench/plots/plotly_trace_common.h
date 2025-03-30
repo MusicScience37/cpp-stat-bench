@@ -134,6 +134,11 @@ public:
     auto y(const std::vector<double>& y) -> ITrace* override {
         trace_.y(y);
         for (const auto& value : y) {
+            // min_y and max_y are used in log function,
+            // so zeros must be ignored.
+            if (value <= 0.0) {
+                continue;
+            }
             min_y_ = std::min(min_y_, value);
             max_y_ = std::max(max_y_, value);
         }
