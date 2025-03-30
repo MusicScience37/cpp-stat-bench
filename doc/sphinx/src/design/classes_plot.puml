@@ -36,9 +36,6 @@ package stat_bench {
         IPlotlyTrace <|.. XxxTrace
         PlotlyFigure ..> XxxTrace : create
 
-        class JinjaRenderer
-        PlotlyPlotter "1" o-- "1" JinjaRenderer
-
         interface IPlot
         PlotReporter "1" o-- "1.." IPlot
 

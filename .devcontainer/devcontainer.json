@@ -46,7 +46,6 @@
         "ms-azuretools.vscode-docker",
         "tamasfe.even-better-toml",
         "redhat.vscode-yaml",
-        "samuelcolvin.jinjahtml",
         "executablebookproject.myst-highlight"
       ],
       "settings": {

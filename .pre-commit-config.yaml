@@ -34,12 +34,6 @@ repos:
         description: Check encoding of files.
         language: system
         entry: poetry run python scripts/check_encoding.py
-      - id: update-template-headers
-        name: update-template-headers
-        description: Update C++ header files of HTML templates.
-        language: system
-        files: src/stat_bench/plots/template/.*\.jinja$
-        entry: poetry run python scripts/generate_template_header.py
       - id: black
         name: black
         entry: poetry run black

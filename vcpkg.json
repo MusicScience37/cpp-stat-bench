@@ -4,7 +4,6 @@
     "fmt",
     "bfgroup-lyra",
     "nlohmann-json",
-    "inja",
     "cpp-msgpack-light",
     "zlib",
     "eigen3",
