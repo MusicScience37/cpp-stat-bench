@@ -64,6 +64,7 @@
     "hicpp",
     "htmlreport",
     "INCLUDEDIR",
+    "inja",
     "installargs",
     "integ",
     "interruptible",
