@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="utf-8" />
-    <title>Log Line Plot</title>
+    <head>
+        <meta charset="utf-8" />
+        <title>Log Line Plot</title>
+    </head>
+    <body>
+        <div id="plot" class="container"></div>
+        <div id="dataset" style="display:none">{&quot;data&quot;:[{&quot;type&quot;:&quot;scatter&quot;,&quot;mode&quot;:&quot;lines&quot;,&quot;x&quot;:[1.0,2.0,3.0],&quot;y&quot;:[1.1,2.2,3.3],&quot;name&quot;:&quot;Line1&quot;},{&quot;type&quot;:&quot;scatter&quot;,&quot;mode&quot;:&quot;lines&quot;,&quot;x&quot;:[2.0,3.0,4.0],&quot;y&quot;:[3.3,4.4,5.5],&quot;name&quot;:&quot;Line2&quot;}],&quot;layout&quot;:{&quot;title&quot;:{&quot;text&quot;:&quot;Log Line Plot&quot;},&quot;showlegend&quot;:true,&quot;xaxis&quot;:{&quot;title&quot;:{&quot;text&quot;:&quot;X&quot;},&quot;type&quot;:&quot;log&quot;},&quot;yaxis&quot;:{&quot;title&quot;:{&quot;text&quot;:&quot;Y&quot;},&quot;type&quot;:&quot;log&quot;}},&quot;config&quot;:{&quot;scrollZoom&quot;:true,&quot;responsive&quot;:true}}</div>
+    </body>
     <style>
         html,
         body,
@@ -13,25 +17,12 @@
             margin: 0px;
         }
     </style>
-</head>
-
-<body>
-    <div id="plot" class="container"></div>
-
-    <!-- Import Plotly -->
-    <script src="https://cdn.plot.ly/plotly-2.35.3.min.js" charset="utf-8"></script>
-
-    <div id="dataset" style="display:none">
-        {&quot;config&quot;:{&quot;responsive&quot;:true,&quot;scrollZoom&quot;:true},&quot;data&quot;:[{&quot;mode&quot;:&quot;lines&quot;,&quot;name&quot;:&quot;Line1&quot;,&quot;type&quot;:&quot;scatter&quot;,&quot;x&quot;:[1.0,2.0,3.0],&quot;y&quot;:[1.1,2.2,3.3]},{&quot;mode&quot;:&quot;lines&quot;,&quot;name&quot;:&quot;Line2&quot;,&quot;type&quot;:&quot;scatter&quot;,&quot;x&quot;:[2.0,3.0,4.0],&quot;y&quot;:[3.3,4.4,5.5]}],&quot;layout&quot;:{&quot;layout&quot;:{&quot;showlegend&quot;:true},&quot;title&quot;:&quot;Log Line Plot&quot;,&quot;xaxis&quot;:{&quot;title&quot;:&quot;X&quot;,&quot;type&quot;:&quot;log&quot;},&quot;yaxis&quot;:{&quot;title&quot;:&quot;Y&quot;,&quot;type&quot;:&quot;log&quot;}}}
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-svg.js"></script>
+    <script src="https://cdn.plot.ly/plotly-3.0.1.min.js" charset="utf-8"></script>
     <script type="text/javascript">
-        var dataset_str = document.querySelector('#dataset').textContent
+        var dataset_str = document.querySelector('#dataset').textContent;
         var dataset = JSON.parse(dataset_str);
-
         Plotly.newPlot("plot", dataset.data, dataset.layout, dataset.config);
     </script>
-</body>
-
 </html>
 

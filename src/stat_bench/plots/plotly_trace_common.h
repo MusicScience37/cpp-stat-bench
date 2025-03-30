@@ -26,25 +26,66 @@
 #include <variant>
 #include <vector>
 
-#include <nlohmann/json.hpp>
+#include <plotly_plotter/json_converter_decl.h>
+#include <plotly_plotter/json_value.h>
 
 #include "i_plotly_trace.h"
 #include "stat_bench/param/parameter_value.h"
 #include "stat_bench/util/utf8_string.h"
+
+namespace plotly_plotter {
+
+/*!
+ * \brief Specialization of json_converter class for
+ * stat_bench::param::ParameterValueVariant.
+ */
+template <>
+class json_converter<stat_bench::param::ParameterValueVariant> {
+public:
+    /*!
+     * \brief Convert an object to a JSON value.
+     *
+     * \param[in] from Object to convert from.
+     * \param[out] to JSON value to convert to.
+     */
+    static void to_json(
+        const stat_bench::param::ParameterValueVariant& from, json_value& to) {
+        std::visit([&to](const auto& value) { to = value; }, from);
+    }
+};
+
+/*!
+ * \brief Specialization of json_converter class for
+ * stat_bench::util::Utf8String.
+ */
+template <>
+class json_converter<stat_bench::util::Utf8String> {
+public:
+    /*!
+     * \brief Convert an object to a JSON value.
+     *
+     * \param[in] from Object to convert from.
+     * \param[out] to JSON value to convert to.
+     */
+    static void to_json(
+        const stat_bench::util::Utf8String& from, json_value& to) {
+        to = from.str();
+    }
+};
+
+}  // namespace plotly_plotter
 
 namespace stat_bench {
 namespace plots {
 
 /*!
  * \brief Class to implement some common functions of traces in plotly.
+ *
+ * \tparam Trace Type of the trace.
  */
+template <typename Trace>
 class PlotlyTraceCommon : public IPlotlyTrace {
 public:
-    /*!
-     * \brief Constructor.
-     */
-    PlotlyTraceCommon() = default;
-
     PlotlyTraceCommon(const PlotlyTraceCommon&) = delete;
     PlotlyTraceCommon(PlotlyTraceCommon&&) = delete;
     auto operator=(const PlotlyTraceCommon&) -> PlotlyTraceCommon& = delete;
@@ -57,13 +98,13 @@ public:
 
     //! \copydoc stat_bench::plots::ITrace::name
     auto name(const util::Utf8String& name) -> ITrace* override {
-        trace_["name"] = name.str();
+        trace_.name(name.str());
         return this;
     }
 
     //! \copydoc stat_bench::plots::ITrace::x
     auto x(const std::vector<double>& x) -> ITrace* override {
-        trace_["x"] = x;
+        trace_.x(x);
         has_x_ = true;
         return this;
     }
@@ -71,13 +112,7 @@ public:
     //! \copydoc stat_bench::plots::ITrace::x
     auto x(const std::vector<param::ParameterValueVariant>& x)
         -> ITrace* override {
-        auto& x_json = trace_["x"];
-        x_json = nlohmann::json::array();
-        for (const auto& value : x) {
-            std::visit(
-                [&x_json](const auto& value) { x_json.push_back(value); },
-                value);
-        }
+        trace_.x(x);
         has_x_ = true;
         return this;
     }
@@ -85,17 +120,25 @@ public:
     //! \copydoc stat_bench::plots::ITrace::generate_sequential_number_for_x
     auto generate_sequential_number_for_x(std::size_t size)
         -> ITrace* override {
-        trace_["x"] = nlohmann::json::array();
+        std::vector<std::size_t> x;
+        x.reserve(size);
         for (std::size_t i = 0; i < size; ++i) {
-            trace_["x"].push_back(i + 1U);
+            x.push_back(i + 1U);
         }
+        trace_.x(x);
+        has_x_ = true;
         return this;
     }
 
     //! \copydoc stat_bench::plots::ITrace::y
     auto y(const std::vector<double>& y) -> ITrace* override {
-        trace_["y"] = y;
+        trace_.y(y);
         for (const auto& value : y) {
+            // min_y and max_y are used in log function,
+            // so zeros must be ignored.
+            if (value <= 0.0) {
+                continue;
+            }
             min_y_ = std::min(min_y_, value);
             max_y_ = std::max(max_y_, value);
         }
@@ -104,16 +147,9 @@ public:
 
     //! \copydoc stat_bench::plots::ITrace::text
     auto text(const std::vector<util::Utf8String>& text) -> ITrace* override {
-        auto& text_json = trace_["text"];
-        text_json = nlohmann::json::array();
-        for (const auto& text : text) {
-            text_json.push_back(text.str());
-        }
+        trace_.text(text);
         return this;
     }
-
-    //! \copydoc stat_bench::plots::IPlotlyTrace::data
-    auto data() -> const nlohmann::json& override { return trace_; }
 
     //! \copydoc stat_bench::plots::IPlotlyTrace::y_range
     auto y_range() -> std::pair<double, double> override {
@@ -124,8 +160,15 @@ public:
     auto has_x() -> bool override { return has_x_; }
 
 protected:
-    //! Data of the trace.
-    nlohmann::json trace_;
+    /*!
+     * \brief Constructor.
+     *
+     * \param[in] trace Trace.
+     */
+    explicit PlotlyTraceCommon(const Trace& trace) : trace_(trace) {}
+
+    //! Trace.
+    Trace trace_;
 
 private:
     //! Minimum value of y-axis.

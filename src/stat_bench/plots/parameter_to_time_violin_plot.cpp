@@ -21,7 +21,6 @@
 
 #include <memory>
 #include <utility>
-#include <variant>
 #include <vector>
 
 #include <fmt/format.h>

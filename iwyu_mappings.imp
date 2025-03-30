@@ -49,7 +49,6 @@
   # Custom (external)
   { symbol: [ "nlohmann::json", private, "<nlohmann/json.hpp>", public ] },
   { include: ["@<nlohmann/detail/.*>", private, "<nlohmann/json.hpp>", public ] },
-  { include: ["@<inja/.*>", private, "<inja/inja.hpp>", public ] },
   { include: ["@<Eigen/src/Core/.*>", private, "<Eigen/Core>", public ] },
   { include: ["@<Eigen/src/plugins/ArrayCwiseUnaryOps.h>", private, "<Eigen/Core>", public ] },
   { include: ["\"src/Core/DenseBase.h\"", private, "<Eigen/Core>", public ] },

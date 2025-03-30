@@ -53,14 +53,18 @@ This library can be installed via vcpkg using following configurations:
     "default-registry": {
       "kind": "git",
       "repository": "https://github.com/Microsoft/vcpkg",
-      "baseline": "80d54ff62d528339c626a6fbc3489a7f25956ade"
+      "baseline": "acd5bba5aac8b6573b5f6f463dc0341ac0ee6fa4"
     },
     "registries": [
       {
         "kind": "git",
         "repository": "https://gitlab.com/MusicScience37Projects/vcpkg-registry",
-        "baseline": "46060da35ec1438c424d2c7a5a49ffa0b4447d1d",
-        "packages": ["cpp-msgpack-light", "cpp-stat-bench"]
+        "baseline": "e9814bf742df3d99e3ef50ca9dcf8ed5d5a578c6",
+        "packages": [
+          "cpp-msgpack-light",
+          "cpp-plotly-plotter",
+          "cpp-stat-bench"
+        ]
       }
     ]
   }

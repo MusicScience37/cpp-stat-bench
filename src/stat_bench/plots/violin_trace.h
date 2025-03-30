@@ -19,7 +19,10 @@
  */
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include <string>
+#include <string_view>
+
+#include <plotly_plotter/traces/violin.h>
 
 #include "plotly_trace_common.h"
 #include "stat_bench/util/utf8_string.h"
@@ -30,17 +33,19 @@ namespace plots {
 /*!
  * \brief Class of traces of violin plots.
  */
-class ViolinTrace final : public PlotlyTraceCommon {
+class ViolinTrace final
+    : public PlotlyTraceCommon<plotly_plotter::traces::violin> {
 public:
     /*!
      * \brief Constructor.
+     *
+     * \param[in] trace Trace.
      */
-    ViolinTrace() {
-        trace_ = nlohmann::json::object();
-        trace_["type"] = "violin";
-        trace_["box"]["visible"] = true;
-        trace_["meanline"]["visible"] = true;
-        trace_["points"] = "outliers";
+    explicit ViolinTrace(const plotly_plotter::traces::violin& trace)
+        : PlotlyTraceCommon(trace) {
+        trace_.box().visible(true);
+        trace_.mean_line().visible(true);
+        trace_.points("outliers");
     }
 
     ViolinTrace(const ViolinTrace&) = delete;
@@ -56,7 +61,7 @@ public:
     //! \copydoc stat_bench::plots::ITrace::name
     auto name(const util::Utf8String& name) -> ITrace* override {
         PlotlyTraceCommon::name(name);
-        trace_["legendgroup"] = name.str();
+        trace_.legend_group(name.str());
         return this;
     }
 

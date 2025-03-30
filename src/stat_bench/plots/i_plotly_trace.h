@@ -21,8 +21,6 @@
 
 #include <utility>
 
-#include <nlohmann/json.hpp>
-
 #include "stat_bench/plots/i_plotter.h"
 
 namespace stat_bench {
@@ -33,13 +31,6 @@ namespace plots {
  */
 class IPlotlyTrace : public ITrace {
 public:
-    /*!
-     * \brief Get data of the trace.
-     *
-     * \return Data of the trace.
-     */
-    virtual auto data() -> const nlohmann::json& = 0;
-
     /*!
      * \brief Get the range of y-axis.
      *

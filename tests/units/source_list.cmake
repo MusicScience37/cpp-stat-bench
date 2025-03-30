@@ -25,7 +25,6 @@ set(SOURCE_FILES
     stat_bench/param/parameter_value_vector_test.cpp
     stat_bench/plots/box_plot_test.cpp
     stat_bench/plots/cdf_line_plot_test.cpp
-    stat_bench/plots/jinja_renderer_test.cpp
     stat_bench/plots/parameter_to_output_line_plot_test.cpp
     stat_bench/plots/parameter_to_time_box_plot_test.cpp
     stat_bench/plots/parameter_to_time_line_plot_test.cpp

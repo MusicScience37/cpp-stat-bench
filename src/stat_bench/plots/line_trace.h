@@ -19,9 +19,10 @@
  */
 #pragma once
 
+#include <string_view>
 #include <vector>
 
-#include <nlohmann/json.hpp>
+#include <plotly_plotter/traces/scatter.h>
 
 #include "plotly_trace_common.h"
 
@@ -31,15 +32,17 @@ namespace plots {
 /*!
  * \brief Class of traces of line plots.
  */
-class LineTrace final : public PlotlyTraceCommon {
+class LineTrace final
+    : public PlotlyTraceCommon<plotly_plotter::traces::scatter> {
 public:
     /*!
      * \brief Constructor.
+     *
+     * \param[in] trace Trace.
      */
-    LineTrace() {
-        trace_ = nlohmann::json::object();
-        trace_["type"] = "scatter";
-        trace_["mode"] = "lines";
+    explicit LineTrace(const plotly_plotter::traces::scatter& trace)
+        : PlotlyTraceCommon(trace) {
+        trace_.mode("lines");
     }
 
     LineTrace(const LineTrace&) = delete;
@@ -54,19 +57,17 @@ public:
 
     //! \copydoc stat_bench::plots::ITrace::x_error
     auto x_error(const std::vector<double>& x_error) -> ITrace* override {
-        trace_["error_x"] = nlohmann::json::object();
-        trace_["error_x"]["type"] = "data";
-        trace_["error_x"]["array"] = x_error;
-        trace_["error_x"]["visible"] = true;
+        trace_.error_x().type("data");
+        trace_.error_x().array(x_error);
+        trace_.error_x().visible(true);
         return this;
     }
 
     //! \copydoc stat_bench::plots::ITrace::y_error
     auto y_error(const std::vector<double>& y_error) -> ITrace* override {
-        trace_["error_y"] = nlohmann::json::object();
-        trace_["error_y"]["type"] = "data";
-        trace_["error_y"]["array"] = y_error;
-        trace_["error_y"]["visible"] = true;
+        trace_.error_y().type("data");
+        trace_.error_y().array(y_error);
+        trace_.error_y().visible(true);
         return this;
     }
 };
