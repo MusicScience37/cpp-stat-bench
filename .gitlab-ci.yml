@@ -413,7 +413,7 @@ pages:
   script:
     - rm -rf public
     - mv build_doc/doc/html public
-    - mv build_clang_coverage/coverage public/
+    - mv build_clang_coverage/coverage/html public/coverage
   artifacts:
     paths:
       - public
