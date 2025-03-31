@@ -1,8 +1,9 @@
 # cpp-stat-bench
 
-[![GitLab Release](https://img.shields.io/gitlab/v/release/32226502?sort=semver)](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/releases)
+[![Latest Release](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/badges/release.svg)](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/releases)
 [![C++ standard](https://img.shields.io/badge/standard-C%2B%2B14-blue?logo=c%2B%2B)](https://en.cppreference.com/w/cpp/compiler_support/14)
 [![pipeline status](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/badges/main/pipeline.svg)](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/-/commits/main)
+[![coverage report](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/badges/main/coverage.svg)](https://cppstatbench.musicscience37.com/coverage/)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
 Benchmark library with statistics and plotting in C++.
