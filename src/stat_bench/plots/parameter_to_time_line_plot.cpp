@@ -24,7 +24,11 @@
 #include <utility>
 
 #include <fmt/format.h>
+#include <plotly_plotter/figure_builders/line.h>
+#include <plotly_plotter/write_html.h>
 
+#include "common_labels.h"
+#include "create_data_table.h"
 #include "plot_by_parameter_impl.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/measurer/measurement.h"
@@ -53,26 +57,23 @@ void ParameterToTimeLinePlot::write(IPlotter* plotter,
     const BenchmarkGroupName& group_name,
     const std::vector<measurer::Measurement>& measurements,
     const std::string& file_path) {
+    (void)plotter;
     (void)group_name;
 
     const auto& title = measurer_name.str();
-    auto figure = plotter->create_figure(title);
-    plot_by_parameter_with_y_error_impl(measurements, parameter_name_,
-        figure.get(), [this](const measurer::Measurement& measurement) {
-            return std::make_tuple(
-                measurement.cond().params().get_as_variant(parameter_name_),
-                measurement.durations_stat().mean(),
-                measurement.durations_stat().standard_error());
-        });
 
-    figure->set_x_title(parameter_name_.str());
-    figure->set_y_title(util::Utf8String("Time [sec]"));
-    if (plot_parameter_as_log_scale_) {
-        figure->set_log_x();
-    }
-    figure->set_log_y();
-
-    figure->write_to_file(file_path);
+    const auto data_table =
+        create_data_table_with_mean_time(measurements, {parameter_name_});
+    auto figure = plotly_plotter::figure_builders::line(data_table)
+                      .x(parameter_name_.str().str())
+                      .y(time_label)
+                      .error_y(time_error_label)
+                      .group(case_name_label)
+                      .log_x(plot_parameter_as_log_scale_)
+                      .log_y(true)
+                      .create();
+    figure.title(title.str());
+    plotly_plotter::write_html(file_path, figure);
 }
 
 }  // namespace plots
