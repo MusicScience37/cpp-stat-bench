@@ -19,10 +19,12 @@
  */
 #pragma once
 
+#include <utility>
 #include <vector>
 
 #include <plotly_plotter/data_table.h>
 
+#include "stat_bench/custom_output_name.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/param/parameter_name.h"
 
@@ -39,6 +41,42 @@ namespace plots {
 [[nodiscard]] auto create_data_table_with_mean_time(
     const std::vector<measurer::Measurement>& measurements,
     const std::vector<param::ParameterName>& parameter_names)
+    -> plotly_plotter::data_table;
+
+/*!
+ * \brief Create a data table with a custom output.
+ *
+ * \param[in] measurements Measurements.
+ * \param[in] parameter_names Names of parameters to include in the table.
+ * \param[in] output_name Name of the custom output to include in the table.
+ * \return Created data table and whether custom output has errors.
+ */
+[[nodiscard]] auto create_data_table_with_custom_output(
+    const std::vector<measurer::Measurement>& measurements,
+    const std::vector<param::ParameterName>& parameter_names,
+    const CustomOutputName& output_name)
+    -> std::pair<plotly_plotter::data_table, bool>;
+
+/*!
+ * \brief Create a data table with all samples of processing time.
+ *
+ * \param[in] measurements Measurements.
+ * \param[in] parameter_names Names of parameters to include in the table.
+ * \return Created data table.
+ */
+[[nodiscard]] auto create_data_table_with_all_time(
+    const std::vector<measurer::Measurement>& measurements,
+    const std::vector<param::ParameterName>& parameter_names)
+    -> plotly_plotter::data_table;
+
+/*!
+ * \brief Create a data table for cumulative distribution functions.
+ *
+ * \param[in] measurements Measurements.
+ * \return Created data table.
+ */
+[[nodiscard]] auto create_data_table_for_cdf_plot(
+    const std::vector<measurer::Measurement>& measurements)
     -> plotly_plotter::data_table;
 
 }  // namespace plots

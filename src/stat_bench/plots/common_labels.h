@@ -37,5 +37,15 @@ constexpr const char* time_label = "Time [s]";
  */
 constexpr const char* time_error_label = "Standard Error of Time [s]";
 
+/*!
+ * \brief Label for sample index in plots.
+ */
+constexpr const char* sample_index_label = "Sample Index";
+
+/*!
+ * \brief Label for cumulative probability in plots.
+ */
+constexpr const char* cumulative_probability_label = "Cumulative Probability";
+
 }  // namespace plots
 }  // namespace stat_bench

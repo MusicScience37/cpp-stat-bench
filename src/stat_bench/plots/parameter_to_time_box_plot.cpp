@@ -24,7 +24,11 @@
 #include <vector>
 
 #include <fmt/format.h>
+#include <plotly_plotter/figure_builders/box.h>
+#include <plotly_plotter/write_html.h>
 
+#include "common_labels.h"
+#include "create_data_table.h"
 #include "plot_by_parameter_impl.h"  // IWYU pragma: keep
 #include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_condition.h"
@@ -57,48 +61,22 @@ void ParameterToTimeBoxPlot::write(IPlotter* plotter,
     const BenchmarkGroupName& group_name,
     const std::vector<measurer::Measurement>& measurements,
     const std::string& file_path) {
+    (void)plotter;
     (void)group_name;
 
     const auto& title = measurer_name.str();
-    auto figure = plotter->create_figure(title);
 
-    struct FigureData {
-        std::vector<param::ParameterValueVariant> x;
-        std::vector<double> y;
-    };
-    util::OrderedMap<std::pair<BenchmarkCaseName, param::ParameterDict>,
-        FigureData>
-        figure_data_map;
-    for (const auto& measurement : measurements) {
-        const auto& case_name = measurement.case_info().case_name();
-        const auto& params = measurement.cond().params();
-        const auto params_without_target =
-            params.clone_without(parameter_name_);
-        const auto key = std::make_pair(case_name, params_without_target);
-        auto& figure_data = figure_data_map[key];
-
-        const param::ParameterValueVariant x_value =
-            measurement.cond().params().get_as_variant(parameter_name_);
-        const auto& y_list = measurement.durations_stat().unsorted_samples();
-        const auto x_list =
-            std::vector<param::ParameterValueVariant>(y_list.size(), x_value);
-
-        figure_data.x.insert(figure_data.x.end(), x_list.begin(), x_list.end());
-        figure_data.y.insert(figure_data.y.end(), y_list.begin(), y_list.end());
-    }
-
-    for (const auto& [key, figure_data] : figure_data_map) {
-        figure->add_box_trace()
-            ->x(figure_data.x)
-            ->y(figure_data.y)
-            ->name(generate_plot_name(key.first, key.second));
-    }
-
-    figure->set_x_title(parameter_name_.str());
-    figure->set_y_title(util::Utf8String("Time [sec]"));
-    figure->set_log_y();
-
-    figure->write_to_file(file_path);
+    const auto data_table =
+        create_data_table_with_all_time(measurements, {parameter_name_});
+    auto figure = plotly_plotter::figure_builders::box(data_table)
+                      .x(parameter_name_.str().str())
+                      .y(time_label)
+                      .group(case_name_label)
+                      .log_y(true)
+                      .box_mean("sd")
+                      .create();
+    figure.title(title.str());
+    plotly_plotter::write_html(file_path, figure);
 }
 
 }  // namespace plots

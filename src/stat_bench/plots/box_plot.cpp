@@ -22,6 +22,11 @@
 #include <memory>
 #include <vector>
 
+#include <plotly_plotter/figure_builders/box.h>
+#include <plotly_plotter/write_html.h>
+
+#include "common_labels.h"
+#include "create_data_table.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/measurer/measurement.h"
@@ -42,22 +47,20 @@ void BoxPlot::write(IPlotter* plotter,
     const BenchmarkGroupName& group_name,
     const std::vector<measurer::Measurement>& measurements,
     const std::string& file_path) {
+    (void)plotter;
     (void)group_name;
 
     const auto& title = measurer_name.str();
-    auto figure = plotter->create_figure(title);
 
-    for (const auto& measurement : measurements) {
-        const auto& y = measurement.durations_stat().unsorted_samples();
-
-        figure->add_box_trace()->y(y)->name(generate_plot_name(
-            measurement.case_info().case_name(), measurement.cond().params()));
-    }
-
-    figure->set_y_title(util::Utf8String("Time [sec]"));
-    figure->set_log_y();
-
-    figure->write_to_file(file_path);
+    const auto data_table = create_data_table_with_all_time(measurements, {});
+    auto figure = plotly_plotter::figure_builders::box(data_table)
+                      .y(time_label)
+                      .group(case_name_label)
+                      .log_y(true)
+                      .box_mean("sd")
+                      .create();
+    figure.title(title.str());
+    plotly_plotter::write_html(file_path, figure);
 }
 
 }  // namespace plots

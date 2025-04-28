@@ -27,7 +27,11 @@
 #include <vector>
 
 #include <fmt/format.h>
+#include <plotly_plotter/figure_builders/line.h>
+#include <plotly_plotter/write_html.h>
 
+#include "common_labels.h"
+#include "create_data_table.h"
 #include "plot_by_parameter_impl.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/measurer/measurement.h"
@@ -61,68 +65,26 @@ void ParameterToOutputLinePlot::write(IPlotter* plotter,
     const BenchmarkGroupName& group_name,
     const std::vector<measurer::Measurement>& measurements,
     const std::string& file_path) {
+    (void)plotter;
     (void)measurer_name;
     (void)group_name;
 
     const auto& title = custom_output_name_.str();
-    auto figure = plotter->create_figure(title);
 
-    const auto& first_custom_outputs = measurements.front().custom_outputs();
-    const auto first_custom_output_iter = std::find_if(
-        first_custom_outputs.begin(), first_custom_outputs.end(),
-        [this](const auto& pair) { return pair.first == custom_output_name_; });
-    if (first_custom_output_iter != first_custom_outputs.end()) {
-        // Case of custom output without statistics.
-        plot_by_parameter_impl(measurements, parameter_name_, figure.get(),
-            [this](const measurer::Measurement& measurement) {
-                const auto& custom_outputs = measurement.custom_outputs();
-                const auto iter = std::find_if(custom_outputs.begin(),
-                    custom_outputs.end(), [this](const auto& pair) {
-                        return pair.first == custom_output_name_;
-                    });
-                if (iter == custom_outputs.end()) {
-                    throw StatBenchException(fmt::format(
-                        "Custom output {} not found in a measurement.",
-                        custom_output_name_));
-                }
-
-                return std::make_tuple(
-                    measurement.cond().params().get_as_variant(parameter_name_),
-                    iter->second);
-            });
-    } else {
-        // Case of custom output with statistics.
-        plot_by_parameter_with_y_error_impl(measurements, parameter_name_,
-            figure.get(), [this](const measurer::Measurement& measurement) {
-                const auto& custom_outputs = measurement.custom_stat_outputs();
-                const auto iter = std::find_if(custom_outputs.begin(),
-                    custom_outputs.end(), [this](const auto& output) {
-                        return output->name() == custom_output_name_;
-                    });
-                if (iter == custom_outputs.end()) {
-                    throw StatBenchException(fmt::format(
-                        "Custom output {} not found in a measurement.",
-                        custom_output_name_));
-                }
-
-                const std::size_t index = iter - custom_outputs.begin();
-                const auto& stat = measurement.custom_stat().at(index);
-                return std::make_tuple(
-                    measurement.cond().params().get_as_variant(parameter_name_),
-                    stat.mean(), stat.standard_error());
-            });
+    const auto [data_table, has_error] = create_data_table_with_custom_output(
+        measurements, {parameter_name_}, custom_output_name_);
+    auto figure_builder = plotly_plotter::figure_builders::line(data_table)
+                              .x(parameter_name_.str().str())
+                              .y(custom_output_name_.str().str())
+                              .group(case_name_label)
+                              .log_x(plot_parameter_as_log_scale_)
+                              .log_y(plot_custom_output_as_log_scale_);
+    if (has_error) {
+        figure_builder.error_y(fmt::format("Error of {}", custom_output_name_));
     }
-
-    figure->set_x_title(parameter_name_.str());
-    figure->set_y_title(custom_output_name_.str());
-    if (plot_parameter_as_log_scale_) {
-        figure->set_log_x();
-    }
-    if (plot_custom_output_as_log_scale_) {
-        figure->set_log_y();
-    }
-
-    figure->write_to_file(file_path);
+    auto figure = figure_builder.create();
+    figure.title(title.str());
+    plotly_plotter::write_html(file_path, figure);
 }
 
 }  // namespace plots
