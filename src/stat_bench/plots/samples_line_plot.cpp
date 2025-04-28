@@ -19,16 +19,17 @@
  */
 #include "stat_bench/plots/samples_line_plot.h"
 
-#include <memory>
 #include <vector>
 
-#include "stat_bench/benchmark_condition.h"
-#include "stat_bench/benchmark_full_name.h"
-#include "stat_bench/measurer/measurement.h"
+#include <plotly_plotter/figure.h>
+#include <plotly_plotter/figure_builders/line.h>
+#include <plotly_plotter/figure_builders/scatter.h>
+#include <plotly_plotter/write_html.h>
+
+#include "common_labels.h"
+#include "create_data_table.h"
 #include "stat_bench/measurer/measurer_name.h"
-#include "stat_bench/plots/i_plotter.h"
-#include "stat_bench/plots/plot_utils.h"
-#include "stat_bench/stat/statistics.h"
+#include "stat_bench/param/parameter_name.h"
 #include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
@@ -38,31 +39,23 @@ auto SamplesLinePlot::name_for_file() const -> const util::Utf8String& {
     return name_for_file_;
 }
 
-void SamplesLinePlot::write(IPlotter* plotter,
-    const measurer::MeasurerName& measurer_name,
+void SamplesLinePlot::write(const measurer::MeasurerName& measurer_name,
     const BenchmarkGroupName& group_name,
     const std::vector<measurer::Measurement>& measurements,
     const std::string& file_path) {
     (void)group_name;
 
     const auto& title = measurer_name.str();
-    auto figure = plotter->create_figure(title);
 
-    for (const auto& measurement : measurements) {
-        const auto& y = measurement.durations_stat().unsorted_samples();
-
-        figure->add_line_trace()
-            ->generate_sequential_number_for_x(y.size())
-            ->y(y)
-            ->name(generate_plot_name(measurement.case_info().case_name(),
-                measurement.cond().params()));
-    }
-
-    figure->set_x_title(util::Utf8String("Sample Index"));
-    figure->set_y_title(util::Utf8String("Time [sec]"));
-    figure->set_log_y();
-
-    figure->write_to_file(file_path);
+    const auto data_table = create_data_table_with_all_time(measurements, {});
+    auto figure = plotly_plotter::figure_builders::line(data_table)
+                      .x(sample_index_label)
+                      .y(time_label)
+                      .group(case_name_label)
+                      .log_y(true)
+                      .create();
+    figure.title(title.str());
+    plotly_plotter::write_html(file_path, figure);
 }
 
 }  // namespace plots

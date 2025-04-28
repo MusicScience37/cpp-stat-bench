@@ -29,7 +29,6 @@
 #include "stat_bench/plots/parameter_to_time_line_plot_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/plots/parameter_to_time_violin_plot_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/plots/plot_utils_test.cpp"  // NOLINT(bugprone-suspicious-include)
-#include "stat_bench/plots/plotly_plotter_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/plots/samples_line_plot_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/plots/time_to_output_by_parameter_line_plot_test.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "stat_bench/plots/violin_plot_test.cpp"  // NOLINT(bugprone-suspicious-include)

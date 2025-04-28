@@ -26,7 +26,6 @@
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/measurer/measurer_name.h"
 #include "stat_bench/plots/i_plot.h"
-#include "stat_bench/plots/i_plotter.h"
 #include "stat_bench/reporter/i_reporter.h"
 #include "stat_bench/util/utf8_string.h"
 
@@ -91,9 +90,6 @@ private:
 
     //! Measurements.
     std::vector<measurer::Measurement> measurements_{};
-
-    //! Plotter.
-    std::shared_ptr<plots::IPlotter> plotter_;
 
     //! Builtin plots.
     std::vector<std::shared_ptr<plots::IPlot>> builtin_plots_{};

@@ -19,20 +19,17 @@
  */
 #include "stat_bench/plots/time_to_output_by_parameter_line_plot.h"
 
-#include <algorithm>
-#include <cstddef>
-#include <memory>
-#include <tuple>
 #include <utility>
 #include <vector>
 
 #include <fmt/format.h>
+#include <plotly_plotter/figure.h>
+#include <plotly_plotter/figure_builders/line.h>
+#include <plotly_plotter/figure_builders/scatter.h>
+#include <plotly_plotter/write_html.h>
 
-#include "plot_by_parameter_impl.h"
-#include "stat_bench/measurer/measurement.h"
-#include "stat_bench/plots/i_plotter.h"
-#include "stat_bench/stat/statistics.h"
-#include "stat_bench/stat_bench_exception.h"
+#include "common_labels.h"
+#include "create_data_table.h"
 #include "stat_bench/util/escape_for_file_name.h"
 
 namespace stat_bench {
@@ -53,7 +50,7 @@ auto TimeToOutputByParameterLinePlot::name_for_file() const
     return name_for_file_;
 }
 
-void TimeToOutputByParameterLinePlot::write(IPlotter* plotter,
+void TimeToOutputByParameterLinePlot::write(
     const measurer::MeasurerName& measurer_name,
     const BenchmarkGroupName& group_name,
     const std::vector<measurer::Measurement>& measurements,
@@ -62,64 +59,23 @@ void TimeToOutputByParameterLinePlot::write(IPlotter* plotter,
     (void)group_name;
 
     const auto& title = custom_output_name_.str();
-    auto figure = plotter->create_figure(title);
 
-    const auto& first_custom_outputs = measurements.front().custom_outputs();
-    const auto first_custom_output_iter = std::find_if(
-        first_custom_outputs.begin(), first_custom_outputs.end(),
-        [this](const auto& pair) { return pair.first == custom_output_name_; });
-    if (first_custom_output_iter != first_custom_outputs.end()) {
-        // Case of custom output without statistics.
-        plot_by_parameter_with_x_error_with_param_impl(measurements,
-            parameter_name_, figure.get(),
-            [this](const measurer::Measurement& measurement) {
-                const auto& custom_outputs = measurement.custom_outputs();
-                const auto iter = std::find_if(custom_outputs.begin(),
-                    custom_outputs.end(), [this](const auto& pair) {
-                        return pair.first == custom_output_name_;
-                    });
-                if (iter == custom_outputs.end()) {
-                    throw StatBenchException(fmt::format(
-                        "Custom output {} not found in a measurement.",
-                        custom_output_name_));
-                }
-
-                return std::make_tuple(measurement.durations_stat().mean(),
-                    iter->second,
-                    measurement.durations_stat().standard_error());
-            });
-    } else {
-        // Case of custom output with statistics.
-        plot_by_parameter_with_xy_error_with_param_impl(measurements,
-            parameter_name_, figure.get(),
-            [this](const measurer::Measurement& measurement) {
-                const auto& custom_outputs = measurement.custom_stat_outputs();
-                const auto iter = std::find_if(custom_outputs.begin(),
-                    custom_outputs.end(), [this](const auto& output) {
-                        return output->name() == custom_output_name_;
-                    });
-                if (iter == custom_outputs.end()) {
-                    throw StatBenchException(fmt::format(
-                        "Custom output {} not found in a measurement.",
-                        custom_output_name_));
-                }
-
-                const std::size_t index = iter - custom_outputs.begin();
-                const auto& stat = measurement.custom_stat().at(index);
-                return std::make_tuple(measurement.durations_stat().mean(),
-                    stat.mean(), measurement.durations_stat().standard_error(),
-                    stat.standard_error());
-            });
+    const auto [data_table, has_error] = create_data_table_with_custom_output(
+        measurements, {parameter_name_}, custom_output_name_);
+    auto figure_builder = plotly_plotter::figure_builders::line(data_table)
+                              .x(time_label)
+                              .error_x(time_error_label)
+                              .y(custom_output_name_.str().str())
+                              .group(case_name_label)
+                              .log_x(true)
+                              .log_y(plot_custom_output_as_log_scale_)
+                              .hover_data({parameter_name_.str().str()});
+    if (has_error) {
+        figure_builder.error_y(fmt::format("Error of {}", custom_output_name_));
     }
-
-    figure->set_x_title(util::Utf8String("Time [sec]"));
-    figure->set_y_title(custom_output_name_.str());
-    figure->set_log_x();
-    if (plot_custom_output_as_log_scale_) {
-        figure->set_log_y();
-    }
-
-    figure->write_to_file(file_path);
+    auto figure = figure_builder.create();
+    figure.title(title.str());
+    plotly_plotter::write_html(file_path, figure);
 }
 
 }  // namespace plots

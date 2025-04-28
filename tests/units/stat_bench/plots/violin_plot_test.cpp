@@ -19,25 +19,20 @@
  */
 #include "stat_bench/plots/violin_plot.h"
 
-#include <memory>
-
 #include <ApprovalTests.hpp>
 #include <catch2/catch_test_macros.hpp>
 
 #include "../reporter/read_file.h"
-#include "stat_bench/plots/plotly_plotter.h"
 #include "use_plot_for_test.h"
 
 TEST_CASE("stat_bench::plots::ViolinPlot") {
-    using stat_bench::plots::create_plotly_plotter;
     using stat_bench::plots::ViolinPlot;
     using stat_bench_test::use_plot_for_test;
 
     SECTION("write") {
-        const auto plotter = create_plotly_plotter();
         ViolinPlot plot;
         const auto file_path = std::string("./plots/ViolinPlot.html");
-        use_plot_for_test(&plot, plotter.get(), file_path);
+        use_plot_for_test(&plot, file_path);
 
         ApprovalTests::Approvals::verify(stat_bench_test::read_file(file_path),
             ApprovalTests::Options().fileOptions().withFileExtension(".html"));

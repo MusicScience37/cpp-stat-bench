@@ -12,6 +12,8 @@ if(STAT_BENCH_ENABLE_PRECOMPILED_HEADERS)
     endif()
 endif()
 
+file(MAKE_DIRECTORY ${STAT_BENCH_TEMP_TEST_DIR}/plots)
+
 add_executable(stat_bench_test_units_unity EXCLUDE_FROM_ALL unity_source.cpp)
 target_link_libraries(stat_bench_test_units_unity PRIVATE Catch2::Catch2WithMain
                                                           stat_bench)
