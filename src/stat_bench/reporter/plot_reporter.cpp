@@ -20,6 +20,7 @@
 #include "stat_bench/reporter/plot_reporter.h"
 
 #include <cstddef>
+#include <filesystem>
 #include <memory>
 #include <utility>
 
@@ -86,6 +87,8 @@ void PlotReporter::group_finished(const BenchmarkGroupName& name) {
             util::escape_for_file_name(name.str()),
             measurer_name_for_file_paths_,
             util::escape_for_file_name(plot->name_for_file()));
+        std::filesystem::create_directories(
+            std::filesystem::path(file_path).parent_path());
         plot->write(measurer_name_, name, measurements_, file_path);
     };
     for (const auto& plot : builtin_plots_) {
