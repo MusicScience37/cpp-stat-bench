@@ -29,7 +29,6 @@
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/plots/box_plot.h"
 #include "stat_bench/plots/cdf_line_plot.h"
-#include "stat_bench/plots/plotly_plotter.h"
 #include "stat_bench/plots/samples_line_plot.h"
 #include "stat_bench/plots/violin_plot.h"
 #include "stat_bench/util/escape_for_file_name.h"
@@ -39,9 +38,7 @@ namespace stat_bench {
 namespace reporter {
 
 PlotReporter::PlotReporter(std::string prefix)
-    : prefix_(std::move(prefix)),
-      measurer_name_(""),
-      plotter_(plots::create_plotly_plotter()) {
+    : prefix_(std::move(prefix)), measurer_name_("") {
     builtin_plots_.push_back(std::make_shared<plots::SamplesLinePlot>());
     builtin_plots_.push_back(std::make_shared<plots::CdfLinePlot>());
     builtin_plots_.push_back(std::make_shared<plots::ViolinPlot>());
@@ -89,8 +86,7 @@ void PlotReporter::group_finished(const BenchmarkGroupName& name) {
             util::escape_for_file_name(name.str()),
             measurer_name_for_file_paths_,
             util::escape_for_file_name(plot->name_for_file()));
-        plot->write(
-            plotter_.get(), measurer_name_, name, measurements_, file_path);
+        plot->write(measurer_name_, name, measurements_, file_path);
     };
     for (const auto& plot : builtin_plots_) {
         process_plot(plot);

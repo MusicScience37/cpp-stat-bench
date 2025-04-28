@@ -28,7 +28,6 @@
 #include "plots/parameter_to_time_line_plot.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "plots/parameter_to_time_violin_plot.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "plots/plot_utils.cpp"         // NOLINT(bugprone-suspicious-include)
-#include "plots/plotly_plotter.cpp"     // NOLINT(bugprone-suspicious-include)
 #include "plots/samples_line_plot.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "plots/time_to_output_by_parameter_line_plot.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "plots/violin_plot.cpp"  // NOLINT(bugprone-suspicious-include)

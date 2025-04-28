@@ -19,17 +19,30 @@
  */
 #include "create_data_table.h"
 
+#include <algorithm>
+#include <cstddef>
+#include <functional>
+#include <memory>
 #include <string>
 #include <unordered_map>
 #include <variant>
 #include <vector>
 
+#include <fmt/base.h>
 #include <fmt/format.h>
+#include <plotly_plotter/json_converter_decl.h>
+#include <plotly_plotter/json_value.h>
 
 #include "common_labels.h"
+#include "stat_bench/benchmark_condition.h"
+#include "stat_bench/benchmark_full_name.h"
+#include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value.h"
 #include "stat_bench/plots/plot_utils.h"
+#include "stat_bench/stat/statistics.h"
+#include "stat_bench/stat_bench_exception.h"
+#include "stat_bench/util/utf8_string.h"
 
 namespace plotly_plotter {
 

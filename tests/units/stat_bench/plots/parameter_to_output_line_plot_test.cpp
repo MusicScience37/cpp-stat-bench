@@ -40,7 +40,6 @@
 #include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value.h"
-#include "stat_bench/plots/plotly_plotter.h"
 #include "stat_bench/stat/custom_stat_output.h"
 #include "stat_bench/util/ordered_map.h"
 
@@ -57,11 +56,9 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
     using stat_bench::param::ParameterDict;
     using stat_bench::param::ParameterName;
     using stat_bench::param::ParameterValue;
-    using stat_bench::plots::create_plotly_plotter;
     using stat_bench::plots::ParameterToOutputLinePlot;
 
     SECTION("write without statistics") {
-        const auto plotter = create_plotly_plotter();
         const auto target_parameter_name = ParameterName("Parameter1");
         const auto parameter_name2 = ParameterName("Parameter2");
         const auto target_output_name = CustomOutputName("Output1");
@@ -147,8 +144,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
 
             const auto file_path =
                 std::string("./plots/ParameterToOutputLinePlot.html");
-            plot.write(plotter.get(), measurer_name, group_name, measurements,
-                file_path);
+            plot.write(measurer_name, group_name, measurements, file_path);
 
             ApprovalTests::Approvals::verify(
                 stat_bench_test::read_file(file_path),
@@ -165,8 +161,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
 
             const auto file_path =
                 std::string("./plots/ParameterToOutputLinePlotLog.html");
-            plot.write(plotter.get(), measurer_name, group_name, measurements,
-                file_path);
+            plot.write(measurer_name, group_name, measurements, file_path);
 
             ApprovalTests::Approvals::verify(
                 stat_bench_test::read_file(file_path),
@@ -176,7 +171,6 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
     }
 
     SECTION("write with statistics") {
-        const auto plotter = create_plotly_plotter();
         const auto target_parameter_name = ParameterName("Parameter1");
         const auto parameter_name2 = ParameterName("Parameter2");
         const auto target_output_name = CustomOutputName("Output1");
@@ -287,8 +281,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
 
             const auto file_path =
                 std::string("./plots/ParameterToOutputLinePlotStat.html");
-            plot.write(plotter.get(), measurer_name, group_name, measurements,
-                file_path);
+            plot.write(measurer_name, group_name, measurements, file_path);
 
             ApprovalTests::Approvals::verify(
                 stat_bench_test::read_file(file_path),
@@ -305,8 +298,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
 
             const auto file_path =
                 std::string("./plots/ParameterToOutputLinePlotStatLog.html");
-            plot.write(plotter.get(), measurer_name, group_name, measurements,
-                file_path);
+            plot.write(measurer_name, group_name, measurements, file_path);
 
             ApprovalTests::Approvals::verify(
                 stat_bench_test::read_file(file_path),

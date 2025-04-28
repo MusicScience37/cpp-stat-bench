@@ -19,26 +19,17 @@
  */
 #include "stat_bench/plots/parameter_to_output_line_plot.h"
 
-#include <algorithm>
-#include <cstddef>
-#include <memory>
-#include <tuple>
 #include <utility>
 #include <vector>
 
 #include <fmt/format.h>
+#include <plotly_plotter/figure.h>
 #include <plotly_plotter/figure_builders/line.h>
+#include <plotly_plotter/figure_builders/scatter.h>
 #include <plotly_plotter/write_html.h>
 
 #include "common_labels.h"
 #include "create_data_table.h"
-#include "plot_by_parameter_impl.h"
-#include "stat_bench/benchmark_condition.h"
-#include "stat_bench/measurer/measurement.h"
-#include "stat_bench/param/parameter_dict.h"
-#include "stat_bench/plots/i_plotter.h"
-#include "stat_bench/stat/statistics.h"
-#include "stat_bench/stat_bench_exception.h"
 #include "stat_bench/util/escape_for_file_name.h"
 
 namespace stat_bench {
@@ -60,12 +51,11 @@ auto ParameterToOutputLinePlot::name_for_file() const
     return name_for_file_;
 }
 
-void ParameterToOutputLinePlot::write(IPlotter* plotter,
+void ParameterToOutputLinePlot::write(
     const measurer::MeasurerName& measurer_name,
     const BenchmarkGroupName& group_name,
     const std::vector<measurer::Measurement>& measurements,
     const std::string& file_path) {
-    (void)plotter;
     (void)measurer_name;
     (void)group_name;
 

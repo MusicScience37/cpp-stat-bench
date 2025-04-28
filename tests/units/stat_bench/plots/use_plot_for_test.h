@@ -28,12 +28,11 @@
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/measurer/measurer_name.h"
 #include "stat_bench/plots/i_plot.h"
-#include "stat_bench/plots/i_plotter.h"
 
 namespace stat_bench_test {
 
-inline void use_plot_for_test(stat_bench::plots::IPlot* plot,
-    stat_bench::plots::IPlotter* plotter, const std::string& file_path) {
+inline void use_plot_for_test(
+    stat_bench::plots::IPlot* plot, const std::string& file_path) {
     using stat_bench::BenchmarkGroupName;
     using stat_bench::clock::Duration;
     using stat_bench::measurer::Measurement;
@@ -50,8 +49,8 @@ inline void use_plot_for_test(stat_bench::plots::IPlot* plot,
             std::vector<std::vector<Duration>>{std::vector<Duration>{
                 Duration(800.0), Duration(900.0), Duration(1000.0)}})};
 
-    plot->write(plotter, MeasurerName(measurer_name),
-        BenchmarkGroupName(group_name), measurements, file_path);
+    plot->write(MeasurerName(measurer_name), BenchmarkGroupName(group_name),
+        measurements, file_path);
 }
 
 }  // namespace stat_bench_test

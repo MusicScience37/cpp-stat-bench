@@ -19,23 +19,18 @@
  */
 #include "stat_bench/plots/parameter_to_time_line_plot.h"
 
-#include <memory>
-#include <tuple>
 #include <utility>
+#include <vector>
 
 #include <fmt/format.h>
+#include <plotly_plotter/figure.h>
 #include <plotly_plotter/figure_builders/line.h>
+#include <plotly_plotter/figure_builders/scatter.h>
 #include <plotly_plotter/write_html.h>
 
 #include "common_labels.h"
 #include "create_data_table.h"
-#include "plot_by_parameter_impl.h"
-#include "stat_bench/benchmark_condition.h"
-#include "stat_bench/measurer/measurement.h"
 #include "stat_bench/measurer/measurer_name.h"
-#include "stat_bench/param/parameter_dict.h"
-#include "stat_bench/plots/i_plotter.h"
-#include "stat_bench/stat/statistics.h"
 #include "stat_bench/util/escape_for_file_name.h"
 
 namespace stat_bench {
@@ -52,12 +47,10 @@ auto ParameterToTimeLinePlot::name_for_file() const -> const util::Utf8String& {
     return name_for_file_;
 }
 
-void ParameterToTimeLinePlot::write(IPlotter* plotter,
-    const measurer::MeasurerName& measurer_name,
+void ParameterToTimeLinePlot::write(const measurer::MeasurerName& measurer_name,
     const BenchmarkGroupName& group_name,
     const std::vector<measurer::Measurement>& measurements,
     const std::string& file_path) {
-    (void)plotter;
     (void)group_name;
 
     const auto& title = measurer_name.str();

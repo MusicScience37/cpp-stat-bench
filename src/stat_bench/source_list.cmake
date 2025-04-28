@@ -29,7 +29,6 @@ set(SOURCE_FILES
     plots/parameter_to_time_line_plot.cpp
     plots/parameter_to_time_violin_plot.cpp
     plots/plot_utils.cpp
-    plots/plotly_plotter.cpp
     plots/samples_line_plot.cpp
     plots/time_to_output_by_parameter_line_plot.cpp
     plots/violin_plot.cpp
