@@ -37,11 +37,10 @@ namespace plots {
 
 ParameterToOutputLinePlot::ParameterToOutputLinePlot(
     param::ParameterName parameter_name, CustomOutputName custom_output_name,
-    bool plot_parameter_as_log_scale, bool plot_custom_output_as_log_scale)
+    PlotOptions options)
     : parameter_name_(std::move(parameter_name)),
       custom_output_name_(std::move(custom_output_name)),
-      plot_parameter_as_log_scale_(plot_parameter_as_log_scale),
-      plot_custom_output_as_log_scale_(plot_custom_output_as_log_scale),
+      options_(options),
       name_for_file_(fmt::format("{}_by_{}",
           util::escape_for_file_name(custom_output_name_.str()),
           util::escape_for_file_name(parameter_name_.str()))) {}
@@ -67,8 +66,8 @@ void ParameterToOutputLinePlot::write(
                               .x(parameter_name_.str().str())
                               .y(custom_output_name_.str().str())
                               .group(case_name_label)
-                              .log_x(plot_parameter_as_log_scale_)
-                              .log_y(plot_custom_output_as_log_scale_);
+                              .log_x(options_.log_parameter())
+                              .log_y(options_.log_output());
     if (has_error) {
         figure_builder.error_y(fmt::format("Error of {}", custom_output_name_));
     }

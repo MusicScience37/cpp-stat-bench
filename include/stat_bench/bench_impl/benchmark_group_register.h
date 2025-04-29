@@ -21,7 +21,7 @@
 
 #include "stat_bench/bench_impl/benchmark_group.h"
 #include "stat_bench/benchmark_group_name.h"
-#include "stat_bench/plot_option.h"
+#include "stat_bench/plot_options.h"
 #include "stat_bench/util/string_view.h"
 
 namespace stat_bench {
@@ -48,7 +48,7 @@ public:
      * \return Reference to this object.
      */
     auto add_parameter_to_time_line_plot(util::StringView parameter_name,
-        PlotOption::Value options = PlotOption::none) noexcept
+        PlotOptions options = PlotOptions()) noexcept
         -> BenchmarkGroupRegister&;
 
     /*!
@@ -92,7 +92,7 @@ public:
      */
     auto add_parameter_to_output_line_plot(util::StringView parameter_name,
         util::StringView custom_output_name,
-        PlotOption::Value options = PlotOption::none) noexcept
+        PlotOptions options = PlotOptions()) noexcept
         -> BenchmarkGroupRegister&;
 
     /*!
@@ -106,7 +106,7 @@ public:
      */
     auto add_time_to_output_by_parameter_line_plot(
         util::StringView parameter_name, util::StringView custom_output_name,
-        PlotOption::Value options = PlotOption::none) noexcept
+        PlotOptions options = PlotOptions()) noexcept
         -> BenchmarkGroupRegister&;
 
 private:
