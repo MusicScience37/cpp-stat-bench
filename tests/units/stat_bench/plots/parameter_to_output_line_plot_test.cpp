@@ -40,6 +40,7 @@
 #include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value.h"
+#include "stat_bench/plot_options.h"
 #include "stat_bench/stat/custom_stat_output.h"
 #include "stat_bench/util/ordered_map.h"
 
@@ -49,6 +50,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
     using stat_bench::BenchmarkFullName;
     using stat_bench::BenchmarkGroupName;
     using stat_bench::CustomOutputName;
+    using stat_bench::PlotOptions;
     using stat_bench::clock::Duration;
     using stat_bench::measurer::Measurement;
     using stat_bench::measurer::MeasurerName;
@@ -136,11 +138,9 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                 {{target_output_name, 6.6}, {output_name2, -1.0}})};
 
         SECTION("in linear scale") {
-            constexpr bool plot_parameter_as_log_scale = false;
-            constexpr bool plot_custom_output_as_log_scale = false;
             ParameterToOutputLinePlot plot(target_parameter_name,
-                target_output_name, plot_parameter_as_log_scale,
-                plot_custom_output_as_log_scale);
+                target_output_name,
+                PlotOptions().log_parameter(false).log_output(false));
 
             const auto file_path =
                 std::string("./plots/ParameterToOutputLinePlot.html");
@@ -153,11 +153,9 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
         }
 
         SECTION("in log scale") {
-            constexpr bool plot_parameter_as_log_scale = true;
-            constexpr bool plot_custom_output_as_log_scale = true;
             ParameterToOutputLinePlot plot(target_parameter_name,
-                target_output_name, plot_parameter_as_log_scale,
-                plot_custom_output_as_log_scale);
+                target_output_name,
+                PlotOptions().log_parameter(true).log_output(true));
 
             const auto file_path =
                 std::string("./plots/ParameterToOutputLinePlotLog.html");
@@ -273,11 +271,9 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                 {})};
 
         SECTION("in linear scale") {
-            constexpr bool plot_parameter_as_log_scale = false;
-            constexpr bool plot_custom_output_as_log_scale = false;
             ParameterToOutputLinePlot plot(target_parameter_name,
-                target_output_name, plot_parameter_as_log_scale,
-                plot_custom_output_as_log_scale);
+                target_output_name,
+                PlotOptions().log_parameter(false).log_output(false));
 
             const auto file_path =
                 std::string("./plots/ParameterToOutputLinePlotStat.html");
@@ -290,11 +286,9 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
         }
 
         SECTION("in log scale") {
-            constexpr bool plot_parameter_as_log_scale = true;
-            constexpr bool plot_custom_output_as_log_scale = true;
             ParameterToOutputLinePlot plot(target_parameter_name,
-                target_output_name, plot_parameter_as_log_scale,
-                plot_custom_output_as_log_scale);
+                target_output_name,
+                PlotOptions().log_parameter(true).log_output(true));
 
             const auto file_path =
                 std::string("./plots/ParameterToOutputLinePlotStatLog.html");

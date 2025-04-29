@@ -23,6 +23,7 @@
 
 #include "stat_bench/custom_output_name.h"
 #include "stat_bench/param/parameter_name.h"
+#include "stat_bench/plot_options.h"
 #include "stat_bench/plots/i_plot.h"
 #include "stat_bench/util/utf8_string.h"
 
@@ -39,14 +40,10 @@ public:
      *
      * \param[in] parameter_name Parameter name.
      * \param[in] custom_output_name Custom output name.
-     * \param[in] plot_parameter_as_log_scale Whether the parameter should be
-     * plotted as log scale.
-     * \param[in] plot_custom_output_as_log_scale Whether the custom output
-     * should be plotted as log scale.
+     * \param[in] options Options for the plot.
      */
     ParameterToOutputLinePlot(param::ParameterName parameter_name,
-        CustomOutputName custom_output_name, bool plot_parameter_as_log_scale,
-        bool plot_custom_output_as_log_scale);
+        CustomOutputName custom_output_name, PlotOptions options);
 
     ParameterToOutputLinePlot(const ParameterToOutputLinePlot&) = delete;
     ParameterToOutputLinePlot(ParameterToOutputLinePlot&&) = delete;
@@ -77,11 +74,8 @@ private:
     //! Custom output name.
     CustomOutputName custom_output_name_;
 
-    //! Whether the parameter should be plotted as log scale.
-    bool plot_parameter_as_log_scale_;
-
-    //! Whether the custom output should be plotted as log scale.
-    bool plot_custom_output_as_log_scale_;
+    //! Options for the plot.
+    PlotOptions options_;
 
     //! Name for output files.
     util::Utf8String name_for_file_;

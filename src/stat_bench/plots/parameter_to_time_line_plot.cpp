@@ -37,9 +37,9 @@ namespace stat_bench {
 namespace plots {
 
 ParameterToTimeLinePlot::ParameterToTimeLinePlot(
-    param::ParameterName parameter_name, bool plot_parameter_as_log_scale)
+    param::ParameterName parameter_name, PlotOptions options)
     : parameter_name_(std::move(parameter_name)),
-      plot_parameter_as_log_scale_(plot_parameter_as_log_scale),
+      options_(options),
       name_for_file_(fmt::format(
           "by_{}", util::escape_for_file_name(parameter_name_.str()))) {}
 
@@ -62,7 +62,7 @@ void ParameterToTimeLinePlot::write(const measurer::MeasurerName& measurer_name,
                       .y(time_label)
                       .error_y(time_error_label)
                       .group(case_name_label)
-                      .log_x(plot_parameter_as_log_scale_)
+                      .log_x(options_.log_parameter())
                       .log_y(true)
                       .create();
     figure.title(title.str());

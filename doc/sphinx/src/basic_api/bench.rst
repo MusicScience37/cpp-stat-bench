@@ -29,4 +29,4 @@ Group Configuration
 
 .. doxygenclass:: stat_bench::bench_impl::BenchmarkGroupRegister
 
-.. doxygenclass:: stat_bench::PlotOption
+.. doxygenclass:: stat_bench::PlotOptions

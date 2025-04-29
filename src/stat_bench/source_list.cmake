@@ -21,6 +21,7 @@ set(SOURCE_FILES
     param/parameter_dict.cpp
     param/parameter_generator.cpp
     param/parameter_name.cpp
+    plot_options.cpp
     plots/box_plot.cpp
     plots/cdf_line_plot.cpp
     plots/create_data_table.cpp

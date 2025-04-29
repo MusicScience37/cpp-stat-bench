@@ -40,6 +40,7 @@
 #include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value.h"
+#include "stat_bench/plot_options.h"
 #include "stat_bench/util/ordered_map.h"
 
 TEST_CASE("stat_bench::plots::ParameterToTimeLinePlot") {
@@ -47,6 +48,7 @@ TEST_CASE("stat_bench::plots::ParameterToTimeLinePlot") {
     using stat_bench::BenchmarkCondition;
     using stat_bench::BenchmarkFullName;
     using stat_bench::BenchmarkGroupName;
+    using stat_bench::PlotOptions;
     using stat_bench::clock::Duration;
     using stat_bench::measurer::Measurement;
     using stat_bench::measurer::MeasurerName;
@@ -126,9 +128,8 @@ TEST_CASE("stat_bench::plots::ParameterToTimeLinePlot") {
                 {{Duration(6), Duration(7), Duration(8)}}, {}, {})};
 
         SECTION("in linear scale") {
-            constexpr bool plot_parameter_as_log_scale = false;
             ParameterToTimeLinePlot plot(
-                target_parameter_name, plot_parameter_as_log_scale);
+                target_parameter_name, PlotOptions().log_parameter(false));
 
             const auto file_path =
                 std::string("./plots/ParameterToTimeLinePlot.html");
@@ -141,9 +142,8 @@ TEST_CASE("stat_bench::plots::ParameterToTimeLinePlot") {
         }
 
         SECTION("in log scale") {
-            constexpr bool plot_parameter_as_log_scale = true;
             ParameterToTimeLinePlot plot(
-                target_parameter_name, plot_parameter_as_log_scale);
+                target_parameter_name, PlotOptions().log_parameter(true));
 
             const auto file_path =
                 std::string("./plots/ParameterToTimeLinePlotLog.html");

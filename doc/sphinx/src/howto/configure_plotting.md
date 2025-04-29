@@ -78,4 +78,4 @@ The following types of plots can be generated:
 - API Reference
   - {c:func}`STAT_BENCH_GROUP`
   - {cpp:class}`stat_bench::bench_impl::BenchmarkGroupRegister`
-  - {cpp:class}`stat_bench::PlotOption`
+  - {cpp:class}`stat_bench::PlotOptions`

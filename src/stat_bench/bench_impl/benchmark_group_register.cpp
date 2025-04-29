@@ -52,16 +52,14 @@ BenchmarkGroupRegister::BenchmarkGroupRegister(
 }
 
 auto BenchmarkGroupRegister::add_parameter_to_time_line_plot(
-    util::StringView parameter_name, PlotOption::Value options) noexcept
+    util::StringView parameter_name, PlotOptions options) noexcept
     -> BenchmarkGroupRegister& {
     try {
-        const bool plot_parameter_as_log_scale =
-            (options & PlotOption::log_parameter) != 0U;
         group_->config().add_plot(
             std::make_shared<plots::ParameterToTimeLinePlot>(
                 param::ParameterName(
                     std::string(parameter_name.data(), parameter_name.size())),
-                plot_parameter_as_log_scale));
+                options));
         return *this;
     } catch (const std::exception& e) {
         std::cerr << "Failed to append a plot to a benchmark group: "
@@ -73,7 +71,7 @@ auto BenchmarkGroupRegister::add_parameter_to_time_line_plot(
 auto BenchmarkGroupRegister::add_parameter_to_time_line_plot_log(
     util::StringView parameter_name) noexcept -> BenchmarkGroupRegister& {
     return add_parameter_to_time_line_plot(
-        parameter_name, PlotOption::log_parameter);
+        parameter_name, PlotOptions().log_parameter(true));
 }
 
 auto BenchmarkGroupRegister::add_parameter_to_time_violin_plot(
@@ -108,19 +106,15 @@ auto BenchmarkGroupRegister::add_parameter_to_time_box_plot(
 
 auto BenchmarkGroupRegister::add_parameter_to_output_line_plot(
     util::StringView parameter_name, util::StringView custom_output_name,
-    PlotOption::Value options) noexcept -> BenchmarkGroupRegister& {
+    PlotOptions options) noexcept -> BenchmarkGroupRegister& {
     try {
-        const bool plot_parameter_as_log_scale =
-            (options & PlotOption::log_parameter) != 0U;
-        const bool plot_custom_output_as_log_scale =
-            (options & PlotOption::log_output) != 0U;
         group_->config().add_plot(
             std::make_shared<plots::ParameterToOutputLinePlot>(
                 param::ParameterName(
                     std::string(parameter_name.data(), parameter_name.size())),
                 CustomOutputName(std::string(
                     custom_output_name.data(), custom_output_name.size())),
-                plot_parameter_as_log_scale, plot_custom_output_as_log_scale));
+                options));
         return *this;
     } catch (const std::exception& e) {
         std::cerr << "Failed to append a plot to a benchmark group: "
@@ -131,17 +125,15 @@ auto BenchmarkGroupRegister::add_parameter_to_output_line_plot(
 
 auto BenchmarkGroupRegister::add_time_to_output_by_parameter_line_plot(
     util::StringView parameter_name, util::StringView custom_output_name,
-    PlotOption::Value options) noexcept -> BenchmarkGroupRegister& {
+    PlotOptions options) noexcept -> BenchmarkGroupRegister& {
     try {
-        const bool plot_custom_output_as_log_scale =
-            (options & PlotOption::log_output) != 0U;
         group_->config().add_plot(
             std::make_shared<plots::TimeToOutputByParameterLinePlot>(
                 param::ParameterName(
                     std::string(parameter_name.data(), parameter_name.size())),
                 CustomOutputName(std::string(
                     custom_output_name.data(), custom_output_name.size())),
-                plot_custom_output_as_log_scale));
+                options));
         return *this;
     } catch (const std::exception& e) {
         std::cerr << "Failed to append a plot to a benchmark group: "

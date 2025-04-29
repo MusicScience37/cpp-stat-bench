@@ -20,6 +20,7 @@
 #include "param/parameter_dict.cpp"       // NOLINT(bugprone-suspicious-include)
 #include "param/parameter_generator.cpp"  // NOLINT(bugprone-suspicious-include)
 #include "param/parameter_name.cpp"       // NOLINT(bugprone-suspicious-include)
+#include "plot_options.cpp"               // NOLINT(bugprone-suspicious-include)
 #include "plots/box_plot.cpp"             // NOLINT(bugprone-suspicious-include)
 #include "plots/cdf_line_plot.cpp"        // NOLINT(bugprone-suspicious-include)
 #include "plots/create_data_table.cpp"    // NOLINT(bugprone-suspicious-include)

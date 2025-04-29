@@ -23,6 +23,9 @@ namespace stat_bench {
 
 /*!
  * \brief Enumeration of options for plots.
+ *
+ * \deprecated This class will be removed in favor of stat_bench::PlotOptions
+ * class.
  */
 class PlotOption {
 public:

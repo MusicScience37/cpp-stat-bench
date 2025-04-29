@@ -22,6 +22,7 @@
 #include <string>
 
 #include "stat_bench/param/parameter_name.h"
+#include "stat_bench/plot_options.h"
 #include "stat_bench/plots/i_plot.h"
 #include "stat_bench/util/utf8_string.h"
 
@@ -37,11 +38,10 @@ public:
      * \brief Constructor.
      *
      * \param[in] parameter_name Parameter name.
-     * \param[in] plot_parameter_as_log_scale Whether the parameter should be
-     * plotted as log scale.
+     * \param[in] options Options for the plot.
      */
     ParameterToTimeLinePlot(
-        param::ParameterName parameter_name, bool plot_parameter_as_log_scale);
+        param::ParameterName parameter_name, PlotOptions options);
 
     ParameterToTimeLinePlot(const ParameterToTimeLinePlot&) = delete;
     ParameterToTimeLinePlot(ParameterToTimeLinePlot&&) = delete;
@@ -69,8 +69,8 @@ private:
     //! Parameter name.
     param::ParameterName parameter_name_;
 
-    //! Whether the parameter should be plotted as log scale.
-    bool plot_parameter_as_log_scale_;
+    //! Options for the plot.
+    PlotOptions options_;
 
     //! Name for output files.
     util::Utf8String name_for_file_;
