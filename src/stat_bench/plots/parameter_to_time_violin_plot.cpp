@@ -36,8 +36,9 @@ namespace stat_bench {
 namespace plots {
 
 ParameterToTimeViolinPlot::ParameterToTimeViolinPlot(
-    param::ParameterName parameter_name)
+    param::ParameterName parameter_name, PlotOptions options)
     : parameter_name_(std::move(parameter_name)),
+      options_(options),
       name_for_file_(fmt::format(
           "by_{}_violin", util::escape_for_file_name(parameter_name_.str()))) {}
 

@@ -84,6 +84,16 @@ public:
     }
 
     /*!
+     * \brief Check whether this string is empty.
+     *
+     * \retval true This string is empty.
+     * \retval false This string is not empty.
+     */
+    [[nodiscard]] constexpr auto empty() const noexcept -> bool {
+        return size_ == 0;
+    }
+
+    /*!
      * \brief Get a character in the string.
      *
      * \param[in] index Index of the character to get.

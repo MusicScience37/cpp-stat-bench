@@ -300,4 +300,89 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                     ".html"));
         }
     }
+
+    SECTION("write with two parameters") {
+        const auto parameter_name1 = ParameterName("Parameter1");
+        const auto parameter_name2 = ParameterName("Parameter2");
+        const auto target_output_name = CustomOutputName("Output1");
+        const auto group_name = BenchmarkGroupName("Group");
+        const auto case_name1 = BenchmarkCaseName("Case1");
+        const auto measurer_name = MeasurerName("Measurer");
+        constexpr std::size_t iterations = 1;
+        const auto measurements = std::vector<Measurement>{
+            Measurement(BenchmarkFullName(group_name, case_name1),
+                BenchmarkCondition(ParameterDict(
+                    {{parameter_name1,
+                         ParameterValue().emplace<std::size_t>(1)},
+                        {parameter_name2,
+                            ParameterValue().emplace<std::string>("value1")},
+                        {num_threads_parameter_name(),
+                            ParameterValue().emplace<std::size_t>(1)}})),
+                measurer_name, iterations, 3,
+                {{Duration(1), Duration(2), Duration(3)}}, {},
+                {{target_output_name, 1.1}}),
+            Measurement(BenchmarkFullName(group_name, case_name1),
+                BenchmarkCondition(ParameterDict(
+                    {{parameter_name1,
+                         ParameterValue().emplace<std::size_t>(2)},
+                        {parameter_name2,
+                            ParameterValue().emplace<std::string>("value1")},
+                        {num_threads_parameter_name(),
+                            ParameterValue().emplace<std::size_t>(1)}})),
+                measurer_name, iterations, 3,
+                {{Duration(1), Duration(2), Duration(3)}}, {},
+                {{target_output_name, 2.2}}),
+            Measurement(BenchmarkFullName(group_name, case_name1),
+                BenchmarkCondition(ParameterDict(
+                    {{parameter_name1,
+                         ParameterValue().emplace<std::size_t>(1)},
+                        {parameter_name2,
+                            ParameterValue().emplace<std::string>("value2")},
+                        {num_threads_parameter_name(),
+                            ParameterValue().emplace<std::size_t>(1)}})),
+                measurer_name, iterations, 3,
+                {{Duration(1), Duration(2), Duration(3)}}, {},
+                {{target_output_name, 3.3}}),
+            Measurement(BenchmarkFullName(group_name, case_name1),
+                BenchmarkCondition(ParameterDict(
+                    {{parameter_name1,
+                         ParameterValue().emplace<std::size_t>(2)},
+                        {parameter_name2,
+                            ParameterValue().emplace<std::string>("value2")},
+                        {num_threads_parameter_name(),
+                            ParameterValue().emplace<std::size_t>(1)}})),
+                measurer_name, iterations, 3,
+                {{Duration(1), Duration(2), Duration(3)}}, {},
+                {{target_output_name, 4.4}})};
+
+        SECTION("using columns") {
+            ParameterToOutputLinePlot plot(parameter_name1, target_output_name,
+                PlotOptions().subplot_column_parameter_name(
+                    parameter_name2.str().str()));
+
+            const auto file_path =
+                std::string("./plots/ParameterToOutputLinePlotColumn.html");
+            plot.write(measurer_name, group_name, measurements, file_path);
+
+            ApprovalTests::Approvals::verify(
+                stat_bench_test::read_file(file_path),
+                ApprovalTests::Options().fileOptions().withFileExtension(
+                    ".html"));
+        }
+
+        SECTION("using rows") {
+            ParameterToOutputLinePlot plot(parameter_name1, target_output_name,
+                PlotOptions().subplot_row_parameter_name(
+                    parameter_name2.str().str()));
+
+            const auto file_path =
+                std::string("./plots/ParameterToOutputLinePlotRow.html");
+            plot.write(measurer_name, group_name, measurements, file_path);
+
+            ApprovalTests::Approvals::verify(
+                stat_bench_test::read_file(file_path),
+                ApprovalTests::Options().fileOptions().withFileExtension(
+                    ".html"));
+        }
+    }
 }

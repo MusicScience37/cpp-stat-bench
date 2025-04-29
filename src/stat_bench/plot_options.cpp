@@ -23,21 +23,34 @@
 
 namespace stat_bench {
 
-PlotOptions::PlotOptions() : log_parameter_(false), log_output_(false) {}
+PlotOptions::PlotOptions() noexcept
+    : log_parameter_(false), log_output_(false) {}
 
-PlotOptions::PlotOptions(PlotOption::Value option)
+PlotOptions::PlotOptions(PlotOption::Value option) noexcept
     : log_parameter_(
           (option & PlotOption::log_parameter) == PlotOption::log_parameter),
       log_output_((option & PlotOption::log_output) == PlotOption::log_output) {
 }
 
-auto PlotOptions::log_parameter(bool value) -> PlotOptions& {
+auto PlotOptions::log_parameter(bool value) noexcept -> PlotOptions& {
     log_parameter_ = value;
     return *this;
 }
 
-auto PlotOptions::log_output(bool value) -> PlotOptions& {
+auto PlotOptions::log_output(bool value) noexcept -> PlotOptions& {
     log_output_ = value;
+    return *this;
+}
+
+auto PlotOptions::subplot_column_parameter_name(
+    const util::StringView& value) noexcept -> PlotOptions& {
+    subplot_column_parameter_name_ = value;
+    return *this;
+}
+
+auto PlotOptions::subplot_row_parameter_name(
+    const util::StringView& value) noexcept -> PlotOptions& {
+    subplot_row_parameter_name_ = value;
     return *this;
 }
 
@@ -46,5 +59,15 @@ auto PlotOptions::log_parameter() const noexcept -> bool {
 }
 
 auto PlotOptions::log_output() const noexcept -> bool { return log_output_; }
+
+auto PlotOptions::subplot_column_parameter_name() const noexcept
+    -> util::StringView {
+    return subplot_column_parameter_name_;
+}
+
+auto PlotOptions::subplot_row_parameter_name() const noexcept
+    -> util::StringView {
+    return subplot_row_parameter_name_;
+}
 
 }  // namespace stat_bench

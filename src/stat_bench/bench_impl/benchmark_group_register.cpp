@@ -75,12 +75,14 @@ auto BenchmarkGroupRegister::add_parameter_to_time_line_plot_log(
 }
 
 auto BenchmarkGroupRegister::add_parameter_to_time_violin_plot(
-    util::StringView parameter_name) noexcept -> BenchmarkGroupRegister& {
+    util::StringView parameter_name, PlotOptions options) noexcept
+    -> BenchmarkGroupRegister& {
     try {
         group_->config().add_plot(
             std::make_shared<plots::ParameterToTimeViolinPlot>(
-                param::ParameterName(std::string(
-                    parameter_name.data(), parameter_name.size()))));
+                param::ParameterName(
+                    std::string(parameter_name.data(), parameter_name.size())),
+                options));
         return *this;
     } catch (const std::exception& e) {
         std::cerr << "Failed to append a plot to a benchmark group: "
@@ -90,12 +92,14 @@ auto BenchmarkGroupRegister::add_parameter_to_time_violin_plot(
 }
 
 auto BenchmarkGroupRegister::add_parameter_to_time_box_plot(
-    util::StringView parameter_name) noexcept -> BenchmarkGroupRegister& {
+    util::StringView parameter_name, PlotOptions options) noexcept
+    -> BenchmarkGroupRegister& {
     try {
         group_->config().add_plot(
             std::make_shared<plots::ParameterToTimeBoxPlot>(
-                param::ParameterName(std::string(
-                    parameter_name.data(), parameter_name.size()))));
+                param::ParameterName(
+                    std::string(parameter_name.data(), parameter_name.size())),
+                options));
         return *this;
     } catch (const std::exception& e) {
         std::cerr << "Failed to append a plot to a benchmark group: "

@@ -40,6 +40,7 @@
 #include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value.h"
+#include "stat_bench/plot_options.h"
 #include "stat_bench/util/ordered_map.h"
 
 TEST_CASE("stat_bench::plots::ParameterToTimeViolinPlot") {
@@ -47,6 +48,7 @@ TEST_CASE("stat_bench::plots::ParameterToTimeViolinPlot") {
     using stat_bench::BenchmarkCondition;
     using stat_bench::BenchmarkFullName;
     using stat_bench::BenchmarkGroupName;
+    using stat_bench::PlotOptions;
     using stat_bench::clock::Duration;
     using stat_bench::measurer::Measurement;
     using stat_bench::measurer::MeasurerName;
@@ -145,7 +147,7 @@ TEST_CASE("stat_bench::plots::ParameterToTimeViolinPlot") {
                 measurer_name, iterations, 3,
                 {{Duration(6), Duration(7), Duration(8)}}, {}, {})};
 
-        ParameterToTimeViolinPlot plot(target_parameter_name);
+        ParameterToTimeViolinPlot plot(target_parameter_name, PlotOptions());
 
         const auto file_path =
             std::string("./plots/ParameterToTimeViolinPlot.html");
