@@ -66,9 +66,9 @@ STAT_BENCH_GROUP("FibonacciParametrized")
     .add_parameter_to_time_violin_plot("number")
     .add_parameter_to_time_box_plot("number")
     .add_parameter_to_output_line_plot(
-        "number", "result", stat_bench::PlotOption::log_output)
+        "number", "result", stat_bench::PlotOptions().log_output(true))
     .add_time_to_output_by_parameter_line_plot(
-        "number", "result", stat_bench::PlotOption::log_output);
+        "number", "result", stat_bench::PlotOptions().log_output(true));
 
 class VectorPushBackFixture : public stat_bench::FixtureBase {
 public:
@@ -114,16 +114,14 @@ STAT_BENCH_CASE_F(
 
 STAT_BENCH_GROUP("VectorPushBackParametrized")
     .add_parameter_to_time_line_plot(
-        "size", stat_bench::PlotOption::log_parameter)
+        "size", stat_bench::PlotOptions().log_parameter(true))
     .add_parameter_to_time_violin_plot("size")
     .add_parameter_to_time_box_plot("size")
     .add_parameter_to_output_line_plot("size", "throughput_stat",
-        stat_bench::PlotOption::log_parameter |
-            stat_bench::PlotOption::log_output)
+        stat_bench::PlotOptions().log_parameter(true).log_output(true))
     .add_time_to_output_by_parameter_line_plot(
-        "size", "throughput_stat", stat_bench::PlotOption::log_output)
+        "size", "throughput_stat", stat_bench::PlotOptions().log_output(true))
     .add_parameter_to_output_line_plot("size", "processed_numbers",
-        stat_bench::PlotOption::log_parameter |
-            stat_bench::PlotOption::log_output);
+        stat_bench::PlotOptions().log_parameter(true).log_output(true));
 
 STAT_BENCH_MAIN

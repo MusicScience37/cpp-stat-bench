@@ -70,7 +70,7 @@ STAT_BENCH_GROUP("ApproxExp")
     // * Y-axis: Custom output "error" in log scale.
     // Custom outputs without or with statistics can be specified similarly.
     .add_parameter_to_output_line_plot(
-        "num_terms", "error", stat_bench::PlotOption::log_output)
+        "num_terms", "error", stat_bench::PlotOptions().log_output(true))
 
     // Add a line plot.
     // * X-axis: Processing time. (Log scale is used always.)
@@ -79,7 +79,7 @@ STAT_BENCH_GROUP("ApproxExp")
     // "num_terms" changes.
     // This is useful to see efficiency of algorithms.
     .add_time_to_output_by_parameter_line_plot(
-        "num_terms", "error", stat_bench::PlotOption::log_output);
+        "num_terms", "error", stat_bench::PlotOptions().log_output(true));
 
 // Define main function. (Required once in an executable.)
 STAT_BENCH_MAIN

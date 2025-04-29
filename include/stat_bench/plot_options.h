@@ -37,6 +37,9 @@ public:
      * \brief Constructor.
      *
      * \param[in] option Option.
+     *
+     * \deprecated This function exists for backward compatibility and will be
+     * removed in the future.
      */
     PlotOptions(PlotOption::Value option);  // NOLINT
 

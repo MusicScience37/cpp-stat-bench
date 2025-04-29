@@ -71,7 +71,7 @@ auto BenchmarkGroupRegister::add_parameter_to_time_line_plot(
 auto BenchmarkGroupRegister::add_parameter_to_time_line_plot_log(
     util::StringView parameter_name) noexcept -> BenchmarkGroupRegister& {
     return add_parameter_to_time_line_plot(
-        parameter_name, PlotOption::log_parameter);
+        parameter_name, PlotOptions().log_parameter(true));
 }
 
 auto BenchmarkGroupRegister::add_parameter_to_time_violin_plot(
