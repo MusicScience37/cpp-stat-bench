@@ -114,6 +114,10 @@ STAT_BENCH_GROUP("BinomialSeries")
         stat_bench::PlotOptions()
             .subplot_column_parameter_name("Exponent")
             .subplot_row_parameter_name("Sign"))
+    .add_parameter_to_time_violin_plot("Absolute Value of x",
+        stat_bench::PlotOptions()
+            .subplot_column_parameter_name("Exponent")
+            .subplot_row_parameter_name("Sign"))
     .add_parameter_to_time_box_plot("Absolute Value of x",
         stat_bench::PlotOptions()
             .subplot_column_parameter_name("Exponent")
