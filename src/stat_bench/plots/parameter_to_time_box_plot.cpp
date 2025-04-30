@@ -19,9 +19,11 @@
  */
 #include "stat_bench/plots/parameter_to_time_box_plot.h"
 
+#include <iterator>
 #include <utility>
 #include <vector>
 
+#include <fmt/base.h>
 #include <fmt/format.h>
 #include <plotly_plotter/figure.h>
 #include <plotly_plotter/figure_builders/box.h>
@@ -31,15 +33,16 @@
 #include "create_data_table.h"
 #include "stat_bench/measurer/measurer_name.h"
 #include "stat_bench/util/escape_for_file_name.h"
+#include "stat_bench/util/string_view.h"
 
 namespace stat_bench {
 namespace plots {
 
 ParameterToTimeBoxPlot::ParameterToTimeBoxPlot(
-    param::ParameterName parameter_name)
+    param::ParameterName parameter_name, PlotOptions options)
     : parameter_name_(std::move(parameter_name)),
-      name_for_file_(fmt::format(
-          "by_{}_box", util::escape_for_file_name(parameter_name_.str()))) {}
+      options_(options),
+      name_for_file_(create_name_for_file(parameter_name_, options_)) {}
 
 auto ParameterToTimeBoxPlot::name_for_file() const -> const util::Utf8String& {
     return name_for_file_;
@@ -53,17 +56,55 @@ void ParameterToTimeBoxPlot::write(const measurer::MeasurerName& measurer_name,
 
     const auto& title = measurer_name.str();
 
+    std::vector<param::ParameterName> parameter_names;
+    parameter_names.push_back(parameter_name_);
+    if (!options_.subplot_column_parameter_name().empty()) {
+        parameter_names.emplace_back(
+            options_.subplot_column_parameter_name().data());
+    }
+    if (!options_.subplot_row_parameter_name().empty()) {
+        parameter_names.emplace_back(
+            options_.subplot_row_parameter_name().data());
+    }
+
     const auto data_table =
-        create_data_table_with_all_time(measurements, {parameter_name_});
-    auto figure = plotly_plotter::figure_builders::box(data_table)
-                      .x(parameter_name_.str().str())
-                      .y(time_label)
-                      .group(case_name_label)
-                      .log_y(true)
-                      .box_mean("sd")
-                      .create();
+        create_data_table_with_all_time(measurements, parameter_names);
+    auto figure_builder = plotly_plotter::figure_builders::box(data_table)
+                              .x(parameter_name_.str().str())
+                              .y(time_label)
+                              .group(case_name_label)
+                              .log_y(true)
+                              .box_mean("sd");
+    if (!options_.subplot_column_parameter_name().empty()) {
+        figure_builder.subplot_column(
+            options_.subplot_column_parameter_name().data());
+    }
+    if (!options_.subplot_row_parameter_name().empty()) {
+        figure_builder.subplot_row(
+            options_.subplot_row_parameter_name().data());
+    }
+    auto figure = figure_builder.create();
     figure.title(title.str());
     plotly_plotter::write_html(file_path, figure);
+}
+
+auto ParameterToTimeBoxPlot::create_name_for_file(
+    const param::ParameterName& parameter_name, const PlotOptions& options)
+    -> util::Utf8String {
+    fmt::memory_buffer buffer;
+    fmt::format_to(std::back_inserter(buffer), "by_{}_box",
+        util::escape_for_file_name(parameter_name.str()));
+    if (!options.subplot_column_parameter_name().empty()) {
+        fmt::format_to(std::back_inserter(buffer), "_by_{}",
+            util::escape_for_file_name(util::Utf8String(
+                options.subplot_column_parameter_name().data())));
+    }
+    if (!options.subplot_row_parameter_name().empty()) {
+        fmt::format_to(std::back_inserter(buffer), "_by_{}",
+            util::escape_for_file_name(
+                util::Utf8String(options.subplot_row_parameter_name().data())));
+    }
+    return util::Utf8String(std::string(buffer.data(), buffer.size()));
 }
 
 }  // namespace plots

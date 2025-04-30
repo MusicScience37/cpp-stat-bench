@@ -57,8 +57,12 @@ public:
      *
      * \param[in] parameter_name Parameter name.
      * \return Reference to this object.
+     *
+     * \deprecated This function is deprecated in favor of
+     * add_parameter_to_time_line_plot() function.
      */
-    auto add_parameter_to_time_line_plot_log(
+    [[deprecated("Use add_parameter_to_time_line_plot instead.")]] auto
+    add_parameter_to_time_line_plot_log(
         util::StringView parameter_name) noexcept -> BenchmarkGroupRegister&;
 
     /*!
@@ -66,20 +70,24 @@ public:
      * to the group.
      *
      * \param[in] parameter_name Parameter name.
+     * \param[in] options Options for the plot.
      * \return Reference to this object.
      */
-    auto add_parameter_to_time_violin_plot(
-        util::StringView parameter_name) noexcept -> BenchmarkGroupRegister&;
+    auto add_parameter_to_time_violin_plot(util::StringView parameter_name,
+        PlotOptions options = PlotOptions()) noexcept
+        -> BenchmarkGroupRegister&;
 
     /*!
      * \brief Add a box plot of processing time with respect to a parameter to
      * the group.
      *
      * \param[in] parameter_name Parameter name.
+     * \param[in] options Options for the plot.
      * \return Reference to this object.
      */
-    auto add_parameter_to_time_box_plot(
-        util::StringView parameter_name) noexcept -> BenchmarkGroupRegister&;
+    auto add_parameter_to_time_box_plot(util::StringView parameter_name,
+        PlotOptions options = PlotOptions()) noexcept
+        -> BenchmarkGroupRegister&;
 
     /*!
      * \brief Add a line plot of a custom output with respect to a parameter to

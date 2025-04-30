@@ -19,9 +19,11 @@
  */
 #include "stat_bench/plots/parameter_to_output_line_plot.h"
 
+#include <iterator>
 #include <utility>
 #include <vector>
 
+#include <fmt/base.h>
 #include <fmt/format.h>
 #include <plotly_plotter/figure.h>
 #include <plotly_plotter/figure_builders/line.h>
@@ -30,7 +32,10 @@
 
 #include "common_labels.h"
 #include "create_data_table.h"
+#include "stat_bench/param/parameter_name.h"
 #include "stat_bench/util/escape_for_file_name.h"
+#include "stat_bench/util/string_view.h"
+#include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
 namespace plots {
@@ -41,9 +46,8 @@ ParameterToOutputLinePlot::ParameterToOutputLinePlot(
     : parameter_name_(std::move(parameter_name)),
       custom_output_name_(std::move(custom_output_name)),
       options_(options),
-      name_for_file_(fmt::format("{}_by_{}",
-          util::escape_for_file_name(custom_output_name_.str()),
-          util::escape_for_file_name(parameter_name_.str()))) {}
+      name_for_file_(create_name_for_file(
+          parameter_name_, custom_output_name_, options_)) {}
 
 auto ParameterToOutputLinePlot::name_for_file() const
     -> const util::Utf8String& {
@@ -60,8 +64,19 @@ void ParameterToOutputLinePlot::write(
 
     const auto& title = custom_output_name_.str();
 
+    std::vector<param::ParameterName> parameter_names;
+    parameter_names.push_back(parameter_name_);
+    if (!options_.subplot_column_parameter_name().empty()) {
+        parameter_names.emplace_back(
+            options_.subplot_column_parameter_name().data());
+    }
+    if (!options_.subplot_row_parameter_name().empty()) {
+        parameter_names.emplace_back(
+            options_.subplot_row_parameter_name().data());
+    }
+
     const auto [data_table, has_error] = create_data_table_with_custom_output(
-        measurements, {parameter_name_}, custom_output_name_);
+        measurements, parameter_names, custom_output_name_);
     auto figure_builder = plotly_plotter::figure_builders::line(data_table)
                               .x(parameter_name_.str().str())
                               .y(custom_output_name_.str().str())
@@ -71,9 +86,38 @@ void ParameterToOutputLinePlot::write(
     if (has_error) {
         figure_builder.error_y(fmt::format("Error of {}", custom_output_name_));
     }
+    if (!options_.subplot_column_parameter_name().empty()) {
+        figure_builder.subplot_column(
+            options_.subplot_column_parameter_name().data());
+    }
+    if (!options_.subplot_row_parameter_name().empty()) {
+        figure_builder.subplot_row(
+            options_.subplot_row_parameter_name().data());
+    }
     auto figure = figure_builder.create();
     figure.title(title.str());
     plotly_plotter::write_html(file_path, figure);
+}
+
+auto ParameterToOutputLinePlot::create_name_for_file(
+    const param::ParameterName& parameter_name,
+    const CustomOutputName& custom_output_name, const PlotOptions& options)
+    -> util::Utf8String {
+    fmt::memory_buffer buffer;
+    fmt::format_to(std::back_inserter(buffer), "{}_by_{}",
+        util::escape_for_file_name(custom_output_name.str()),
+        util::escape_for_file_name(parameter_name.str()));
+    if (!options.subplot_column_parameter_name().empty()) {
+        fmt::format_to(std::back_inserter(buffer), "_by_{}",
+            util::escape_for_file_name(util::Utf8String(
+                options.subplot_column_parameter_name().data())));
+    }
+    if (!options.subplot_row_parameter_name().empty()) {
+        fmt::format_to(std::back_inserter(buffer), "_by_{}",
+            util::escape_for_file_name(
+                util::Utf8String(options.subplot_row_parameter_name().data())));
+    }
+    return util::Utf8String(std::string(buffer.data(), buffer.size()));
 }
 
 }  // namespace plots

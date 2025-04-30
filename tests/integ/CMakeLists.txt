@@ -10,6 +10,7 @@ stat_bench_test_integ_add_bench(error_in_benchmark)
 stat_bench_test_integ_add_bench(parametrized_benchmark)
 stat_bench_test_integ_add_bench(duplicate_cases)
 stat_bench_test_integ_add_bench(escaped_names)
+stat_bench_test_integ_add_bench(subplots)
 
 add_test(
     NAME stat_bench_test_integ

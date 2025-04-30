@@ -20,6 +20,7 @@
   { include: ["@<__numeric/.*>", private, "<numeric>", public ] },
   { include: ["@<__exception/.*>", private, "<exception>", public ] },
   { include: ["@<__mutex/.*>", private, "<mutex>", public ] },
+  { include: ["@<__math/.*>", private, "<cmath>", public ] },
   { include: ["<__tuple>", private, "<tuple>", public ] },
   { include: ["<__tuple>", private, "<utility>", public ] },
   { include: ["<__tuple>", private, "<unordered_map>", public ] },

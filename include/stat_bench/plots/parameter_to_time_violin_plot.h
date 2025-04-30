@@ -22,6 +22,7 @@
 #include <string>
 
 #include "stat_bench/param/parameter_name.h"
+#include "stat_bench/plot_options.h"
 #include "stat_bench/plots/i_plot.h"
 #include "stat_bench/util/utf8_string.h"
 
@@ -37,8 +38,10 @@ public:
      * \brief Constructor.
      *
      * \param[in] parameter_name Parameter name.
+     * \param[in] options Options for the plot.
      */
-    explicit ParameterToTimeViolinPlot(param::ParameterName parameter_name);
+    ParameterToTimeViolinPlot(
+        param::ParameterName parameter_name, PlotOptions options);
 
     ParameterToTimeViolinPlot(const ParameterToTimeViolinPlot&) = delete;
     ParameterToTimeViolinPlot(ParameterToTimeViolinPlot&&) = delete;
@@ -63,8 +66,22 @@ public:
         const std::string& file_path) override;
 
 private:
+    /*!
+     * \brief Create the name for output files.
+     *
+     * \param[in] parameter_name Parameter name.
+     * \param[in] options Options for the plot.
+     * \return Name.
+     */
+    [[nodiscard]] static auto create_name_for_file(
+        const param::ParameterName& parameter_name, const PlotOptions& options)
+        -> util::Utf8String;
+
     //! Parameter name.
     param::ParameterName parameter_name_;
+
+    //! Options for the plot.
+    PlotOptions options_;
 
     //! Name for output files.
     util::Utf8String name_for_file_;

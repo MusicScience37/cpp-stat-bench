@@ -20,6 +20,7 @@
 #pragma once
 
 #include "stat_bench/plot_option.h"
+#include "stat_bench/util/string_view.h"
 
 namespace stat_bench {
 
@@ -31,7 +32,7 @@ public:
     /*!
      * \brief Constructor.
      */
-    PlotOptions();
+    PlotOptions() noexcept;
 
     /*!
      * \brief Constructor.
@@ -41,7 +42,7 @@ public:
      * \deprecated This function exists for backward compatibility and will be
      * removed in the future.
      */
-    PlotOptions(PlotOption::Value option);  // NOLINT
+    PlotOptions(PlotOption::Value option) noexcept;  // NOLINT
 
     /*!
      * \brief Set whether to plot parameters in the log scale.
@@ -49,7 +50,7 @@ public:
      * \param[in] value Value.
      * \return This object.
      */
-    auto log_parameter(bool value) -> PlotOptions&;
+    auto log_parameter(bool value) noexcept -> PlotOptions&;
 
     /*!
      * \brief Set whether to plot custom outputs in the log scale.
@@ -57,7 +58,31 @@ public:
      * \param[in] value Value.
      * \return This object.
      */
-    auto log_output(bool value) -> PlotOptions&;
+    auto log_output(bool value) noexcept -> PlotOptions&;
+
+    /*!
+     * \brief Set parameter name used for columns of subplots.
+     *
+     * \param[in] value Value. (A string literal.)
+     * \return This object.
+     *
+     * \note This function is assumed to be used with a string literal,
+     * and hold only the pointer to the string literal.
+     */
+    auto subplot_column_parameter_name(const util::StringView& value) noexcept
+        -> PlotOptions&;
+
+    /*!
+     * \brief Set parameter name used for rows of subplots.
+     *
+     * \param[in] value Value. (A string literal.)
+     * \return This object.
+     *
+     * \note This function is assumed to be used with a string literal,
+     * and hold only the pointer to the string literal.
+     */
+    auto subplot_row_parameter_name(const util::StringView& value) noexcept
+        -> PlotOptions&;
 
     /*!
      * \brief Get whether to plot parameters in the log scale.
@@ -73,12 +98,34 @@ public:
      */
     [[nodiscard]] auto log_output() const noexcept -> bool;
 
+    /*!
+     * \brief Get parameter name used for columns of subplots.
+     *
+     * \return Parameter name used for columns of subplots.
+     */
+    [[nodiscard]] auto subplot_column_parameter_name() const noexcept
+        -> util::StringView;
+
+    /*!
+     * \brief Get parameter name used for rows of subplots.
+     *
+     * \return Parameter name used for rows of subplots.
+     */
+    [[nodiscard]] auto subplot_row_parameter_name() const noexcept
+        -> util::StringView;
+
 private:
     //! Whether to plot parameters in the log scale.
     bool log_parameter_;
 
     //! Whether to plot custom outputs in the log scale.
     bool log_output_;
+
+    //! Parameter name used for columns of subplots. (Empty for no columns.)
+    util::StringView subplot_column_parameter_name_;
+
+    //! Parameter name used for rows of subplots. (Empty for no rows.)
+    util::StringView subplot_row_parameter_name_;
 };
 
 }  // namespace stat_bench

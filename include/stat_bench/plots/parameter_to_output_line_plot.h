@@ -68,6 +68,19 @@ public:
         const std::string& file_path) override;
 
 private:
+    /*!
+     * \brief Create the name for output files.
+     *
+     * \param[in] parameter_name Parameter name.
+     * \param[in] custom_output_name Custom output name.
+     * \param[in] options Options for the plot.
+     * \return Name.
+     */
+    [[nodiscard]] static auto create_name_for_file(
+        const param::ParameterName& parameter_name,
+        const CustomOutputName& custom_output_name, const PlotOptions& options)
+        -> util::Utf8String;
+
     //! Parameter name.
     param::ParameterName parameter_name_;
 

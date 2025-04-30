@@ -5,7 +5,6 @@
   "dictionaries": [],
   "words": [
     "addoption",
-    "aiohttp",
     "alloc",
     "approvaltests",
     "ARGN",
@@ -81,6 +80,7 @@
     "LIBDIR",
     "libstdc",
     "literalinclude",
+    "Maclaurin",
     "maxdepth",
     "MAXSIZE",
     "mayfail",

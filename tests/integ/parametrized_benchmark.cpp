@@ -27,7 +27,7 @@
 #include "stat_bench/fixture_base.h"
 #include "stat_bench/invocation_context.h"
 #include "stat_bench/param/parameter_value_vector.h"
-#include "stat_bench/plot_option.h"
+#include "stat_bench/plot_options.h"
 #include "stat_bench/stat/custom_stat_output.h"
 
 class FibonacciFixture : public stat_bench::FixtureBase {

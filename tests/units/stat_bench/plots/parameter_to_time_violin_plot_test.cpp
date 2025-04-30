@@ -40,6 +40,7 @@
 #include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value.h"
+#include "stat_bench/plot_options.h"
 #include "stat_bench/util/ordered_map.h"
 
 TEST_CASE("stat_bench::plots::ParameterToTimeViolinPlot") {
@@ -47,6 +48,7 @@ TEST_CASE("stat_bench::plots::ParameterToTimeViolinPlot") {
     using stat_bench::BenchmarkCondition;
     using stat_bench::BenchmarkFullName;
     using stat_bench::BenchmarkGroupName;
+    using stat_bench::PlotOptions;
     using stat_bench::clock::Duration;
     using stat_bench::measurer::Measurement;
     using stat_bench::measurer::MeasurerName;
@@ -145,7 +147,7 @@ TEST_CASE("stat_bench::plots::ParameterToTimeViolinPlot") {
                 measurer_name, iterations, 3,
                 {{Duration(6), Duration(7), Duration(8)}}, {}, {})};
 
-        ParameterToTimeViolinPlot plot(target_parameter_name);
+        ParameterToTimeViolinPlot plot(target_parameter_name, PlotOptions());
 
         const auto file_path =
             std::string("./plots/ParameterToTimeViolinPlot.html");
@@ -153,5 +155,85 @@ TEST_CASE("stat_bench::plots::ParameterToTimeViolinPlot") {
 
         ApprovalTests::Approvals::verify(stat_bench_test::read_file(file_path),
             ApprovalTests::Options().fileOptions().withFileExtension(".html"));
+    }
+
+    SECTION("write with two parameters") {
+        const auto parameter_name1 = ParameterName("Parameter1");
+        const auto parameter_name2 = ParameterName("Parameter2");
+        const auto group_name = BenchmarkGroupName("Group");
+        const auto case_name1 = BenchmarkCaseName("Case1");
+        const auto measurer_name = MeasurerName("Measurer");
+        constexpr std::size_t iterations = 1;
+        const auto measurements = std::vector<Measurement>{
+            Measurement(BenchmarkFullName(group_name, case_name1),
+                BenchmarkCondition(ParameterDict(
+                    {{parameter_name1,
+                         ParameterValue().emplace<std::size_t>(1)},
+                        {parameter_name2,
+                            ParameterValue().emplace<std::string>("value1")},
+                        {num_threads_parameter_name(),
+                            ParameterValue().emplace<std::size_t>(1)}})),
+                measurer_name, iterations, 3,
+                {{Duration(1), Duration(2), Duration(3)}}, {}, {}),
+            Measurement(BenchmarkFullName(group_name, case_name1),
+                BenchmarkCondition(ParameterDict(
+                    {{parameter_name1,
+                         ParameterValue().emplace<std::size_t>(2)},
+                        {parameter_name2,
+                            ParameterValue().emplace<std::string>("value1")},
+                        {num_threads_parameter_name(),
+                            ParameterValue().emplace<std::size_t>(1)}})),
+                measurer_name, iterations, 3,
+                {{Duration(2), Duration(3), Duration(4)}}, {}, {}),
+            Measurement(BenchmarkFullName(group_name, case_name1),
+                BenchmarkCondition(ParameterDict(
+                    {{parameter_name1,
+                         ParameterValue().emplace<std::size_t>(1)},
+                        {parameter_name2,
+                            ParameterValue().emplace<std::string>("value2")},
+                        {num_threads_parameter_name(),
+                            ParameterValue().emplace<std::size_t>(1)}})),
+                measurer_name, iterations, 3,
+                {{Duration(7), Duration(8), Duration(9)}}, {}, {}),
+            Measurement(BenchmarkFullName(group_name, case_name1),
+                BenchmarkCondition(ParameterDict(
+                    {{parameter_name1,
+                         ParameterValue().emplace<std::size_t>(2)},
+                        {parameter_name2,
+                            ParameterValue().emplace<std::string>("value2")},
+                        {num_threads_parameter_name(),
+                            ParameterValue().emplace<std::size_t>(1)}})),
+                measurer_name, iterations, 3,
+                {{Duration(8), Duration(9), Duration(10)}}, {}, {})};
+
+        SECTION("using columns") {
+            ParameterToTimeViolinPlot plot(parameter_name1,
+                PlotOptions().subplot_column_parameter_name(
+                    parameter_name2.str().str()));
+
+            const auto file_path =
+                std::string("./plots/ParameterToTimeViolinPlotColumns.html");
+            plot.write(measurer_name, group_name, measurements, file_path);
+
+            ApprovalTests::Approvals::verify(
+                stat_bench_test::read_file(file_path),
+                ApprovalTests::Options().fileOptions().withFileExtension(
+                    ".html"));
+        }
+
+        SECTION("using rows") {
+            ParameterToTimeViolinPlot plot(parameter_name1,
+                PlotOptions().subplot_row_parameter_name(
+                    parameter_name2.str().str()));
+
+            const auto file_path =
+                std::string("./plots/ParameterToTimeViolinPlotRows.html");
+            plot.write(measurer_name, group_name, measurements, file_path);
+
+            ApprovalTests::Approvals::verify(
+                stat_bench_test::read_file(file_path),
+                ApprovalTests::Options().fileOptions().withFileExtension(
+                    ".html"));
+        }
     }
 }
