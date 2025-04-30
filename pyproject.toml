@@ -9,7 +9,7 @@ packages = [{ include = "scripts" }]
 [tool.poetry.dependencies]
 python = ">=3.12,<3.14"
 # Some tools require setuptools.
-setuptools = "^78.1.0"
+setuptools = "^80.0.1"
 
 [tool.poetry.group.test.dependencies]
 pytest = "^8.3.5"
@@ -26,7 +26,6 @@ myst-parser = "^4.0.1"
 sphinx-togglebutton = "^0.3.2"
 
 [tool.poetry.group.dev.dependencies]
-aiohttp = "^3.11.14"
 black = "^25.1.0"
 cmakelang = "^0.6.13"
 doc8 = "^1.1.2"
@@ -38,7 +37,7 @@ jsonschema2md = "^1.5.2"
 click = "^8.1.8"
 isort = "^6.0.1"
 pylint = "^3.3.6"
-flake8 = "^7.1.2"
+flake8 = "^7.2.0"
 mypy = "^1.15.0"
 
 [build-system]
