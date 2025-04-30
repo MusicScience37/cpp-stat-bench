@@ -19,6 +19,8 @@
  */
 #pragma once
 
+// IWYU pragma: no_include <version>
+
 #include <cstdlib>
 #include <exception>
 #include <future>

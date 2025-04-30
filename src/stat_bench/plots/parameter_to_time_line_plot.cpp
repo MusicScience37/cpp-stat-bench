@@ -19,9 +19,11 @@
  */
 #include "stat_bench/plots/parameter_to_time_line_plot.h"
 
+#include <iterator>
 #include <utility>
 #include <vector>
 
+#include <fmt/base.h>
 #include <fmt/format.h>
 #include <plotly_plotter/figure.h>
 #include <plotly_plotter/figure_builders/line.h>
@@ -32,6 +34,7 @@
 #include "create_data_table.h"
 #include "stat_bench/measurer/measurer_name.h"
 #include "stat_bench/util/escape_for_file_name.h"
+#include "stat_bench/util/string_view.h"
 
 namespace stat_bench {
 namespace plots {
