@@ -44,9 +44,8 @@ ParameterToOutputLinePlot::ParameterToOutputLinePlot(
     : parameter_name_(std::move(parameter_name)),
       custom_output_name_(std::move(custom_output_name)),
       options_(options),
-      name_for_file_(fmt::format("{}_by_{}",
-          util::escape_for_file_name(custom_output_name_.str()),
-          util::escape_for_file_name(parameter_name_.str()))) {}
+      name_for_file_(create_name_for_file(
+          parameter_name_, custom_output_name_, options_)) {}
 
 auto ParameterToOutputLinePlot::name_for_file() const
     -> const util::Utf8String& {

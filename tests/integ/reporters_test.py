@@ -325,6 +325,27 @@ class TestPlot:
             / "MeanProcessingTime_to_throughput_stat_by_size.html"
         ).exists()
 
+    def test_plot_with_subplots(
+        self, bench_executor: BenchExecutor, subplots: pathlib.Path
+    ) -> None:
+        """Test to plot with subplots."""
+        result = bench_executor.execute(
+            subplots, "--plot", bench_executor.test_name, verify=False
+        )
+
+        assert result.returncode == 0
+        plot_dir = bench_executor.temp_test_dir / bench_executor.test_name
+        assert plot_dir.exists()
+        assert (plot_dir / "BinomialSeries").exists()
+        assert (
+            plot_dir / "BinomialSeries" / "ProcessingTime_Error%2520Rate"
+            "_by_Absolute%2520Value%2520of%2520x_by_Exponent_by_Sign.html"
+        ).exists()
+        assert (
+            plot_dir / "BinomialSeries" / "MeanProcessingTime_Error%2520Rate"
+            "_by_Absolute%2520Value%2520of%2520x_by_Exponent_by_Sign.html"
+        ).exists()
+
 
 class TestJson:
     """Test of JSON output."""
