@@ -339,6 +339,14 @@ class TestPlot:
         assert (plot_dir / "BinomialSeries").exists()
         assert (
             plot_dir / "BinomialSeries" / "ProcessingTime"
+            "_by_Absolute%2520Value%2520of%2520x_by_Exponent_by_Sign.html"
+        ).exists()
+        assert (
+            plot_dir / "BinomialSeries" / "MeanProcessingTime"
+            "_by_Absolute%2520Value%2520of%2520x_by_Exponent_by_Sign.html"
+        ).exists()
+        assert (
+            plot_dir / "BinomialSeries" / "ProcessingTime"
             "_by_Absolute%2520Value%2520of%2520x_box_by_Exponent_by_Sign.html"
         ).exists()
         assert (
