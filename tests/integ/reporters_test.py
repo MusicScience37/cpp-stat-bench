@@ -369,6 +369,16 @@ class TestPlot:
             plot_dir / "BinomialSeries" / "MeanProcessingTime_Error%2520Rate"
             "_by_Absolute%2520Value%2520of%2520x_by_Exponent_by_Sign.html"
         ).exists()
+        assert (
+            plot_dir
+            / "BinomialSeries"
+            / "ProcessingTime_to_Error%2520Rate_by_Terms_by_Exponent_by_Sign.html"
+        ).exists()
+        assert (
+            plot_dir
+            / "BinomialSeries"
+            / "MeanProcessingTime_to_Error%2520Rate_by_Terms_by_Exponent_by_Sign.html"
+        ).exists()
 
 
 class TestJson:

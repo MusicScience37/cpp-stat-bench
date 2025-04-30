@@ -126,6 +126,11 @@ STAT_BENCH_GROUP("BinomialSeries")
         stat_bench::PlotOptions()
             .log_output(true)
             .subplot_column_parameter_name("Exponent")
+            .subplot_row_parameter_name("Sign"))
+    .add_time_to_output_by_parameter_line_plot("Terms", "Error Rate",
+        stat_bench::PlotOptions()
+            .log_output(true)
+            .subplot_column_parameter_name("Exponent")
             .subplot_row_parameter_name("Sign"));
 
 STAT_BENCH_MAIN
