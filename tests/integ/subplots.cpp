@@ -110,6 +110,10 @@ STAT_BENCH_CASE_F(BinomialSeriesFixture, "BinomialSeries", "BinomialSeries") {
 }
 
 STAT_BENCH_GROUP("BinomialSeries")
+    .add_parameter_to_time_box_plot("Absolute Value of x",
+        stat_bench::PlotOptions()
+            .subplot_column_parameter_name("Exponent")
+            .subplot_row_parameter_name("Sign"))
     .add_parameter_to_output_line_plot("Absolute Value of x", "Error Rate",
         stat_bench::PlotOptions()
             .log_output(true)
