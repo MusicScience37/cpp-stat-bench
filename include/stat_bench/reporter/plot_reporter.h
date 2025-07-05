@@ -23,6 +23,7 @@
 #include <string>
 #include <vector>
 
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/plots/i_plot.h"

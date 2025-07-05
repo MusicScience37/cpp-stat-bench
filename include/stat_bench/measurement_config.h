@@ -21,6 +21,7 @@
 
 #include <cstddef>
 #include <optional>
+#include <string>
 
 #include "stat_bench/measurer/measurement_type.h"
 

@@ -19,6 +19,8 @@
  */
 #include "stat_bench/measurer/generate_default_measurement_configs.h"
 
+#include <string>
+
 namespace stat_bench {
 namespace measurer {
 

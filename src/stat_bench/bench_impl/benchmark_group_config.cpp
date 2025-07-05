@@ -19,7 +19,10 @@
  */
 #include "stat_bench/bench_impl/benchmark_group_config.h"
 
+#include <string>
+
 #include "stat_bench/stat_bench_exception.h"
+#include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
 namespace bench_impl {

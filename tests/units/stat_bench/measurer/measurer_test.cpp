@@ -21,6 +21,7 @@
 
 #include <chrono>
 #include <memory>
+#include <string>
 #include <thread>
 #include <vector>
 
@@ -39,6 +40,7 @@
 #include "stat_bench/measurement_config.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/measurer/measurement_type.h"
+#include "stat_bench/util/utf8_string.h"
 
 TEST_CASE("stat_bench::measurer::Measurer") {
     using stat_bench::BenchmarkCaseName;
