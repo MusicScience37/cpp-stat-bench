@@ -23,7 +23,7 @@
 #include <string>
 
 #include "stat_bench/measurer/i_measurer.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 
 namespace stat_bench {
 namespace measurer {
@@ -49,8 +49,9 @@ public:
           min_warming_up_iterations_(min_warming_up_iterations),
           min_warming_up_duration_sec_(min_warming_up_duration_sec) {}
 
-    //! \copydoc stat_bench::measurer::IMeasurer::name
-    [[nodiscard]] auto name() const noexcept -> const MeasurerName& override {
+    //! \copydoc stat_bench::measurer::IMeasurer::type
+    [[nodiscard]] auto type() const noexcept
+        -> const MeasurementType& override {
         return name_;
     }
 
@@ -72,7 +73,7 @@ public:
 
 private:
     //! Name.
-    const MeasurerName name_{"Processing Time"};
+    const MeasurementType name_{"Processing Time"};
 
     //! Number of samples.
     std::size_t samples_;

@@ -46,7 +46,7 @@ TEST_CASE("NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE definitions") {
         measurement.group_name = Utf8String("Group");
         measurement.case_name = Utf8String("Case");
         measurement.params[Utf8String("Param")] = Utf8String("Value");
-        measurement.measurer_name = Utf8String("Measurer");
+        measurement.measurement_type = Utf8String("Measurer");
         measurement.iterations = 123;  // NOLINT
         measurement.samples = 12345;   // NOLINT
 
@@ -86,8 +86,8 @@ TEST_CASE("NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE definitions") {
         REQUIRE(deserialized_measurement.group_name == measurement.group_name);
         REQUIRE(deserialized_measurement.case_name == measurement.case_name);
         REQUIRE(deserialized_measurement.params == measurement.params);
-        REQUIRE(deserialized_measurement.measurer_name ==
-            measurement.measurer_name);
+        REQUIRE(deserialized_measurement.measurement_type ==
+            measurement.measurement_type);
         REQUIRE(deserialized_measurement.iterations == measurement.iterations);
         REQUIRE(deserialized_measurement.samples == measurement.samples);
 

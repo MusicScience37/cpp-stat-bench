@@ -27,21 +27,21 @@
 #include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/custom_output_name.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 
 TEST_CASE("stat_bench::measurer::Measurement") {
     using stat_bench::BenchmarkCaseName;
     using stat_bench::BenchmarkGroupName;
     using stat_bench::CustomOutputName;
     using stat_bench::clock::Duration;
-    using stat_bench::measurer::MeasurerName;
+    using stat_bench::measurer::MeasurementType;
 
     SECTION("construct") {
         const auto info = stat_bench::BenchmarkFullName(
             BenchmarkGroupName("group"), BenchmarkCaseName("case"));
         const auto cond = stat_bench::BenchmarkCondition(
             2, stat_bench_test::param::create_ordinary_parameter_dict());
-        const auto measurer_name = MeasurerName("measurer");
+        const auto measurement_type = MeasurementType("measurer");
         const std::size_t iterations = 7;
         const std::size_t samples = 2;
         const auto durations = std::vector<std::vector<Duration>>{
@@ -66,13 +66,13 @@ TEST_CASE("stat_bench::measurer::Measurement") {
             {CustomOutputName("CustomOutput2"), 2.0}};
 
         const auto measurement = stat_bench::measurer::Measurement(info, cond,
-            measurer_name, iterations, samples, durations, custom_stat_outputs,
-            custom_outputs);
+            measurement_type, iterations, samples, durations,
+            custom_stat_outputs, custom_outputs);
 
         REQUIRE(measurement.case_info().group_name() == info.group_name());
         REQUIRE(measurement.case_info().case_name() == info.case_name());
         REQUIRE(measurement.cond().threads() == cond.threads());
-        REQUIRE(measurement.measurer_name() == measurer_name);
+        REQUIRE(measurement.measurement_type() == measurement_type);
         REQUIRE(measurement.iterations() == iterations);
         REQUIRE(measurement.samples() == samples);
 

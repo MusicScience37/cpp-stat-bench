@@ -45,8 +45,8 @@
               }
             }
           },
-          "measurer_name": {
-            "title": "Measurer name",
+          "measurement_type": {
+            "title": "Measurement type.",
             "description": "Name of the measurer of this measurement.",
             "type": "string"
           },
@@ -249,7 +249,7 @@
           "durations",
           "group_name",
           "iterations",
-          "measurer_name",
+          "measurement_type",
           "params",
           "samples"
         ]

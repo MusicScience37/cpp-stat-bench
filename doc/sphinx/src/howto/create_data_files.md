@@ -156,7 +156,7 @@ The created file contains the benchmark results in JSON format as follows:
       },
       "group_name": "Fibonacci",
       "iterations": 1,
-      "measurer_name": "Processing Time",
+      "measurement_type": "Processing Time",
       "params": null,
       "samples": 100
     },
@@ -281,7 +281,7 @@ The created file contains the benchmark results in JSON format as follows:
       },
       "group_name": "Fibonacci",
       "iterations": 1,
-      "measurer_name": "Processing Time",
+      "measurement_type": "Processing Time",
       "params": null,
       "samples": 100
     },
@@ -336,7 +336,7 @@ The created file contains the benchmark results in JSON format as follows:
       },
       "group_name": "Fibonacci",
       "iterations": 1000000,
-      "measurer_name": "Mean Processing Time",
+      "measurement_type": "Mean Processing Time",
       "params": null,
       "samples": 30
     },
@@ -391,7 +391,7 @@ The created file contains the benchmark results in JSON format as follows:
       },
       "group_name": "Fibonacci",
       "iterations": 1000000,
-      "measurer_name": "Mean Processing Time",
+      "measurement_type": "Mean Processing Time",
       "params": null,
       "samples": 30
     }

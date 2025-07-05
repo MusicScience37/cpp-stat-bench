@@ -35,7 +35,7 @@
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/measurer/measurement.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/param/parameter_config.h"
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value_vector.h"
@@ -44,16 +44,16 @@ TEST_CASE("stat_bench::runner::Runner") {
     using stat_bench::BenchmarkCaseName;
     using stat_bench::BenchmarkFullName;
     using stat_bench::BenchmarkGroupName;
-    using stat_bench::measurer::MeasurerName;
+    using stat_bench::measurer::MeasurementType;
     using stat_bench::param::ParameterName;
 
     const auto measurer =
         std::make_shared<stat_bench_test::measurer::MockMeasurer>();
 
-    const auto measurer_name = MeasurerName("measurer");
-    ALLOW_CALL(*measurer, name())
+    const auto measurement_type = MeasurementType("measurer");
+    ALLOW_CALL(*measurer, type())
         // NOLINTNEXTLINE
-        .RETURN(measurer_name);
+        .RETURN(measurement_type);
 
     const auto reporter =
         std::make_shared<stat_bench_test::reporter::MockReporter>();
@@ -86,7 +86,7 @@ TEST_CASE("stat_bench::runner::Runner") {
 
         REQUIRE_CALL(*reporter, experiment_starts(trompeloeil::_))
             .IN_SEQUENCE(seq);
-        REQUIRE_CALL(*reporter, measurer_starts(measurer_name))
+        REQUIRE_CALL(*reporter, measurer_starts(measurement_type))
             .IN_SEQUENCE(seq);
         REQUIRE_CALL(*reporter, group_starts(group_name1, trompeloeil::_))
             .IN_SEQUENCE(seq);
@@ -101,7 +101,7 @@ TEST_CASE("stat_bench::runner::Runner") {
         REQUIRE_CALL(*measurer, measure(trompeloeil::_, trompeloeil::_))
             // NOLINTNEXTLINE
             .RETURN(stat_bench::measurer::Measurement(_1->info(), _2,
-                measurer_name, iterations, samples, durations, {}, {}))
+                measurement_type, iterations, samples, durations, {}, {}))
             .IN_SEQUENCE(seq);
 
         std::shared_ptr<stat_bench::measurer::Measurement> measurement;
@@ -116,7 +116,7 @@ TEST_CASE("stat_bench::runner::Runner") {
 
         REQUIRE_CALL(*reporter, case_finished(trompeloeil::_)).IN_SEQUENCE(seq);
         REQUIRE_CALL(*reporter, group_finished(group_name1)).IN_SEQUENCE(seq);
-        REQUIRE_CALL(*reporter, measurer_finished(measurer_name))
+        REQUIRE_CALL(*reporter, measurer_finished(measurement_type))
             .IN_SEQUENCE(seq);
         REQUIRE_CALL(*reporter, experiment_finished(trompeloeil::_))
             .IN_SEQUENCE(seq);
@@ -126,7 +126,7 @@ TEST_CASE("stat_bench::runner::Runner") {
         REQUIRE(measurement->case_info().group_name() == group_name1);
         REQUIRE(measurement->case_info().case_name() == case_name1);
         REQUIRE(measurement->cond().threads() == 1);
-        REQUIRE(measurement->measurer_name() == measurer_name);
+        REQUIRE(measurement->measurement_type() == measurement_type);
         REQUIRE(measurement->iterations() == iterations);
         REQUIRE(measurement->samples() == samples);
         REQUIRE(measurement->durations().size() == 1);
@@ -160,7 +160,7 @@ TEST_CASE("stat_bench::runner::Runner") {
 
         REQUIRE_CALL(*reporter, experiment_starts(trompeloeil::_))
             .IN_SEQUENCE(seq);
-        REQUIRE_CALL(*reporter, measurer_starts(measurer_name))
+        REQUIRE_CALL(*reporter, measurer_starts(measurement_type))
             .IN_SEQUENCE(seq);
         REQUIRE_CALL(*reporter, group_starts(group_name1, trompeloeil::_))
             .IN_SEQUENCE(seq);
@@ -185,7 +185,7 @@ TEST_CASE("stat_bench::runner::Runner") {
 
         REQUIRE_CALL(*reporter, case_finished(trompeloeil::_)).IN_SEQUENCE(seq);
         REQUIRE_CALL(*reporter, group_finished(group_name1)).IN_SEQUENCE(seq);
-        REQUIRE_CALL(*reporter, measurer_finished(measurer_name))
+        REQUIRE_CALL(*reporter, measurer_finished(measurement_type))
             .IN_SEQUENCE(seq);
         REQUIRE_CALL(*reporter, experiment_finished(trompeloeil::_))
             .IN_SEQUENCE(seq);
@@ -237,7 +237,7 @@ TEST_CASE("stat_bench::runner::Runner") {
             .LR_SIDE_EFFECT(conditions.push_back(_2))
             // NOLINTNEXTLINE
             .RETURN(stat_bench::measurer::Measurement(_1->info(), _2,
-                measurer_name, iterations, samples, durations, {}, {}))
+                measurement_type, iterations, samples, durations, {}, {}))
             // NOLINTNEXTLINE
             .TIMES(6);
 

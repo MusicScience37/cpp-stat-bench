@@ -32,7 +32,7 @@
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/custom_output_name.h"
 #include "stat_bench/measurer/measurement.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/param/num_threads_parameter_name.h"
 #include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/param/parameter_name.h"
@@ -43,7 +43,7 @@
 namespace stat_bench_test {
 
 [[nodiscard]] inline auto create_test_measurement(const std::string& group_name,
-    const std::string& case_name, const std::string& measurer_name,
+    const std::string& case_name, const std::string& measurement_type,
     const std::vector<std::vector<stat_bench::clock::Duration>>& durations) {
     using stat_bench::BenchmarkCaseName;
     using stat_bench::BenchmarkCondition;
@@ -52,7 +52,7 @@ namespace stat_bench_test {
     using stat_bench::CustomOutputName;
     using stat_bench::clock::Duration;
     using stat_bench::measurer::Measurement;
-    using stat_bench::measurer::MeasurerName;
+    using stat_bench::measurer::MeasurementType;
     using stat_bench::param::ParameterDict;
     using stat_bench::param::ParameterName;
     using stat_bench::param::ParameterValue;
@@ -68,7 +68,7 @@ namespace stat_bench_test {
                                ParameterValue().emplace<std::size_t>(threads)},
                 {ParameterName("param"),
                     ParameterValue().emplace<std::string>("value")}})),
-        MeasurerName(measurer_name), iterations, samples, durations,
+        MeasurementType(measurement_type), iterations, samples, durations,
         std::vector<std::shared_ptr<CustomStatOutput>>(),
         std::vector<std::pair<CustomOutputName, double>>());
 }

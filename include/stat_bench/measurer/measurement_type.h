@@ -15,7 +15,7 @@
  */
 /*!
  * \file
- * \brief Definition of MeasurerName class.
+ * \brief Definition of MeasurementType class.
  */
 #pragma once
 
@@ -31,24 +31,24 @@ namespace stat_bench {
 namespace measurer {
 
 /*!
- * \brief Class of names of measurers.
+ * \brief Class of names of measurement types.
  */
-class MeasurerName {
+class MeasurementType {
 public:
     /*!
      * \brief Constructor.
      *
      * \param[in] str String of the name.
      */
-    explicit MeasurerName(util::Utf8String str) noexcept;
+    explicit MeasurementType(util::Utf8String str) noexcept;
 
     /*!
      * \brief Constructor.
      *
      * \param[in] str String of the name.
      */
-    explicit MeasurerName(std::string str)
-        : MeasurerName(util::Utf8String(std::move(str))) {}
+    explicit MeasurementType(std::string str)
+        : MeasurementType(util::Utf8String(std::move(str))) {}
 
     /*!
      * \brief Get the string of the name.
@@ -63,7 +63,7 @@ private:
 };
 
 /*!
- * \brief Compare two MeasurerName objects.
+ * \brief Compare two MeasurementType objects.
  *
  * \param[in] lhs Left-hand side object.
  * \param[in] rhs Right-hand side object.
@@ -71,12 +71,12 @@ private:
  * \retval false The two objects are not equal.
  */
 [[nodiscard]] inline auto operator==(
-    const MeasurerName& lhs, const MeasurerName& rhs) noexcept -> bool {
+    const MeasurementType& lhs, const MeasurementType& rhs) noexcept -> bool {
     return lhs.str() == rhs.str();
 }
 
 /*!
- * \brief Compare two MeasurerName objects.
+ * \brief Compare two MeasurementType objects.
  *
  * \param[in] lhs Left-hand side object.
  * \param[in] rhs Right-hand side object.
@@ -84,7 +84,7 @@ private:
  * \retval false The two objects are equal.
  */
 [[nodiscard]] inline auto operator!=(
-    const MeasurerName& lhs, const MeasurerName& rhs) noexcept -> bool {
+    const MeasurementType& lhs, const MeasurementType& rhs) noexcept -> bool {
     return !(lhs == rhs);
 }
 
@@ -95,10 +95,10 @@ namespace fmt {
 
 /*!
  * \brief Implementation of fmt::formatter for
- * stat_bench::measurer::MeasurerName.
+ * stat_bench::measurer::MeasurementType.
  */
 template <>
-struct formatter<stat_bench::measurer::MeasurerName>
+struct formatter<stat_bench::measurer::MeasurementType>
     : public formatter<stat_bench::util::Utf8String> {
     /*!
      * \brief Format.
@@ -107,7 +107,7 @@ struct formatter<stat_bench::measurer::MeasurerName>
      * \param[in] context Context.
      * \return Output iterator after formatting.
      */
-    auto format(const stat_bench::measurer::MeasurerName& val,
+    auto format(const stat_bench::measurer::MeasurementType& val,
         fmt::format_context& context) const -> fmt::format_context::iterator {
         return formatter<stat_bench::util::Utf8String>::format(
             val.str(), context);
@@ -126,7 +126,7 @@ namespace measurer {
  * \param[in] val Value.
  * \return Stream.
  */
-inline auto operator<<(std::ostream& stream, const MeasurerName& val)
+inline auto operator<<(std::ostream& stream, const MeasurementType& val)
     -> std::ostream& {
     return stream << val.str();
 }

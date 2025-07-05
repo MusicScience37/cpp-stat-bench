@@ -107,7 +107,7 @@ void Runner::run() const {
 
     for (const auto& measurer : measurers_) {
         for (const auto& reporter : reporters_) {
-            reporter->measurer_starts(measurer->name());
+            reporter->measurer_starts(measurer->type());
         }
 
         for (const auto& group_pair : registry_.benchmarks()) {
@@ -127,7 +127,7 @@ void Runner::run() const {
         }
 
         for (const auto& reporter : reporters_) {
-            reporter->measurer_finished(measurer->name());
+            reporter->measurer_finished(measurer->type());
         }
     }
 

@@ -24,7 +24,7 @@
 
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/measurer/measurement.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
@@ -46,12 +46,12 @@ public:
     /*!
      * \brief Write a plot.
      *
-     * \param[in] measurer_name Measurer name.
+     * \param[in] measurement_type Measurement type.
      * \param[in] group_name Group name.
      * \param[in] measurements Measurements.
      * \param[in] file_path File path of the output.
      */
-    virtual void write(const measurer::MeasurerName& measurer_name,
+    virtual void write(const measurer::MeasurementType& measurement_type,
         const BenchmarkGroupName& group_name,
         const std::vector<measurer::Measurement>& measurements,
         const std::string& file_path) = 0;

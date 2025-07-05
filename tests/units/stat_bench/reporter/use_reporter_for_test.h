@@ -30,7 +30,7 @@
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/clock/system_clock.h"
 #include "stat_bench/measurer/measurement.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/reporter/i_reporter.h"
 
 namespace stat_bench_test {
@@ -46,17 +46,17 @@ inline void use_reporter_for_test(stat_bench::reporter::IReporter* reporter) {
     using stat_bench::clock::Duration;
     using stat_bench::clock::SystemClock;
     using stat_bench::measurer::Measurement;
-    using stat_bench::measurer::MeasurerName;
+    using stat_bench::measurer::MeasurementType;
 
     reporter->experiment_starts(SystemClock::now());
-    const std::string measurer_name = "Measurement1";
-    reporter->measurer_starts(MeasurerName(measurer_name));
+    const std::string measurement_type = "Measurement1";
+    reporter->measurer_starts(MeasurementType(measurement_type));
     const std::string group1_name = "Group1";
     reporter->group_starts(
         BenchmarkGroupName(group1_name), BenchmarkGroupConfig());
 
     const auto measurement1 = stat_bench_test::create_test_measurement(
-        group1_name, "Case1", measurer_name,
+        group1_name, "Case1", measurement_type,
         std::vector<std::vector<Duration>>{
             std::vector<Duration>{create_duration(1.0), create_duration(2.0)}});
     reporter->case_starts(measurement1.case_info());
@@ -64,7 +64,7 @@ inline void use_reporter_for_test(stat_bench::reporter::IReporter* reporter) {
     reporter->case_finished(measurement1.case_info());
 
     const auto measurement2 = stat_bench_test::create_test_measurement(
-        group1_name, "Case2", measurer_name,
+        group1_name, "Case2", measurement_type,
         std::vector<std::vector<Duration>>{std::vector<Duration>{
             create_duration(3.0), create_duration(4.0), create_duration(5.0)}});
     reporter->case_starts(measurement2.case_info());
@@ -72,7 +72,7 @@ inline void use_reporter_for_test(stat_bench::reporter::IReporter* reporter) {
     reporter->case_finished(measurement2.case_info());
 
     const auto measurement3 = stat_bench_test::create_test_measurement(
-        group1_name, "Case3", measurer_name,
+        group1_name, "Case3", measurement_type,
         std::vector<std::vector<Duration>>{std::vector<Duration>{Duration(0)}});
     reporter->case_starts(measurement3.case_info());
     reporter->measurement_failed(measurement3.case_info(), measurement3.cond(),
@@ -80,7 +80,7 @@ inline void use_reporter_for_test(stat_bench::reporter::IReporter* reporter) {
     reporter->case_finished(measurement3.case_info());
 
     reporter->group_finished(BenchmarkGroupName(group1_name));
-    reporter->measurer_finished(MeasurerName(measurer_name));
+    reporter->measurer_finished(MeasurementType(measurement_type));
     reporter->experiment_finished(SystemClock::now());
 }
 

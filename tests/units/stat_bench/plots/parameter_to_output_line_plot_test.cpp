@@ -35,7 +35,7 @@
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/custom_output_name.h"
 #include "stat_bench/measurer/measurement.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/param/num_threads_parameter_name.h"
 #include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/param/parameter_name.h"
@@ -53,7 +53,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
     using stat_bench::PlotOptions;
     using stat_bench::clock::Duration;
     using stat_bench::measurer::Measurement;
-    using stat_bench::measurer::MeasurerName;
+    using stat_bench::measurer::MeasurementType;
     using stat_bench::param::num_threads_parameter_name;
     using stat_bench::param::ParameterDict;
     using stat_bench::param::ParameterName;
@@ -68,7 +68,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
         const auto group_name = BenchmarkGroupName("Group");
         const auto case_name1 = BenchmarkCaseName("Case1");
         const auto case_name2 = BenchmarkCaseName("Case2");
-        const auto measurer_name = MeasurerName("Measurer");
+        const auto measurement_type = MeasurementType("Measurer");
         constexpr std::size_t iterations = 1;
         const auto measurements = std::vector<Measurement>{
             // Case 1, param2=value1
@@ -80,7 +80,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                             ParameterValue().emplace<std::string>("value1")},
                         {num_threads_parameter_name(),
                             ParameterValue().emplace<std::size_t>(1)}})),
-                measurer_name, iterations, 3,
+                measurement_type, iterations, 3,
                 {{Duration(1), Duration(2), Duration(3)}}, {},
                 {{target_output_name, 1.1}, {output_name2, -1.0}}),
             Measurement(BenchmarkFullName(group_name, case_name1),
@@ -91,7 +91,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                             ParameterValue().emplace<std::string>("value1")},
                         {num_threads_parameter_name(),
                             ParameterValue().emplace<std::size_t>(1)}})),
-                measurer_name, iterations, 3,
+                measurement_type, iterations, 3,
                 {{Duration(4), Duration(5), Duration(6)}}, {},
                 {{target_output_name, 2.2}, {output_name2, -1.0}}),
             // Case 1, param2=value2
@@ -103,7 +103,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                             ParameterValue().emplace<std::string>("value2")},
                         {num_threads_parameter_name(),
                             ParameterValue().emplace<std::size_t>(1)}})),
-                measurer_name, iterations, 3,
+                measurement_type, iterations, 3,
                 {{Duration(2), Duration(3), Duration(4)}}, {},
                 {{target_output_name, 3.3}, {output_name2, -1.0}}),
             Measurement(BenchmarkFullName(group_name, case_name1),
@@ -114,7 +114,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                             ParameterValue().emplace<std::string>("value2")},
                         {num_threads_parameter_name(),
                             ParameterValue().emplace<std::size_t>(1)}})),
-                measurer_name, iterations, 3,
+                measurement_type, iterations, 3,
                 {{Duration(5), Duration(6), Duration(7)}}, {},
                 {{target_output_name, 4.4}, {output_name2, -1.0}}),
             // Case 2
@@ -124,7 +124,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                          ParameterValue().emplace<std::size_t>(1)},
                         {num_threads_parameter_name(),
                             ParameterValue().emplace<std::size_t>(1)}})),
-                measurer_name, iterations, 3,
+                measurement_type, iterations, 3,
                 {{Duration(3), Duration(4), Duration(5)}}, {},
                 {{target_output_name, 5.5}, {output_name2, -1.0}}),
             Measurement(BenchmarkFullName(group_name, case_name2),
@@ -133,7 +133,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                          ParameterValue().emplace<std::size_t>(2)},
                         {num_threads_parameter_name(),
                             ParameterValue().emplace<std::size_t>(1)}})),
-                measurer_name, iterations, 3,
+                measurement_type, iterations, 3,
                 {{Duration(6), Duration(7), Duration(8)}}, {},
                 {{target_output_name, 6.6}, {output_name2, -1.0}})};
 
@@ -144,7 +144,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
 
             const auto file_path =
                 std::string("./plots/ParameterToOutputLinePlot.html");
-            plot.write(measurer_name, group_name, measurements, file_path);
+            plot.write(measurement_type, group_name, measurements, file_path);
 
             ApprovalTests::Approvals::verify(
                 stat_bench_test::read_file(file_path),
@@ -159,7 +159,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
 
             const auto file_path =
                 std::string("./plots/ParameterToOutputLinePlotLog.html");
-            plot.write(measurer_name, group_name, measurements, file_path);
+            plot.write(measurement_type, group_name, measurements, file_path);
 
             ApprovalTests::Approvals::verify(
                 stat_bench_test::read_file(file_path),
@@ -176,7 +176,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
         const auto group_name = BenchmarkGroupName("Group");
         const auto case_name1 = BenchmarkCaseName("Case1");
         const auto case_name2 = BenchmarkCaseName("Case2");
-        const auto measurer_name = MeasurerName("Measurer");
+        const auto measurement_type = MeasurementType("Measurer");
         static constexpr std::size_t threads = 1;
         static constexpr std::size_t iterations = 1;
 
@@ -201,7 +201,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                             ParameterValue().emplace<std::string>("value1")},
                         {num_threads_parameter_name(),
                             ParameterValue().emplace<std::size_t>(1)}})),
-                measurer_name, iterations, 3,
+                measurement_type, iterations, 3,
                 {{Duration(1), Duration(2), Duration(3)}},
                 {create_output(target_output_name, 1.1),
                     create_output(output_name2, -1.0)},
@@ -214,7 +214,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                             ParameterValue().emplace<std::string>("value1")},
                         {num_threads_parameter_name(),
                             ParameterValue().emplace<std::size_t>(1)}})),
-                measurer_name, iterations, 3,
+                measurement_type, iterations, 3,
                 {{Duration(4), Duration(5), Duration(6)}},
                 {create_output(target_output_name, 2.2),
                     create_output(output_name2, -1.0)},
@@ -228,7 +228,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                             ParameterValue().emplace<std::string>("value2")},
                         {num_threads_parameter_name(),
                             ParameterValue().emplace<std::size_t>(1)}})),
-                measurer_name, iterations, 3,
+                measurement_type, iterations, 3,
                 {{Duration(2), Duration(3), Duration(4)}},
                 {create_output(target_output_name, 3.3),
                     create_output(output_name2, -1.0)},
@@ -241,7 +241,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                             ParameterValue().emplace<std::string>("value2")},
                         {num_threads_parameter_name(),
                             ParameterValue().emplace<std::size_t>(1)}})),
-                measurer_name, iterations, 3,
+                measurement_type, iterations, 3,
                 {{Duration(5), Duration(6), Duration(7)}},
                 {create_output(target_output_name, 4.4),
                     create_output(output_name2, -1.0)},
@@ -253,7 +253,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                          ParameterValue().emplace<std::size_t>(1)},
                         {num_threads_parameter_name(),
                             ParameterValue().emplace<std::size_t>(1)}})),
-                measurer_name, iterations, 3,
+                measurement_type, iterations, 3,
                 {{Duration(3), Duration(4), Duration(5)}},
                 {create_output(target_output_name, 5.5),
                     create_output(output_name2, -1.0)},
@@ -264,7 +264,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                          ParameterValue().emplace<std::size_t>(2)},
                         {num_threads_parameter_name(),
                             ParameterValue().emplace<std::size_t>(1)}})),
-                measurer_name, iterations, 3,
+                measurement_type, iterations, 3,
                 {{Duration(6), Duration(7), Duration(8)}},
                 {create_output(target_output_name, 6.6),
                     create_output(output_name2, -1.0)},
@@ -277,7 +277,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
 
             const auto file_path =
                 std::string("./plots/ParameterToOutputLinePlotStat.html");
-            plot.write(measurer_name, group_name, measurements, file_path);
+            plot.write(measurement_type, group_name, measurements, file_path);
 
             ApprovalTests::Approvals::verify(
                 stat_bench_test::read_file(file_path),
@@ -292,7 +292,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
 
             const auto file_path =
                 std::string("./plots/ParameterToOutputLinePlotStatLog.html");
-            plot.write(measurer_name, group_name, measurements, file_path);
+            plot.write(measurement_type, group_name, measurements, file_path);
 
             ApprovalTests::Approvals::verify(
                 stat_bench_test::read_file(file_path),
@@ -307,7 +307,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
         const auto target_output_name = CustomOutputName("Output1");
         const auto group_name = BenchmarkGroupName("Group");
         const auto case_name1 = BenchmarkCaseName("Case1");
-        const auto measurer_name = MeasurerName("Measurer");
+        const auto measurement_type = MeasurementType("Measurer");
         constexpr std::size_t iterations = 1;
         const auto measurements = std::vector<Measurement>{
             Measurement(BenchmarkFullName(group_name, case_name1),
@@ -318,7 +318,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                             ParameterValue().emplace<std::string>("value1")},
                         {num_threads_parameter_name(),
                             ParameterValue().emplace<std::size_t>(1)}})),
-                measurer_name, iterations, 3,
+                measurement_type, iterations, 3,
                 {{Duration(1), Duration(2), Duration(3)}}, {},
                 {{target_output_name, 1.1}}),
             Measurement(BenchmarkFullName(group_name, case_name1),
@@ -329,7 +329,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                             ParameterValue().emplace<std::string>("value1")},
                         {num_threads_parameter_name(),
                             ParameterValue().emplace<std::size_t>(1)}})),
-                measurer_name, iterations, 3,
+                measurement_type, iterations, 3,
                 {{Duration(1), Duration(2), Duration(3)}}, {},
                 {{target_output_name, 2.2}}),
             Measurement(BenchmarkFullName(group_name, case_name1),
@@ -340,7 +340,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                             ParameterValue().emplace<std::string>("value2")},
                         {num_threads_parameter_name(),
                             ParameterValue().emplace<std::size_t>(1)}})),
-                measurer_name, iterations, 3,
+                measurement_type, iterations, 3,
                 {{Duration(1), Duration(2), Duration(3)}}, {},
                 {{target_output_name, 3.3}}),
             Measurement(BenchmarkFullName(group_name, case_name1),
@@ -351,7 +351,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
                             ParameterValue().emplace<std::string>("value2")},
                         {num_threads_parameter_name(),
                             ParameterValue().emplace<std::size_t>(1)}})),
-                measurer_name, iterations, 3,
+                measurement_type, iterations, 3,
                 {{Duration(1), Duration(2), Duration(3)}}, {},
                 {{target_output_name, 4.4}})};
 
@@ -362,7 +362,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
 
             const auto file_path =
                 std::string("./plots/ParameterToOutputLinePlotColumn.html");
-            plot.write(measurer_name, group_name, measurements, file_path);
+            plot.write(measurement_type, group_name, measurements, file_path);
 
             ApprovalTests::Approvals::verify(
                 stat_bench_test::read_file(file_path),
@@ -377,7 +377,7 @@ TEST_CASE("stat_bench::plots::ParameterToOutputLinePlot") {
 
             const auto file_path =
                 std::string("./plots/ParameterToOutputLinePlotRow.html");
-            plot.write(measurer_name, group_name, measurements, file_path);
+            plot.write(measurement_type, group_name, measurements, file_path);
 
             ApprovalTests::Approvals::verify(
                 stat_bench_test::read_file(file_path),

@@ -27,7 +27,7 @@
 
 #include "common_labels.h"
 #include "create_data_table.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/param/parameter_name.h"
 
 namespace stat_bench {
@@ -37,13 +37,13 @@ auto ViolinPlot::name_for_file() const -> const util::Utf8String& {
     return name_for_file_;
 }
 
-void ViolinPlot::write(const measurer::MeasurerName& measurer_name,
+void ViolinPlot::write(const measurer::MeasurementType& measurement_type,
     const BenchmarkGroupName& group_name,
     const std::vector<measurer::Measurement>& measurements,
     const std::string& file_path) {
     (void)group_name;
 
-    const auto& title = measurer_name.str();
+    const auto& title = measurement_type.str();
 
     const auto data_table = create_data_table_with_all_time(measurements, {});
     auto figure = plotly_plotter::figure_builders::violin(data_table)

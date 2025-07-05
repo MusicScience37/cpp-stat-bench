@@ -23,7 +23,7 @@
 
 #include "stat_bench/bench_impl/i_benchmark_case.h"
 #include "stat_bench/benchmark_condition.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 
 namespace stat_bench {
 namespace measurer {
@@ -33,7 +33,7 @@ namespace measurer {
  *
  * \param[in] bench_case Case.
  * \param[in] cond Condition.
- * \param[in] measurer_name Measurer name.
+ * \param[in] measurement_type Measurement type.
  * \param[in] iterations Number of iterations.
  * \param[in] min_iterations Minimum number of iterations for warming up.
  * \param[in] min_duration_sec Minimum duration for warming up. [sec]
@@ -41,7 +41,7 @@ namespace measurer {
  */
 [[nodiscard]] auto determine_warming_up_samples(
     bench_impl::IBenchmarkCase* bench_case, const BenchmarkCondition& cond,
-    const MeasurerName& measurer_name, std::size_t iterations,
+    const MeasurementType& measurement_type, std::size_t iterations,
     std::size_t min_iterations, double min_duration_sec) -> std::size_t;
 
 }  // namespace measurer

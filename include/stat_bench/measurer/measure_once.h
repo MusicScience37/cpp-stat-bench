@@ -24,7 +24,7 @@
 #include "stat_bench/bench_impl/i_benchmark_case.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/measurer/measurement.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 
 namespace stat_bench {
 namespace measurer {
@@ -34,14 +34,14 @@ namespace measurer {
  *
  * \param[in] bench_case Case.
  * \param[in] cond Condition.
- * \param[in] measurer_name Measurer name.
+ * \param[in] measurement_type Measurement type.
  * \param[in] iterations Number of iterations.
  * \param[in] samples Number of samples (except for warming up).
  * \param[in] warming_up_samples Number of samples for warming up.
  * \return Result.
  */
 [[nodiscard]] auto measure_once(bench_impl::IBenchmarkCase* bench_case,
-    const BenchmarkCondition& cond, const MeasurerName& measurer_name,
+    const BenchmarkCondition& cond, const MeasurementType& measurement_type,
     std::size_t iterations, std::size_t samples, std::size_t warming_up_samples)
     -> Measurement;
 

@@ -28,7 +28,7 @@
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/system_time_point.h"
 #include "stat_bench/measurer/measurement.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/reporter/i_reporter.h"
 
 namespace stat_bench_test {
@@ -45,12 +45,12 @@ public:
         void(const stat_bench::clock::SystemTimePoint&), override);
 
     // NOLINTNEXTLINE
-    MAKE_MOCK1(measurer_starts, void(const stat_bench::measurer::MeasurerName&),
-        override);
+    MAKE_MOCK1(measurer_starts,
+        void(const stat_bench::measurer::MeasurementType&), override);
 
     // NOLINTNEXTLINE
     MAKE_MOCK1(measurer_finished,
-        void(const stat_bench::measurer::MeasurerName&), override);
+        void(const stat_bench::measurer::MeasurementType&), override);
 
     // NOLINTNEXTLINE
     MAKE_MOCK2(group_starts,

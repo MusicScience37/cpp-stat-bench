@@ -24,7 +24,7 @@
 #include <vector>
 
 #include "stat_bench/measurer/measurement.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/plots/i_plot.h"
 #include "stat_bench/reporter/i_reporter.h"
 #include "stat_bench/util/utf8_string.h"
@@ -51,10 +51,10 @@ public:
     void experiment_finished(const clock::SystemTimePoint& time_stamp) override;
 
     //! \copydoc stat_bench::reporter::IReporter::measurer_starts
-    void measurer_starts(const measurer::MeasurerName& name) override;
+    void measurer_starts(const measurer::MeasurementType& name) override;
 
     //! \copydoc stat_bench::reporter::IReporter::measurer_finished
-    void measurer_finished(const measurer::MeasurerName& name) override;
+    void measurer_finished(const measurer::MeasurementType& name) override;
 
     //! \copydoc stat_bench::reporter::IReporter::group_starts
     void group_starts(const BenchmarkGroupName& name,
@@ -82,11 +82,11 @@ private:
     //! File prefix.
     std::string prefix_;
 
-    //! Measurer name.
-    measurer::MeasurerName measurer_name_;
+    //! Measurement type.
+    measurer::MeasurementType measurement_type_;
 
-    //! Measurer name for file paths.
-    util::Utf8String measurer_name_for_file_paths_;
+    //! Measurement type.for file paths.
+    util::Utf8String measurement_type_for_file_paths_;
 
     //! Measurements.
     std::vector<measurer::Measurement> measurements_{};

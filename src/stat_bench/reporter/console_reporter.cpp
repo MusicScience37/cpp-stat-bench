@@ -78,7 +78,7 @@ void ConsoleReporter::experiment_finished(
     (void)std::fflush(file_);
 }
 
-void ConsoleReporter::measurer_starts(const measurer::MeasurerName& name) {
+void ConsoleReporter::measurer_starts(const measurer::MeasurementType& name) {
     print_line(file_, '=');
     fmt::print(file_, FMT_STRING("{}\n"), name);
     print_line(file_, '=');
@@ -86,7 +86,7 @@ void ConsoleReporter::measurer_starts(const measurer::MeasurerName& name) {
     (void)std::fflush(file_);
 }
 
-void ConsoleReporter::measurer_finished(const measurer::MeasurerName& name) {
+void ConsoleReporter::measurer_finished(const measurer::MeasurementType& name) {
     // no operation
     (void)name;
 }

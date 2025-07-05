@@ -16,7 +16,7 @@ set(SOURCE_FILES
     measurer/determine_warming_up_samples.cpp
     measurer/mean_processing_time_measurer.cpp
     measurer/measure_once.cpp
-    measurer/measurer_name.cpp
+    measurer/measurement_type.cpp
     measurer/processing_time_measurer.cpp
     param/parameter_dict.cpp
     param/parameter_generator.cpp

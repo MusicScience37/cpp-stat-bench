@@ -39,7 +39,7 @@ namespace stat_bench {
 namespace reporter {
 
 PlotReporter::PlotReporter(std::string prefix)
-    : prefix_(std::move(prefix)), measurer_name_("") {
+    : prefix_(std::move(prefix)), measurement_type_("") {
     builtin_plots_.push_back(std::make_shared<plots::SamplesLinePlot>());
     builtin_plots_.push_back(std::make_shared<plots::CdfLinePlot>());
     builtin_plots_.push_back(std::make_shared<plots::ViolinPlot>());
@@ -56,21 +56,22 @@ void PlotReporter::experiment_finished(
     // no operation
 }
 
-void PlotReporter::measurer_starts(const measurer::MeasurerName& name) {
-    measurer_name_ = name;
+void PlotReporter::measurer_starts(const measurer::MeasurementType& name) {
+    measurement_type_ = name;
 
-    std::string measurer_name_without_space = measurer_name_.str().str();
+    std::string measurement_type_without_space = measurement_type_.str().str();
     std::size_t pos = 0;
-    while ((pos = measurer_name_without_space.find(' ', pos)) !=
+    while ((pos = measurement_type_without_space.find(' ', pos)) !=
         std::string::npos) {
-        measurer_name_without_space.erase(pos, 1);
+        measurement_type_without_space.erase(pos, 1);
     }
 
-    measurer_name_for_file_paths_ = util::escape_for_file_name(
-        util::Utf8String(measurer_name_without_space));
+    measurement_type_for_file_paths_ = util::escape_for_file_name(
+        util::Utf8String(measurement_type_without_space));
 }
 
-void PlotReporter::measurer_finished(const measurer::MeasurerName& /*name*/) {
+void PlotReporter::measurer_finished(
+    const measurer::MeasurementType& /*name*/) {
     // no operation
 }
 
@@ -85,11 +86,11 @@ void PlotReporter::group_finished(const BenchmarkGroupName& name) {
                                   const std::shared_ptr<plots::IPlot>& plot) {
         const std::string file_path = fmt::format("{}/{}/{}_{}.html", prefix_,
             util::escape_for_file_name(name.str()),
-            measurer_name_for_file_paths_,
+            measurement_type_for_file_paths_,
             util::escape_for_file_name(plot->name_for_file()));
         std::filesystem::create_directories(
             std::filesystem::path(file_path).parent_path());
-        plot->write(measurer_name_, name, measurements_, file_path);
+        plot->write(measurement_type_, name, measurements_, file_path);
     };
     for (const auto& plot : builtin_plots_) {
         process_plot(plot);

@@ -30,14 +30,14 @@ namespace stat_bench {
 namespace measurer {
 
 auto determine_iterations(bench_impl::IBenchmarkCase* bench_case,
-    const BenchmarkCondition& cond, const MeasurerName& measurer_name,
+    const BenchmarkCondition& cond, const MeasurementType& measurement_type,
     double min_sample_duration_sec) -> std::size_t {
     std::size_t iterations = 1;
     constexpr std::size_t trials = 10;
     for (std::size_t i = 0; i < trials; ++i) {
         constexpr std::size_t samples = 2;
         const auto data = measure_once(
-            bench_case, cond, measurer_name, iterations, samples, 0);
+            bench_case, cond, measurement_type, iterations, samples, 0);
         const double duration_sec = data.durations().at(0).at(1).seconds();
         if (duration_sec > min_sample_duration_sec) {
             break;

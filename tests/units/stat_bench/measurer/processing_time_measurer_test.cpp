@@ -36,12 +36,12 @@
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/current_invocation_context.h"
 #include "stat_bench/measurer/measurement.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 
 TEST_CASE("stat_bench::measurer::ProcessingTimeMeasurer") {
     using stat_bench::BenchmarkCaseName;
     using stat_bench::BenchmarkGroupName;
-    using stat_bench::measurer::MeasurerName;
+    using stat_bench::measurer::MeasurementType;
 
     constexpr std::size_t samples = 3;
     constexpr std::size_t min_warming_up_iterations = 5;
@@ -51,7 +51,7 @@ TEST_CASE("stat_bench::measurer::ProcessingTimeMeasurer") {
             samples, min_warming_up_iterations, min_warming_up_duration_sec);
 
     SECTION("get name") {
-        REQUIRE(measurer->name() == MeasurerName("Processing Time"));
+        REQUIRE(measurer->type() == MeasurementType("Processing Time"));
     }
 
     SECTION("measure") {
@@ -77,7 +77,8 @@ TEST_CASE("stat_bench::measurer::ProcessingTimeMeasurer") {
         REQUIRE(result.case_info().group_name() == info.group_name());
         REQUIRE(result.case_info().case_name() == info.case_name());
         REQUIRE(result.cond().threads() == cond.threads());
-        REQUIRE(result.measurer_name() == MeasurerName("Processing Time"));
+        REQUIRE(
+            result.measurement_type() == MeasurementType("Processing Time"));
         REQUIRE(result.iterations() > 0);
         REQUIRE(result.samples() == samples);
         REQUIRE(result.durations().size() == 1);

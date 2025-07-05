@@ -47,10 +47,10 @@ public:
     void experiment_finished(const clock::SystemTimePoint& time_stamp) override;
 
     //! \copydoc stat_bench::reporter::IReporter::measurer_starts
-    void measurer_starts(const measurer::MeasurerName& name) override;
+    void measurer_starts(const measurer::MeasurementType& name) override;
 
     //! \copydoc stat_bench::reporter::IReporter::measurer_finished
-    void measurer_finished(const measurer::MeasurerName& name) override;
+    void measurer_finished(const measurer::MeasurementType& name) override;
 
     //! \copydoc stat_bench::reporter::IReporter::group_starts
     void group_starts(const BenchmarkGroupName& name,

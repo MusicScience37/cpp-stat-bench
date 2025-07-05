@@ -52,7 +52,7 @@ public:
         -> const util::Utf8String& override;
 
     //! \copydoc stat_bench::plots::IPlot::write
-    void write(const measurer::MeasurerName& measurer_name,
+    void write(const measurer::MeasurementType& measurement_type,
         const BenchmarkGroupName& group_name,
         const std::vector<measurer::Measurement>& measurements,
         const std::string& file_path) override;

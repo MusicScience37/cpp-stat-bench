@@ -106,7 +106,7 @@ struct MeasurementData {
     std::unordered_map<util::Utf8String, util::Utf8String> params{};
 
     //! Name of measurer.
-    util::Utf8String measurer_name{};
+    util::Utf8String measurement_type{};
 
     //! Number of iterations.
     std::size_t iterations{};

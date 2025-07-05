@@ -48,12 +48,12 @@ void DataFileReporterBase::experiment_finished(
 }
 
 void DataFileReporterBase::measurer_starts(
-    const measurer::MeasurerName& /*name*/) {
+    const measurer::MeasurementType& /*name*/) {
     // no operation
 }
 
 void DataFileReporterBase::measurer_finished(
-    const measurer::MeasurerName& /*name*/) {
+    const measurer::MeasurementType& /*name*/) {
     // no operation
 }
 

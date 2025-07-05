@@ -15,17 +15,17 @@
  */
 /*!
  * \file
- * \brief Implementation of MeasurerName class.
+ * \brief Implementation of MeasurementType class.
  */
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 
 namespace stat_bench {
 namespace measurer {
 
-MeasurerName::MeasurerName(util::Utf8String str) noexcept
+MeasurementType::MeasurementType(util::Utf8String str) noexcept
     : str_(std::move(str)) {}
 
-auto MeasurerName::str() const noexcept -> const util::Utf8String& {
+auto MeasurementType::str() const noexcept -> const util::Utf8String& {
     return str_;
 }
 
