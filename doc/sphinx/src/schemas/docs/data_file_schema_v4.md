@@ -1,6 +1,6 @@
-# Data files in cpp-stat-bench (version 2)
+# Data files in cpp-stat-bench (version 4)
 
-*JSON schema of data files written by cpp-stat-bench library  (version 2).*
+*JSON schema of data files written by cpp-stat-bench library  (version 4).*
 
 ## Properties
 
@@ -12,7 +12,7 @@
     - <a id="properties/measurements/items/properties/case_name"></a>**`case_name`** *(string, required)*: Name of the case in the benchmark.
     - <a id="properties/measurements/items/properties/params"></a>**`params`** *(object, required)*: Parameters of this measurement.
       - <a id="properties/measurements/items/properties/params/patternProperties/%5E.%2A%24"></a>**`^.*$`** *(string)*: Parameter of this measurement.
-    - <a id="properties/measurements/items/properties/measurer_name"></a>**`measurer_name`** *(string, required)*: Name of the measurer of this measurement.
+    - <a id="properties/measurements/items/properties/measurement_type"></a>**`measurement_type`** *(string, required)*: Name of the measurement type.
     - <a id="properties/measurements/items/properties/iterations"></a>**`iterations`** *(integer, required)*: Number of iterations in each iteration.
     - <a id="properties/measurements/items/properties/samples"></a>**`samples`** *(integer, required)*: Number of samples.
     - <a id="properties/measurements/items/properties/custom_outputs"></a>**`custom_outputs`** *(array, required)*: List of user-specified outputs.

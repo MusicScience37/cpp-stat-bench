@@ -46,8 +46,8 @@
             },
             "required": ["threads"]
           },
-          "measurement_type": {
-            "title": "Measurement type.",
+          "measurer_name": {
+            "title": "Measurer name",
             "description": "Name of the measurer of this measurement.",
             "type": "string"
           },
@@ -226,7 +226,7 @@
           "durations",
           "group_name",
           "iterations",
-          "measurement_type",
+          "measurer_name",
           "params",
           "samples"
         ]

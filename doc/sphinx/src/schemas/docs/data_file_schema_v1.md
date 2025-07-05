@@ -1,43 +1,43 @@
 # Data files in cpp-stat-bench (version 1)
 
-_JSON schema of data files written by cpp-stat-bench library (version 1)._
+*JSON schema of data files written by cpp-stat-bench library  (version 1).*
 
 ## Properties
 
-- **`started_at`** _(string, required)_: Time when this benchmark execution started.
-- **`finished_at`** _(string, required)_: Time when this benchmark execution finished.
-- **`measurements`** _(array, required)_: List of information of measurements of time.
-  - **Items** _(object)_: Information of a measurement of time.
-    - **`group_name`** _(string, required)_: Name of the group in the benchmark.
-    - **`case_name`** _(string, required)_: Name of the case in the benchmark.
-    - **`params`** _(object, required)_: Parameters of this measurement.
-      - **`^.*$`** _(string)_: Parameter of this measurement.
-    - **`measurement_type`** _(string, required)_: Name of the measurer of this measurement.
-    - **`iterations`** _(integer, required)_: Number of iterations in each iteration.
-    - **`samples`** _(integer, required)_: Number of samples.
-    - **`custom_outputs`** _(array, required)_: List of user-specified outputs.
-      - **Items** _(object)_: User-specified output.
-        - **`name`** _(string, required)_: Name of the custom output.
-        - **`value`** _(number, required)_: Value of the custom output.
-    - **`custom_stat_outputs`** _(array, required)_: List of user-specified outputs with statistics.
-      - **Items** _(object)_: User-specified output with statistics.
-        - **`name`** _(string, required)_: Name of the custom output.
-        - **`stat`** _(object, required)_: Statistics of the custom output.
-          - **`max`** _(number, required)_: Maximum value of the custom output.
-          - **`mean`** _(number, required)_: Mean value of the custom output.
-          - **`min`** _(number, required)_: Minimum value of the custom output.
-          - **`standard_deviation`** _(number, required)_: Standard deviation of values of the custom output.
-          - **`variance`** _(number, required)_: Variance of values of the custom output.
-        - **`values`** _(array, required)_: Values of the custom output.
-          - **Items** _(array)_: Values of the custom output.
-            - **Items** _(number)_: Value of the custom output.
-    - **`durations`** _(object, required)_: Measured durations.
-      - **`stat`** _(object, required)_: Statistics of the measured durations.
-        - **`max`** _(number, required)_: Maximum duration.
-        - **`mean`** _(number, required)_: Mean duration.
-        - **`min`** _(number, required)_: Minimum duration.
-        - **`standard_deviation`** _(number, required)_: Standard deviation of the durations.
-        - **`variance`** _(number, required)_: Variance of the durations.
-      - **`values`** _(array, required)_: Values of the measured durations.
-        - **Items** _(array)_: Values of the measured durations.
-          - **Items** _(number)_: Value of a measured duration.
+- <a id="properties/started_at"></a>**`started_at`** *(string, required)*: Time when this benchmark execution started.
+- <a id="properties/finished_at"></a>**`finished_at`** *(string, required)*: Time when this benchmark execution finished.
+- <a id="properties/measurements"></a>**`measurements`** *(array, required)*: List of information of measurements of time.
+  - <a id="properties/measurements/items"></a>**Items** *(object)*: Information of a measurement of time.
+    - <a id="properties/measurements/items/properties/group_name"></a>**`group_name`** *(string, required)*: Name of the group in the benchmark.
+    - <a id="properties/measurements/items/properties/case_name"></a>**`case_name`** *(string, required)*: Name of the case in the benchmark.
+    - <a id="properties/measurements/items/properties/params"></a>**`params`** *(object, required)*: Parameters of this measurement.
+      - <a id="properties/measurements/items/properties/params/patternProperties/%5E.%2A%24"></a>**`^.*$`** *(string)*: Parameter of this measurement.
+    - <a id="properties/measurements/items/properties/measurer_name"></a>**`measurer_name`** *(string, required)*: Name of the measurer of this measurement.
+    - <a id="properties/measurements/items/properties/iterations"></a>**`iterations`** *(integer, required)*: Number of iterations in each iteration.
+    - <a id="properties/measurements/items/properties/samples"></a>**`samples`** *(integer, required)*: Number of samples.
+    - <a id="properties/measurements/items/properties/custom_outputs"></a>**`custom_outputs`** *(array, required)*: List of user-specified outputs.
+      - <a id="properties/measurements/items/properties/custom_outputs/items"></a>**Items** *(object)*: User-specified output.
+        - <a id="properties/measurements/items/properties/custom_outputs/items/properties/name"></a>**`name`** *(string, required)*: Name of the custom output.
+        - <a id="properties/measurements/items/properties/custom_outputs/items/properties/value"></a>**`value`** *(number, required)*: Value of the custom output.
+    - <a id="properties/measurements/items/properties/custom_stat_outputs"></a>**`custom_stat_outputs`** *(array, required)*: List of user-specified outputs with statistics.
+      - <a id="properties/measurements/items/properties/custom_stat_outputs/items"></a>**Items** *(object)*: User-specified output with statistics.
+        - <a id="properties/measurements/items/properties/custom_stat_outputs/items/properties/name"></a>**`name`** *(string, required)*: Name of the custom output.
+        - <a id="properties/measurements/items/properties/custom_stat_outputs/items/properties/stat"></a>**`stat`** *(object, required)*: Statistics of the custom output.
+          - <a id="properties/measurements/items/properties/custom_stat_outputs/items/properties/stat/properties/max"></a>**`max`** *(number, required)*: Maximum value of the custom output.
+          - <a id="properties/measurements/items/properties/custom_stat_outputs/items/properties/stat/properties/mean"></a>**`mean`** *(number, required)*: Mean value of the custom output.
+          - <a id="properties/measurements/items/properties/custom_stat_outputs/items/properties/stat/properties/min"></a>**`min`** *(number, required)*: Minimum value of the custom output.
+          - <a id="properties/measurements/items/properties/custom_stat_outputs/items/properties/stat/properties/standard_deviation"></a>**`standard_deviation`** *(number, required)*: Standard deviation of values of the custom output.
+          - <a id="properties/measurements/items/properties/custom_stat_outputs/items/properties/stat/properties/variance"></a>**`variance`** *(number, required)*: Variance of values of the custom output.
+        - <a id="properties/measurements/items/properties/custom_stat_outputs/items/properties/values"></a>**`values`** *(array, required)*: Values of the custom output.
+          - <a id="properties/measurements/items/properties/custom_stat_outputs/items/properties/values/items"></a>**Items** *(array)*: Values of the custom output.
+            - <a id="properties/measurements/items/properties/custom_stat_outputs/items/properties/values/items/items"></a>**Items** *(number)*: Value of the custom output.
+    - <a id="properties/measurements/items/properties/durations"></a>**`durations`** *(object, required)*: Measured durations.
+      - <a id="properties/measurements/items/properties/durations/properties/stat"></a>**`stat`** *(object, required)*: Statistics of the measured durations.
+        - <a id="properties/measurements/items/properties/durations/properties/stat/properties/max"></a>**`max`** *(number, required)*: Maximum duration.
+        - <a id="properties/measurements/items/properties/durations/properties/stat/properties/mean"></a>**`mean`** *(number, required)*: Mean duration.
+        - <a id="properties/measurements/items/properties/durations/properties/stat/properties/min"></a>**`min`** *(number, required)*: Minimum duration.
+        - <a id="properties/measurements/items/properties/durations/properties/stat/properties/standard_deviation"></a>**`standard_deviation`** *(number, required)*: Standard deviation of the durations.
+        - <a id="properties/measurements/items/properties/durations/properties/stat/properties/variance"></a>**`variance`** *(number, required)*: Variance of the durations.
+      - <a id="properties/measurements/items/properties/durations/properties/values"></a>**`values`** *(array, required)*: Values of the measured durations.
+        - <a id="properties/measurements/items/properties/durations/properties/values/items"></a>**Items** *(array)*: Values of the measured durations.
+          - <a id="properties/measurements/items/properties/durations/properties/values/items/items"></a>**Items** *(number)*: Value of a measured duration.

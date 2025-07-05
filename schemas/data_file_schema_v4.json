@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
-  "title": "Data files in cpp-stat-bench (version 3)",
-  "description": "JSON schema of data files written by cpp-stat-bench library  (version 3).",
+  "title": "Data files in cpp-stat-bench (version 4)",
+  "description": "JSON schema of data files written by cpp-stat-bench library  (version 4).",
   "properties": {
     "started_at": {
       "title": "Start time",
@@ -45,9 +45,9 @@
               }
             }
           },
-          "measurer_name": {
-            "title": "Measurer name",
-            "description": "Name of the measurer of this measurement.",
+          "measurement_type": {
+            "title": "Measurement type",
+            "description": "Name of the measurement type.",
             "type": "string"
           },
           "iterations": {
@@ -249,7 +249,7 @@
           "durations",
           "group_name",
           "iterations",
-          "measurer_name",
+          "measurement_type",
           "params",
           "samples"
         ]
