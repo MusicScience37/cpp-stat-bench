@@ -107,7 +107,7 @@ TEST_CASE("stat_bench::util::OrderedMap") {
         CHECK(map.size() == 2);
 
         map.clear();
-        CHECK(map.size() == 0);
+        CHECK(map.size() == 0);  // NOLINT
         CHECK(map.empty());
     }
 
