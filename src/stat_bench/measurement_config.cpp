@@ -48,18 +48,6 @@ auto MeasurementConfig::iterations(std::size_t value) -> MeasurementConfig& {
     return *this;
 }
 
-void MeasurementConfig::apply_if_not_set(const MeasurementConfig& other) {
-    if (!samples_ && other.samples_) {
-        samples_ = other.samples_;
-    }
-    if (!warming_up_samples_ && other.warming_up_samples_) {
-        warming_up_samples_ = other.warming_up_samples_;
-    }
-    if (!iterations_ && other.iterations_) {
-        iterations_ = other.iterations_;
-    }
-}
-
 auto MeasurementConfig::type() const noexcept
     -> const measurer::MeasurementType& {
     return type_;

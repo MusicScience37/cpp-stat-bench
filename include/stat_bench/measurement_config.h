@@ -70,13 +70,6 @@ public:
     auto iterations(std::size_t value) -> MeasurementConfig&;
 
     /*!
-     * \brief Apply another configuration for parameters that are not set.
-     *
-     * \param[in] other Another configuration.
-     */
-    void apply_if_not_set(const MeasurementConfig& other);
-
-    /*!
      * \brief Get the measurement type.
      *
      * \return Measurement type.
