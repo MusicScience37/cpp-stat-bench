@@ -11,6 +11,7 @@ stat_bench_test_integ_add_bench(parametrized_benchmark)
 stat_bench_test_integ_add_bench(duplicate_cases)
 stat_bench_test_integ_add_bench(escaped_names)
 stat_bench_test_integ_add_bench(subplots)
+stat_bench_test_integ_add_bench(custom_measurement)
 
 add_test(
     NAME stat_bench_test_integ

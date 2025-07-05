@@ -126,8 +126,46 @@ TEST_CASE("stat_bench::measurer::Measurer") {
         REQUIRE(result.cond().threads() == cond.threads());
         REQUIRE(
             result.measurement_type() == MeasurementType("Processing Time"));
-        REQUIRE(result.iterations() > 0);
+        REQUIRE(result.iterations() == 1);
         REQUIRE(result.samples() == samples);
+        REQUIRE(result.durations().size() == 1);
+        REQUIRE(result.durations().at(0).size() == result.samples());
+    }
+
+    SECTION("measure with a custom measurement configuration") {
+        stat_bench_test::bench_impl::MockBenchmarkCase bench_case;
+        const auto info = stat_bench::BenchmarkFullName(
+            BenchmarkGroupName("group"), BenchmarkCaseName("case"));
+        const auto cond = stat_bench::BenchmarkCondition(
+            1, stat_bench_test::param::create_ordinary_parameter_dict());
+        const auto measurement_type = MeasurementType("Processing Time");
+        const auto measurement_config = MeasurementConfig()
+                                            .type(measurement_type.str().str())
+                                            .samples(2)
+                                            .iterations(7)
+                                            .warming_up_samples(3);
+
+        // NOLINTNEXTLINE
+        ALLOW_CALL(bench_case, info()).RETURN(info);
+        REQUIRE_CALL(bench_case, execute())
+            .TIMES(AT_LEAST(1))
+            // NOLINTNEXTLINE
+            .SIDE_EFFECT(stat_bench::current_invocation_context().measure(
+                [](std::size_t /*thread_index*/, std::size_t /*sample_index*/,
+                    std::size_t /*iteration_index*/) {
+                    // NOLINTNEXTLINE
+                    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+                }));
+
+        const auto result =
+            measurer->measure(&bench_case, cond, measurement_config);
+        REQUIRE(result.case_info().group_name() == info.group_name());
+        REQUIRE(result.case_info().case_name() == info.case_name());
+        REQUIRE(result.cond().threads() == cond.threads());
+        REQUIRE(
+            result.measurement_type() == MeasurementType("Processing Time"));
+        REQUIRE(result.iterations() == 7);
+        REQUIRE(result.samples() == 2);
         REQUIRE(result.durations().size() == 1);
         REQUIRE(result.durations().at(0).size() == result.samples());
     }
