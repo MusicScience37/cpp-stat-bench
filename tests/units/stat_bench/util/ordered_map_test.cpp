@@ -99,6 +99,18 @@ TEST_CASE("stat_bench::util::OrderedMap") {
         CHECK_THROWS(map.at(2));
     }
 
+    SECTION("clear all pairs using clear function") {
+        OrderedMap<int, std::string> map;
+
+        map[2] = "two";
+        map[1] = "one";
+        CHECK(map.size() == 2);
+
+        map.clear();
+        CHECK(map.size() == 0);
+        CHECK(map.empty());
+    }
+
     SECTION("get values using at function") {
         OrderedMap<int, std::string> map;
 

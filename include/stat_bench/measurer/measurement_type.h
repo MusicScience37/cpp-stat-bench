@@ -19,6 +19,7 @@
  */
 #pragma once
 
+#include <functional>
 #include <ostream>
 #include <string>
 #include <utility>
@@ -133,3 +134,29 @@ inline auto operator<<(std::ostream& stream, const MeasurementType& val)
 
 }  // namespace measurer
 }  // namespace stat_bench
+
+namespace std {
+
+/*!
+ * \brief Implementation of std::hash for stat_bench::measurer::MeasurementType.
+ */
+template <>
+class hash<stat_bench::measurer::MeasurementType> {
+public:
+    /*!
+     * \brief Hash function.
+     *
+     * \param[in] val Value.
+     * \return Hash value.
+     */
+    auto operator()(const stat_bench::measurer::MeasurementType& val) const
+        -> std::size_t {
+        return hash_(val.str());
+    }
+
+private:
+    //! Hash function for strings.
+    std::hash<stat_bench::util::Utf8String> hash_;
+};
+
+}  // namespace std

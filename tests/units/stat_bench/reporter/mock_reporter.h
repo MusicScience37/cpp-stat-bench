@@ -45,14 +45,6 @@ public:
         void(const stat_bench::clock::SystemTimePoint&), override);
 
     // NOLINTNEXTLINE
-    MAKE_MOCK1(measurer_starts,
-        void(const stat_bench::measurer::MeasurementType&), override);
-
-    // NOLINTNEXTLINE
-    MAKE_MOCK1(measurer_finished,
-        void(const stat_bench::measurer::MeasurementType&), override);
-
-    // NOLINTNEXTLINE
     MAKE_MOCK2(group_starts,
         void(const stat_bench::BenchmarkGroupName&,
             const stat_bench::bench_impl::BenchmarkGroupConfig&),
@@ -61,6 +53,14 @@ public:
     // NOLINTNEXTLINE
     MAKE_MOCK1(
         group_finished, void(const stat_bench::BenchmarkGroupName&), override);
+
+    // NOLINTNEXTLINE
+    MAKE_MOCK1(measurement_type_starts,
+        void(const stat_bench::measurer::MeasurementType&), override);
+
+    // NOLINTNEXTLINE
+    MAKE_MOCK1(measurement_type_finished,
+        void(const stat_bench::measurer::MeasurementType&), override);
 
     // NOLINTNEXTLINE
     MAKE_MOCK1(

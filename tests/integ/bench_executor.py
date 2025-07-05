@@ -43,7 +43,6 @@ class BenchExecutor:
         bench_bin_path: pathlib.Path,
         *additional_args: str,
         samples: typing.Optional[int] = 3,
-        mean_samples: typing.Optional[int] = 2,
         min_sample_duration: float = 0.001,
         min_warming_up_iterations: int = 1,
         min_warming_up_duration_sec: float = 0.001,
@@ -57,8 +56,6 @@ class BenchExecutor:
             additional_args (str): Additional arguments to pass to the benchmark.
             samples (typing.Optional[int], optional): The number of samples.
                 Defaults to 3.
-            mean_samples (typing.Optional[int], optional): The number of samples for
-                mean. Defaults to 2.
             min_sample_duration (float, optional): The minimum duration of a sample.
                 Defaults to 0.001.
             min_warming_up_iterations (int, optional): The minimum number of iterations
@@ -76,8 +73,6 @@ class BenchExecutor:
         args: typing.List[str] = []
         if samples is not None:
             args = args + ["--samples", str(samples)]
-        if mean_samples is not None:
-            args = args + ["--mean_samples", str(mean_samples)]
         if min_sample_duration is not None:
             args = args + ["--min_sample_duration", str(min_sample_duration)]
         if min_warming_up_iterations is not None:

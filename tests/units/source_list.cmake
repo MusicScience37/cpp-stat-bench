@@ -14,9 +14,8 @@ set(SOURCE_FILES
     stat_bench/filters/regex_filter_test.cpp
     stat_bench/fixture_base_test.cpp
     stat_bench/invocation_context_test.cpp
-    stat_bench/measurer/mean_processing_time_measurer_test.cpp
     stat_bench/measurer/measurement_test.cpp
-    stat_bench/measurer/processing_time_measurer_test.cpp
+    stat_bench/measurer/measurer_test.cpp
     stat_bench/memory_barrier_test.cpp
     stat_bench/param/parameter_config_test.cpp
     stat_bench/param/parameter_dict_test.cpp
@@ -40,7 +39,6 @@ set(SOURCE_FILES
     stat_bench/reporter/msgpack_reporter_test.cpp
     stat_bench/reporter/plot_reporter_test.cpp
     stat_bench/runner/command_line_parser_test.cpp
-    stat_bench/runner/runner_test.cpp
     stat_bench/stat/calc_stat_test.cpp
     stat_bench/stat/custom_stat_output_test.cpp
     stat_bench/util/check_glob_pattern_test.cpp

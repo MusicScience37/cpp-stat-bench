@@ -1,6 +1,7 @@
 set(SOURCE_FILES
     bench_impl/benchmark_case_registry.cpp
     bench_impl/benchmark_group.cpp
+    bench_impl/benchmark_group_config.cpp
     bench_impl/benchmark_group_register.cpp
     bench_impl/invocation_context_registry.cpp
     benchmark_case_name.cpp
@@ -12,12 +13,13 @@ set(SOURCE_FILES
     filters/composed_filter.cpp
     filters/glob_filter.cpp
     filters/regex_filter.cpp
+    measurement_config.cpp
     measurer/determine_iterations.cpp
     measurer/determine_warming_up_samples.cpp
-    measurer/mean_processing_time_measurer.cpp
+    measurer/generate_default_measurement_configs.cpp
     measurer/measure_once.cpp
     measurer/measurement_type.cpp
-    measurer/processing_time_measurer.cpp
+    measurer/measurer.cpp
     param/parameter_dict.cpp
     param/parameter_generator.cpp
     param/parameter_name.cpp

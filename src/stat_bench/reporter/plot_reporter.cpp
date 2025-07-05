@@ -39,7 +39,7 @@ namespace stat_bench {
 namespace reporter {
 
 PlotReporter::PlotReporter(std::string prefix)
-    : prefix_(std::move(prefix)), measurement_type_("") {
+    : prefix_(std::move(prefix)), group_name_(""), measurement_type_("") {
     builtin_plots_.push_back(std::make_shared<plots::SamplesLinePlot>());
     builtin_plots_.push_back(std::make_shared<plots::CdfLinePlot>());
     builtin_plots_.push_back(std::make_shared<plots::ViolinPlot>());
@@ -56,8 +56,19 @@ void PlotReporter::experiment_finished(
     // no operation
 }
 
-void PlotReporter::measurer_starts(const measurer::MeasurementType& name) {
-    measurement_type_ = name;
+void PlotReporter::group_starts(const BenchmarkGroupName& name,
+    const bench_impl::BenchmarkGroupConfig& config) {
+    group_name_ = name;
+    group_plots_ = config.plots();
+}
+
+void PlotReporter::group_finished(const BenchmarkGroupName& /*name*/) {
+    // no operation
+}
+
+void PlotReporter::measurement_type_starts(
+    const measurer::MeasurementType& type) {
+    measurement_type_ = type;
 
     std::string measurement_type_without_space = measurement_type_.str().str();
     std::size_t pos = 0;
@@ -70,27 +81,17 @@ void PlotReporter::measurer_starts(const measurer::MeasurementType& name) {
         util::Utf8String(measurement_type_without_space));
 }
 
-void PlotReporter::measurer_finished(
-    const measurer::MeasurementType& /*name*/) {
-    // no operation
-}
-
-void PlotReporter::group_starts(const BenchmarkGroupName& /*name*/,
-    const bench_impl::BenchmarkGroupConfig& config) {
-    measurements_.clear();
-    group_plots_ = config.plots();
-}
-
-void PlotReporter::group_finished(const BenchmarkGroupName& name) {
-    const auto process_plot = [this, &name](
+void PlotReporter::measurement_type_finished(
+    const measurer::MeasurementType& /*type*/) {
+    const auto process_plot = [this](
                                   const std::shared_ptr<plots::IPlot>& plot) {
         const std::string file_path = fmt::format("{}/{}/{}_{}.html", prefix_,
-            util::escape_for_file_name(name.str()),
+            util::escape_for_file_name(group_name_.str()),
             measurement_type_for_file_paths_,
             util::escape_for_file_name(plot->name_for_file()));
         std::filesystem::create_directories(
             std::filesystem::path(file_path).parent_path());
-        plot->write(measurement_type_, name, measurements_, file_path);
+        plot->write(measurement_type_, group_name_, measurements_, file_path);
     };
     for (const auto& plot : builtin_plots_) {
         process_plot(plot);
@@ -98,6 +99,8 @@ void PlotReporter::group_finished(const BenchmarkGroupName& name) {
     for (const auto& plot : group_plots_) {
         process_plot(plot);
     }
+
+    measurements_.clear();
 }
 
 void PlotReporter::case_starts(const BenchmarkFullName& /*case_info*/) {

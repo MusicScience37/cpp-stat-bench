@@ -47,22 +47,22 @@ void DataFileReporterBase::experiment_finished(
     write_data_file(file_path_, data_);
 }
 
-void DataFileReporterBase::measurer_starts(
-    const measurer::MeasurementType& /*name*/) {
-    // no operation
-}
-
-void DataFileReporterBase::measurer_finished(
-    const measurer::MeasurementType& /*name*/) {
-    // no operation
-}
-
 void DataFileReporterBase::group_starts(const BenchmarkGroupName& /*name*/,
     const bench_impl::BenchmarkGroupConfig& /*config*/) {
     // no operation
 }
 
 void DataFileReporterBase::group_finished(const BenchmarkGroupName& /*name*/) {
+    // no operation
+}
+
+void DataFileReporterBase::measurement_type_starts(
+    const measurer::MeasurementType& /*type*/) {
+    // no operation
+}
+
+void DataFileReporterBase::measurement_type_finished(
+    const measurer::MeasurementType& /*type*/) {
     // no operation
 }
 

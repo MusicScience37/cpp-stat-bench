@@ -2,7 +2,7 @@ exit_code:
 0
 stdout:
 USAGE:
-  stat_bench_test_integ_simple_benchmark [-h|--help] [--plot <prefix>] [--json <filepath>] [--msgpack <filepath>] [--compressed-msgpack <filepath>] [--samples <num>] [--mean_samples <num>] [--min_sample_duration <num>] [--min_warming_up_iterations <num>] [--min_warming_up_duration_sec <num>] [--include <pattern>] [--exclude <pattern>] [--include_regex <regex>] [--exclude_regex <regex>]
+  stat_bench_test_integ_simple_benchmark [-h|--help] [--plot <prefix>] [--json <filepath>] [--msgpack <filepath>] [--compressed-msgpack <filepath>] [--samples <num>] [--min_sample_duration <num>] [--min_warming_up_iterations <num>] [--min_warming_up_duration_sec <num>] [--include <pattern>] [--exclude <pattern>] [--include_regex <regex>] [--exclude_regex <regex>]
 
 OPTIONS, ARGUMENTS:
   -h, --help              Show this help.
@@ -12,7 +12,6 @@ OPTIONS, ARGUMENTS:
   --compressed-msgpack <filepath>
                           Generate compressed MsgPack data file of results.
   --samples <num>         Number of samples for measurements of processing time.
-  --mean_samples <num>    Number of samples for measurements of mean processing time.
   --min_sample_duration <num>
                           Minimum duration of a sample for measurement of mean processing time. [sec]
   --min_warming_up_iterations <num>

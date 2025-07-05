@@ -29,10 +29,7 @@ namespace runner {
 namespace impl {
 
 //! Default number of samples for measurements of processing time.
-static constexpr std::size_t default_processing_time_samples = 100;
-
-//! Default number of samples for measurement of mean processing time.
-static constexpr std::size_t default_mean_processing_time_samples = 30;
+static constexpr std::size_t default_samples = 30;
 
 /*!
  * \brief Default minimum duration of a sample for measurement of mean
@@ -56,11 +53,7 @@ struct Config {
     bool show_help{false};
 
     //! Number of samples for measurements of processing time.
-    std::size_t processing_time_samples{impl::default_processing_time_samples};
-
-    //! Number of samples for measurements of mean processing time.
-    std::size_t mean_processing_time_samples{
-        impl::default_mean_processing_time_samples};
+    std::size_t samples{impl::default_samples};
 
     /*!
      * \brief Minimum duration of a sample for measurement of mean processing

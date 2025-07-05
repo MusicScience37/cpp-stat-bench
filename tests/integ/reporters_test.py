@@ -198,6 +198,7 @@ class TestPlot:
             "--plot",
             bench_executor.test_name,
             samples=10000,
+            min_sample_duration=0.00001,
             verify=False,
         )
 

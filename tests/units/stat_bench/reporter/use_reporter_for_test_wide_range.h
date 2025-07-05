@@ -47,10 +47,10 @@ inline void use_reporter_for_test_wide_range(
 
     reporter->experiment_starts(SystemClock::now());
     const std::string measurement_type = "Measurement1";
-    reporter->measurer_starts(MeasurementType(measurement_type));
     const std::string group1_name = "Group1";
     reporter->group_starts(
         BenchmarkGroupName(group1_name), BenchmarkGroupConfig());
+    reporter->measurement_type_starts(MeasurementType(measurement_type));
 
     const auto measurement1 = stat_bench_test::create_test_measurement(
         group1_name, "Case1", measurement_type,
@@ -76,8 +76,8 @@ inline void use_reporter_for_test_wide_range(
     reporter->measurement_succeeded(measurement3);
     reporter->case_finished(measurement3.case_info());
 
+    reporter->measurement_type_finished(MeasurementType(measurement_type));
     reporter->group_finished(BenchmarkGroupName(group1_name));
-    reporter->measurer_finished(MeasurementType(measurement_type));
     reporter->experiment_finished(SystemClock::now());
 }
 

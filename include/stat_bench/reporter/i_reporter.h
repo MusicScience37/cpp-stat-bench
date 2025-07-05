@@ -54,20 +54,6 @@ public:
         const clock::SystemTimePoint& time_stamp) = 0;
 
     /*!
-     * \brief Start benchmarks using a measurer.
-     *
-     * \param[in] name Measurement type.
-     */
-    virtual void measurer_starts(const measurer::MeasurementType& name) = 0;
-
-    /*!
-     * \brief Finished benchmarks using a measurer.
-     *
-     * \param[in] name Measurement type.
-     */
-    virtual void measurer_finished(const measurer::MeasurementType& name) = 0;
-
-    /*!
      * \brief Start a group of benchmarks.
      *
      * \param[in] name Group name.
@@ -82,6 +68,22 @@ public:
      * \param[in] name Group name.
      */
     virtual void group_finished(const BenchmarkGroupName& name) = 0;
+
+    /*!
+     * \brief Start a measurement with a type.
+     *
+     * \param[in] type Measurement type.
+     */
+    virtual void measurement_type_starts(
+        const measurer::MeasurementType& type) = 0;
+
+    /*!
+     * \brief Finished a measurement with a type.
+     *
+     * \param[in] type Measurement type.
+     */
+    virtual void measurement_type_finished(
+        const measurer::MeasurementType& type) = 0;
 
     /*!
      * \brief Start a case of a benchmark.

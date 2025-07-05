@@ -15,9 +15,9 @@
  */
 /*!
  * \file
- * \brief Test of MeanProcessingTimeMeasurer class.
+ * \brief Test of Measurer class.
  */
-#include "stat_bench/measurer/mean_processing_time_measurer.h"
+#include "stat_bench/measurer/measurer.h"
 
 #include <chrono>
 #include <memory>
@@ -36,33 +36,33 @@
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/current_invocation_context.h"
+#include "stat_bench/measurement_config.h"
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/measurer/measurement_type.h"
 
-TEST_CASE("stat_bench::measurer::MeanProcessingTimeMeasurer") {
+TEST_CASE("stat_bench::measurer::Measurer") {
     using stat_bench::BenchmarkCaseName;
     using stat_bench::BenchmarkGroupName;
+    using stat_bench::MeasurementConfig;
     using stat_bench::measurer::MeasurementType;
 
     constexpr double min_sample_duration_sec = 0.01;
     constexpr std::size_t samples = 3;
     constexpr std::size_t min_warming_up_iterations = 5;
     constexpr double min_warming_up_duration_sec = 0.01;
-    const auto measurer =
-        std::make_shared<stat_bench::measurer::MeanProcessingTimeMeasurer>(
-            min_sample_duration_sec, samples, min_warming_up_iterations,
-            min_warming_up_duration_sec);
+    const auto measurer = std::make_shared<stat_bench::measurer::Measurer>(
+        min_sample_duration_sec, min_warming_up_duration_sec, samples,
+        min_warming_up_iterations);
 
-    SECTION("get name") {
-        REQUIRE(measurer->type() == MeasurementType("Mean Processing Time"));
-    }
-
-    SECTION("measure") {
+    SECTION("measure mean processing time") {
         stat_bench_test::bench_impl::MockBenchmarkCase bench_case;
         const auto info = stat_bench::BenchmarkFullName(
             BenchmarkGroupName("group"), BenchmarkCaseName("case"));
         const auto cond = stat_bench::BenchmarkCondition(
             1, stat_bench_test::param::create_ordinary_parameter_dict());
+        const auto measurement_type = MeasurementType("Mean Processing Time");
+        const auto measurement_config =
+            MeasurementConfig().type(measurement_type.str().str());
 
         // NOLINTNEXTLINE
         ALLOW_CALL(bench_case, info()).RETURN(info);
@@ -76,7 +76,8 @@ TEST_CASE("stat_bench::measurer::MeanProcessingTimeMeasurer") {
                     std::this_thread::sleep_for(std::chrono::milliseconds(1));
                 }));
 
-        const auto result = measurer->measure(&bench_case, cond);
+        const auto result =
+            measurer->measure(&bench_case, cond, measurement_config);
         REQUIRE(result.case_info().group_name() == info.group_name());
         REQUIRE(result.case_info().case_name() == info.case_name());
         REQUIRE(result.cond().threads() == cond.threads());
@@ -91,5 +92,41 @@ TEST_CASE("stat_bench::measurer::MeanProcessingTimeMeasurer") {
             constexpr double tol = min_sample_duration_sec * 0.1;
             REQUIRE(result.durations().at(0).at(i).seconds() > tol);
         }
+    }
+
+    SECTION("measure processing time") {
+        stat_bench_test::bench_impl::MockBenchmarkCase bench_case;
+        const auto info = stat_bench::BenchmarkFullName(
+            BenchmarkGroupName("group"), BenchmarkCaseName("case"));
+        const auto cond = stat_bench::BenchmarkCondition(
+            1, stat_bench_test::param::create_ordinary_parameter_dict());
+        const auto measurement_type = MeasurementType("Processing Time");
+        const auto measurement_config = MeasurementConfig()
+                                            .type(measurement_type.str().str())
+                                            .iterations(1);
+
+        // NOLINTNEXTLINE
+        ALLOW_CALL(bench_case, info()).RETURN(info);
+        REQUIRE_CALL(bench_case, execute())
+            .TIMES(AT_LEAST(1))
+            // NOLINTNEXTLINE
+            .SIDE_EFFECT(stat_bench::current_invocation_context().measure(
+                [](std::size_t /*thread_index*/, std::size_t /*sample_index*/,
+                    std::size_t /*iteration_index*/) {
+                    // NOLINTNEXTLINE
+                    std::this_thread::sleep_for(std::chrono::milliseconds(1));
+                }));
+
+        const auto result =
+            measurer->measure(&bench_case, cond, measurement_config);
+        REQUIRE(result.case_info().group_name() == info.group_name());
+        REQUIRE(result.case_info().case_name() == info.case_name());
+        REQUIRE(result.cond().threads() == cond.threads());
+        REQUIRE(
+            result.measurement_type() == MeasurementType("Processing Time"));
+        REQUIRE(result.iterations() > 0);
+        REQUIRE(result.samples() == samples);
+        REQUIRE(result.durations().size() == 1);
+        REQUIRE(result.durations().at(0).size() == result.samples());
     }
 }

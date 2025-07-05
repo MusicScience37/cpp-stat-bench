@@ -54,18 +54,18 @@ public:
     //! \copydoc stat_bench::reporter::IReporter::experiment_finished
     void experiment_finished(const clock::SystemTimePoint& time_stamp) final;
 
-    //! \copydoc stat_bench::reporter::IReporter::measurer_starts
-    void measurer_starts(const measurer::MeasurementType& name) final;
-
-    //! \copydoc stat_bench::reporter::IReporter::measurer_finished
-    void measurer_finished(const measurer::MeasurementType& name) final;
-
     //! \copydoc stat_bench::reporter::IReporter::group_starts
     void group_starts(const BenchmarkGroupName& name,
         const bench_impl::BenchmarkGroupConfig& config) final;
 
     //! \copydoc stat_bench::reporter::IReporter::group_finished
     void group_finished(const BenchmarkGroupName& name) final;
+
+    //! \copydoc stat_bench::reporter::IReporter::measurement_type_starts
+    void measurement_type_starts(const measurer::MeasurementType& type) final;
+
+    //! \copydoc stat_bench::reporter::IReporter::measurement_type_finished
+    void measurement_type_finished(const measurer::MeasurementType& type) final;
 
     //! \copydoc stat_bench::reporter::IReporter::case_starts
     void case_starts(const BenchmarkFullName& case_info) final;
