@@ -9,13 +9,13 @@ packages = [{ include = "scripts" }]
 [tool.poetry.dependencies]
 python = ">=3.12,<3.14"
 # Some tools require setuptools.
-setuptools = "^80.0.1"
+setuptools = "^80.9.0"
 
 [tool.poetry.group.test.dependencies]
-pytest = "^8.3.5"
+pytest = "^8.4.1"
 pytest-approvaltests = "^0.2.4"
 fastjsonschema = "^2.21.1"
-msgpack = "^1.1.0"
+msgpack = "^1.1.1"
 
 [tool.poetry.group.doc.dependencies]
 sphinx = "^8.2.3"
@@ -28,17 +28,17 @@ sphinx-togglebutton = "^0.3.2"
 [tool.poetry.group.dev.dependencies]
 black = "^25.1.0"
 cmakelang = "^0.6.13"
-doc8 = "^1.1.2"
+doc8 = "^2.0.0"
 pre-commit = "^4.2.0"
 sphinx-autobuild = "^2024.10.3"
 clang-tidy-checker = "^0.6.0"
 lcov-cobertura = "^2.1.1"
 jsonschema2md = "^1.5.2"
-click = "^8.1.8"
+click = "^8.2.1"
 isort = "^6.0.1"
-pylint = "^3.3.6"
-flake8 = "^7.2.0"
-mypy = "^1.15.0"
+pylint = "^3.3.7"
+flake8 = "^7.3.0"
+mypy = "^1.16.1"
 
 [build-system]
 requires = ["poetry-core"]
