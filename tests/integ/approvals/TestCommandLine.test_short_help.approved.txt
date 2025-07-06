@@ -18,10 +18,10 @@ OPTIONS, ARGUMENTS:
                           Minimum number of iterations for warming up.
   --min_warming_up_duration_sec <num>
                           Minimum duration for warming up. [sec]
-  --include <pattern>     Specify glob patterns of benchmark names to include.When omitted, this option won't filter any benchmarks.
-  --exclude <pattern>     Specify glob patterns of benchmark names to exclude.When omitted, this option won't filter any benchmarks.
-  --include_regex <regex> Specify regular expressions of benchmark names to include.When omitted, this option won't filter any benchmarks.
-  --exclude_regex <regex> Specify regular expressions of benchmark names to exclude.When omitted, this option won't filter any benchmarks.
+  --include <pattern>     Specify glob patterns of benchmark names to include. When omitted, this option won't filter any benchmarks.
+  --exclude <pattern>     Specify glob patterns of benchmark names to exclude. When omitted, this option won't filter any benchmarks.
+  --include_regex <regex> Specify regular expressions of benchmark names to include. When omitted, this option won't filter any benchmarks.
+  --exclude_regex <regex> Specify regular expressions of benchmark names to exclude. When omitted, this option won't filter any benchmarks.
 
 
 stderr:

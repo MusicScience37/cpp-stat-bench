@@ -86,25 +86,25 @@ CommandLineParser::CommandLineParser() {
     cli_.add_argument(lyra::opt(config_.include_glob, "pattern")
             .name("--include")
             .cardinality(0, 0)
-            .help("Specify glob patterns of benchmark names to include."
+            .help("Specify glob patterns of benchmark names to include. "
                   "When omitted, this option won't filter any benchmarks."));
 
     cli_.add_argument(lyra::opt(config_.exclude_glob, "pattern")
             .name("--exclude")
             .cardinality(0, 0)
-            .help("Specify glob patterns of benchmark names to exclude."
+            .help("Specify glob patterns of benchmark names to exclude. "
                   "When omitted, this option won't filter any benchmarks."));
 
     cli_.add_argument(lyra::opt(config_.include_regex, "regex")
             .name("--include_regex")
             .cardinality(0, 0)
-            .help("Specify regular expressions of benchmark names to include."
+            .help("Specify regular expressions of benchmark names to include. "
                   "When omitted, this option won't filter any benchmarks."));
 
     cli_.add_argument(lyra::opt(config_.exclude_regex, "regex")
             .name("--exclude_regex")
             .cardinality(0, 0)
-            .help("Specify regular expressions of benchmark names to exclude."
+            .help("Specify regular expressions of benchmark names to exclude. "
                   "When omitted, this option won't filter any benchmarks."));
 }
 
