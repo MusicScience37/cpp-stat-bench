@@ -28,7 +28,7 @@
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/custom_output_name.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/stat/calc_stat.h"
 #include "stat_bench/stat/custom_stat_output.h"
 #include "stat_bench/stat/statistics.h"
@@ -46,7 +46,7 @@ public:
      *
      * \param[in] case_info Information of the case.
      * \param[in] cond Condition.
-     * \param[in] measurer_name Name of the measurer.
+     * \param[in] measurement_type Name of the measurer.
      * \param[in] iterations Number of iterations.
      * \param[in] samples Number of samples.
      * \param[in] durations Measured durations.
@@ -54,14 +54,15 @@ public:
      * \param[in] custom_outputs Custom outputs without statistics.
      */
     Measurement(BenchmarkFullName case_info, BenchmarkCondition cond,
-        MeasurerName measurer_name, std::size_t iterations, std::size_t samples,
+        MeasurementType measurement_type, std::size_t iterations,
+        std::size_t samples,
         std::vector<std::vector<clock::Duration>> durations,
         std::vector<std::shared_ptr<stat::CustomStatOutput>>
             custom_stat_outputs,
         std::vector<std::pair<CustomOutputName, double>> custom_outputs)
         : case_info_(std::move(case_info)),
           cond_(std::move(cond)),
-          measurer_name_(std::move(measurer_name)),
+          measurement_type_(std::move(measurement_type)),
           iterations_(iterations),
           samples_(samples),
           durations_(std::move(durations)),
@@ -98,8 +99,9 @@ public:
      *
      * \return Name of the measurer.
      */
-    [[nodiscard]] auto measurer_name() const noexcept -> const MeasurerName& {
-        return measurer_name_;
+    [[nodiscard]] auto measurement_type() const noexcept
+        -> const MeasurementType& {
+        return measurement_type_;
     }
 
     /*!
@@ -180,7 +182,7 @@ private:
     BenchmarkCondition cond_;
 
     //! Name of the measurer.
-    MeasurerName measurer_name_;
+    MeasurementType measurement_type_;
 
     //! Number of iterations.
     std::size_t iterations_;

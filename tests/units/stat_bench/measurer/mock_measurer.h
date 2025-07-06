@@ -24,7 +24,7 @@
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/measurer/i_measurer.h"
 #include "stat_bench/measurer/measurement.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 
 namespace stat_bench_test {
 namespace measurer {
@@ -32,8 +32,8 @@ namespace measurer {
 class MockMeasurer final : public stat_bench::measurer::IMeasurer {
 public:
     // NOLINTNEXTLINE
-    MAKE_CONST_MOCK0(
-        name, const stat_bench::measurer::MeasurerName&(), noexcept override);
+    MAKE_CONST_MOCK0(type, const stat_bench::measurer::MeasurementType&(),
+        noexcept override);
 
     // NOLINTNEXTLINE
     MAKE_CONST_MOCK2(measure,

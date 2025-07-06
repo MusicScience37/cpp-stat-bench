@@ -29,7 +29,7 @@
 #include "stat_bench/benchmark_case_name.h"
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/custom_output_name.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/stat_bench_exception.h"
 
@@ -66,7 +66,7 @@ TEST_CASE("create Utf8String") {
 }
 
 TEMPLATE_TEST_CASE("create UTF8 strings", "",
-    stat_bench::measurer::MeasurerName, stat_bench::param::ParameterName,
+    stat_bench::measurer::MeasurementType, stat_bench::param::ParameterName,
     stat_bench::BenchmarkCaseName, stat_bench::BenchmarkGroupName,
     stat_bench::CustomOutputName) {
     SECTION("create from a string") {
@@ -116,7 +116,7 @@ TEST_CASE("compare Utf8String for equality") {
 }
 
 TEMPLATE_TEST_CASE("compare UTF8 strings for equality", "",
-    stat_bench::measurer::MeasurerName, stat_bench::param::ParameterName,
+    stat_bench::measurer::MeasurementType, stat_bench::param::ParameterName,
     stat_bench::BenchmarkCaseName, stat_bench::BenchmarkGroupName,
     stat_bench::CustomOutputName) {
     SECTION("compare") {
@@ -205,7 +205,7 @@ TEST_CASE("format Utf8String") {
 }
 
 TEMPLATE_TEST_CASE("format UTF8 strings", "",
-    stat_bench::measurer::MeasurerName, stat_bench::param::ParameterName,
+    stat_bench::measurer::MeasurementType, stat_bench::param::ParameterName,
     stat_bench::BenchmarkCaseName, stat_bench::BenchmarkGroupName,
     stat_bench::CustomOutputName) {
     SECTION("via fmt library") {

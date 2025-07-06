@@ -22,7 +22,7 @@
 #include "stat_bench/bench_impl/i_benchmark_case.h"
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/measurer/measurement.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 
 namespace stat_bench {
 namespace measurer {
@@ -33,11 +33,12 @@ namespace measurer {
 class IMeasurer {
 public:
     /*!
-     * \brief Get the name of this measurer.
+     * \brief Get the measurement type of this measurer.
      *
      * \return Name.
      */
-    [[nodiscard]] virtual auto name() const noexcept -> const MeasurerName& = 0;
+    [[nodiscard]] virtual auto type() const noexcept
+        -> const MeasurementType& = 0;
 
     /*!
      * \brief Measure durations.

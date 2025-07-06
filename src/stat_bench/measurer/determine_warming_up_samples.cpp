@@ -25,11 +25,11 @@ namespace stat_bench {
 namespace measurer {
 
 auto determine_warming_up_samples(bench_impl::IBenchmarkCase* bench_case,
-    const BenchmarkCondition& cond, const MeasurerName& measurer_name,
+    const BenchmarkCondition& cond, const MeasurementType& measurement_type,
     std::size_t iterations, std::size_t min_iterations, double min_duration_sec)
     -> std::size_t {
-    std::size_t warming_up_iterations =
-        determine_iterations(bench_case, cond, measurer_name, min_duration_sec);
+    std::size_t warming_up_iterations = determine_iterations(
+        bench_case, cond, measurement_type, min_duration_sec);
     if (warming_up_iterations < min_iterations) {
         warming_up_iterations = min_iterations;
     }

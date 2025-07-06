@@ -61,7 +61,7 @@ MSGPACK_LIGHT_STRUCT_MAP(
 MSGPACK_LIGHT_STRUCT_MAP(
     stat_bench::reporter::data_file_spec::CustomOutputData, name, value);
 MSGPACK_LIGHT_STRUCT_MAP(stat_bench::reporter::data_file_spec::MeasurementData,
-    group_name, case_name, params, measurer_name, iterations, samples,
+    group_name, case_name, params, measurement_type, iterations, samples,
     durations, custom_stat_outputs, custom_outputs);
 MSGPACK_LIGHT_STRUCT_MAP(stat_bench::reporter::data_file_spec::RootData,
     started_at, finished_at, measurements);

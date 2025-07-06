@@ -26,7 +26,8 @@
 #include "stat_bench/bench_impl/benchmark_case_registry.h"
 #include "stat_bench/bench_impl/i_benchmark_case.h"
 #include "stat_bench/benchmark_condition.h"
-#include "stat_bench/measurer/i_measurer.h"
+#include "stat_bench/measurement_config.h"
+#include "stat_bench/measurer/measurer.h"
 #include "stat_bench/reporter/i_reporter.h"
 #include "stat_bench/runner/config.h"
 
@@ -54,7 +55,8 @@ public:
      * \param[in] registry Registry of benchmarks.
      */
     explicit Runner(bench_impl::BenchmarkCaseRegistry& registry =
-                        bench_impl::BenchmarkCaseRegistry::instance());
+                        bench_impl::BenchmarkCaseRegistry::instance())
+        : Runner(Config{}, registry) {}
 
     Runner(const Runner&) = delete;
     Runner(Runner&&) = delete;
@@ -65,15 +67,6 @@ public:
      * \brief Destructor.
      */
     ~Runner();
-
-    /*!
-     * \brief Add a measurer.
-     *
-     * \param[in] measurer Measurer.
-     */
-    void add(std::shared_ptr<measurer::IMeasurer> measurer) {
-        measurers_.push_back(std::move(measurer));
-    }
 
     /*!
      * \brief Add a reporter.
@@ -93,26 +86,26 @@ private:
     /*!
      * \brief Run a case.
      *
-     * \param[in] measurer Measurer.
      * \param[in] bench_case Case.
+     * \param[in] measurement_config Measurement configuration.
      */
-    void run_case(const std::shared_ptr<measurer::IMeasurer>& measurer,
-        const std::shared_ptr<bench_impl::IBenchmarkCase>& bench_case) const;
+    void run_case(const std::shared_ptr<bench_impl::IBenchmarkCase>& bench_case,
+        const MeasurementConfig& measurement_config) const;
 
     /*!
      * \brief Run a case.
      *
-     * \param[in] measurer Measurer.
      * \param[in] bench_case Case.
-     * \param[in] cond Condition.
+     * \param[in] condition Condition.
+     * \param[in] measurement_config Measurement configuration.
      */
     void run_case_with_condition(
-        const std::shared_ptr<measurer::IMeasurer>& measurer,
         const std::shared_ptr<bench_impl::IBenchmarkCase>& bench_case,
-        const BenchmarkCondition& cond) const;
+        const BenchmarkCondition& condition,
+        const MeasurementConfig& measurement_config) const;
 
-    //! Measurers.
-    std::vector<std::shared_ptr<measurer::IMeasurer>> measurers_{};
+    //! Measurer.
+    measurer::Measurer measurer_;
 
     //! Reporters.
     std::vector<std::shared_ptr<reporter::IReporter>> reporters_{};

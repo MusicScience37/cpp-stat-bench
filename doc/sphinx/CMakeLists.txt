@@ -21,6 +21,9 @@ configure_file(
 configure_file(
     ${STAT_BENCH_SOURCE_DIR}/schemas/data_file_schema_v3.json
     ${STAT_BENCH_HTML_ROOT}/schemas/data_file_schema_v3.json COPYONLY)
+configure_file(
+    ${STAT_BENCH_SOURCE_DIR}/schemas/data_file_schema_v4.json
+    ${STAT_BENCH_HTML_ROOT}/schemas/data_file_schema_v4.json COPYONLY)
 
 add_custom_target(
     stat_bench_doc_sphinx_html ALL

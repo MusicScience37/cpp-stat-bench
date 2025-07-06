@@ -27,7 +27,7 @@
 
 #include "common_labels.h"
 #include "create_data_table.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/util/utf8_string.h"
 
 namespace stat_bench {
@@ -37,14 +37,14 @@ auto CdfLinePlot::name_for_file() const -> const util::Utf8String& {
     return name_for_file_;
 }
 
-void CdfLinePlot::write(const measurer::MeasurerName& measurer_name,
+void CdfLinePlot::write(const measurer::MeasurementType& measurement_type,
     const BenchmarkGroupName& group_name,
     const std::vector<measurer::Measurement>& measurements,
     const std::string& file_path) {
     (void)group_name;
 
     const auto title = util::Utf8String(fmt::format(
-        "Cumulative Distribution Function of {}", measurer_name.str()));
+        "Cumulative Distribution Function of {}", measurement_type.str()));
 
     const auto data_table = create_data_table_for_cdf_plot(measurements);
     auto figure = plotly_plotter::figure_builders::line(data_table)

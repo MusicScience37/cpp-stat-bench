@@ -23,8 +23,9 @@
 #include <string>
 #include <vector>
 
+#include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/measurer/measurement.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/plots/i_plot.h"
 #include "stat_bench/reporter/i_reporter.h"
 #include "stat_bench/util/utf8_string.h"
@@ -50,18 +51,18 @@ public:
     //! \copydoc stat_bench::reporter::IReporter::experiment_finished
     void experiment_finished(const clock::SystemTimePoint& time_stamp) override;
 
-    //! \copydoc stat_bench::reporter::IReporter::measurer_starts
-    void measurer_starts(const measurer::MeasurerName& name) override;
-
-    //! \copydoc stat_bench::reporter::IReporter::measurer_finished
-    void measurer_finished(const measurer::MeasurerName& name) override;
-
     //! \copydoc stat_bench::reporter::IReporter::group_starts
     void group_starts(const BenchmarkGroupName& name,
         const bench_impl::BenchmarkGroupConfig& config) override;
 
     //! \copydoc stat_bench::reporter::IReporter::group_finished
     void group_finished(const BenchmarkGroupName& name) override;
+
+    //! \copydoc stat_bench::reporter::IReporter::measurement_type_starts
+    void measurement_type_starts(const measurer::MeasurementType& type) final;
+
+    //! \copydoc stat_bench::reporter::IReporter::measurement_type_finished
+    void measurement_type_finished(const measurer::MeasurementType& type) final;
 
     //! \copydoc stat_bench::reporter::IReporter::case_starts
     void case_starts(const BenchmarkFullName& case_info) override;
@@ -82,11 +83,14 @@ private:
     //! File prefix.
     std::string prefix_;
 
-    //! Measurer name.
-    measurer::MeasurerName measurer_name_;
+    //! Group name.
+    BenchmarkGroupName group_name_;
 
-    //! Measurer name for file paths.
-    util::Utf8String measurer_name_for_file_paths_;
+    //! Measurement type.
+    measurer::MeasurementType measurement_type_;
+
+    //! Measurement type.for file paths.
+    util::Utf8String measurement_type_for_file_paths_;
 
     //! Measurements.
     std::vector<measurer::Measurement> measurements_{};

@@ -53,11 +53,11 @@ auto TimeToOutputByParameterLinePlot::name_for_file() const
 }
 
 void TimeToOutputByParameterLinePlot::write(
-    const measurer::MeasurerName& measurer_name,
+    const measurer::MeasurementType& measurement_type,
     const BenchmarkGroupName& group_name,
     const std::vector<measurer::Measurement>& measurements,
     const std::string& file_path) {
-    (void)measurer_name;
+    (void)measurement_type;
     (void)group_name;
 
     const auto& title = custom_output_name_.str();

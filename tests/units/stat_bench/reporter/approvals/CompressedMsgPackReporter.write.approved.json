@@ -24,7 +24,7 @@
       },
       "group_name": "Group1",
       "iterations": 1000,
-      "measurer_name": "Measurement1",
+      "measurement_type": "Measurement1",
       "params": {
         "param": "value",
         "threads": "1"
@@ -55,7 +55,7 @@
       },
       "group_name": "Group1",
       "iterations": 1000,
-      "measurer_name": "Measurement1",
+      "measurement_type": "Measurement1",
       "params": {
         "param": "value",
         "threads": "1"

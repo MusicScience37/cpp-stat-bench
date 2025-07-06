@@ -23,7 +23,11 @@
 #include <utility>
 #include <vector>
 
+#include "stat_bench/measurement_config.h"
+#include "stat_bench/measurer/generate_default_measurement_configs.h"
+#include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/plots/i_plot.h"
+#include "stat_bench/util/ordered_map.h"
 
 namespace stat_bench {
 namespace bench_impl {
@@ -48,6 +52,18 @@ public:
     }
 
     /*!
+     * \brief Add a measurement configuration to the group.
+     *
+     * \param[in] config Measurement configuration.
+     */
+    void add_measurement_config(const MeasurementConfig& config);
+
+    /*!
+     * \brief Clear all measurement configurations in the group.
+     */
+    void clear_measurement_configs() noexcept { measurement_configs_.clear(); }
+
+    /*!
      * \brief Get the plots in the group.
      *
      * \return Plots.
@@ -57,9 +73,23 @@ public:
         return plots_;
     }
 
+    /*!
+     * \brief Get the measurement configurations in the group.
+     *
+     * \return Measurement configurations.
+     */
+    [[nodiscard]] auto measurement_configs() const noexcept -> const
+        util::OrderedMap<measurer::MeasurementType, MeasurementConfig>& {
+        return measurement_configs_;
+    }
+
 private:
     //! Plots only in the group.
     std::vector<std::shared_ptr<plots::IPlot>> plots_;
+
+    //! Configurations of measurements in the group.
+    util::OrderedMap<measurer::MeasurementType, MeasurementConfig>
+        measurement_configs_{measurer::generate_default_measurement_configs()};
 };
 
 }  // namespace bench_impl

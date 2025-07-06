@@ -27,7 +27,7 @@
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/system_time_point.h"
 #include "stat_bench/measurer/measurement.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 
 namespace stat_bench {
 namespace reporter {
@@ -54,20 +54,6 @@ public:
         const clock::SystemTimePoint& time_stamp) = 0;
 
     /*!
-     * \brief Start benchmarks using a measurer.
-     *
-     * \param[in] name Measurer name.
-     */
-    virtual void measurer_starts(const measurer::MeasurerName& name) = 0;
-
-    /*!
-     * \brief Finished benchmarks using a measurer.
-     *
-     * \param[in] name Measurer name.
-     */
-    virtual void measurer_finished(const measurer::MeasurerName& name) = 0;
-
-    /*!
      * \brief Start a group of benchmarks.
      *
      * \param[in] name Group name.
@@ -82,6 +68,22 @@ public:
      * \param[in] name Group name.
      */
     virtual void group_finished(const BenchmarkGroupName& name) = 0;
+
+    /*!
+     * \brief Start a measurement with a type.
+     *
+     * \param[in] type Measurement type.
+     */
+    virtual void measurement_type_starts(
+        const measurer::MeasurementType& type) = 0;
+
+    /*!
+     * \brief Finished a measurement with a type.
+     *
+     * \param[in] type Measurement type.
+     */
+    virtual void measurement_type_finished(
+        const measurer::MeasurementType& type) = 0;
 
     /*!
      * \brief Start a case of a benchmark.

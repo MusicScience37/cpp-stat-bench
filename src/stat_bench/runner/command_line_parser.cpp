@@ -59,18 +59,11 @@ CommandLineParser::CommandLineParser() {
             .optional()
             .help("Generate compressed MsgPack data file of results."));
 
-    cli_.add_argument(lyra::opt(config_.processing_time_samples, "num")
+    cli_.add_argument(lyra::opt(config_.samples, "num")
             .name("--samples")
             .optional()
             .choices([](std::size_t val) { return val > 0; })
             .help("Number of samples for measurements of processing time."));
-
-    cli_.add_argument(lyra::opt(config_.mean_processing_time_samples, "num")
-            .name("--mean_samples")
-            .optional()
-            .choices([](std::size_t val) { return val > 0; })
-            .help(
-                "Number of samples for measurements of mean processing time."));
 
     cli_.add_argument(lyra::opt(config_.min_sample_duration_sec, "num")
             .name("--min_sample_duration")

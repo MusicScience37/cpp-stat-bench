@@ -146,5 +146,25 @@ auto BenchmarkGroupRegister::add_time_to_output_by_parameter_line_plot(
     }
 }
 
+auto BenchmarkGroupRegister::add_measurement_config(
+    const MeasurementConfig& config) noexcept -> BenchmarkGroupRegister& {
+    try {
+        group_->config().add_measurement_config(config);
+        return *this;
+    } catch (const std::exception& e) {
+        std::cerr << "Failed to append a measurement configuration to a "
+                     "benchmark group: "
+                  << e.what() << std::endl;  // NOLINT(performance-avoid-endl)
+        std::exit(1);                        // NOLINT(concurrency-mt-unsafe)
+    }
+}
+
+auto BenchmarkGroupRegister::clear_measurement_configs() noexcept
+    -> BenchmarkGroupRegister& {
+    // This won't throw an exception.
+    group_->config().clear_measurement_configs();
+    return *this;
+}
+
 }  // namespace bench_impl
 }  // namespace stat_bench

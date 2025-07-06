@@ -28,7 +28,7 @@ Reporter
     :members: get, format_to, as_string_dict
 
 .. doxygenclass:: stat_bench::measurer::Measurement
-    :members: case_info, cond, measurer_name, iterations, samples, durations, durations_stat, custom_stat_outputs, custom_stat, custom_outputs
+    :members: case_info, cond, measurement_type, iterations, samples, durations, durations_stat, custom_stat_outputs, custom_stat, custom_outputs
 
 .. doxygenclass:: stat_bench::stat::Statistics
     :members: unsorted_samples, sorted_samples, mean, max, min, variance, standard_deviation

@@ -78,19 +78,6 @@ void ConsoleReporter::experiment_finished(
     (void)std::fflush(file_);
 }
 
-void ConsoleReporter::measurer_starts(const measurer::MeasurerName& name) {
-    print_line(file_, '=');
-    fmt::print(file_, FMT_STRING("{}\n"), name);
-    print_line(file_, '=');
-    fmt::print(file_, "\n");
-    (void)std::fflush(file_);
-}
-
-void ConsoleReporter::measurer_finished(const measurer::MeasurerName& name) {
-    // no operation
-    (void)name;
-}
-
 namespace {
 
 auto format_duration(double val) -> std::string {
@@ -113,7 +100,20 @@ auto format_duration(double val) -> std::string {
 
 void ConsoleReporter::group_starts(const BenchmarkGroupName& name,
     const bench_impl::BenchmarkGroupConfig& /*config*/) {
-    fmt::print(file_, FMT_STRING(">> {}\n"), name);
+    print_line(file_, '=');
+    fmt::print(file_, FMT_STRING("{}\n"), name);
+    print_line(file_, '=');
+    fmt::print(file_, "\n");
+    (void)std::fflush(file_);
+}
+
+void ConsoleReporter::group_finished(const BenchmarkGroupName& /*name*/) {
+    // no operation
+}
+
+void ConsoleReporter::measurement_type_starts(
+    const measurer::MeasurementType& type) {
+    fmt::print(file_, FMT_STRING(">> {}\n"), type);
     fmt::print(file_, FMT_STRING(CONSOLE_TABLE_FORMAT "{}\n"), "", "", "",
         "Time [us]", "", "", "");
     fmt::print(file_, FMT_STRING(CONSOLE_TABLE_FORMAT "{}\n"), "", "Iterations",
@@ -122,7 +122,8 @@ void ConsoleReporter::group_starts(const BenchmarkGroupName& name,
     (void)std::fflush(file_);
 }
 
-void ConsoleReporter::group_finished(const BenchmarkGroupName& /*name*/) {
+void ConsoleReporter::measurement_type_finished(
+    const measurer::MeasurementType& /*type*/) {
     fmt::print(file_, "\n");
     (void)std::fflush(file_);
 }

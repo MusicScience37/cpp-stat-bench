@@ -26,7 +26,7 @@
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/benchmark_group_name.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 
 namespace stat_bench {
 namespace reporter {
@@ -101,8 +101,9 @@ auto convert(const std::vector<std::pair<CustomOutputName, double>>& outputs)
 auto convert(const measurer::Measurement& measurement) -> MeasurementData {
     return MeasurementData{measurement.case_info().group_name().str(),
         measurement.case_info().case_name().str(),
-        convert(measurement.cond().params()), measurement.measurer_name().str(),
-        measurement.iterations(), measurement.samples(),
+        convert(measurement.cond().params()),
+        measurement.measurement_type().str(), measurement.iterations(),
+        measurement.samples(),
         convert(measurement.durations(), measurement.durations_stat()),
         convert(measurement.custom_stat_outputs(), measurement.custom_stat()),
         convert(measurement.custom_outputs())};

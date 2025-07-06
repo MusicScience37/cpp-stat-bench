@@ -1,0 +1,260 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "title": "Data files in cpp-stat-bench (version 4)",
+  "description": "JSON schema of data files written by cpp-stat-bench library  (version 4).",
+  "properties": {
+    "started_at": {
+      "title": "Start time",
+      "description": "Time when this benchmark execution started.",
+      "type": "string"
+    },
+    "finished_at": {
+      "title": "Finish time",
+      "description": "Time when this benchmark execution finished.",
+      "type": "string"
+    },
+    "measurements": {
+      "title": "Measurements",
+      "description": "List of information of measurements of time.",
+      "type": "array",
+      "items": {
+        "title": "Measurement",
+        "description": "Information of a measurement of time.",
+        "type": "object",
+        "properties": {
+          "group_name": {
+            "title": "Group name",
+            "description": "Name of the group in the benchmark.",
+            "type": "string"
+          },
+          "case_name": {
+            "title": "Case name",
+            "description": "Name of the case in the benchmark.",
+            "type": "string"
+          },
+          "params": {
+            "title": "Parameters",
+            "description": "Parameters of this measurement.",
+            "type": "object",
+            "patternProperties": {
+              "^.*$": {
+                "title": "Parameter",
+                "description": "Parameter of this measurement.",
+                "type": "string"
+              }
+            }
+          },
+          "measurement_type": {
+            "title": "Measurement type",
+            "description": "Name of the measurement type.",
+            "type": "string"
+          },
+          "iterations": {
+            "title": "Iterations",
+            "description": "Number of iterations in each iteration.",
+            "type": "integer"
+          },
+          "samples": {
+            "title": "Samples",
+            "description": "Number of samples.",
+            "type": "integer"
+          },
+          "custom_outputs": {
+            "title": "Custom outputs",
+            "description": "List of user-specified outputs.",
+            "type": "array",
+            "items": {
+              "title": "Custom output",
+              "description": "User-specified output.",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "title": "Name",
+                  "description": "Name of the custom output.",
+                  "type": "string"
+                },
+                "value": {
+                  "title": "Value",
+                  "description": "Value of the custom output.",
+                  "type": "number"
+                }
+              },
+              "required": ["name", "value"]
+            }
+          },
+          "custom_stat_outputs": {
+            "title": "Custom outputs with statistics",
+            "description": "List of user-specified outputs with statistics.",
+            "type": "array",
+            "items": {
+              "title": "Custom output with statistics",
+              "description": "User-specified output with statistics.",
+              "type": "object",
+              "properties": {
+                "name": {
+                  "title": "Name",
+                  "description": "Name of the custom output.",
+                  "type": "string"
+                },
+                "stat": {
+                  "title": "Statistics",
+                  "description": "Statistics of the custom output.",
+                  "type": "object",
+                  "properties": {
+                    "max": {
+                      "title": "Max",
+                      "description": "Maximum value of the custom output.",
+                      "type": "number"
+                    },
+                    "mean": {
+                      "title": "Mean",
+                      "description": "Mean value of the custom output.",
+                      "type": "number"
+                    },
+                    "min": {
+                      "title": "Min",
+                      "description": "Minimum value of the custom output.",
+                      "type": "number"
+                    },
+                    "median": {
+                      "title": "Median",
+                      "description": "Median of the custom output.",
+                      "type": "number"
+                    },
+                    "standard_deviation": {
+                      "title": "Standard deviation",
+                      "description": "Standard deviation of values of the custom output.",
+                      "type": "number"
+                    },
+                    "variance": {
+                      "title": "Variance",
+                      "description": "Variance of values of the custom output.",
+                      "type": "number"
+                    },
+                    "standard_error": {
+                      "title": "Standard error",
+                      "description": "Standard error of values of the custom output.",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "max",
+                    "mean",
+                    "min",
+                    "median",
+                    "standard_deviation",
+                    "variance",
+                    "standard_error"
+                  ]
+                },
+                "values": {
+                  "title": "Values",
+                  "description": "Values of the custom output.",
+                  "type": "array",
+                  "items": {
+                    "title": "Values",
+                    "description": "Values of the custom output.",
+                    "type": "array",
+                    "items": {
+                      "title": "Value",
+                      "description": "Value of the custom output.",
+                      "type": "number"
+                    }
+                  }
+                }
+              },
+              "required": ["name", "stat", "values"]
+            }
+          },
+          "durations": {
+            "title": "Durations",
+            "description": "Measured durations.",
+            "type": "object",
+            "properties": {
+              "stat": {
+                "title": "Statistics",
+                "description": "Statistics of the measured durations.",
+                "type": "object",
+                "properties": {
+                  "max": {
+                    "title": "Max",
+                    "description": "Maximum duration.",
+                    "type": "number"
+                  },
+                  "mean": {
+                    "title": "Mean",
+                    "description": "Mean duration.",
+                    "type": "number"
+                  },
+                  "min": {
+                    "title": "Min",
+                    "description": "Minimum duration.",
+                    "type": "number"
+                  },
+                  "median": {
+                    "title": "Median",
+                    "description": "Median of the custom output.",
+                    "type": "number"
+                  },
+                  "standard_deviation": {
+                    "title": "Standard deviation",
+                    "description": "Standard deviation of the durations.",
+                    "type": "number"
+                  },
+                  "variance": {
+                    "title": "Variance",
+                    "description": "Variance of the durations.",
+                    "type": "number"
+                  },
+                  "standard_error": {
+                    "title": "Standard error",
+                    "description": "Standard error of values of the custom output.",
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "max",
+                  "mean",
+                  "min",
+                  "median",
+                  "standard_deviation",
+                  "variance",
+                  "standard_error"
+                ]
+              },
+              "values": {
+                "title": "Values",
+                "description": "Values of the measured durations.",
+                "type": "array",
+                "items": {
+                  "title": "Values",
+                  "description": "Values of the measured durations.",
+                  "type": "array",
+                  "items": {
+                    "title": "Value",
+                    "description": "Value of a measured duration.",
+                    "type": "number"
+                  }
+                }
+              }
+            },
+            "required": ["stat", "values"]
+          }
+        },
+        "required": [
+          "case_name",
+          "custom_outputs",
+          "custom_stat_outputs",
+          "durations",
+          "group_name",
+          "iterations",
+          "measurement_type",
+          "params",
+          "samples"
+        ]
+      }
+    }
+  },
+  "required": ["measurements", "started_at", "finished_at"]
+}

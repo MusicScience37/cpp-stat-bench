@@ -1,5 +1,5 @@
 /*
- * Copyright 2024 MusicScience37 (Kenta Kabashima)
+ * Copyright 2025 MusicScience37 (Kenta Kabashima)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,19 +15,24 @@
  */
 /*!
  * \file
- * \brief Implementation of MeasurerName class.
+ * \brief Definition of generate_default_measurement_configs function.
  */
-#include "stat_bench/measurer/measurer_name.h"
+#pragma once
+
+#include "stat_bench/measurement_config.h"
+#include "stat_bench/measurer/measurement_type.h"
+#include "stat_bench/util/ordered_map.h"
 
 namespace stat_bench {
 namespace measurer {
 
-MeasurerName::MeasurerName(util::Utf8String str) noexcept
-    : str_(std::move(str)) {}
-
-auto MeasurerName::str() const noexcept -> const util::Utf8String& {
-    return str_;
-}
+/*!
+ * \brief Generate default measurement configurations.
+ *
+ * \return Measurement configurations.
+ */
+auto generate_default_measurement_configs()
+    -> util::OrderedMap<MeasurementType, MeasurementConfig>;
 
 }  // namespace measurer
 }  // namespace stat_bench

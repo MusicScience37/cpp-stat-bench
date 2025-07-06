@@ -21,6 +21,7 @@
 
 #include "stat_bench/bench_impl/benchmark_group.h"
 #include "stat_bench/benchmark_group_name.h"
+#include "stat_bench/measurement_config.h"
 #include "stat_bench/plot_options.h"
 #include "stat_bench/util/string_view.h"
 
@@ -116,6 +117,22 @@ public:
         util::StringView parameter_name, util::StringView custom_output_name,
         PlotOptions options = PlotOptions()) noexcept
         -> BenchmarkGroupRegister&;
+
+    /*!
+     * \brief Add a measurement configuration to the group.
+     *
+     * \param[in] config Measurement configuration.
+     * \return Reference to this object.
+     */
+    auto add_measurement_config(const MeasurementConfig& config) noexcept
+        -> BenchmarkGroupRegister&;
+
+    /*!
+     * \brief Clear all measurement configurations.
+     *
+     * \return Reference to this object.
+     */
+    auto clear_measurement_configs() noexcept -> BenchmarkGroupRegister&;
 
 private:
     //! Group.

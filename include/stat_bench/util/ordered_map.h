@@ -159,6 +159,14 @@ public:
     }
 
     /*!
+     * \brief Erase all pairs in this mapping.
+     */
+    void clear() noexcept {
+        pairs_.clear();
+        key_to_index_.clear();
+    }
+
+    /*!
      * \brief Access a mapped value.
      *
      * \param[in] key Key.

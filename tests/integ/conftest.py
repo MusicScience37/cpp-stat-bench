@@ -91,3 +91,9 @@ def escaped_names(bin_dir: pathlib.Path) -> pathlib.Path:
 def subplots(bin_dir: pathlib.Path) -> pathlib.Path:
     """Get the path of executable stat_bench_test_integ_subplots."""
     return bin_dir / "stat_bench_test_integ_subplots"
+
+
+@pytest.fixture
+def custom_measurement(bin_dir: pathlib.Path) -> pathlib.Path:
+    """Get the path of executable stat_bench_test_integ_custom_measurement."""
+    return bin_dir / "stat_bench_test_integ_custom_measurement"

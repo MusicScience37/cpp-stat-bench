@@ -26,7 +26,7 @@
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/measurer/measurement.h"
-#include "stat_bench/measurer/measurer_name.h"
+#include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/plots/i_plot.h"
 
 namespace stat_bench_test {
@@ -36,21 +36,21 @@ inline void use_plot_for_test(
     using stat_bench::BenchmarkGroupName;
     using stat_bench::clock::Duration;
     using stat_bench::measurer::Measurement;
-    using stat_bench::measurer::MeasurerName;
+    using stat_bench::measurer::MeasurementType;
 
-    const auto measurer_name = std::string("Measurement1");
+    const auto measurement_type = std::string("Measurement1");
     const auto group_name = std::string("Group1");
     const auto measurements = std::vector<Measurement>{
-        create_test_measurement(group_name, "Case1", measurer_name,
+        create_test_measurement(group_name, "Case1", measurement_type,
             std::vector<std::vector<Duration>>{
                 std::vector<Duration>{Duration(1.0), Duration(2.0),
                     Duration(2.0), Duration(3.0), Duration(20.0)}}),
-        create_test_measurement(group_name, "Case2", measurer_name,
+        create_test_measurement(group_name, "Case2", measurement_type,
             std::vector<std::vector<Duration>>{std::vector<Duration>{
                 Duration(800.0), Duration(900.0), Duration(1000.0)}})};
 
-    plot->write(MeasurerName(measurer_name), BenchmarkGroupName(group_name),
-        measurements, file_path);
+    plot->write(MeasurementType(measurement_type),
+        BenchmarkGroupName(group_name), measurements, file_path);
 }
 
 }  // namespace stat_bench_test

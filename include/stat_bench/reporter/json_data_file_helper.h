@@ -114,8 +114,8 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(CustomStatOutputData, name, stat, values)
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(CustomOutputData, name, value)
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(MeasurementData, group_name, case_name,
-    params, measurer_name, iterations, samples, durations, custom_stat_outputs,
-    custom_outputs)
+    params, measurement_type, iterations, samples, durations,
+    custom_stat_outputs, custom_outputs)
 
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
     RootData, started_at, finished_at, measurements)

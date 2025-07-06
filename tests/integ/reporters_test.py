@@ -13,7 +13,7 @@ from .bench_executor import BenchExecutor
 
 THIS_DIR = pathlib.Path(__file__).absolute().parent
 SCHEMAS_DIR = THIS_DIR.parent.parent / "schemas"
-CURRENT_SCHEMA_FILE = SCHEMAS_DIR / "data_file_schema_v3.json"
+CURRENT_SCHEMA_FILE = SCHEMAS_DIR / "data_file_schema_v4.json"
 
 
 @pytest.fixture
@@ -198,6 +198,7 @@ class TestPlot:
             "--plot",
             bench_executor.test_name,
             samples=10000,
+            min_sample_duration=0.00001,
             verify=False,
         )
 
