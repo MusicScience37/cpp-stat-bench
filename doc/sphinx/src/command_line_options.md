@@ -11,20 +11,43 @@ Currently, the following command line options are available:
 
 ## Options for Plotting
 
-For the following options,
-see [Generate Basic Plots of Processing Time](howto/generate_basic_plots.md):
+`--plot` option enables generation of plots for benchmark results.
 
-- `--plot`
+```{seealso}
+See [Generate Basic Plots of Processing Time](howto/generate_basic_plots.md) for more details.
+```
 
 ## Options for Creating Data Files
 
-For the following options,
-see [Create Data Files of Benchmark Results](howto/create_data_files.md):
+Following options generates data files of benchmark results in some formats.
 
-- `--json`
-- `--msgpack`
-- `--compressed-msgpack`
+| Option                 | Output Format                     |
+| :--------------------- | :-------------------------------- |
+| `--json`               | JSON                              |
+| `--msgpack`            | MessagePack                       |
+| `--compressed-msgpack` | MessagePack with gzip compression |
 
-```{todo}
-Describe the remaining options.
+```{seealso}
+See [Create Data Files of Benchmark Results](howto/create_data_files.md) for more details.
 ```
+
+## Options for Configuration of Measurements
+
+Following options set parameters for measurements.
+
+| Option                          | Description                                                                                               |
+| :------------------------------ | :-------------------------------------------------------------------------------------------------------- |
+| `--samples`                     | Number of samples for measurements of processing time. Default is 30.                                     |
+| `--min_sample_duration`         | Minimum duration of a sample for measurement of mean processing time in seconds. Default is 0.03 seconds. |
+| `--min_warming_up_iterations`   | Minimum number of iterations for warming up. Default is 1.                                                |
+| `--min_warming_up_duration_sec` | Minimum duration for warming up in seconds. Default is 0.03 seconds.                                      |
+
+## Options to Select Benchmarks
+
+Options `--include` and `--exclude` specify benchmarks to include or exclude
+in execution using glob patterns.
+Current implementation allows use of `*` wildcard in the patterns.
+
+Options `--include_regex` and `--exclude_regex` specify benchmarks to include or exclude
+in execution using regular expressions.
+Current implementation uses C++'s [modified ECMAScript regular expression](https://en.cppreference.com/w/cpp/regex/ecmascript.html).
