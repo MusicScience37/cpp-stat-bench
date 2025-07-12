@@ -41,7 +41,7 @@ line count:
 pre-commit:
   stage: test
   needs: []
-  image: musicscience37/clang-ci:clang19
+  image: musicscience37/clang-ci:clang20
   variables:
     POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
   script:
@@ -88,7 +88,7 @@ spell check:
   needs: []
   parallel:
     matrix:
-      - COMPILER_TYPE: ["clang19"]
+      - COMPILER_TYPE: ["clang20"]
         IMAGE_PATH: "musicscience37/clang-ci"
         TEST_TYPE: "release"
   image: ${IMAGE_PATH}:${COMPILER_TYPE}
@@ -147,11 +147,11 @@ test linux:
         IMAGE_PATH: "musicscience37/gcc-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "release"
-      - COMPILER_TYPE: ["clang19"]
+      - COMPILER_TYPE: ["clang20"]
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "release"
-      - COMPILER_TYPE: ["clang19"]
+      - COMPILER_TYPE: ["clang20"]
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 20
         TEST_TYPE: "debug"
@@ -159,7 +159,7 @@ test linux:
         IMAGE_PATH: "musicscience37/gcc-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "debug"
-      - COMPILER_TYPE: ["clang19"]
+      - COMPILER_TYPE: ["clang20"]
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "debug"
@@ -174,7 +174,7 @@ clang coverage:
   extends: .test linux base
   parallel:
     matrix:
-      - COMPILER_TYPE: "clang19"
+      - COMPILER_TYPE: "clang20"
         IMAGE_PATH: "musicscience37/clang-ci"
         TEST_TYPE: "coverage"
   variables:
@@ -221,7 +221,7 @@ clang-asan-ubsan:
   extends: .test linux base
   parallel:
     matrix:
-      - COMPILER_TYPE: "clang19"
+      - COMPILER_TYPE: "clang20"
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "asan_ubsan"
@@ -236,7 +236,7 @@ clang-tsan:
   extends: clang-asan-ubsan
   parallel:
     matrix:
-      - COMPILER_TYPE: "clang19"
+      - COMPILER_TYPE: "clang20"
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "tsan"
@@ -312,7 +312,7 @@ static analysis:
   extends: .test linux base
   parallel:
     matrix:
-      - COMPILER_TYPE: "clang19"
+      - COMPILER_TYPE: "clang20"
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "static_analysis"
@@ -354,7 +354,7 @@ static analysis:
 python checks:
   stage: test
   needs: []
-  image: musicscience37/clang-ci:clang19
+  image: musicscience37/clang-ci:clang20
   variables:
     POETRY_CACHE_DIR: ${CI_PROJECT_DIR}/.poetry-cache
   script:
@@ -377,7 +377,7 @@ doc:
   extends: .test linux base
   parallel:
     matrix:
-      - COMPILER_TYPE: "clang19"
+      - COMPILER_TYPE: "clang20"
         IMAGE_PATH: "musicscience37/sphinx-doxygen"
         TEST_TYPE: "doc"
   variables:

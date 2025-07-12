@@ -100,7 +100,7 @@ you will require following dependencies:
 - C++ 17 Compiler
   - Following compilers are tested in CI:
     - GCC 13
-    - Clang 19
+    - Clang 20
     - MSVC 19
 
 Additionally, you will require following dependencies
