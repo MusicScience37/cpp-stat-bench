@@ -1,4 +1,8 @@
-call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Auxiliary\\Build\\vcvarsall.bat" x86_x64
+@REM Below is used in GitLab runner in gitlab.com
+@REM call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Auxiliary\\Build\\vcvarsall.bat" x86_x64
+
+@REM Below is used in my runner.
+call "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat" x86_x64
 
 cmake .. ^
     -G Ninja ^
@@ -7,6 +11,7 @@ cmake .. ^
     -DCMAKE_BUILD_TYPE=Release ^
     -DSTAT_BENCH_TESTING:BOOL=ON ^
     -DSTAT_BENCH_ENABLE_BENCH=ON ^
+    -DSTAT_BENCH_ENABLE_INTEG_TESTS=OFF ^
     -DSTAT_BENCH_TEST_BENCHMARKS=ON ^
     -DSTAT_BENCH_BUILD_EXAMPLES=ON ^
     -DSTAT_BENCH_TEST_EXAMPLES=ON ^
