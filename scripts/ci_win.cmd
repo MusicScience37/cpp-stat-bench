@@ -1,4 +1,8 @@
-call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Auxiliary\\Build\\vcvarsall.bat" x86_x64
+@REM Below is used in GitLab runner in gitlab.com
+@REM call "C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Auxiliary\\Build\\vcvarsall.bat" x86_x64
+
+@REM Below is used in my runner.
+call "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\Build\\vcvarsall.bat" x86_x64
 
 cmake .. ^
     -G Ninja ^
