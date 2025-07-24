@@ -19,6 +19,7 @@
  */
 #include "stat_bench/stat/custom_stat_output.h"
 
+#include <cmath>
 #include <string>
 
 #include <catch2/catch_test_macros.hpp>
@@ -114,5 +115,39 @@ TEST_CASE("stat_bench::stat::CustomStatOutput") {
         const auto stat = output.stat();
         REQUIRE_THAT(stat.sorted_samples(),
             Catch::Matchers::Approx(std::vector<double>{0.5, 2.0}));  // NOLINT
+    }
+
+    SECTION(
+        "calculate statistics using rate per seconds when some durations are "
+        "zero") {
+        const auto name = CustomOutputName("CustomStat");
+        constexpr std::size_t threads = 1;
+        constexpr std::size_t samples = 3;
+        constexpr std::size_t warming_up_samples = 1;
+        constexpr std::size_t iterations = 1;
+
+        stat_bench::stat::CustomStatOutput output{name, threads, samples,
+            warming_up_samples, iterations,
+            stat_bench::stat::CustomOutputAnalysisType::rate_per_sec};
+        output.add(0, 0, 1.0);  // NOLINT
+        output.add(0, 1, 1.0);  // NOLINT
+        output.add(0, 2, 2.0);  // NOLINT
+
+        std::vector<std::vector<stat_bench::clock::Duration>> durations{
+            {stat_bench::clock::Duration(0.0),
+                stat_bench::clock::Duration(1.0)}};
+        output.preprocess(durations);
+        const auto stat = output.stat();
+        CHECK(std::isfinite(stat.unsorted_samples().at(0)));
+        CHECK(std::isfinite(stat.unsorted_samples().at(1)));
+        CHECK(std::isfinite(stat.sorted_samples().at(0)));
+        CHECK(std::isfinite(stat.sorted_samples().at(1)));
+        CHECK(std::isfinite(stat.mean()));
+        CHECK(std::isfinite(stat.max()));
+        CHECK(std::isfinite(stat.min()));
+        CHECK(std::isfinite(stat.median()));
+        CHECK(std::isfinite(stat.variance()));
+        CHECK(std::isfinite(stat.standard_deviation()));
+        CHECK(std::isfinite(stat.standard_error()));
     }
 }
