@@ -19,12 +19,14 @@
  */
 #pragma once
 
+#include <algorithm>
 #include <cstddef>
 #include <cstdint>
 #include <utility>
 #include <vector>
 
 #include "stat_bench/clock/duration.h"
+#include "stat_bench/clock/monotone_time_point.h"
 #include "stat_bench/custom_output_name.h"
 #include "stat_bench/stat/calc_stat.h"
 #include "stat_bench/stat/statistics.h"
@@ -102,12 +104,15 @@ public:
             for (std::size_t j = 0; j < used_samples; ++j) {
                 double& val = data_.at(i).at(j);
 
+                static const double minimum_duration =
+                    clock::MonotoneTimePoint::resolution().seconds();
                 switch (analysis_type_) {
                 case CustomOutputAnalysisType::mean:
                     val /= static_cast<double>(iterations_);
                     break;
                 case CustomOutputAnalysisType::rate_per_sec:
-                    val /= durations.at(i).at(j).seconds();
+                    val /= std::max(
+                        durations.at(i).at(j).seconds(), minimum_duration);
                     break;
                 }
             }

@@ -36,12 +36,7 @@ macro(target_add_catch2 TARGET)
 endmacro()
 
 add_subdirectory(units)
-
-option(STAT_BENCH_ENABLE_INTEG_TESTS
-       "enable integration tests of ${FULL_PROJECT_NAME}" ON)
-if(STAT_BENCH_ENABLE_INTEG_TESTS)
-    add_subdirectory(integ)
-endif()
+add_subdirectory(integ)
 
 option(STAT_BENCH_ENABLE_BENCH "enable benchmarks of ${FULL_PROJECT_NAME}" OFF)
 if(STAT_BENCH_ENABLE_BENCH)
