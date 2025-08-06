@@ -21,27 +21,6 @@
 
 #include <fmt/chrono.h>
 #include <fmt/format.h>
-#include <time.h>  // NOLINT: Necessary for use of C functions.
-
-namespace stat_bench::clock {
-
-/*!
- * \brief Thread-safe, cross-platform localtime implementation.
- *
- * \param[in] time The time to convert.
- * \return The local time representation.
- */
-inline auto localtime_safe(std::time_t time) -> std::tm {
-    std::tm tm_result{};
-#if defined(_WIN32)
-    localtime_s(&tm_result, &time);
-#else
-    (void)localtime_r(&time, &tm_result);
-#endif
-    return tm_result;
-}
-
-}  // namespace stat_bench::clock
 
 namespace fmt {
 
