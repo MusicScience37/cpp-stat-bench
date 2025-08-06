@@ -147,11 +147,11 @@ test linux:
         IMAGE_PATH: "musicscience37/gcc-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "release"
-      - COMPILER_TYPE: ["clang19"]
+      - COMPILER_TYPE: ["clang19", "clang20"]
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "release"
-      - COMPILER_TYPE: ["clang19"]
+      - COMPILER_TYPE: ["clang19", "clang20"]
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 20
         TEST_TYPE: "debug"
@@ -159,7 +159,7 @@ test linux:
         IMAGE_PATH: "musicscience37/gcc-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "debug"
-      - COMPILER_TYPE: ["clang19"]
+      - COMPILER_TYPE: ["clang19", "clang20"]
         IMAGE_PATH: "musicscience37/clang-ci"
         CXX_STANDARD: 14
         TEST_TYPE: "debug"
