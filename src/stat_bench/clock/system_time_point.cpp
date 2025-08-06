@@ -21,7 +21,6 @@
 
 #include <fmt/chrono.h>
 #include <fmt/format.h>
-#include <time.h>
 
 namespace fmt {
 
@@ -31,15 +30,13 @@ auto formatter<stat_bench::clock::SystemTimePoint>::format(
     const auto time_point = val.time_point();
     const auto time_sec =
         std::chrono::time_point_cast<std::chrono::seconds>(time_point);
-    const auto time_tm =
-        fmt::localtime(std::chrono::system_clock::to_time_t(time_sec));
     const auto time_usec =
         std::chrono::duration_cast<std::chrono::microseconds>(
             time_point - time_sec)
             .count();
 
     return fmt::format_to(
-        context.out(), "{0:%FT%T}.{1:06d}{0:%z}", time_tm, time_usec);
+        context.out(), "{0:%FT%T}.{1:06d}{0:%z}", time_sec, time_usec);
 }
 
 }  // namespace fmt
