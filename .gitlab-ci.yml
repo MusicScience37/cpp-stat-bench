@@ -400,7 +400,7 @@ doc:
     when: always
     expire_in: "3 mos"
 
-pages:
+pages main:
   stage: deploy
   only:
     - main
@@ -410,6 +410,7 @@ pages:
   dependencies:
     - doc
     - clang coverage
+  image: alpine
   script:
     - rm -rf public
     - mv build_doc/doc/html public
@@ -417,6 +418,26 @@ pages:
   artifacts:
     paths:
       - public
+  pages: true
+
+pages release:
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_TAG =~ /^v/
+  needs:
+    - doc
+  dependencies:
+    - doc
+  image: alpine
+  script:
+    - rm -rf public
+    - mv build_doc/doc/html public
+  artifacts:
+    paths:
+      - public
+  pages:
+    path_prefix: $CI_COMMIT_TAG
+    expire_in: never
 
 release:
   image: registry.gitlab.com/gitlab-org/release-cli:latest
