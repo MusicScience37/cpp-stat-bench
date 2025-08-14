@@ -29,8 +29,7 @@
 #include "stat_bench/plots/i_plot.h"
 #include "stat_bench/util/ordered_map.h"
 
-namespace stat_bench {
-namespace bench_impl {
+namespace stat_bench::bench_impl {
 
 /*!
  * \brief Class of configuration of a group of cases in benchmarks.
@@ -92,5 +91,4 @@ private:
         measurement_configs_{measurer::generate_default_measurement_configs()};
 };
 
-}  // namespace bench_impl
-}  // namespace stat_bench
+}  // namespace stat_bench::bench_impl

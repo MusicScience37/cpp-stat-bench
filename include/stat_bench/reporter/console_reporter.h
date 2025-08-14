@@ -25,8 +25,7 @@
 
 #include "stat_bench/reporter/i_reporter.h"
 
-namespace stat_bench {
-namespace reporter {
+namespace stat_bench::reporter {
 
 /*!
  * \brief Class to report results to consoles.
@@ -79,5 +78,4 @@ private:
     std::FILE* file_;
 };
 
-}  // namespace reporter
-}  // namespace stat_bench
+}  // namespace stat_bench::reporter

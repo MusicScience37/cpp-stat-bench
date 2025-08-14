@@ -24,8 +24,7 @@
 #include "stat_bench/plots/i_plot.h"
 #include "stat_bench/util/utf8_string.h"
 
-namespace stat_bench {
-namespace plots {
+namespace stat_bench::plots {
 
 /*!
  * \brief Class of line plots of cumulative distribution functions.
@@ -62,5 +61,4 @@ private:
     util::Utf8String name_for_file_{"cdf"};
 };
 
-}  // namespace plots
-}  // namespace stat_bench
+}  // namespace stat_bench::plots

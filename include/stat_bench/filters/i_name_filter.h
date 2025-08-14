@@ -21,8 +21,7 @@
 
 #include "stat_bench/benchmark_full_name.h"
 
-namespace stat_bench {
-namespace filters {
+namespace stat_bench::filters {
 
 /*!
  * \brief Interface of filters of names of benchmarks.
@@ -56,5 +55,4 @@ protected:
     INameFilter() = default;
 };
 
-}  // namespace filters
-}  // namespace stat_bench
+}  // namespace stat_bench::filters

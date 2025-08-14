@@ -35,8 +35,7 @@
 #include "stat_bench/util/escape_for_file_name.h"
 #include "stat_bench/util/utf8_string.h"
 
-namespace stat_bench {
-namespace reporter {
+namespace stat_bench::reporter {
 
 PlotReporter::PlotReporter(std::string prefix)
     : prefix_(std::move(prefix)), group_name_(""), measurement_type_("") {
@@ -121,5 +120,4 @@ void PlotReporter::measurement_failed(const BenchmarkFullName& /*case_info*/,
     // no operation
 }
 
-}  // namespace reporter
-}  // namespace stat_bench
+}  // namespace stat_bench::reporter

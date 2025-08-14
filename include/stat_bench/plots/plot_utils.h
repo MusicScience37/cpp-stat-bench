@@ -23,8 +23,7 @@
 #include "stat_bench/param/parameter_dict.h"
 #include "stat_bench/util/utf8_string.h"
 
-namespace stat_bench {
-namespace plots {
+namespace stat_bench::plots {
 
 /*!
  * \brief Generate a name for a plot.
@@ -36,5 +35,4 @@ namespace plots {
 [[nodiscard]] auto generate_plot_name(const BenchmarkCaseName& case_name,
     const param::ParameterDict& params) -> util::Utf8String;
 
-}  // namespace plots
-}  // namespace stat_bench
+}  // namespace stat_bench::plots

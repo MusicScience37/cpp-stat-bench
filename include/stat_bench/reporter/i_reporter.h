@@ -29,8 +29,7 @@
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/measurer/measurement_type.h"
 
-namespace stat_bench {
-namespace reporter {
+namespace stat_bench::reporter {
 
 /*!
  * \brief Interface of reporters.
@@ -134,5 +133,4 @@ protected:
     IReporter() = default;
 };
 
-}  // namespace reporter
-}  // namespace stat_bench
+}  // namespace stat_bench::reporter

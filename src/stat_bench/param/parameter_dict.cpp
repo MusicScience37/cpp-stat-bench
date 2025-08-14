@@ -25,8 +25,7 @@
 
 #include "stat_bench/param/parameter_name.h"
 
-namespace stat_bench {
-namespace param {
+namespace stat_bench::param {
 
 ParameterDict::ParameterDict(
     util::OrderedMap<ParameterName, ParameterValue> data)
@@ -120,8 +119,7 @@ auto ParameterDict::operator!=(const ParameterDict& rhs) const -> bool {
     return !(*this == rhs);
 }
 
-}  // namespace param
-}  // namespace stat_bench
+}  // namespace stat_bench::param
 
 namespace fmt {
 

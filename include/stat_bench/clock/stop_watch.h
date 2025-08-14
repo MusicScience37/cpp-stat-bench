@@ -26,8 +26,7 @@
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/clock/monotone_time_point.h"
 
-namespace stat_bench {
-namespace clock {
+namespace stat_bench::clock {
 
 /*!
  * \brief Class of a stop watch.
@@ -89,5 +88,4 @@ private:
     std::vector<MonotoneTimePoint> time_points_{};
 };
 
-}  // namespace clock
-}  // namespace stat_bench
+}  // namespace stat_bench::clock

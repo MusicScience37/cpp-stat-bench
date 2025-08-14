@@ -25,8 +25,7 @@
 #include "stat_bench/invocation_context.h"
 #include "stat_bench/stat_bench_exception.h"
 
-namespace stat_bench {
-namespace bench_impl {
+namespace stat_bench::bench_impl {
 
 auto InvocationContextRegistry::instance() -> InvocationContextRegistry& {
     static InvocationContextRegistry registry;
@@ -52,5 +51,4 @@ auto InvocationContextRegistry::get() const -> InvocationContext& {
 
 InvocationContextRegistry::InvocationContextRegistry() : context_(nullptr) {}
 
-}  // namespace bench_impl
-}  // namespace stat_bench
+}  // namespace stat_bench::bench_impl

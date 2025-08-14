@@ -27,8 +27,7 @@
 #include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/util/utf8_string.h"
 
-namespace stat_bench {
-namespace plots {
+namespace stat_bench::plots {
 
 /*!
  * \brief Class of interface of plots.
@@ -72,5 +71,4 @@ public:
     virtual ~IPlot() = default;
 };
 
-}  // namespace plots
-}  // namespace stat_bench
+}  // namespace stat_bench::plots

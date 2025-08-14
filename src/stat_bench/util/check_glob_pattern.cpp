@@ -23,8 +23,7 @@
 
 #include "stat_bench/util/string_view.h"
 
-namespace stat_bench {
-namespace util {
+namespace stat_bench::util {
 
 namespace {
 
@@ -67,5 +66,4 @@ auto check_glob_pattern(StringView pattern, StringView str) -> bool {
     }
 }
 
-}  // namespace util
-}  // namespace stat_bench
+}  // namespace stat_bench::util

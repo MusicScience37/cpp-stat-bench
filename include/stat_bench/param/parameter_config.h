@@ -28,8 +28,7 @@
 #include "stat_bench/param/parameter_name.h"
 #include "stat_bench/param/parameter_value_vector.h"
 
-namespace stat_bench {
-namespace param {
+namespace stat_bench::param {
 
 /*!
  * \brief Class of configurations of parameters.
@@ -86,5 +85,4 @@ private:
         params_{};
 };
 
-}  // namespace param
-}  // namespace stat_bench
+}  // namespace stat_bench::param

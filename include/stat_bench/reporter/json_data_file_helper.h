@@ -98,9 +98,7 @@ struct adl_serializer<std::unordered_map<stat_bench::util::Utf8String,
 
 }  // namespace nlohmann
 
-namespace stat_bench {
-namespace reporter {
-namespace data_file_spec {
+namespace stat_bench::reporter::data_file_spec {
 
 #ifndef STAT_BENCH_DOCUMENTATION
 
@@ -122,6 +120,4 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE(
 
 #endif
 
-}  // namespace data_file_spec
-}  // namespace reporter
-}  // namespace stat_bench
+}  // namespace stat_bench::reporter::data_file_spec

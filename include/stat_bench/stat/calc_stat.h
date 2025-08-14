@@ -25,8 +25,7 @@
 #include "stat_bench/clock/duration.h"
 #include "stat_bench/stat/statistics.h"
 
-namespace stat_bench {
-namespace stat {
+namespace stat_bench::stat {
 
 /*!
  * \brief Calculate statistics.
@@ -48,5 +47,4 @@ namespace stat {
 [[nodiscard]] auto calc_stat(const std::vector<std::vector<double>>& values)
     -> stat::Statistics;
 
-}  // namespace stat
-}  // namespace stat_bench
+}  // namespace stat_bench::stat

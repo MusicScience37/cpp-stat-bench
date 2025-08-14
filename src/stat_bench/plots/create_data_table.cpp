@@ -95,8 +95,7 @@ struct formatter<stat_bench::param::ParameterValueVariant>
 
 }  // namespace fmt
 
-namespace stat_bench {
-namespace plots {
+namespace stat_bench::plots {
 
 auto create_data_table_with_mean_time(
     const std::vector<measurer::Measurement>& measurements,
@@ -376,5 +375,4 @@ auto create_data_table_for_cdf_plot(
     return table;
 }
 
-}  // namespace plots
-}  // namespace stat_bench
+}  // namespace stat_bench::plots

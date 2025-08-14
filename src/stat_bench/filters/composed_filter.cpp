@@ -25,8 +25,7 @@
 #include "stat_bench/filters/glob_filter.h"
 #include "stat_bench/filters/regex_filter.h"
 
-namespace stat_bench {
-namespace filters {
+namespace stat_bench::filters {
 
 void ComposedFilter::include_with_glob(const std::string& pattern) {
     included_filter_.push_back(std::make_shared<GlobFilter>(pattern));
@@ -56,5 +55,4 @@ auto ComposedFilter::check(const BenchmarkFullName& name) const -> bool {
             });
 }
 
-}  // namespace filters
-}  // namespace stat_bench
+}  // namespace stat_bench::filters

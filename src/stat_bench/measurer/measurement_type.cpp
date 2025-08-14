@@ -19,8 +19,7 @@
  */
 #include "stat_bench/measurer/measurement_type.h"
 
-namespace stat_bench {
-namespace measurer {
+namespace stat_bench::measurer {
 
 MeasurementType::MeasurementType(util::Utf8String str) noexcept
     : str_(std::move(str)) {}
@@ -29,5 +28,4 @@ auto MeasurementType::str() const noexcept -> const util::Utf8String& {
     return str_;
 }
 
-}  // namespace measurer
-}  // namespace stat_bench
+}  // namespace stat_bench::measurer

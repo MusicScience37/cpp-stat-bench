@@ -25,8 +25,7 @@
 #include "stat_bench/plot_options.h"
 #include "stat_bench/util/string_view.h"
 
-namespace stat_bench {
-namespace bench_impl {
+namespace stat_bench::bench_impl {
 
 /*!
  * \brief Class to register benchmark groups.
@@ -139,5 +138,4 @@ private:
     BenchmarkGroup* group_{nullptr};
 };
 
-}  // namespace bench_impl
-}  // namespace stat_bench
+}  // namespace stat_bench::bench_impl

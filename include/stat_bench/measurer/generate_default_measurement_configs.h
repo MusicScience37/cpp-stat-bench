@@ -23,8 +23,7 @@
 #include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/util/ordered_map.h"
 
-namespace stat_bench {
-namespace measurer {
+namespace stat_bench::measurer {
 
 /*!
  * \brief Generate default measurement configurations.
@@ -34,5 +33,4 @@ namespace measurer {
 auto generate_default_measurement_configs()
     -> util::OrderedMap<MeasurementType, MeasurementConfig>;
 
-}  // namespace measurer
-}  // namespace stat_bench
+}  // namespace stat_bench::measurer

@@ -21,12 +21,10 @@
 
 #include <string_view>
 
-namespace stat_bench {
-namespace reporter {
+namespace stat_bench::reporter {
 
 //! URL of the schema of data files.
 inline constexpr std::string_view data_file_schema_url =
     "https://cppstatbench.musicscience37.com/schemas/data_file_schema_v4.json";
 
-}  // namespace reporter
-}  // namespace stat_bench
+}  // namespace stat_bench::reporter

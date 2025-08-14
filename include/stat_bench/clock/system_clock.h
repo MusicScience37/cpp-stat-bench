@@ -23,8 +23,7 @@
 
 #include "stat_bench/clock/system_time_point.h"
 
-namespace stat_bench {
-namespace clock {
+namespace stat_bench::clock {
 
 /*!
  * \brief Class of a system clock.
@@ -41,5 +40,4 @@ public:
     }
 };
 
-}  // namespace clock
-}  // namespace stat_bench
+}  // namespace stat_bench::clock

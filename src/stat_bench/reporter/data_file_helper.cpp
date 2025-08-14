@@ -28,9 +28,7 @@
 #include "stat_bench/benchmark_group_name.h"
 #include "stat_bench/measurer/measurement_type.h"
 
-namespace stat_bench {
-namespace reporter {
-namespace data_file_spec {
+namespace stat_bench::reporter::data_file_spec {
 
 auto convert(const param::ParameterDict& params)
     -> std::unordered_map<util::Utf8String, util::Utf8String> {
@@ -109,6 +107,4 @@ auto convert(const measurer::Measurement& measurement) -> MeasurementData {
         convert(measurement.custom_outputs())};
 }
 
-}  // namespace data_file_spec
-}  // namespace reporter
-}  // namespace stat_bench
+}  // namespace stat_bench::reporter::data_file_spec

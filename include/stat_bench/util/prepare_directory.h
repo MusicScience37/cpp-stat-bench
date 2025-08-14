@@ -21,8 +21,7 @@
 
 #include <string>
 
-namespace stat_bench {
-namespace util {
+namespace stat_bench::util {
 
 /*!
  * \brief Prepare a directory.
@@ -38,5 +37,4 @@ void prepare_directory(const std::string& path);
  */
 void prepare_directory_for(const std::string& path);
 
-}  // namespace util
-}  // namespace stat_bench
+}  // namespace stat_bench::util

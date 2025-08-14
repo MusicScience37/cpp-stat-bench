@@ -27,8 +27,7 @@
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/stat_bench_exception.h"
 
-namespace stat_bench {
-namespace bench_impl {
+namespace stat_bench::bench_impl {
 
 BenchmarkGroup::BenchmarkGroup(BenchmarkGroupName name)
     : name_(std::move(name)) {}
@@ -76,5 +75,4 @@ auto BenchmarkGroup::config() const noexcept -> const BenchmarkGroupConfig& {
     return config_;
 }
 
-}  // namespace bench_impl
-}  // namespace stat_bench
+}  // namespace stat_bench::bench_impl

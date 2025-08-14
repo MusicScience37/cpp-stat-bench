@@ -26,8 +26,7 @@
 
 #include "stat_bench/bench_impl/benchmark_case_registry.h"
 
-namespace stat_bench {
-namespace bench_impl {
+namespace stat_bench::bench_impl {
 
 /*!
  * \brief Class to register benchmarks.
@@ -52,5 +51,4 @@ public:
     }
 };
 
-}  // namespace bench_impl
-}  // namespace stat_bench
+}  // namespace stat_bench::bench_impl

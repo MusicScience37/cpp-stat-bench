@@ -26,8 +26,7 @@
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/util/check_glob_pattern.h"
 
-namespace stat_bench {
-namespace filters {
+namespace stat_bench::filters {
 
 GlobFilter::GlobFilter(std::string pattern) : pattern_(std::move(pattern)) {}
 
@@ -35,5 +34,4 @@ auto GlobFilter::check(const BenchmarkFullName& name) const -> bool {
     return util::check_glob_pattern(pattern_, fmt::format("{}", name));
 }
 
-}  // namespace filters
-}  // namespace stat_bench
+}  // namespace stat_bench::filters

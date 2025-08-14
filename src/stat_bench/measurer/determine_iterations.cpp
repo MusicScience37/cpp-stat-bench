@@ -26,8 +26,7 @@
 #include "stat_bench/measurer/measure_once.h"
 #include "stat_bench/measurer/measurement.h"
 
-namespace stat_bench {
-namespace measurer {
+namespace stat_bench::measurer {
 
 auto determine_iterations(bench_impl::IBenchmarkCase* bench_case,
     const BenchmarkCondition& cond, const MeasurementType& measurement_type,
@@ -54,5 +53,4 @@ auto determine_iterations(bench_impl::IBenchmarkCase* bench_case,
     return iterations;
 }
 
-}  // namespace measurer
-}  // namespace stat_bench
+}  // namespace stat_bench::measurer

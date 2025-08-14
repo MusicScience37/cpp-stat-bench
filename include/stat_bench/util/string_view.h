@@ -25,8 +25,7 @@
 
 #include "stat_bench/stat_bench_exception.h"
 
-namespace stat_bench {
-namespace util {
+namespace stat_bench::util {
 
 /*!
  * \brief Class of view of strings.
@@ -128,5 +127,4 @@ private:
     std::size_t size_;
 };
 
-}  // namespace util
-}  // namespace stat_bench
+}  // namespace stat_bench::util

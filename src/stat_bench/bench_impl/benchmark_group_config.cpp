@@ -24,8 +24,8 @@
 #include "stat_bench/stat_bench_exception.h"
 #include "stat_bench/util/utf8_string.h"
 
-namespace stat_bench {
-namespace bench_impl {
+namespace stat_bench::bench_impl {
+
 void BenchmarkGroupConfig::add_measurement_config(
     const MeasurementConfig& config) {
     const auto [iterator, added] =
@@ -36,5 +36,4 @@ void BenchmarkGroupConfig::add_measurement_config(
     }
 }
 
-}  // namespace bench_impl
-}  // namespace stat_bench
+}  // namespace stat_bench::bench_impl

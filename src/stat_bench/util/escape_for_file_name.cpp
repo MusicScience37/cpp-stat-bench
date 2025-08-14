@@ -25,8 +25,7 @@
 #include <string>
 #include <string_view>
 
-namespace stat_bench {
-namespace util {
+namespace stat_bench::util {
 
 namespace {
 
@@ -96,5 +95,4 @@ auto escape_for_file_name(const Utf8String& input) -> Utf8String {
     return Utf8String(output);
 }
 
-}  // namespace util
-}  // namespace stat_bench
+}  // namespace stat_bench::util

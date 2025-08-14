@@ -25,8 +25,7 @@
 
 #include "stat_bench/runner/config.h"
 
-namespace stat_bench {
-namespace runner {
+namespace stat_bench::runner {
 
 /*!
  * \brief Class to parse command line arguments.
@@ -81,5 +80,4 @@ private:
     lyra::cli cli_{};
 };
 
-}  // namespace runner
-}  // namespace stat_bench
+}  // namespace stat_bench::runner

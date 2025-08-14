@@ -23,8 +23,7 @@
 
 #include "stat_bench/util/string_view.h"
 
-namespace stat_bench {
-namespace util {
+namespace stat_bench::util {
 
 /*!
  * \brief Escape a string for HTML.
@@ -34,5 +33,4 @@ namespace util {
  */
 [[nodiscard]] auto escape_for_html(const StringView& input) -> std::string;
 
-}  // namespace util
-}  // namespace stat_bench
+}  // namespace stat_bench::util

@@ -23,8 +23,7 @@
 
 #include "stat_bench/reporter/data_file_reporter_base.h"
 
-namespace stat_bench {
-namespace reporter {
+namespace stat_bench::reporter {
 
 /*!
  * \brief Class to write compressed MsgPack files.
@@ -43,5 +42,4 @@ public:
         const data_file_spec::RootData& data) override;
 };
 
-}  // namespace reporter
-}  // namespace stat_bench
+}  // namespace stat_bench::reporter

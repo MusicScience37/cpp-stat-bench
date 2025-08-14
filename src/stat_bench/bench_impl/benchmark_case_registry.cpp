@@ -25,8 +25,7 @@
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/benchmark_group_name.h"
 
-namespace stat_bench {
-namespace bench_impl {
+namespace stat_bench::bench_impl {
 
 void BenchmarkCaseRegistry::add(std::shared_ptr<IBenchmarkCase> bench_case) {
     const auto& group_name = bench_case->info().group_name();
@@ -62,5 +61,4 @@ auto BenchmarkCaseRegistry::instance() -> BenchmarkCaseRegistry& {
     return registry;
 }
 
-}  // namespace bench_impl
-}  // namespace stat_bench
+}  // namespace stat_bench::bench_impl

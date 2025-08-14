@@ -32,8 +32,7 @@
 #include <profileapi.h>
 // clang-format on
 
-namespace stat_bench {
-namespace clock {
+namespace stat_bench::clock {
 
 /*!
  * \brief Get the frequency of the monotone clock in Windows.
@@ -72,8 +71,7 @@ auto WinMonotoneTimePoint::resolution() noexcept -> Duration {
 WinMonotoneTimePoint::WinMonotoneTimePoint(DataType data) noexcept
     : data_(data) {}
 
-}  // namespace clock
-}  // namespace stat_bench
+}  // namespace stat_bench::clock
 
 #endif
 
@@ -86,8 +84,7 @@ WinMonotoneTimePoint::WinMonotoneTimePoint(DataType data) noexcept
 
 #define STAT_BENCH_CLOCK_ID CLOCK_MONOTONIC
 
-namespace stat_bench {
-namespace clock {
+namespace stat_bench::clock {
 
 auto UnixMonotoneTimePoint::operator-(
     const UnixMonotoneTimePoint& right) const noexcept -> Duration {
@@ -119,13 +116,11 @@ auto UnixMonotoneTimePoint::resolution() noexcept -> Duration {
 UnixMonotoneTimePoint::UnixMonotoneTimePoint(DataType data) noexcept
     : data_(data) {}
 
-}  // namespace clock
-}  // namespace stat_bench
+}  // namespace stat_bench::clock
 
 #endif
 
-namespace stat_bench {
-namespace clock {
+namespace stat_bench::clock {
 
 auto StdMonotoneTimePoint::operator-(
     const StdMonotoneTimePoint& right) const noexcept -> Duration {
@@ -148,5 +143,4 @@ auto StdMonotoneTimePoint::resolution() noexcept -> Duration {
 StdMonotoneTimePoint::StdMonotoneTimePoint(DataType data) noexcept
     : data_(data) {}
 
-}  // namespace clock
-}  // namespace stat_bench
+}  // namespace stat_bench::clock

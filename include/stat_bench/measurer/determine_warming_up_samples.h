@@ -25,8 +25,7 @@
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/measurer/measurement_type.h"
 
-namespace stat_bench {
-namespace measurer {
+namespace stat_bench::measurer {
 
 /*!
  * \brief Determine number of iterations.
@@ -44,5 +43,4 @@ namespace measurer {
     const MeasurementType& measurement_type, std::size_t iterations,
     std::size_t min_iterations, double min_duration_sec) -> std::size_t;
 
-}  // namespace measurer
-}  // namespace stat_bench
+}  // namespace stat_bench::measurer

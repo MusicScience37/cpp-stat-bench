@@ -23,8 +23,7 @@
 #include <string>
 #include <string_view>
 
-namespace stat_bench {
-namespace util {
+namespace stat_bench::util {
 
 auto escape_for_html(const StringView& input) -> std::string {
     const auto input_view = std::string_view(input.data(), input.size());
@@ -57,5 +56,4 @@ auto escape_for_html(const StringView& input) -> std::string {
     return output;
 }
 
-}  // namespace util
-}  // namespace stat_bench
+}  // namespace stat_bench::util

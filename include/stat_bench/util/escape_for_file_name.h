@@ -21,8 +21,7 @@
 
 #include "stat_bench/util/utf8_string.h"
 
-namespace stat_bench {
-namespace util {
+namespace stat_bench::util {
 
 /*!
  * \brief Escape a string for a file name.
@@ -32,5 +31,4 @@ namespace util {
  */
 [[nodiscard]] auto escape_for_file_name(const Utf8String& input) -> Utf8String;
 
-}  // namespace util
-}  // namespace stat_bench
+}  // namespace stat_bench::util

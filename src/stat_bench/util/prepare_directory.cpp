@@ -27,8 +27,7 @@
 #include <direct.h>   // _mkdir
 #include <fileapi.h>  // GetFileAttributesA
 
-namespace stat_bench {
-namespace util {
+namespace stat_bench::util {
 
 [[nodiscard]] static auto path_exists(const std::string& path) -> bool {
     return ::GetFileAttributesA(path.c_str()) != INVALID_FILE_ATTRIBUTES;
@@ -66,16 +65,14 @@ void prepare_directory_for(const std::string& path) {
     prepare_directory(path.substr(0, pos));
 }
 
-}  // namespace util
-}  // namespace stat_bench
+}  // namespace stat_bench::util
 
 #else
 
 #include <sys/stat.h>  // mkdir, stat
 #include <sys/types.h>
 
-namespace stat_bench {
-namespace util {
+namespace stat_bench::util {
 
 namespace {
 
@@ -120,7 +117,6 @@ void prepare_directory_for(const std::string& path) {
     prepare_directory(path.substr(0, pos));
 }
 
-}  // namespace util
-}  // namespace stat_bench
+}  // namespace stat_bench::util
 
 #endif

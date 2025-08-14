@@ -25,8 +25,7 @@
 #include "stat_bench/measurer/determine_warming_up_samples.h"
 #include "stat_bench/measurer/measure_once.h"
 
-namespace stat_bench {
-namespace measurer {
+namespace stat_bench::measurer {
 
 Measurer::Measurer(double min_sample_duration_sec,
     double min_warming_up_duration_sec, std::size_t samples,
@@ -62,5 +61,4 @@ auto Measurer::measure(bench_impl::IBenchmarkCase* bench_case,
         samples, warming_up_samples);
 }
 
-}  // namespace measurer
-}  // namespace stat_bench
+}  // namespace stat_bench::measurer

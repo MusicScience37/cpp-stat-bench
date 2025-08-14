@@ -23,8 +23,7 @@
 
 #include <fmt/base.h>
 
-namespace stat_bench {
-namespace clock {
+namespace stat_bench::clock {
 
 /*!
  * \brief Class of time points of system clocks.
@@ -55,8 +54,7 @@ private:
     std::chrono::system_clock::time_point time_point_;
 };
 
-}  // namespace clock
-}  // namespace stat_bench
+}  // namespace stat_bench::clock
 
 namespace fmt {
 

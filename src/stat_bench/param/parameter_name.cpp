@@ -19,8 +19,7 @@
  */
 #include "stat_bench/param/parameter_name.h"
 
-namespace stat_bench {
-namespace param {
+namespace stat_bench::param {
 
 ParameterName::ParameterName(util::Utf8String str) noexcept
     : str_(std::move(str)) {}
@@ -29,5 +28,4 @@ auto ParameterName::str() const noexcept -> const util::Utf8String& {
     return str_;
 }
 
-}  // namespace param
-}  // namespace stat_bench
+}  // namespace stat_bench::param

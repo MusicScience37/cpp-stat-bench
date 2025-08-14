@@ -24,8 +24,7 @@
 #include "stat_bench/reporter/data_file_spec.h"
 #include "stat_bench/reporter/i_reporter.h"
 
-namespace stat_bench {
-namespace reporter {
+namespace stat_bench::reporter {
 
 /*!
  * \brief Base class to write data files.
@@ -88,5 +87,4 @@ private:
     data_file_spec::RootData data_{};
 };
 
-}  // namespace reporter
-}  // namespace stat_bench
+}  // namespace stat_bench::reporter

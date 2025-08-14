@@ -31,8 +31,7 @@
 #include "stat_bench/reporter/i_reporter.h"
 #include "stat_bench/runner/config.h"
 
-namespace stat_bench {
-namespace runner {
+namespace stat_bench::runner {
 
 /*!
  * \brief Class of runners of benchmarks.
@@ -114,5 +113,4 @@ private:
     bench_impl::BenchmarkCaseRegistry& registry_;
 };
 
-}  // namespace runner
-}  // namespace stat_bench
+}  // namespace stat_bench::runner

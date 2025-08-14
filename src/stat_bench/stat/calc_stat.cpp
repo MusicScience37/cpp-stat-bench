@@ -25,8 +25,7 @@
 #include <stdexcept>
 #include <utility>
 
-namespace stat_bench {
-namespace stat {
+namespace stat_bench::stat {
 
 auto calc_stat(const std::vector<std::vector<clock::Duration>>& durations,
     std::size_t iterations) -> stat::Statistics {
@@ -119,5 +118,4 @@ auto calc_stat(const std::vector<std::vector<double>>& values)
         mean, max, min, median, variance, standard_variance, standard_error);
 }
 
-}  // namespace stat
-}  // namespace stat_bench
+}  // namespace stat_bench::stat

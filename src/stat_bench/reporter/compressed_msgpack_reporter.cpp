@@ -31,8 +31,7 @@
 #include "stat_bench/stat_bench_exception.h"
 #include "stat_bench/util/prepare_directory.h"
 
-namespace stat_bench {
-namespace reporter {
+namespace stat_bench::reporter {
 
 /*!
  * \brief Class of buffers to write compressed files in msgpack library.
@@ -94,5 +93,4 @@ void CompressedMsgPackReporter::write_data_file(
     msgpack_light::serialize_to(stream, data);
 }
 
-}  // namespace reporter
-}  // namespace stat_bench
+}  // namespace stat_bench::reporter

@@ -22,8 +22,7 @@
 #include <cstddef>
 #include <memory>
 
-namespace stat_bench {
-namespace util {
+namespace stat_bench::util {
 
 /*!
  * \brief Interface of barriers to synchronize threads.
@@ -68,5 +67,4 @@ protected:
 [[nodiscard]] auto create_sync_barrier(std::size_t num_waiting_threads)
     -> std::shared_ptr<ISyncBarrier>;
 
-}  // namespace util
-}  // namespace stat_bench
+}  // namespace stat_bench::util

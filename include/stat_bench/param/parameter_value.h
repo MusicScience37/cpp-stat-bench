@@ -35,8 +35,7 @@
 #include "stat_bench/stat_bench_exception.h"
 #include "stat_bench/util/utf8_string.h"
 
-namespace stat_bench {
-namespace param {
+namespace stat_bench::param {
 
 /*!
  * \brief Type of variant of parameter values.
@@ -334,8 +333,7 @@ private:
     EqualSignature* equal_{nullptr};
 };
 
-}  // namespace param
-}  // namespace stat_bench
+}  // namespace stat_bench::param
 
 namespace std {
 

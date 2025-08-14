@@ -27,8 +27,7 @@
 #include "stat_bench/stat_bench_exception.h"
 #include "stat_bench/util/sync_barrier.h"
 
-namespace stat_bench {
-namespace util {
+namespace stat_bench::util {
 
 /*!
  * \brief Class of barriers to synchronize threads using pthread library.
@@ -72,5 +71,4 @@ private:
     pthread_barrier_t barrier_{};
 };
 
-}  // namespace util
-}  // namespace stat_bench
+}  // namespace stat_bench::util

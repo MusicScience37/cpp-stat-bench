@@ -25,8 +25,7 @@
 
 #include "stat_bench/benchmark_full_name.h"
 
-namespace stat_bench {
-namespace filters {
+namespace stat_bench::filters {
 
 RegexFilter::RegexFilter(const std::string& regex)
     : regex_(regex,
@@ -36,5 +35,4 @@ auto RegexFilter::check(const BenchmarkFullName& name) const -> bool {
     return std::regex_match(fmt::format("{}", name), regex_);
 }
 
-}  // namespace filters
-}  // namespace stat_bench
+}  // namespace stat_bench::filters

@@ -32,8 +32,7 @@
 #include "stat_bench/stat/statistics.h"
 #include "stat_bench/stat_bench_exception.h"
 
-namespace stat_bench {
-namespace stat {
+namespace stat_bench::stat {
 
 /*!
  * \brief Enumeration of types of analysis applied to custom outputs.
@@ -168,5 +167,4 @@ private:
     CustomOutputAnalysisType analysis_type_;
 };
 
-}  // namespace stat
-}  // namespace stat_bench
+}  // namespace stat_bench::stat

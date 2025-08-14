@@ -22,8 +22,7 @@
 #include <utility>
 #include <vector>
 
-namespace stat_bench {
-namespace stat {
+namespace stat_bench::stat {
 
 /*!
  * \brief Class to calculate statistics.
@@ -158,5 +157,4 @@ private:
     double standard_error_;
 };
 
-}  // namespace stat
-}  // namespace stat_bench
+}  // namespace stat_bench::stat

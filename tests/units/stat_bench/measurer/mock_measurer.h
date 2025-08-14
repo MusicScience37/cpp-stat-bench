@@ -26,8 +26,7 @@
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/measurer/measurement_type.h"
 
-namespace stat_bench_test {
-namespace measurer {
+namespace stat_bench_test::measurer {
 
 class MockMeasurer final : public stat_bench::measurer::IMeasurer {
 public:
@@ -50,5 +49,4 @@ public:
     ~MockMeasurer() override = default;
 };
 
-}  // namespace measurer
-}  // namespace stat_bench_test
+}  // namespace stat_bench_test::measurer

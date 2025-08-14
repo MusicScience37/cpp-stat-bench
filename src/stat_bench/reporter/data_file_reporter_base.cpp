@@ -27,8 +27,7 @@
 #include "stat_bench/reporter/data_file_helper.h"
 #include "stat_bench/util/utf8_string.h"
 
-namespace stat_bench {
-namespace reporter {
+namespace stat_bench::reporter {
 
 DataFileReporterBase::DataFileReporterBase(std::string file_path)
     : file_path_(std::move(file_path)) {}
@@ -89,5 +88,4 @@ void DataFileReporterBase::measurement_failed(
     (void)error;
 }
 
-}  // namespace reporter
-}  // namespace stat_bench
+}  // namespace stat_bench::reporter
