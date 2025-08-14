@@ -26,8 +26,7 @@
 
 #include <fmt/base.h>
 
-namespace stat_bench {
-namespace util {
+namespace stat_bench::util {
 
 /*!
  * \brief Class of UTF-8 encoded string.
@@ -132,8 +131,7 @@ private:
 [[nodiscard]] auto operator>=(
     const Utf8String& lhs, const Utf8String& rhs) noexcept -> bool;
 
-}  // namespace util
-}  // namespace stat_bench
+}  // namespace stat_bench::util
 
 namespace fmt {
 
@@ -156,8 +154,7 @@ struct formatter<stat_bench::util::Utf8String> : public formatter<string_view> {
 
 }  // namespace fmt
 
-namespace stat_bench {
-namespace util {
+namespace stat_bench::util {
 
 /*!
  * \brief Format to a stream.
@@ -168,8 +165,7 @@ namespace util {
  */
 auto operator<<(std::ostream& stream, const Utf8String& val) -> std::ostream&;
 
-}  // namespace util
-}  // namespace stat_bench
+}  // namespace stat_bench::util
 
 namespace std {
 

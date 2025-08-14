@@ -26,9 +26,7 @@
 
 #include "stat_bench/util/utf8_string.h"
 
-namespace stat_bench {
-namespace reporter {
-namespace data_file_spec {
+namespace stat_bench::reporter::data_file_spec {
 
 /*!
  * \brief Struct of data of statistics.
@@ -138,6 +136,4 @@ struct RootData {
     std::vector<MeasurementData> measurements{};
 };
 
-}  // namespace data_file_spec
-}  // namespace reporter
-}  // namespace stat_bench
+}  // namespace stat_bench::reporter::data_file_spec

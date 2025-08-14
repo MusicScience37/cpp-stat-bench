@@ -35,8 +35,7 @@
 #include "pthread_sync_barrier.h"
 #endif
 
-namespace stat_bench {
-namespace util {
+namespace stat_bench::util {
 
 /*!
  * \brief Class of barriers to synchronize threads using mutexes.
@@ -117,5 +116,4 @@ auto create_sync_barrier(std::size_t num_waiting_threads)
     return std::make_shared<Barrier>(num_waiting_threads);
 }
 
-}  // namespace util
-}  // namespace stat_bench
+}  // namespace stat_bench::util

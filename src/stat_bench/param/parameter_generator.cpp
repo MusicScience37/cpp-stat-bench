@@ -23,8 +23,7 @@
 #include "stat_bench/param/parameter_value.h"
 #include "stat_bench/util/ordered_map.h"
 
-namespace stat_bench {
-namespace param {
+namespace stat_bench::param {
 
 ParameterGenerator::ParameterGenerator(const std::vector<
     std::pair<ParameterName, std::shared_ptr<IParameterValueVector>>>& params) {
@@ -58,5 +57,4 @@ auto ParameterGenerator::generate() const -> ParameterDict {
     return ParameterDict(data);
 }
 
-}  // namespace param
-}  // namespace stat_bench
+}  // namespace stat_bench::param

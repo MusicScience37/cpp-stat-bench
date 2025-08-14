@@ -33,8 +33,7 @@
 #include "stat_bench/invocation_context.h"
 #include "stat_bench/measurer/measurement.h"
 
-namespace stat_bench {
-namespace measurer {
+namespace stat_bench::measurer {
 
 auto measure_once(bench_impl::IBenchmarkCase* bench_case,
     const BenchmarkCondition& cond, const MeasurementType& measurement_type,
@@ -55,5 +54,4 @@ auto measure_once(bench_impl::IBenchmarkCase* bench_case,
     return measurement;
 }
 
-}  // namespace measurer
-}  // namespace stat_bench
+}  // namespace stat_bench::measurer

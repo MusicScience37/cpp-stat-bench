@@ -26,8 +26,7 @@
 #include "stat_bench/measurement_config.h"
 #include "stat_bench/measurer/measurement.h"
 
-namespace stat_bench {
-namespace measurer {
+namespace stat_bench::measurer {
 
 /*!
  * \brief Class to measure durations.
@@ -73,5 +72,4 @@ private:
     std::size_t min_warming_up_iterations_;
 };
 
-}  // namespace measurer
-}  // namespace stat_bench
+}  // namespace stat_bench::measurer

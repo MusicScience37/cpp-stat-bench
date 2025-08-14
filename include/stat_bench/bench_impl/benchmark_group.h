@@ -28,8 +28,7 @@
 #include "stat_bench/filters/composed_filter.h"
 #include "stat_bench/util/ordered_map.h"
 
-namespace stat_bench {
-namespace bench_impl {
+namespace stat_bench::bench_impl {
 
 /*!
  * \brief Class of groups of cases in benchmarks.
@@ -98,5 +97,4 @@ private:
     BenchmarkGroupConfig config_{};
 };
 
-}  // namespace bench_impl
-}  // namespace stat_bench
+}  // namespace stat_bench::bench_impl

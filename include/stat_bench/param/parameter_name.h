@@ -29,8 +29,7 @@
 
 #include "stat_bench/util/utf8_string.h"
 
-namespace stat_bench {
-namespace param {
+namespace stat_bench::param {
 
 /*!
  * \brief Class of names of parameters.
@@ -150,8 +149,7 @@ private:
     return !(lhs < rhs);
 }
 
-}  // namespace param
-}  // namespace stat_bench
+}  // namespace stat_bench::param
 
 namespace fmt {
 
@@ -177,8 +175,7 @@ struct formatter<stat_bench::param::ParameterName>
 
 }  // namespace fmt
 
-namespace stat_bench {
-namespace param {
+namespace stat_bench::param {
 
 /*!
  * \brief Format to a stream.
@@ -192,8 +189,7 @@ inline auto operator<<(std::ostream& stream, const ParameterName& val)
     return stream << val.str();
 }
 
-}  // namespace param
-}  // namespace stat_bench
+}  // namespace stat_bench::param
 
 namespace std {
 

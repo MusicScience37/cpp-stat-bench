@@ -26,8 +26,7 @@
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/measurer/measurement_type.h"
 
-namespace stat_bench {
-namespace measurer {
+namespace stat_bench::measurer {
 
 /*!
  * \brief Measure durations once.
@@ -45,5 +44,4 @@ namespace measurer {
     std::size_t iterations, std::size_t samples, std::size_t warming_up_samples)
     -> Measurement;
 
-}  // namespace measurer
-}  // namespace stat_bench
+}  // namespace stat_bench::measurer

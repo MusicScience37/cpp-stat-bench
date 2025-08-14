@@ -38,27 +38,8 @@
 #include "stat_bench/stat_bench_exception.h"
 #include "stat_bench/util/sync_barrier.h"
 
-namespace stat_bench {
-namespace bench_impl {
+namespace stat_bench::bench_impl {
 
-// Define invoke_result_t for C++14 and C++17
-#if defined(__cpp_lib_is_invocable) || defined(STAT_BENCH_DOCUMENTATION)
-// Since C++17
-/*!
- * \brief Get the result type of invoking a function with arguments.
- *
- * \tparam Func Type of the function.
- * \tparam Args Type of the arguments.
- */
-template <typename Func, typename... Args>
-using invoke_result_t = std::invoke_result_t<Func, Args...>;
-#else
-// C++14
-template <typename Func, typename... Args>
-using invoke_result_t = std::result_of_t<Func(Args...)>;  // NOLINT
-#endif
-
-// Define invoke_result_t for C++14 and C++17
 #ifdef STAT_BENCH_DOCUMENTATION
 /*!
  * \brief Invoke a function and ignore the return value.
@@ -86,8 +67,7 @@ void invoke_and_ignore_return_value(const Func& func, Args&&... args) {
 template <typename Func, typename... Args>
 auto invoke_and_ignore_return_value(const Func& func, Args&&... args)
     -> std::enable_if_t<
-        // NOLINTNEXTLINE(modernize-type-traits): is_same_v is unavailable in C++14.
-        std::is_same<invoke_result_t<Func, Args...>, void>::value> {
+        std::is_same_v<std::invoke_result_t<Func, Args...>, void>> {
     func(std::forward<Args>(args)...);
 }
 
@@ -105,8 +85,7 @@ auto invoke_and_ignore_return_value(const Func& func, Args&&... args)
 template <typename Func, typename... Args>
 auto invoke_and_ignore_return_value(const Func& func, Args&&... args)
     -> std::enable_if_t<
-        // NOLINTNEXTLINE(modernize-type-traits): is_same_v is unavailable in C++14.
-        !std::is_same<invoke_result_t<Func, Args...>, void>::value> {
+        !std::is_same_v<std::invoke_result_t<Func, Args...>, void>> {
     do_not_optimize(func(std::forward<Args>(args)...));
 }
 #endif
@@ -275,5 +254,4 @@ private:
     std::shared_ptr<util::ISyncBarrier> barrier_;
 };
 
-}  // namespace bench_impl
-}  // namespace stat_bench
+}  // namespace stat_bench::bench_impl

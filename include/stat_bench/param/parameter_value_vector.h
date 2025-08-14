@@ -25,8 +25,7 @@
 
 #include "stat_bench/param/parameter_value.h"
 
-namespace stat_bench {
-namespace param {
+namespace stat_bench::param {
 
 /*!
  * \brief Interface of vectors of parameter values.
@@ -130,5 +129,4 @@ private:
     std::vector<ParameterValue> values_{};
 };
 
-}  // namespace param
-}  // namespace stat_bench
+}  // namespace stat_bench::param

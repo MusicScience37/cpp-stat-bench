@@ -44,8 +44,7 @@
 #include "stat_bench/util/utf8_string.h"
 #include "stat_bench/version.h"
 
-namespace stat_bench {
-namespace reporter {
+namespace stat_bench::reporter {
 
 namespace {
 
@@ -183,5 +182,4 @@ void ConsoleReporter::measurement_failed(const BenchmarkFullName& case_info,
     (void)std::fflush(file_);
 }
 
-}  // namespace reporter
-}  // namespace stat_bench
+}  // namespace stat_bench::reporter

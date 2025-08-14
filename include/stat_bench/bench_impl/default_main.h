@@ -29,8 +29,7 @@
 #include "stat_bench/runner/config.h"
 #include "stat_bench/runner/runner.h"
 
-namespace stat_bench {
-namespace impl {
+namespace stat_bench::impl {
 
 /*!
  * \brief Default main function.
@@ -58,8 +57,7 @@ inline auto default_main(int argc, const char** argv) noexcept -> int {
     }
 }
 
-}  // namespace impl
-}  // namespace stat_bench
+}  // namespace stat_bench::impl
 
 /*!
  * \brief Macro of default main function.

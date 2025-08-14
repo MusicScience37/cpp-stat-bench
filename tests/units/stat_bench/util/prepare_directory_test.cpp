@@ -19,42 +19,21 @@
  */
 #include "stat_bench/util/prepare_directory.h"
 
-#include <catch2/catch_test_macros.hpp>
+#include <filesystem>
 
-#ifdef _WIN32
-#include <Windows.h>  // GetFileAttributesA
-#include <direct.h>   // _rmdir
-#include <fileapi.h>  // GetFileAttributesA
-#else
-#include <sys/stat.h>  // stat
-#include <unistd.h>    // rmdir
-#endif
+#include <catch2/catch_test_macros.hpp>
 
 TEST_CASE("stat_bench::util::prepare_directory_for") {
     SECTION("create directory") {
         const std::string dir_path = "./prepare_directory_test/";
         const std::string file_path = dir_path + "test";
 
-#ifdef _WIN32
-        ::_rmdir(dir_path.c_str());
-        REQUIRE(
-            ::GetFileAttributesA(dir_path.c_str()) == INVALID_FILE_ATTRIBUTES);
-#else
-        ::rmdir(dir_path.c_str());
-        struct stat buf{};
-        REQUIRE(::stat(dir_path.c_str(), &buf) != 0);
-#endif
+        std::filesystem::remove_all(dir_path);
+        REQUIRE(!std::filesystem::exists(dir_path));
 
         stat_bench::util::prepare_directory_for(file_path);
 
-#ifdef _WIN32
-        REQUIRE(
-            ::GetFileAttributesA(dir_path.c_str()) != INVALID_FILE_ATTRIBUTES);
-        REQUIRE(
-            ::GetFileAttributesA(file_path.c_str()) == INVALID_FILE_ATTRIBUTES);
-#else
-        REQUIRE(::stat(dir_path.c_str(), &buf) == 0);
-        REQUIRE(::stat(file_path.c_str(), &buf) != 0);
-#endif
+        REQUIRE(std::filesystem::exists(dir_path));
+        REQUIRE(std::filesystem::is_directory(dir_path));
     }
 }

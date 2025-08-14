@@ -22,8 +22,7 @@
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/param/parameter_config.h"
 
-namespace stat_bench {
-namespace bench_impl {
+namespace stat_bench::bench_impl {
 
 /*!
  * \brief Interface of cases in benchmarks.
@@ -68,5 +67,4 @@ protected:
     IBenchmarkCase() = default;
 };
 
-}  // namespace bench_impl
-}  // namespace stat_bench
+}  // namespace stat_bench::bench_impl

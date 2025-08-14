@@ -23,8 +23,7 @@
 
 #include "stat_bench/param/parameter_name.h"
 
-namespace stat_bench {
-namespace param {
+namespace stat_bench::param {
 
 /*!
  * \brief Get the parameter name for the number of threads.
@@ -36,5 +35,4 @@ inline auto num_threads_parameter_name() -> const ParameterName& {
     return name;
 }
 
-}  // namespace param
-}  // namespace stat_bench
+}  // namespace stat_bench::param

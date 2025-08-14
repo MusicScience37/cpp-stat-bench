@@ -21,8 +21,7 @@
 
 #include <string>
 
-namespace stat_bench {
-namespace measurer {
+namespace stat_bench::measurer {
 
 auto generate_default_measurement_configs()
     -> util::OrderedMap<MeasurementType, MeasurementConfig> {
@@ -36,5 +35,4 @@ auto generate_default_measurement_configs()
     return configs;
 }
 
-}  // namespace measurer
-}  // namespace stat_bench
+}  // namespace stat_bench::measurer

@@ -19,8 +19,7 @@
  */
 #pragma once
 
-namespace stat_bench {
-namespace clock {
+namespace stat_bench::clock {
 
 /*!
  * \brief Class of durations.
@@ -46,5 +45,4 @@ private:
     double seconds_;
 };
 
-}  // namespace clock
-}  // namespace stat_bench
+}  // namespace stat_bench::clock

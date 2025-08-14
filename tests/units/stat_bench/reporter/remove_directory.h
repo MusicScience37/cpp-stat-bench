@@ -19,20 +19,9 @@
  */
 #pragma once
 
+#include <filesystem>
 #include <string>
 
-#ifdef _WIN32
-#include <Windows.h>  // GetFileAttributesA
-#include <direct.h>   // _rmdir
-#include <fileapi.h>  // GetFileAttributesA
-#else
-#include <unistd.h>  // rmdir
-#endif
-
 inline void remove_directory(const std::string& dir_path) {
-#ifdef _WIN32
-    ::_rmdir(dir_path.c_str());
-#else
-    ::rmdir(dir_path.c_str());
-#endif
+    std::filesystem::remove_all(dir_path);
 }

@@ -29,8 +29,7 @@
 
 #include "stat_bench/util/utf8_string.h"
 
-namespace stat_bench {
-namespace measurer {
+namespace stat_bench::measurer {
 
 /*!
  * \brief Class of names of measurement types.
@@ -90,8 +89,7 @@ private:
     return !(lhs == rhs);
 }
 
-}  // namespace measurer
-}  // namespace stat_bench
+}  // namespace stat_bench::measurer
 
 namespace fmt {
 
@@ -118,8 +116,7 @@ struct formatter<stat_bench::measurer::MeasurementType>
 
 }  // namespace fmt
 
-namespace stat_bench {
-namespace measurer {
+namespace stat_bench::measurer {
 
 /*!
  * \brief Format to a stream.
@@ -133,8 +130,7 @@ inline auto operator<<(std::ostream& stream, const MeasurementType& val)
     return stream << val.str();
 }
 
-}  // namespace measurer
-}  // namespace stat_bench
+}  // namespace stat_bench::measurer
 
 namespace std {
 

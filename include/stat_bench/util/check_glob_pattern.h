@@ -21,8 +21,7 @@
 
 #include "stat_bench/util/string_view.h"
 
-namespace stat_bench {
-namespace util {
+namespace stat_bench::util {
 
 /*!
  * \brief Check whether a string matches with a glob pattern.
@@ -35,5 +34,4 @@ namespace util {
 [[nodiscard]] auto check_glob_pattern(StringView pattern, StringView str)
     -> bool;
 
-}  // namespace util
-}  // namespace stat_bench
+}  // namespace stat_bench::util

@@ -30,8 +30,7 @@
 #include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/util/utf8_string.h"
 
-namespace stat_bench {
-namespace plots {
+namespace stat_bench::plots {
 
 auto CdfLinePlot::name_for_file() const -> const util::Utf8String& {
     return name_for_file_;
@@ -57,5 +56,4 @@ void CdfLinePlot::write(const measurer::MeasurementType& measurement_type,
     plotly_plotter::write_html(file_path, figure);
 }
 
-}  // namespace plots
-}  // namespace stat_bench
+}  // namespace stat_bench::plots

@@ -37,8 +37,7 @@
 #include "stat_bench/plots/time_to_output_by_parameter_line_plot.h"
 #include "stat_bench/util/string_view.h"
 
-namespace stat_bench {
-namespace bench_impl {
+namespace stat_bench::bench_impl {
 
 BenchmarkGroupRegister::BenchmarkGroupRegister(
     const BenchmarkGroupName& name) noexcept {
@@ -166,5 +165,4 @@ auto BenchmarkGroupRegister::clear_measurement_configs() noexcept
     return *this;
 }
 
-}  // namespace bench_impl
-}  // namespace stat_bench
+}  // namespace stat_bench::bench_impl

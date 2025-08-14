@@ -21,8 +21,7 @@
 
 #include <fmt/format.h>
 
-namespace stat_bench {
-namespace plots {
+namespace stat_bench::plots {
 
 auto generate_plot_name(const BenchmarkCaseName& case_name,
     const param::ParameterDict& params) -> util::Utf8String {
@@ -32,5 +31,4 @@ auto generate_plot_name(const BenchmarkCaseName& case_name,
     return util::Utf8String(fmt::format("{} ({})", case_name.str(), params));
 }
 
-}  // namespace plots
-}  // namespace stat_bench
+}  // namespace stat_bench::plots

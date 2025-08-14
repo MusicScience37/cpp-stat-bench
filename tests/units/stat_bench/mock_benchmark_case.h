@@ -22,8 +22,7 @@
 #include "../trompeloeil.h"
 #include "stat_bench/bench_impl/i_benchmark_case.h"
 
-namespace stat_bench_test {
-namespace bench_impl {
+namespace stat_bench_test::bench_impl {
 
 class MockBenchmarkCase final : public stat_bench::bench_impl::IBenchmarkCase {
 public:
@@ -46,5 +45,4 @@ public:
     ~MockBenchmarkCase() override = default;
 };
 
-}  // namespace bench_impl
-}  // namespace stat_bench_test
+}  // namespace stat_bench_test::bench_impl

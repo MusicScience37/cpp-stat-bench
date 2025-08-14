@@ -31,8 +31,7 @@
 #include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/reporter/i_reporter.h"
 
-namespace stat_bench_test {
-namespace reporter {
+namespace stat_bench_test::reporter {
 
 class MockReporter final : public stat_bench::reporter::IReporter {
 public:
@@ -89,5 +88,4 @@ public:
     ~MockReporter() override = default;
 };
 
-}  // namespace reporter
-}  // namespace stat_bench_test
+}  // namespace stat_bench_test::reporter

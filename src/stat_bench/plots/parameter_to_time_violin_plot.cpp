@@ -35,8 +35,7 @@
 #include "stat_bench/util/escape_for_file_name.h"
 #include "stat_bench/util/string_view.h"
 
-namespace stat_bench {
-namespace plots {
+namespace stat_bench::plots {
 
 ParameterToTimeViolinPlot::ParameterToTimeViolinPlot(
     param::ParameterName parameter_name, PlotOptions options)
@@ -110,5 +109,4 @@ auto ParameterToTimeViolinPlot::create_name_for_file(
     return util::Utf8String(std::string(buffer.data(), buffer.size()));
 }
 
-}  // namespace plots
-}  // namespace stat_bench
+}  // namespace stat_bench::plots

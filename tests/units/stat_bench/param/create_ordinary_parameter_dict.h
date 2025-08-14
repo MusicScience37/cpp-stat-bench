@@ -28,8 +28,7 @@
 #include "stat_bench/param/parameter_value.h"
 #include "stat_bench/util/ordered_map.h"
 
-namespace stat_bench_test {
-namespace param {
+namespace stat_bench_test::param {
 
 /*!
  * \brief Create an ordinary parameter dictionary.
@@ -46,5 +45,4 @@ namespace param {
     return stat_bench::param::ParameterDict(std::move(data));
 }
 
-}  // namespace param
-}  // namespace stat_bench_test
+}  // namespace stat_bench_test::param

@@ -24,8 +24,7 @@
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/measurer/measurement_type.h"
 
-namespace stat_bench {
-namespace measurer {
+namespace stat_bench::measurer {
 
 /*!
  * \brief Interface of measurers of durations.
@@ -67,5 +66,4 @@ protected:
     IMeasurer() = default;
 };
 
-}  // namespace measurer
-}  // namespace stat_bench
+}  // namespace stat_bench::measurer

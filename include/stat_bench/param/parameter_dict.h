@@ -35,8 +35,7 @@
 #include "stat_bench/util/ordered_map.h"
 #include "stat_bench/util/utf8_string.h"
 
-namespace stat_bench {
-namespace param {
+namespace stat_bench::param {
 
 /*!
  * \brief Class of dictionaries of parameters.
@@ -159,8 +158,7 @@ private:
     util::OrderedMap<ParameterName, ParameterValue> data_;
 };
 
-}  // namespace param
-}  // namespace stat_bench
+}  // namespace stat_bench::param
 
 namespace fmt {
 

@@ -27,8 +27,7 @@
 
 #include "stat_bench/stat_bench_exception.h"
 
-namespace stat_bench {
-namespace util {
+namespace stat_bench::util {
 
 Utf8String::Utf8String(std::string str) : str_(std::move(str)) {
     if (!simdutf::validate_utf8(str_.data(), str_.size())) {
@@ -62,8 +61,7 @@ auto operator>=(const Utf8String& lhs, const Utf8String& rhs) noexcept -> bool {
     return !(lhs < rhs);
 }
 
-}  // namespace util
-}  // namespace stat_bench
+}  // namespace stat_bench::util
 
 namespace fmt {
 
@@ -75,12 +73,10 @@ auto formatter<stat_bench::util::Utf8String>::format(
 
 }  // namespace fmt
 
-namespace stat_bench {
-namespace util {
+namespace stat_bench::util {
 
 auto operator<<(std::ostream& stream, const Utf8String& val) -> std::ostream& {
     return stream << val.str();
 }
 
-}  // namespace util
-}  // namespace stat_bench
+}  // namespace stat_bench::util

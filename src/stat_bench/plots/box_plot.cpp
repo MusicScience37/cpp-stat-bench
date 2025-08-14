@@ -30,8 +30,7 @@
 #include "stat_bench/measurer/measurement_type.h"
 #include "stat_bench/param/parameter_name.h"
 
-namespace stat_bench {
-namespace plots {
+namespace stat_bench::plots {
 
 auto BoxPlot::name_for_file() const -> const util::Utf8String& {
     return name_for_file_;
@@ -56,5 +55,4 @@ void BoxPlot::write(const measurer::MeasurementType& measurement_type,
     plotly_plotter::write_html(file_path, figure);
 }
 
-}  // namespace plots
-}  // namespace stat_bench
+}  // namespace stat_bench::plots

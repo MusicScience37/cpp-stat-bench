@@ -24,8 +24,7 @@
 #include "stat_bench/current_invocation_context.h"
 #include "stat_bench/invocation_context.h"
 
-namespace stat_bench {
-namespace impl {
+namespace stat_bench::impl {
 
 /*!
  * \brief Helper class to measure a function.
@@ -57,8 +56,7 @@ private:
     InvocationContext& context_;
 };
 
-}  // namespace impl
-}  // namespace stat_bench
+}  // namespace stat_bench::impl
 
 /*!
  * \brief Macro to measure a function.

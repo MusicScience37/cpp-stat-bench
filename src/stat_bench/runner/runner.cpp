@@ -41,8 +41,7 @@
 #include "stat_bench/reporter/plot_reporter.h"
 #include "stat_bench/util/ordered_map.h"
 
-namespace stat_bench {
-namespace runner {
+namespace stat_bench::runner {
 
 Runner::Runner(
     const Config& config, bench_impl::BenchmarkCaseRegistry& registry)
@@ -182,5 +181,4 @@ void Runner::run_case_with_condition(
     }
 }
 
-}  // namespace runner
-}  // namespace stat_bench
+}  // namespace stat_bench::runner

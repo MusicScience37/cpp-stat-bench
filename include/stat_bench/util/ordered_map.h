@@ -26,8 +26,7 @@
 #include <utility>
 #include <vector>
 
-namespace stat_bench {
-namespace util {
+namespace stat_bench::util {
 
 /*!
  * \brief Class of mapping which preserves order of insertion.
@@ -289,5 +288,4 @@ private:
     std::unordered_map<Key, std::size_t> key_to_index_;
 };
 
-}  // namespace util
-}  // namespace stat_bench
+}  // namespace stat_bench::util

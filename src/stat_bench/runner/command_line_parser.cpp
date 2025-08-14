@@ -28,8 +28,7 @@
 #include <lyra/opt.hpp>
 #include <lyra/parser.hpp>
 
-namespace stat_bench {
-namespace runner {
+namespace stat_bench::runner {
 
 CommandLineParser::CommandLineParser() {
     cli_.add_argument(lyra::opt(config_.show_help)
@@ -117,5 +116,4 @@ void CommandLineParser::parse_cli(int argc, const char** argv) {
     }
 }
 
-}  // namespace runner
-}  // namespace stat_bench
+}  // namespace stat_bench::runner

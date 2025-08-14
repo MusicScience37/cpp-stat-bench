@@ -19,8 +19,7 @@
  */
 #pragma once
 
-namespace stat_bench {
-namespace plots {
+namespace stat_bench::plots {
 
 /*!
  * \brief Label for case names in plots.
@@ -47,5 +46,4 @@ constexpr const char* sample_index_label = "Sample Index";
  */
 constexpr const char* cumulative_probability_label = "Cumulative Probability";
 
-}  // namespace plots
-}  // namespace stat_bench
+}  // namespace stat_bench::plots

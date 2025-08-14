@@ -32,8 +32,7 @@
 #include "stat_bench/stat_bench_exception.h"
 #include "stat_bench/util/prepare_directory.h"
 
-namespace stat_bench {
-namespace reporter {
+namespace stat_bench::reporter {
 
 JsonReporter::JsonReporter(std::string file_path)
     : DataFileReporterBase(std::move(file_path)) {}
@@ -56,5 +55,4 @@ void JsonReporter::write_data_file(
     stream << json_data.dump(indent, indent_char, ensure_ascii);
 }
 
-}  // namespace reporter
-}  // namespace stat_bench
+}  // namespace stat_bench::reporter

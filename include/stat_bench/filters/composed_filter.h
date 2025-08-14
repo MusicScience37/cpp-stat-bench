@@ -26,8 +26,7 @@
 #include "stat_bench/benchmark_full_name.h"
 #include "stat_bench/filters/i_name_filter.h"
 
-namespace stat_bench {
-namespace filters {
+namespace stat_bench::filters {
 
 /*!
  * \brief Class of composed filters of benchmarks.
@@ -86,5 +85,4 @@ private:
     std::vector<std::shared_ptr<INameFilter>> excluded_filter_{};
 };
 
-}  // namespace filters
-}  // namespace stat_bench
+}  // namespace stat_bench::filters

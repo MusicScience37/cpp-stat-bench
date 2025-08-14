@@ -25,8 +25,7 @@
 #include "stat_bench/benchmark_condition.h"
 #include "stat_bench/invocation_context.h"
 
-namespace stat_bench {
-namespace bench_impl {
+namespace stat_bench::bench_impl {
 
 /*!
  * \brief Class to save InvocationContext object.
@@ -81,5 +80,4 @@ private:
     std::unique_ptr<InvocationContext> context_;
 };
 
-}  // namespace bench_impl
-}  // namespace stat_bench
+}  // namespace stat_bench::bench_impl

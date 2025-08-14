@@ -33,8 +33,7 @@
 #include "stat_bench/stat/custom_stat_output.h"
 #include "stat_bench/stat/statistics.h"
 
-namespace stat_bench {
-namespace measurer {
+namespace stat_bench::measurer {
 
 /*!
  * \brief Class of data of measurements.
@@ -206,5 +205,4 @@ private:
     std::vector<std::pair<CustomOutputName, double>> custom_outputs_;
 };
 
-}  // namespace measurer
-}  // namespace stat_bench
+}  // namespace stat_bench::measurer

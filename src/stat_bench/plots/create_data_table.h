@@ -28,8 +28,7 @@
 #include "stat_bench/measurer/measurement.h"
 #include "stat_bench/param/parameter_name.h"
 
-namespace stat_bench {
-namespace plots {
+namespace stat_bench::plots {
 
 /*!
  * \brief Create a data table with the mean of processing time.
@@ -79,5 +78,4 @@ namespace plots {
     const std::vector<measurer::Measurement>& measurements)
     -> plotly_plotter::data_table;
 
-}  // namespace plots
-}  // namespace stat_bench
+}  // namespace stat_bench::plots

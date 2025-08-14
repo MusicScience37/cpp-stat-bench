@@ -23,8 +23,7 @@
 #include <string>
 #include <vector>
 
-namespace stat_bench {
-namespace runner {
+namespace stat_bench::runner {
 
 namespace impl {
 
@@ -110,5 +109,4 @@ struct Config {
     std::vector<std::string> exclude_regex{};
 };
 
-}  // namespace runner
-}  // namespace stat_bench
+}  // namespace stat_bench::runner

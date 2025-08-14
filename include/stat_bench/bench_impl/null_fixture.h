@@ -21,8 +21,7 @@
 
 #include "stat_bench/fixture_base.h"
 
-namespace stat_bench {
-namespace bench_impl {
+namespace stat_bench::bench_impl {
 
 /*!
  * \brief Class of fixtures without set up and tear down operations.
@@ -60,5 +59,4 @@ private:
     }
 };
 
-}  // namespace bench_impl
-}  // namespace stat_bench
+}  // namespace stat_bench::bench_impl

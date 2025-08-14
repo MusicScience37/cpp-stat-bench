@@ -33,9 +33,7 @@
 #include "stat_bench/stat/statistics.h"
 #include "stat_bench/util/utf8_string.h"
 
-namespace stat_bench {
-namespace reporter {
-namespace data_file_spec {
+namespace stat_bench::reporter::data_file_spec {
 
 /*!
  * \brief Convert to data for data files.
@@ -107,6 +105,4 @@ namespace data_file_spec {
 [[nodiscard]] auto convert(const measurer::Measurement& measurement)
     -> MeasurementData;
 
-}  // namespace data_file_spec
-}  // namespace reporter
-}  // namespace stat_bench
+}  // namespace stat_bench::reporter::data_file_spec

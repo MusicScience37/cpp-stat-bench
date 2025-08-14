@@ -25,20 +25,18 @@
 
 #if defined(STAT_BENCH_DOCUMENTATION)
 #include <cstdint>
-
-#include <time.h>
+#include <ctime>
 #elif defined(_WIN32)
 #define STAT_BENCH_HAS_WIN_MONOTONE_CLOCK 1
 #include <cstdint>
 #elif defined(__unix__)
 #define STAT_BENCH_HAS_UNIX_MONOTONE_CLOCK 1
-#include <time.h>  // NOLINT: std::timespec doesn't exist in C++ 14.
+#include <ctime>
 #else
 // No definition here.
 #endif
 
-namespace stat_bench {
-namespace clock {
+namespace stat_bench::clock {
 
 #if defined(STAT_BENCH_DOCUMENTATION) || \
     defined(STAT_BENCH_HAS_WIN_MONOTONE_CLOCK)
@@ -125,7 +123,7 @@ public:
 
 private:
     //! Data type.
-    using DataType = timespec;
+    using DataType = std::timespec;
 
     /*!
      * \brief Constructor.
@@ -200,5 +198,4 @@ using MonotoneTimePoint = UnixMonotoneTimePoint;
 using MonotoneTimePoint = StdMonotoneTimePoint;
 #endif
 
-}  // namespace clock
-}  // namespace stat_bench
+}  // namespace stat_bench::clock

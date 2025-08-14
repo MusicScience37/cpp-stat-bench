@@ -30,8 +30,7 @@
 #include "stat_bench/reporter/i_reporter.h"
 #include "stat_bench/util/utf8_string.h"
 
-namespace stat_bench {
-namespace reporter {
+namespace stat_bench::reporter {
 
 /*!
  * \brief Class to generate plots of measurement results.
@@ -102,5 +101,4 @@ private:
     std::vector<std::shared_ptr<plots::IPlot>> group_plots_{};
 };
 
-}  // namespace reporter
-}  // namespace stat_bench
+}  // namespace stat_bench::reporter

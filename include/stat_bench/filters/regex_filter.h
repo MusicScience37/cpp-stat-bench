@@ -24,8 +24,7 @@
 
 #include "stat_bench/filters/i_name_filter.h"
 
-namespace stat_bench {
-namespace filters {
+namespace stat_bench::filters {
 
 /*!
  * \brief Class of filters using regular expressions.
@@ -58,5 +57,4 @@ private:
     std::regex regex_;
 };
 
-}  // namespace filters
-}  // namespace stat_bench
+}  // namespace stat_bench::filters
