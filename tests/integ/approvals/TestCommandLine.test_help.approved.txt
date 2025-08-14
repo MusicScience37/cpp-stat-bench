@@ -11,13 +11,13 @@ OPTIONS, ARGUMENTS:
   --msgpack <filepath>    Generate MsgPack data file of results.
   --compressed-msgpack <filepath>
                           Generate compressed MsgPack data file of results.
-  --samples <num>         Number of samples for measurements of processing time.
+  --samples <num>         Number of samples for measurements of processing time. [default: 30]
   --min_sample_duration <num>
-                          Minimum duration of a sample for measurement of mean processing time. [sec]
+                          Minimum duration of a sample for measurement of mean processing time. [sec] [default: 0.03]
   --min_warming_up_iterations <num>
-                          Minimum number of iterations for warming up.
+                          Minimum number of iterations for warming up. [default: 1]
   --min_warming_up_duration_sec <num>
-                          Minimum duration for warming up. [sec]
+                          Minimum duration for warming up. [sec] [default: 0.03]
   --include <pattern>     Specify glob patterns of benchmark names to include. When omitted, this option won't filter any benchmarks.
   --exclude <pattern>     Specify glob patterns of benchmark names to exclude. When omitted, this option won't filter any benchmarks.
   --include_regex <regex> Specify regular expressions of benchmark names to include. When omitted, this option won't filter any benchmarks.
