@@ -40,7 +40,6 @@
 
 namespace stat_bench::bench_impl {
 
-// Define invoke_result_t for C++14 and C++17
 #ifdef STAT_BENCH_DOCUMENTATION
 /*!
  * \brief Invoke a function and ignore the return value.
