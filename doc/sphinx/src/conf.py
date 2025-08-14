@@ -1,18 +1,8 @@
-# Configuration file for the Sphinx documentation builder.
-#
-# This file only contains a selection of the most common options. For a full
-# list see the documentation:
-# https://www.sphinx-doc.org/en/master/usage/configuration.html
+"""Configuration file for Sphinx."""
 
-# -- Path setup --------------------------------------------------------------
+# pylint: disable=invalid-name
+# pylint: disable=redefined-builtin
 
-# If extensions (or modules to document with autodoc) are in another directory,
-# add these directories to sys.path here. If the directory is relative to the
-# documentation root, use os.path.abspath to make it absolute, like shown here.
-#
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
 
 # -- Project information -----------------------------------------------------
 
@@ -26,7 +16,6 @@ author = "MusicScience37"
 
 extensions = [
     "sphinx.ext.todo",
-    "myst_parser",
     "sphinx_togglebutton",
 ]
 
@@ -35,6 +24,12 @@ templates_path = ["_templates"]
 exclude_patterns = []
 
 todo_include_todos = True
+
+# -- Options for Myst-Parser -------------------------------------------------
+
+extensions += ["myst_parser"]
+
+myst_heading_anchors = 4
 
 # -- Options for PlantUML ----------------------------------------------------
 
