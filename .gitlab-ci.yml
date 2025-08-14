@@ -145,11 +145,11 @@ test linux:
     matrix:
       - COMPILER_TYPE: ["gcc13"]
         IMAGE_PATH: "musicscience37/gcc-ci"
-        CXX_STANDARD: 14
+        CXX_STANDARD: 17
         TEST_TYPE: "release"
       - COMPILER_TYPE: ["clang19", "clang20"]
         IMAGE_PATH: "musicscience37/clang-ci"
-        CXX_STANDARD: 14
+        CXX_STANDARD: 17
         TEST_TYPE: "release"
       - COMPILER_TYPE: ["clang19", "clang20"]
         IMAGE_PATH: "musicscience37/clang-ci"
@@ -157,11 +157,11 @@ test linux:
         TEST_TYPE: "debug"
       - COMPILER_TYPE: ["gcc13"]
         IMAGE_PATH: "musicscience37/gcc-ci"
-        CXX_STANDARD: 14
+        CXX_STANDARD: 17
         TEST_TYPE: "debug"
       - COMPILER_TYPE: ["clang19", "clang20"]
         IMAGE_PATH: "musicscience37/clang-ci"
-        CXX_STANDARD: 14
+        CXX_STANDARD: 17
         TEST_TYPE: "debug"
   script:
     - poetry run python ./scripts/ci_linux_test.py
@@ -223,7 +223,7 @@ clang-asan-ubsan:
     matrix:
       - COMPILER_TYPE: "clang20"
         IMAGE_PATH: "musicscience37/clang-ci"
-        CXX_STANDARD: 14
+        CXX_STANDARD: 17
         TEST_TYPE: "asan_ubsan"
   script:
     - poetry run python ./scripts/ci_linux_test.py
@@ -238,7 +238,7 @@ clang-tsan:
     matrix:
       - COMPILER_TYPE: "clang20"
         IMAGE_PATH: "musicscience37/clang-ci"
-        CXX_STANDARD: 14
+        CXX_STANDARD: 17
         TEST_TYPE: "tsan"
   script:
     - poetry run python ./scripts/ci_linux_test.py
@@ -314,7 +314,7 @@ static analysis:
     matrix:
       - COMPILER_TYPE: "clang20"
         IMAGE_PATH: "musicscience37/clang-ci"
-        CXX_STANDARD: 14
+        CXX_STANDARD: 17
         TEST_TYPE: "static_analysis"
   variables:
     BUILD_TYPE: Debug

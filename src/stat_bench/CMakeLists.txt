@@ -16,8 +16,7 @@ target_link_libraries(
            $<BUILD_INTERFACE:stat_bench_cpp_warnings>)
 target_link_libraries(stat_bench PRIVATE cpp_plotly_plotter::plotly_plotter)
 set_target_properties(stat_bench PROPERTIES VERSION ${PROJECT_VERSION})
-target_compile_features(stat_bench PUBLIC cxx_std_14)
-target_compile_features(stat_bench PRIVATE cxx_std_17)
+target_compile_features(stat_bench PUBLIC cxx_std_17)
 if(MSVC)
     target_compile_definitions(stat_bench PUBLIC _CRT_SECURE_NO_WARNINGS=1)
 endif()
@@ -56,5 +55,4 @@ target_link_libraries(
 target_link_libraries(stat_bench_unity
                       PRIVATE cpp_plotly_plotter::plotly_plotter)
 set_target_properties(stat_bench_unity PROPERTIES VERSION ${PROJECT_VERSION})
-target_compile_features(stat_bench_unity PUBLIC cxx_std_14)
-target_compile_features(stat_bench_unity PRIVATE cxx_std_17)
+target_compile_features(stat_bench_unity PUBLIC cxx_std_17)
