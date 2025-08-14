@@ -19,104 +19,18 @@
  */
 #include "stat_bench/util/prepare_directory.h"
 
-#include <cstddef>
-
-#ifdef _WIN32
-
-#include <Windows.h>  // GetFileAttributesA
-#include <direct.h>   // _mkdir
-#include <fileapi.h>  // GetFileAttributesA
+#include <filesystem>
 
 namespace stat_bench::util {
 
-[[nodiscard]] static auto path_exists(const std::string& path) -> bool {
-    return ::GetFileAttributesA(path.c_str()) != INVALID_FILE_ATTRIBUTES;
-}
-
 void prepare_directory(const std::string& path) {
-    if (path_exists(path)) {
-        return;
-    }
-
-    std::size_t pos = 0;
-    while (true) {
-        pos = path.find_first_of("/\\", pos);
-        if (pos == std::string::npos) {
-            pos = path.size();
-        }
-        const auto parent = path.substr(0, pos);
-        ++pos;
-
-        if (parent.empty() || path_exists(parent)) {
-            continue;
-        }
-        ::_mkdir(parent.c_str());
-        if (pos >= path.size()) {
-            return;
-        }
-    }
+    std::filesystem::create_directories(path);
 }
 
 void prepare_directory_for(const std::string& path) {
-    const std::size_t pos = path.find_last_of("/\\");
-    if (pos == std::string::npos) {
-        return;
-    }
-    prepare_directory(path.substr(0, pos));
+    const auto parent =
+        std::filesystem::absolute(std::filesystem::path(path)).parent_path();
+    prepare_directory(parent.string());
 }
 
 }  // namespace stat_bench::util
-
-#else
-
-#include <sys/stat.h>  // mkdir, stat
-#include <sys/types.h>
-
-namespace stat_bench::util {
-
-namespace {
-
-[[nodiscard]] auto path_exists(const std::string& path) -> bool {
-    struct stat buf{};
-    return ::stat(path.c_str(), &buf) == 0;
-}
-
-}  // namespace
-
-void prepare_directory(const std::string& path) {
-    if (path_exists(path)) {
-        return;
-    }
-
-    std::size_t pos = 0;
-    while (true) {
-        pos = path.find_first_of('/', pos);
-        if (pos == std::string::npos) {
-            pos = path.size();
-        }
-        const auto parent = path.substr(0, pos);
-        ++pos;
-
-        if (parent.empty() || path_exists(parent)) {
-            continue;
-        }
-        // NOLINTNEXTLINE(google-readability-casting): This is constructor.
-        const auto mode = ::mode_t(0755);
-        ::mkdir(parent.c_str(), mode);
-        if (pos >= path.size()) {
-            return;
-        }
-    }
-}
-
-void prepare_directory_for(const std::string& path) {
-    const std::size_t pos = path.find_last_of('/');
-    if (pos == std::string::npos) {
-        return;
-    }
-    prepare_directory(path.substr(0, pos));
-}
-
-}  // namespace stat_bench::util
-
-#endif
