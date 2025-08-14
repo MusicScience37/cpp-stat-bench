@@ -51,7 +51,7 @@ pre-commit:
     - poetry run pre-commit run --all-files
   cache:
     - key:
-        prefix: poetry-${CI_JOB_NAME}
+        prefix: poetry-linux
         files:
           - poetry.lock
       paths:
@@ -110,18 +110,18 @@ spell check:
     - Dummy command for base configuration
   cache:
     - key:
-        prefix: poetry-${CI_JOB_NAME}
+        prefix: poetry-linux
         files:
           - poetry.lock
       paths:
         - .poetry-cache
     - key:
-        prefix: vcpkg-${CI_JOB_NAME}
+        prefix: vcpkg-${COMPILER_TYPE}-${TEST_TYPE}
         files:
           - vcpkg-configuration.json
       paths:
         - .vcpkg-cache
-    - key: ccache-${CI_JOB_NAME}
+    - key: ccache-${COMPILER_TYPE}-${TEST_TYPE}
       paths:
         - .ccache
   artifacts:
@@ -280,18 +280,18 @@ msvc-release:
     - cmd.exe /C ..\scripts\ci_win.cmd
   cache:
     - key:
-        prefix: poetry-${CI_JOB_NAME}
+        prefix: poetry-win
         files:
           - poetry.lock
       paths:
         - .poetry-cache
     - key:
-        prefix: vcpkg-${CI_JOB_NAME}
+        prefix: vcpkg-msvc-release
         files:
           - vcpkg-configuration.json
       paths:
         - .vcpkg-cache
-    - key: ccache-${CI_JOB_NAME}
+    - key: ccache-msvc-release
       paths:
         - .ccache
   artifacts:
@@ -336,18 +336,18 @@ static analysis:
     - poetry run clang-tidy-checker -b ${BUILD_DIR} --cache_dir ./.clang-tidy-cache
   cache:
     - key:
-        prefix: poetry-${CI_JOB_NAME}
+        prefix: poetry-linux
         files:
           - poetry.lock
       paths:
         - .poetry-cache
     - key:
-        prefix: vcpkg-${CI_JOB_NAME}
+        prefix: vcpkg-static-analysis
         files:
           - vcpkg-configuration.json
       paths:
         - .vcpkg-cache
-    - key: clang-tidy-checker-${CI_JOB_NAME}
+    - key: clang-tidy-checker
       paths:
         - .clang-tidy-cache
 
@@ -366,7 +366,7 @@ python checks:
     - poetry run mypy ./tests/integ
   cache:
     - key:
-        prefix: poetry-${CI_JOB_NAME}
+        prefix: poetry-linux
         files:
           - poetry.lock
       paths:
