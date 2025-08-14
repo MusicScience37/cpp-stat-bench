@@ -142,7 +142,8 @@
     "xaxis",
     "Xclang",
     "Xiwyu",
-    "yaxis"
+    "yaxis",
+    "yyjson"
   ],
   "ignoreWords": [],
   "import": []

@@ -6,7 +6,7 @@
 [![coverage report](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench/badges/main/coverage.svg)](https://cppstatbench.musicscience37.com/coverage/)
 [![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit&logoColor=white)](https://github.com/pre-commit/pre-commit)
 
-Benchmark library with statistics and plotting in C++.
+A benchmark library with statistical analysis and plotting capabilities in C++.
 
 ## ✨ Features
 
@@ -18,6 +18,10 @@ Benchmark library with statistics and plotting in C++.
     - Processing time for each execution.
     - Cumulative distribution function of processing time.
     - Violin plots.
+    - Box plots.
+    - Plots of processing time with respect to parameters.
+    - Plots of custom outputs with respect to parameters.
+    - Plots of custom outputs with respect to processing time.
 - Measure processing time in two patterns.
   - Processing time of each execution.
   - Mean processing time of consecutive executions.
@@ -26,148 +30,50 @@ Benchmark library with statistics and plotting in C++.
 - Perform benchmark in multiple threads.
 - Use fixtures.
 
+## Supported Compilers
+
+This library should compile with most C++ 17 compliant compilers.
+
+Following compilers are tested in CI:
+
+- GCC 13
+- Clang 19
+- Clang 20
+- Visual Studio 2022
+
+## Dependencies
+
+- [fmt](https://github.com/fmtlib/fmt)
+- [lyra](https://github.com/bfgroup/Lyra)
+- [cpp-msgpack-light](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-msgpack-light)
+- [cpp-plotly-plotter](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-plotly-plotter)
+- [Eigen](https://gitlab.com/libeigen/eigen)
+- [yyjson](https://github.com/ibireme/yyjson)
+- [nlohmann/json](https://github.com/nlohmann/json)
+- [simdutf](https://github.com/simdutf/simdutf)
+- [zlib](https://github.com/madler/zlib)
+
+## Installation
+
+See [Install This Library](doc/sphinx/src/installation.md).
+
+## Documentation
+
+Documentation built in CI:
+
+| Version     | Documentation                                                     | Full API Reference (Doxygen)                                          |
+| :---------- | :---------------------------------------------------------------- | :-------------------------------------------------------------------- |
+| main branch | [Documentation](https://cppstatbench.musicscience37.com/)         | [API Reference](https://cppstatbench.musicscience37.com/api/)         |
+| v0.25.2     | [Documentation](https://cppstatbench.musicscience37.com/v0.25.2/) | [API Reference](https://cppstatbench.musicscience37.com/v0.25.2/api/) |
+
 ## Repositories
 
 - Main in GitLab: [https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench](https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench)
 - Mirror in GitHub: [https://github.com/MusicScience37/cpp-stat-bench](https://github.com/MusicScience37/cpp-stat-bench)
 
-## Documentation
+## For Developers
 
-- [Documentation build on main branch](https://cppstatbench.musicscience37.com/)
-- Examples are in `examples` directory.
-
-## Installation
-
-### Via vcpkg
-
-This library can be installed via vcpkg using following configurations:
-
-- Add a vcpkg registry
-  `https://gitlab.com/MusicScience37Projects/vcpkg-registry`
-  in `vcpkg-configuration.json`.
-
-  Example:
-
-  ```json
-  {
-    "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg-configuration.schema.json",
-    "default-registry": {
-      "kind": "git",
-      "repository": "https://github.com/Microsoft/vcpkg",
-      "baseline": "acd5bba5aac8b6573b5f6f463dc0341ac0ee6fa4"
-    },
-    "registries": [
-      {
-        "kind": "git",
-        "repository": "https://gitlab.com/MusicScience37Projects/vcpkg-registry",
-        "baseline": "e9814bf742df3d99e3ef50ca9dcf8ed5d5a578c6",
-        "packages": [
-          "cpp-msgpack-light",
-          "cpp-plotly-plotter",
-          "cpp-stat-bench"
-        ]
-      }
-    ]
-  }
-  ```
-
-- Add `cpp-stat-bench` in `vcpkg.json`
-
-  Example:
-
-  ```json
-  {
-    "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
-    "dependencies": ["cpp-stat-bench"]
-  }
-  ```
-
-## How to Build in this Repository
-
-To build this repository,
-you will require following dependencies:
-
-- [Python](https://www.python.org/) 3.13
-  - You may want to use [pyenv](https://github.com/pyenv/pyenv).
-- [poetry](https://python-poetry.org)
-  - Required Python packages can be installed using poetry.
-    Execute the command `poetry install` on this directory.
-  - [pre-commit](https://pre-commit.com/)
-    will be installed via poetry, and used for some checks.
-    Execute `poetry run pre-commit install` on this directory
-    if you develop this library.
-- [CMake](https://cmake.org/)
-- C++ 17 Compiler
-  - Following compilers are tested in CI:
-    - GCC 13
-    - Clang 19
-    - MSVC 19
-
-Additionally, you will require following dependencies
-to build documentation.
-
-- [Doxygen](https://www.doxygen.nl/index.html)
-- [Graphviz](https://graphviz.org/)
-- [PlantUML](https://plantuml.com)
-  - Set `PLANTUML_JAR_PATH` environment variable to specify the place of `plantuml.jar` file.
-- Java runtime environment (JRE) for PlantUML
-
-After installing the above dependencies,
-execute the following commands:
-
-1. Start a shell of poetry.
-
-   ```bash
-   cd <this-directory>
-   poetry install
-   poetry shell
-   ```
-
-2. Download vcpkg if you haven't already.
-
-   ```bash
-   git submodule update --init
-   ```
-
-3. Build vcpkg.
-
-   - On Windows:
-
-     ```bat
-     .\vcpkg\bootstrap-vcpkg.bat
-     ```
-
-   - On Linux:
-
-     ```bash
-     ./vcpkg/bootstrap-vcpkg.sh
-     ```
-
-4. Configure.
-
-   ```bash
-   mkdir build
-   cd build
-   cmake .. -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
-   ```
-
-5. Optionally edit options.
-
-   ```bash
-   <some-editor> CMakeCache.txt
-   ```
-
-6. Build.
-
-   ```bash
-   cmake --build .
-   ```
-
-7. Optionally run tests.
-
-   ```bash
-   ctest
-   ```
+- [How to build in this repository](doc/sphinx/src/how_to_build_in_repository.md)
 
 ## License
 
