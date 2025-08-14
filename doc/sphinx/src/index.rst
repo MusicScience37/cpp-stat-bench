@@ -1,7 +1,7 @@
 cpp-stat-bench
 ============================
 
-Benchmark library with statistics and plotting in C++.
+A benchmark library with statistical analysis and plotting capabilities in C++.
 
 Developed at
 `https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench <https://gitlab.com/MusicScience37Projects/utility-libraries/cpp-stat-bench>`_.

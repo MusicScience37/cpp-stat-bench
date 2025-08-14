@@ -1,86 +1,94 @@
 # Build in the Repository
 
-To build this repository,
-you will require following dependencies:
+This section show how to build this project in the Git repository.
 
-- [Python](https://www.python.org/) 3.13
-  - You may want to use [pyenv](https://github.com/pyenv/pyenv).
-- [poetry](https://python-poetry.org)
-  - Required Python packages can be installed using poetry.
-    Execute the command `poetry install` on this directory.
-  - [pre-commit](https://pre-commit.com/)
-    will be installed via poetry, and used for some checks.
-    Execute `poetry run pre-commit install` on this directory
-    if you develop this library.
-- [CMake](https://cmake.org/)
-- C++ 17 Compiler
-  - Following compilers are tested in CI:
-    - GCC 13
-    - Clang 19
-    - MSVC 19
+Here shows two ways to build this project:
 
-Additionally, you will require following dependencies
-to build documentation.
+- [Build in DevContainer of Visual Studio Code](#build-in-devcontainer-of-visual-studio-code)
+- [Build using Visual Studio in Windows](#build-using-visual-studio-in-windows)
 
-- [Doxygen](https://www.doxygen.nl/index.html)
-- [Graphviz](https://graphviz.org/)
-- [PlantUML](https://plantuml.com)
-  - Set `PLANTUML_JAR_PATH` environment variable to specify the place of `plantuml.jar` file.
-- Java runtime environment (JRE) for PlantUML
+## Build in DevContainer of Visual Studio Code
 
-After installing the above dependencies,
-execute the following commands:
+This section shows how to build this project
+in DevContainer of Visual Studio Code.
 
-1. Start a shell of poetry.
+### Prerequisites
 
-   ```bash
-   cd <this-directory>
-   poetry install
-   poetry shell
+- Install [Visual Studio Code](https://code.visualstudio.com/).
+- Install [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) in Visual Studio Code.
+- Install [Docker](https://www.docker.com/).
+
+### Steps
+
+1. Update Git submodules.
+
+   Execute the following command in the directory of this project.
+
+   ```shell
+   git submodule update --init --recursive
    ```
 
-2. Download vcpkg if you haven't already.
+2. Open the directory of this project with DevContainer.
 
-   ```bash
-   git submodule update --init
+   See
+   [Developing inside a Container](https://code.visualstudio.com/docs/devcontainers/containers)
+   for how to open a project with DevContainer.
+
+   When you open this project with DevContainer for the first time,
+   required configurations are automatically done.
+
+3. Build this project.
+
+   You can use
+   [CMake Tools extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.cmake-tools)
+   to build this project.
+
+   When you build this project for the first time,
+   dependencies are automatically downloaded and built.
+
+   Also you can run tests with CMake Tools extension.
+
+## Build using Visual Studio in Windows
+
+This section shows how to build this project
+using Visual Studio in Windows.
+
+This project has configurations to build with Visual Studio in CMakePresets.json file.
+For details, see
+[CMake projects in Visual Studio](https://learn.microsoft.com/en-us/cpp/build/cmake-projects-in-visual-studio?view=msvc-170).
+
+### Prerequisites
+
+- Install [Visual Studio](https://visualstudio.microsoft.com/)
+
+### Steps
+
+1. Update Git submodules.
+
+   Execute the following command in the directory of this project.
+
+   ```shell
+   git submodule update --init --recursive
    ```
 
-3. Build vcpkg.
+2. Install Python dependencies.
 
-   - On Windows:
+   Execute the following command in the directory of this project.
 
-     ```bat
-     .\vcpkg\bootstrap-vcpkg.bat
-     ```
-
-   - On Linux:
-
-     ```bash
-     ./vcpkg/bootstrap-vcpkg.sh
-     ```
-
-4. Configure.
-
-   ```bash
-   mkdir build
-   cd build
-   cmake .. -DCMAKE_TOOLCHAIN_FILE=../vcpkg/scripts/buildsystems/vcpkg.cmake
+   ```shell
+   poetry sync
    ```
 
-5. Optionally edit options.
+3. Open the directory of this project with Visual Studio.
 
-   ```bash
-   <some-editor> CMakeCache.txt
-   ```
+   Visual Studio will automatically detect configurations written in CMakePresets.json file
+   and run cmake to configure this project.
 
-6. Build.
+   When you open this project with Visual Studio for the first time,
+   dependencies are automatically downloaded and built.
 
-   ```bash
-   cmake --build .
-   ```
+4. Build this project.
 
-7. Optionally run tests.
+   You can build this project with Visual Studio, for example, by pressing Ctrl+Shift+B.
 
-   ```bash
-   ctest
-   ```
+   Also you can run tests with Visual Studio.
