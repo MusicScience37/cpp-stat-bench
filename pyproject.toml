@@ -12,33 +12,33 @@ python = ">=3.12,<3.14"
 setuptools = "^80.9.0"
 
 [tool.poetry.group.test.dependencies]
-pytest = "^8.4.1"
+pytest = "^8.4.2"
 pytest-approvaltests = "^0.2.4"
-fastjsonschema = "^2.21.1"
+fastjsonschema = "^2.21.2"
 msgpack = "^1.1.1"
 
 [tool.poetry.group.doc.dependencies]
 sphinx = "^8.2.3"
-sphinx-orange-book-theme = "^0.15.0"
-sphinxcontrib-plantuml = "^0.30"
+sphinx-orange-book-theme = "^0.16.0"
+sphinxcontrib-plantuml = "^0.31"
 breathe = "^4.36.0"
 myst-parser = "^4.0.1"
 sphinx-togglebutton = "^0.3.2"
 
 [tool.poetry.group.dev.dependencies]
-black = "^25.1.0"
+black = "^25.9.0"
 cmakelang = "^0.6.13"
 doc8 = "^2.0.0"
-pre-commit = "^4.2.0"
-sphinx-autobuild = "^2024.10.3"
+pre-commit = "^4.3.0"
+sphinx-autobuild = "^2025.8.25"
 clang-tidy-checker = "^0.6.0"
 lcov-cobertura = "^2.1.1"
-jsonschema2md = "^1.6.1"
-click = "^8.2.1"
-isort = "^6.0.1"
-pylint = "^3.3.7"
+jsonschema2md = "^1.7.0"
+click = "^8.3.0"
+isort = "^6.1.0"
+pylint = "^3.3.9"
 flake8 = "^7.3.0"
-mypy = "^1.17.1"
+mypy = "^1.18.2"
 
 [build-system]
 requires = ["poetry-core"]
