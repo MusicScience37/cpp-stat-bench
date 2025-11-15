@@ -136,6 +136,7 @@
     "trompeloeil",
     "tsan",
     "ubsan",
+    "unshallow",
     "vcpkg",
     "venv",
     "violinmode",
