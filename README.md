@@ -39,6 +39,7 @@ Following compilers are tested in CI:
 - GCC 13
 - Clang 19
 - Clang 20
+- Clang 21
 - Visual Studio 2022
 
 ## Dependencies
