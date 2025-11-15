@@ -210,6 +210,7 @@ clang coverage:
       -Dsonar.host.url="${SONAR_HOST_URL}"
       -Dsonar.token="${SONAR_TOKEN}"
       -Dsonar.cfamily.compile-commands=${BUILD_DIR}/compile_commands.json
+      -Dsonar.cfamily.llvm-cov.reportPath=${BUILD_DIR}/coverage/coverage.txt
   coverage: '/[^\s]+%\s+\d+\s+\d+\s+\s[^\s]+%/'
   cache:
     - key:
