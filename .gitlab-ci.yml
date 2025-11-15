@@ -205,7 +205,7 @@ clang coverage:
     - curl -sSLo ./sonar-scanner.zip 'https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.2.0.5079-linux-x64.zip'
     - unzip -o sonar-scanner.zip
     - mv sonar-scanner-7.2.0.5079-linux-x64 sonar-scanner
-    - git fetch --unshallow # Ensure full git history for SonarQube
+    - git fetch # Ensure full git history for SonarQube
     - sonar-scanner/bin/sonar-scanner
       -Dsonar.host.url="${SONAR_HOST_URL}"
       -Dsonar.token="${SONAR_TOKEN}"
