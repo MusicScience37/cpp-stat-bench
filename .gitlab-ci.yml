@@ -179,6 +179,7 @@ clang coverage:
         TEST_TYPE: "coverage"
   variables:
     BUILD_DIR: build_clang_coverage
+    SONAR_USER_HOME: ${CI_PROJECT_DIR}/.sonar
   script:
     - cd $BUILD_DIR
     - cmake ..
@@ -198,8 +199,38 @@ clang coverage:
     - cd ../
     - scripts/collect_llvm_coverage.sh build_clang_coverage
     - poetry run lcov_cobertura $BUILD_DIR/coverage/coverage --output $BUILD_DIR/coverage.xml
+    # Codecov
     - bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+    # SonarQube
+    - curl -sSLo ./sonar-scanner.zip 'https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-7.2.0.5079-linux-x64.zip'
+    - unzip -o sonar-scanner.zip
+    - mv sonar-scanner-7.2.0.5079-linux-x64 sonar-scanner
+    - git fetch # Ensure full git history for SonarQube
+    - sonar-scanner/bin/sonar-scanner
+      -Dsonar.host.url="${SONAR_HOST_URL}"
+      -Dsonar.token="${SONAR_TOKEN}"
+      -Dsonar.cfamily.compile-commands=${BUILD_DIR}/compile_commands.json
+      -Dsonar.cfamily.llvm-cov.reportPath=${BUILD_DIR}/coverage/coverage.txt
   coverage: '/[^\s]+%\s+\d+\s+\d+\s+\s[^\s]+%/'
+  cache:
+    - key:
+        prefix: poetry-linux
+        files:
+          - poetry.lock
+      paths:
+        - .poetry-cache
+    - key:
+        prefix: vcpkg-${COMPILER_TYPE}-${TEST_TYPE}
+        files:
+          - vcpkg-configuration.json
+      paths:
+        - .vcpkg-cache
+    - key: ccache-${COMPILER_TYPE}-${TEST_TYPE}
+      paths:
+        - .ccache
+    - key: sonar-qube-cache
+      paths:
+        - .sonar/cache
   artifacts:
     paths:
       - $BUILD_DIR/bench
@@ -308,7 +339,7 @@ msvc-release:
     when: always
     expire_in: "1 mos"
 
-static analysis:
+clang-tidy:
   extends: .test linux base
   parallel:
     matrix:
