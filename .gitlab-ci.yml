@@ -179,7 +179,6 @@ clang coverage:
         TEST_TYPE: "coverage"
   variables:
     BUILD_DIR: build_clang_coverage
-    SONAR_USER_HOME: ${CI_PROJECT_DIR}/.sonar
   script:
     - cd $BUILD_DIR
     - cmake ..
@@ -212,25 +211,6 @@ clang coverage:
       -Dsonar.cfamily.compile-commands=${BUILD_DIR}/compile_commands.json
       -Dsonar.cfamily.llvm-cov.reportPath=${BUILD_DIR}/coverage/coverage.txt
   coverage: '/[^\s]+%\s+\d+\s+\d+\s+\s[^\s]+%/'
-  cache:
-    - key:
-        prefix: poetry-linux
-        files:
-          - poetry.lock
-      paths:
-        - .poetry-cache
-    - key:
-        prefix: vcpkg-${COMPILER_TYPE}-${TEST_TYPE}
-        files:
-          - vcpkg-configuration.json
-      paths:
-        - .vcpkg-cache
-    - key: ccache-${COMPILER_TYPE}-${TEST_TYPE}
-      paths:
-        - .ccache
-    - key: sonar-qube-cache
-      paths:
-        - .sonar/cache
   artifacts:
     paths:
       - $BUILD_DIR/bench
