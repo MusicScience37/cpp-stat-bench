@@ -1,15 +1,14 @@
-[tool.poetry]
+[project]
 name = "cpp-stat-bench"
 version = "0.0.0"
 description = ""
-authors = []
 readme = "README.md"
-packages = [{ include = "scripts" }]
+authors = []
+requires-python = ">=3.12,<3.14"
+dependencies = ["setuptools >=80.9.0"]
 
-[tool.poetry.dependencies]
-python = ">=3.12,<3.14"
-# Some tools require setuptools.
-setuptools = "^80.9.0"
+[tool.poetry]
+packages = [{ include = "scripts" }]
 
 [tool.poetry.group.test.dependencies]
 pytest = "^9.0.2"
@@ -18,15 +17,15 @@ fastjsonschema = "^2.21.2"
 msgpack = "^1.1.2"
 
 [tool.poetry.group.doc.dependencies]
-sphinx = "^8.2.3"
-sphinx-orange-book-theme = "^0.16.0"
+sphinx = "^9.1.0"
+sphinx-orange-book-theme = "^0.19.0"
 sphinxcontrib-plantuml = "^0.31"
 breathe = "^4.36.0"
-myst-parser = "^4.0.1"
-sphinx-togglebutton = "^0.3.2"
+myst-parser = "^5.0.0"
+sphinx-togglebutton = "^0.4.4"
 
 [tool.poetry.group.dev.dependencies]
-black = "^25.12.0"
+black = "^26.1.0"
 cmakelang = "^0.6.13"
 doc8 = "^2.0.0"
 pre-commit = "^4.5.1"
