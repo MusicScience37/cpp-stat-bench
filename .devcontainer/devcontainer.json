@@ -1,5 +1,5 @@
 {
-  "build": { "dockerfile": "Dockerfile" },
+  "image": "registry.gitlab.com/musicscience37projects/docker/my-cpp-env-docker:clang21",
   "runArgs": [
     // Configuration for GDB.
     "--cap-add=SYS_PTRACE",
