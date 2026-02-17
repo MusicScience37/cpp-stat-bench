@@ -5,7 +5,7 @@ description = ""
 readme = "README.md"
 authors = []
 requires-python = ">=3.12,<3.14"
-dependencies = ["setuptools >=80.9.0"]
+dependencies = ["setuptools (>=82.0.0,<83.0.0)"]
 
 [tool.poetry]
 packages = [{ include = "scripts" }]
