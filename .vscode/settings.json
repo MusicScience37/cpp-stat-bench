@@ -58,5 +58,7 @@
   },
   "cmake.useCMakePresets": "never",
   "restructuredtext.pythonRecommendation.disabled": true,
-  "cmake.loadCompileCommands": false
+  "cmake.loadCompileCommands": false,
+  "python-envs.defaultEnvManager": "ms-python.python:poetry",
+  "python-envs.defaultPackageManager": "ms-python.python:poetry"
 }

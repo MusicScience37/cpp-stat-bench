@@ -37,9 +37,11 @@ This library should compile with most C++ 17 compliant compilers.
 Following compilers are tested in CI:
 
 - GCC 13
-- Clang 19
+- GCC 14
+- GCC 15
 - Clang 20
 - Clang 21
+- Clang 22
 - Visual Studio 2022
 
 ## Dependencies
