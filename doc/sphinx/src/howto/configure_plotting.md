@@ -38,7 +38,7 @@ In the above example, the following plots are generated
 (plots added by the configurations are highlighted):
 
 ```{uml}
-salt
+@startsalt
 {
 {T
  + <color:gray>results
@@ -59,6 +59,7 @@ salt
  +++ <color:#D66D32>MeanProcessingTime_to_error_by_num_terms.html
 }
 }
+@endsalt
 ```
 
 ## Types of Plots
