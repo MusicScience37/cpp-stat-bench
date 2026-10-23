@@ -2,13 +2,13 @@
   "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg-configuration.schema.json",
   "default-registry": {
     "kind": "builtin",
-    "baseline": "4e82e29f14eac2b3422f18f72c7524d04f19924e"
+    "baseline": "8b27e7400540a327462d999d29bc196223c0100e"
   },
   "registries": [
     {
       "kind": "git",
       "repository": "https://gitlab.com/MusicScience37Projects/vcpkg-registry",
-      "baseline": "53134f8349a6d5855faf8dd552f332d823e58d9b",
+      "baseline": "7ee03fe48000da2bf47c1351b35b69ac196dee7f",
       "packages": ["cpp-msgpack-light", "cpp-plotly-plotter"]
     }
   ],
