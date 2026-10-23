@@ -27,7 +27,7 @@ This command generates plots of processing time in the `results` directory.
 Plots are generated for each group of benchmarks as follows:
 
 ```{uml}
-salt
+@startsalt
 {
 {T
  + results                              | (Directory specified in command line option.)
@@ -42,6 +42,7 @@ salt
  +++ MeanProcessingTime_cdf.html
 }
 }
+@endsalt
 ```
 
 Here describes the plots generated:
