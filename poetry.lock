@@ -2073,19 +2073,19 @@ test = ["beautifulsoup4", "coverage", "defusedxml", "myst-nb", "pytest", "pytest
 
 [[package]]
 name = "sphinx-orange-book-theme"
-version = "0.21.0"
+version = "0.22.0"
 description = "An orange version of sphinx-book-theme."
 optional = false
 python-versions = "<3.15,>=3.12"
 groups = ["doc"]
 files = [
-    {file = "sphinx_orange_book_theme-0.21.0-py3-none-any.whl", hash = "sha256:57c09276081c0a99f6db1f0b119b7665af90d932339a33897a5719580e0b473f"},
-    {file = "sphinx_orange_book_theme-0.21.0.tar.gz", hash = "sha256:6b2cc1115488aaf03cc038fc731ba9628f44e35ffc1ff10404c70174cdff88cb"},
+    {file = "sphinx_orange_book_theme-0.22.0-py3-none-any.whl", hash = "sha256:7791de830a63aa0537fea90ccb266516778ad2af5ecd2df8fabc0c863dbc3d69"},
+    {file = "sphinx_orange_book_theme-0.22.0.tar.gz", hash = "sha256:3fe3f4f1340bdb06f29638accbc4960e4f90f62061ecd01c3fa3b050c2a310a6"},
 ]
 
 [package.dependencies]
 sphinx = ">=9.1.0"
-sphinx-book-theme = ">=1.2.0"
+sphinx-book-theme = ">=1.4.0"
 
 [[package]]
 name = "sphinx-togglebutton"
@@ -2720,4 +2720,4 @@ packaging = ">=24.0"
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<3.14"
-content-hash = "41331f5e94b6bf80476fb1978f09889a51bad769c8547770c7f50487a7d125f6"
+content-hash = "e2a12b1b80c4a7e46ecf06262bdc445af1ffedf4db6b127a78cfba778126d036"
