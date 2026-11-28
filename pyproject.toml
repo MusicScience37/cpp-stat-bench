@@ -18,7 +18,7 @@ msgpack = "^1.2.3"
 
 [tool.poetry.group.doc.dependencies]
 sphinx = "^9.1.1"
-sphinx-orange-book-theme = "^0.21.0"
+sphinx-orange-book-theme = "^0.22.0"
 sphinxcontrib-plantuml = "^0.31"
 breathe = "^5.1.0"
 myst-parser = "^5.1.0"
